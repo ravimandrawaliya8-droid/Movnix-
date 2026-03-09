@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Metflix</title>
+
+<style>
+
+body{
+
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:#0f0f0f;
+color:white;
+
+}
+
+/* HEADER */
+
+header{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+padding:20px;
+
+background:#000;
+
+position:sticky;
+top:0;
+
+}
+
+.logo{
+
+color:red;
+font-size:28px;
+font-weight:bold;
+
+}
+
+.search-box{
+
+width:300px;
+
+}
+
+.search-box input{
+
+width:100%;
+padding:10px;
+border:none;
+border-radius:4px;
+
+}
+
+/* HERO */
+
+.hero{
+
+height:400px;
+
+background:url("https://image.tmdb.org/t/p/original/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg");
+
+background-size:cover;
+background-position:center;
+
+display:flex;
+align-items:flex-end;
+
+padding:30px;
+
+}
+
+.hero h1{
+
+font-size:40px;
+
+}
+
+/* SECTION */
+
+section{
+
+padding:20px;
+
+}
+
+.section-title{
+
+font-size:22px;
+margin-bottom:15px;
+
+}
+
+/* MOVIE GRID */
+
+.movies{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+
+gap:20px;
+
+}
+
+.movie{
+
+position:relative;
+
+cursor:pointer;
+
+transition:transform .3s;
+
+}
+
+.movie:hover{
+
+transform:scale(1.08);
+
+}
+
+.movie img{
+
+width:100%;
+border-radius:6px;
+
+}
+
+.rating{
+
+position:absolute;
+
+top:8px;
+right:8px;
+
+background:black;
+
+padding:3px 6px;
+
+font-size:12px;
+
+border-radius:4px;
+
+}
+
+/* FOOTER */
+
+footer{
+
+text-align:center;
+padding:30px;
+
+color:#888;
+
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+.search-box{
+
+width:150px;
+
+}
+
+.hero h1{
+
+font-size:26px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">METFLIX</div>
+
+<div class="search-box">
+
+<input
+type="text"
+id="search"
+placeholder="Search movies..."
+>
+
+</div>
+
+</header>
+
+<div class="hero">
+
+<h1>Unlimited Movies</h1>
+
+</div>
+
+<section>
+
+<div class="section-title">🔥 Trending Movies</div>
+
+<div id="movies" class="movies"></div>
+
+</section>
+
+<footer>
+
+Metflix © 2026
+
+</footer>
+
+<script>
+
+const API_KEY="YOUR_TMDB_API";
+
+const API_URL=`https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}`;
+
+const IMG="https://image.tmdb.org/t/p/w500";
+
+const movies=document.getElementById("movies");
+
+fetch(API_URL)
+
+.then(res=>res.json())
+
+.then(data=>{
+
+data.results.forEach(movie=>{
+
+const div=document.createElement("div");
+
+div.classList.add("movie");
+
+div.innerHTML=`
+
+<img src="${IMG+movie.poster_path}">
+
+<div class="rating">⭐ ${movie.vote_average}</div>
+
+`;
+
+movies.appendChild(div);
+
+});
+
+});
+
+</script>
+
+</body>
+
+  </html>
