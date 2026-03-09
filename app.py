@@ -1,21 +1,16 @@
 import os
 import requests
 from flask import Flask, request
-from telegram import Bot, Update, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import Dispatcher, CommandHandler
-
-# =====================
-# ENV VARIABLES
-# =====================
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
 TOKEN = os.getenv("TELEGRAM_TOKEN")
 TMDB_API = os.getenv("TMDB_API")
 WEBSITE = os.getenv("WEBSITE_URL")
 
-bot = Bot(token=TOKEN)
-
 app = Flask(__name__)
-dispatcher = Dispatcher(bot, None)
+
+bot_app = ApplicationBuilder().token(TOKEN).build()
 
 # =====================
 # TMDB SEARCH
@@ -44,7 +39,7 @@ def search_movie(query):
 # START COMMAND
 # =====================
 
-def start(update, context):
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     text = (
         "🎬 Welcome to Movie Bot\n\n"
@@ -54,16 +49,16 @@ def start(update, context):
         "/movie avatar"
     )
 
-    update.message.reply_text(text)
+    await update.message.reply_text(text)
 
 # =====================
 # MOVIE COMMAND
 # =====================
 
-def movie(update, context):
+async def movie(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if not context.args:
-        update.message.reply_text("Example: /movie avatar")
+        await update.message.reply_text("Example: /movie avatar")
         return
 
     query = " ".join(context.args)
@@ -71,7 +66,7 @@ def movie(update, context):
     data = search_movie(query)
 
     if not data:
-        update.message.reply_text("Movie not found")
+        await update.message.reply_text("Movie not found")
         return
 
     poster = data["poster"]
@@ -94,8 +89,7 @@ def movie(update, context):
 
     reply_markup = InlineKeyboardMarkup(keyboard)
 
-    bot.send_photo(
-        chat_id=update.effective_chat.id,
+    await update.message.reply_photo(
         photo=poster_url,
         caption=caption,
         reply_markup=reply_markup
@@ -105,19 +99,19 @@ def movie(update, context):
 # HANDLERS
 # =====================
 
-dispatcher.add_handler(CommandHandler("start", start))
-dispatcher.add_handler(CommandHandler("movie", movie))
+bot_app.add_handler(CommandHandler("start", start))
+bot_app.add_handler(CommandHandler("movie", movie))
 
 # =====================
 # WEBHOOK
 # =====================
 
 @app.route(f"/{TOKEN}", methods=["POST"])
-def webhook():
+async def webhook():
 
-    update = Update.de_json(request.get_json(force=True), bot)
+    update = Update.de_json(request.get_json(force=True), bot_app.bot)
 
-    dispatcher.process_update(update)
+    await bot_app.process_update(update)
 
     return "ok"
 
