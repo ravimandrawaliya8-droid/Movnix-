@@ -327,14 +327,16 @@ footer {
 <!-- ===== HERO BANNER ===== -->
 <div id="hero" class="hero">
     <div class="hero-overlay"></div>
-    <div class="hero-content">
+    <div class="hero-content" style="display:flex; gap:20px; align-items:flex-end;">
         <div class="hero-left">
             <img id="hero-poster" src="" alt="Hero Poster">
         </div>
-        <div class="hero-right">
-            <h1 id="hero-title">Loading...</h1>
-            <p id="hero-overview"></p>
-            <button id="hero-trailer">Watch Trailer</button>
+        <div class="hero-right" style="backdrop-filter:blur(8px); background:rgba(0,0,0,0.25); padding:20px; border-radius:12px; max-width:60%;">
+            <h1 id="hero-title" style="margin:0; font-size:24px; font-weight:bold;"></h1>
+            <p id="hero-overview" style="font-size:14px; max-height:120px; overflow:hidden; margin:10px 0;"></p>
+            <button id="hero-trailer" style="background:red; border:none; color:white; padding:8px 16px; border-radius:20px; cursor:pointer;">
+                Watch Trailer
+            </button>
         </div>
     </div>
 </div>
