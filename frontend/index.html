@@ -2,411 +2,454 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Movnix</title>
 
 <style>
-/* ===== BODY & FONT ===== */
-body {
-    margin: 0;
-    background: #0f0f0f;
-    font-family: Arial, sans-serif;
-    color: white;
+body{
+margin:0;
+background:#0f0f0f;
+font-family:Arial, sans-serif;
+color:white;
 }
 
-/* ===== HEADER ===== */
-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 16px;
-    background: #000;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+header{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:12px;
+background:#000;
+position:sticky;
+top:0;
+z-index:999;
 }
 
-.logo img {
-    height: 36px;
+.logo img{
+height:34px;
 }
 
-.search-box {
-    position: relative;
+.search-box{
+position:relative;
 }
 
-.search {
-    background: #1c1c1c;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 20px;
-    color: white;
-    width: 180px;
+.search{
+background:#1c1c1c;
+border:none;
+padding:7px 10px;
+border-radius:4px;
+color:white;
+width:160px;
 }
 
-.search-results {
-    position: absolute;
-    top: 36px;
-    left: 0;
-    background: #111;
-    width: 220px;
-    display: none;
-    border-radius: 6px;
-    max-height: 200px;
-    overflow-y: auto;
-    z-index: 10;
+.search-results{
+position:absolute;
+top:32px;
+left:0;
+background:#111;
+width:220px;
+display:none;
+border-radius:6px;
+z-index:1000;
 }
 
-.search-results div {
-    padding: 8px;
-    cursor: pointer;
+.search-results div{
+padding:8px;
+cursor:pointer;
 }
 
-.search-results div:hover {
-    background: #222;
+.search-results div:hover{
+background:#222;
 }
 
-/* ===== LOGIN / SIGNUP ===== */
-.auth-buttons {
-    display: flex;
-    gap: 8px;
+.categories{
+display:flex;
+flex-wrap:wrap;
+gap:8px;
+padding:10px;
 }
 
-.auth-buttons button {
-    background: red;
-    border: none;
-    color: white;
-    padding: 6px 12px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 13px;
+.cat{
+border:1px solid red;
+padding:6px 12px;
+border-radius:20px;
+white-space:nowrap;
+font-size:13px;
+cursor:pointer;
+flex:1 0 auto;
+text-align:center;
 }
 
-.auth-buttons button:hover {
-    opacity: 0.9;
+.cat:hover{
+background:red;
+color:white;
 }
 
-/* ===== CATEGORIES ===== */
-.categories {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 10px 16px;
+.hero{
+height:420px;
+display:flex;
+flex-direction:row;
+align-items:center;
+justify-content:space-between;
+padding:20px;
+background-size:cover;
+background-position:center;
+position:relative;
+color:white;
 }
 
-.cat {
-    border: 1px solid red;
-    padding: 6px 14px;
-    border-radius: 20px;
-    white-space: nowrap;
-    font-size: 13px;
-    cursor: pointer;
-    flex: 1 0 auto;
-    text-align: center;
+.hero::after{
+content:"";
+position:absolute;
+top:0; left:0;
+width:100%; height:100%;
+background:linear-gradient(to right, rgba(0,0,0,0.8) 30%, rgba(0,0,0,0.2) 70%);
+z-index:1;
 }
 
-.cat:hover {
-    background: red;
+.hero-content{
+position:relative;
+display:flex;
+width:100%;
+gap:20px;
+z-index:2;
 }
 
-/* ===== HERO BANNER ===== */
-.hero {
-    position: relative;
-    height: 300px;
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 20px;
-    font-size: 24px;
-    font-weight: bold;
-    color: white;
+.hero-left{
+flex:0 0 160px;
 }
 
-.hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0));
-    z-index: 0;
+.hero-left img{
+width:160px;
+border-radius:12px;
+box-shadow:0 4px 12px rgba(0,0,0,0.6);
 }
 
-.hero-content {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
+.hero-right{
+flex:1;
+display:flex;
+flex-direction:column;
+justify-content:flex-end;
 }
 
-.hero-content div {
-    font-size: 24px;
-    font-weight: bold;
+.hero-right h2{
+margin:0 0 10px 0;
+font-size:24px;
 }
 
-.hero-content button {
-    background: red;
-    border: none;
-    padding: 6px 14px;
-    color: white;
-    border-radius: 20px;
-    cursor: pointer;
+.hero-right p{
+font-size:14px;
+line-height:1.4;
+max-height:100px;
+overflow:hidden;
+text-overflow:ellipsis;
 }
 
-/* ===== SECTIONS ===== */
-.section {
-    padding: 16px;
+.hero-right button{
+background:red;
+border:none;
+padding:8px 14px;
+color:white;
+border-radius:4px;
+cursor:pointer;
+width:fit-content;
+margin-top:10px;
 }
 
-.section-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
+.section{
+padding:15px;
 }
 
-.see {
-    color: #3ea6ff;
-    font-size: 13px;
-    cursor: pointer;
+.section-head{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:10px;
 }
 
-/* ===== MOVIE / CELEBRITY ROWS ===== */
-.row, .celebs {
-    display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    padding-bottom: 6px;
+.see{
+color:#3ea6ff;
+font-size:13px;
+cursor:pointer;
 }
 
-.card {
-    min-width: 140px;
-    cursor: pointer;
+.row{
+display:flex;
+gap:12px;
+overflow-x:auto;
+scroll-behavior:smooth;
 }
 
-.card img {
-    width: 140px;
-    border-radius: 6px;
+.card{
+min-width:140px;
+cursor:pointer;
+flex:0 0 auto;
 }
 
-.title {
-    font-size: 13px;
-    margin-top: 5px;
+.card img{
+width:140px;
+border-radius:6px;
 }
 
-.rating {
-    font-size: 12px;
-    color: yellow;
+.title{
+font-size:13px;
+margin-top:5px;
 }
 
-/* ===== BOX OFFICE ===== */
-#boxoffice div {
-    margin-bottom: 8px;
+.rating{
+font-size:12px;
+color:yellow;
 }
 
-/* ===== FOOTER ===== */
-footer {
-    text-align: center;
-    padding: 20px;
-    color: #666;
+.celebs{
+display:flex;
+gap:16px;
+overflow-x:auto;
 }
 
-/* ===== RESPONSIVE ===== */
-@media(max-width:600px){
-    .hero { height: 220px; font-size: 18px; padding: 14px; }
-    .hero-content div { font-size: 18px; }
-    .search { width: 120px; }
+.celebs img{
+width:85px;
+border-radius:50%;
+}
+
+#boxoffice .box-card{
+display:flex;
+align-items:center;
+gap:10px;
+margin-bottom:10px;
+background:#1c1c1c;
+padding:6px 8px;
+border-radius:8px;
+}
+
+#boxoffice .box-card img{
+width:50px;
+border-radius:6px;
+}
+
+#boxoffice .box-card .info{
+display:flex;
+flex-direction:column;
+}
+
+footer{
+text-align:center;
+padding:20px;
+color:#666;
+}
+
+@media(max-width:768px){
+.hero{
+flex-direction:column;
+height:auto;
+padding:10px;
+}
+.hero-left img{
+width:100px;
+}
+.hero-right h2{
+font-size:18px;
+}
+.hero-right p{
+font-size:12px;
+max-height:70px;
+}
+.categories{
+justify-content:center;
+gap:6px;
+}
+.celebs img{
+width:60px;
+}
+.card img{
+width:100px;
+}
+.card{
+min-width:100px;
+}
 }
 </style>
-
 </head>
+
 <body>
 
-<!-- ===== HEADER ===== -->
 <header>
-    <div class="logo"><img src="logo.png"></div>
-
-    <div class="search-box">
-        <input class="search" id="search" placeholder="Search">
-        <div id="searchResults" class="search-results"></div>
-    </div>
-
-    <div class="auth-buttons">
-        <button>Login</button>
-        <button>Signup</button>
-    </div>
+<div class="logo"><img src="logo.png" alt="Movnix"></div>
+<div class="search-box">
+<input class="search" id="search" placeholder="Search">
+<div id="searchResults" class="search-results"></div>
+</div>
+<div>
+<button style="background:red;color:white;border:none;padding:6px 12px;border-radius:4px;margin-left:8px;cursor:pointer;">Login</button>
+<button style="background:white;color:red;border:none;padding:6px 12px;border-radius:4px;margin-left:8px;cursor:pointer;">Sign Up</button>
+</div>
 </header>
 
-<!-- ===== CATEGORIES ===== -->
 <div class="categories">
-    <div class="cat">Movies</div>
-    <div class="cat">Hollywood</div>
-    <div class="cat">Horror</div>
-    <div class="cat">South</div>
-    <div class="cat">Bollywood</div>
-    <div class="cat">Cartoon</div>
-    <div class="cat">Anime</div>
-    <div class="cat">Drama</div>
-    <div class="cat">TV Serial</div>
+<div class="cat">Movies</div>
+<div class="cat">Hollywood</div>
+<div class="cat">Horror</div>
+<div class="cat">South</div>
+<div class="cat">Bollywood</div>
+<div class="cat">Cartoon</div>
+<div class="cat">Anime</div>
+<div class="cat">Drama</div>
+<div class="cat">TV Serial</div>
 </div>
 
-<!-- ===== HERO BANNER ===== -->
 <div id="hero" class="hero">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-        <div id="hero-title">Loading...</div>
-        <button id="hero-trailer">Watch Trailer</button>
-    </div>
+<div class="hero-content">
+<div class="hero-left">
+<img src="" id="heroPoster">
 </div>
-
-<!-- ===== MOVIE SECTIONS ===== -->
-<div class="section">
-    <div class="section-head">
-        <div>🔥 Trending Today</div>
-        <div class="see">See All</div>
-    </div>
-    <div id="trending" class="row"></div>
+<div class="hero-right">
+<h2 id="heroTitle"></h2>
+<p id="heroOverview"></p>
+<button id="heroTrailer">Watch Trailer</button>
+</div>
+</div>
 </div>
 
 <div class="section">
-    <div class="section-head">
-        <div>⭐ Top Rated Movies</div>
-        <div class="see">See All</div>
-    </div>
-    <div id="top" class="row"></div>
+<div class="section-head">
+<div>🔥 Trending Today</div>
+<div class="see">See All</div>
+</div>
+<div id="trending" class="row"></div>
 </div>
 
 <div class="section">
-    <div class="section-head">
-        <div>🎬 Popular Movies</div>
-        <div class="see">See All</div>
-    </div>
-    <div id="popular" class="row"></div>
+<div class="section-head">
+<div>⭐ Top Rated Movies</div>
+<div class="see">See All</div>
+</div>
+<div id="top" class="row"></div>
 </div>
 
 <div class="section">
-    <div class="section-head">
-        <div>🎥 Now Playing</div>
-        <div class="see">See All</div>
-    </div>
-    <div id="now" class="row"></div>
+<div class="section-head">
+<div>🎬 Popular Movies</div>
+<div class="see">See All</div>
+</div>
+<div id="popular" class="row"></div>
 </div>
 
 <div class="section">
-    <div class="section-head">
-        <div>📅 Upcoming Movies</div>
-        <div class="see">See All</div>
-    </div>
-    <div id="upcoming" class="row"></div>
+<div class="section-head">
+<div>🎥 Now Playing</div>
+<div class="see">See All</div>
+</div>
+<div id="now" class="row"></div>
 </div>
 
-<!-- ===== CELEBRITIES ===== -->
 <div class="section">
-    <div class="section-head">
-        <div>🎭 Popular Celebrities</div>
-        <div class="see">See All</div>
-    </div>
-    <div id="celebs" class="celebs"></div>
+<div class="section-head">
+<div>📅 Upcoming Movies</div>
+<div class="see">See All</div>
+</div>
+<div id="upcoming" class="row"></div>
 </div>
 
-<!-- ===== BOX OFFICE ===== -->
 <div class="section">
-    <div class="section-head">
-        <div>💰 Box Office Trends</div>
-    </div>
-    <div id="boxoffice"></div>
+<div class="section-head">
+<div>🎭 Popular Celebrities</div>
+<div class="see">See All</div>
+</div>
+<div id="celebs" class="celebs"></div>
 </div>
 
-<!-- ===== FOOTER ===== -->
-<footer>Movnix © 2026</footer>
+<div class="section">
+<div class="section-head"><div>💰 Box Office Trends</div></div>
+<div id="boxoffice"></div>
+</div>
 
-<!-- ===== SCRIPT ===== -->
+<footer>
+Movnix © 2026
+</footer>
+
 <script>
-const KEY="45fe7a9c4583e4374d3981bb55c39222";
+const KEY="YOUR_TMDB_KEY";
 const API="https://api.themoviedb.org/3";
 const IMG="https://image.tmdb.org/t/p/w500";
 
 let heroMovies=[];
 let heroIndex=0;
 
-// Show movies in a row
+// Show row cards
 function showMovies(list,id){
-    const box=document.getElementById(id);
-    box.innerHTML="";
-    list.slice(0,25).forEach(m=>{
-        const poster=m.poster_path?IMG+m.poster_path:"https://via.placeholder.com/200x300";
-        const div=document.createElement("div");
-        div.className="card";
-        div.innerHTML=`
-            <a href="movie.html?id=${m.id}"><img src="${poster}"></a>
-            <div class="title">${m.title || m.name}</div>
-            <div class="rating">⭐ ${m.vote_average?m.vote_average.toFixed(1):"N/A"}</div>
-        `;
-        box.appendChild(div);
-    });
+const box=document.getElementById(id);
+box.innerHTML="";
+list.slice(0,25).forEach(m=>{
+const poster=m.poster_path? IMG+m.poster_path:"https://via.placeholder.com/200x300";
+const div=document.createElement("div");
+div.className="card";
+div.innerHTML=`
+<a href="movie.html?id=${m.id}">
+<img src="${poster}">
+</a>
+<div class="title">${m.title || m.name}</div>
+<div class="rating">⭐ ${m.vote_average ? m.vote_average.toFixed(1) : "N/A"}</div>`;
+box.appendChild(div);
+});
 }
 
 // Hero banner
-function hero(){
-    const el=document.getElementById("hero");
-    const m=heroMovies[heroIndex];
-    el.style.backgroundImage=`url(${IMG+m.backdrop_path})`;
-    document.getElementById("hero-title").innerText=m.title;
-    document.getElementById("hero-trailer").onclick=()=>watchTrailer(m.id);
-    heroIndex++;
-    if(heroIndex>=heroMovies.length) heroIndex=0;
+function setHero(){
+const elPoster=document.getElementById("heroPoster");
+const elTitle=document.getElementById("heroTitle");
+const elOverview=document.getElementById("heroOverview");
+const elTrailer=document.getElementById("heroTrailer");
+const m=heroMovies[heroIndex];
+
+elPoster.src=IMG+m.poster_path;
+elTitle.innerText=m.title;
+elOverview.innerText=m.overview || "No description available.";
+elTrailer.onclick=()=>{fetch(`${API}/movie/${m.id}/videos?api_key=${KEY}`)
+.then(r=>r.json()).then(d=>{
+const trailer=d.results.find(v=>v.type==="Trailer");
+if(trailer){window.open(`https://youtube.com/watch?v=${trailer.key}`);}
+});};
+
+heroIndex++;
+if(heroIndex>=heroMovies.length) heroIndex=0;
 }
 
-// Watch trailer
-function watchTrailer(id){
-    fetch(`${API}/movie/${id}/videos?api_key=${KEY}`)
-    .then(r=>r.json())
-    .then(d=>{
-        const trailer=d.results.find(v=>v.type==="Trailer");
-        if(trailer) window.open(`https://youtube.com/watch?v=${trailer.key}`);
-    });
+// Load cast
+function loadCast(){
+fetch(`${API}/person/popular?api_key=${KEY}`)
+.then(r=>r.json()).then(d=>{
+const box=document.getElementById("celebs");
+box.innerHTML="";
+d.results.slice(0,12).forEach(c=>{
+const img=c.profile_path? IMG+c.profile_path:"https://via.placeholder.com/200";
+const div=document.createElement("div");
+div.innerHTML=`<img src="${img}"><div style="font-size:12px">${c.name}</div>`;
+box.appendChild(div);
+});
+});
 }
 
 // Box office
 function loadBoxOffice(){
-    fetch(`${API}/movie/popular?api_key=${KEY}`)
-    .then(r=>r.json())
-    .then(d=>{
-        const box=document.getElementById("boxoffice");
-        box.innerHTML="";
-        d.results.slice(0,10).forEach(m=>{
-            const div=document.createElement("div");
-            div.innerHTML=`<b style="color:white">${m.title}</b> <span style="color:yellow">⭐ ${m.vote_average}</span>`;
-            box.appendChild(div);
-        });
-    });
+fetch(`${API}/movie/popular?api_key=${KEY}`)
+.then(r=>r.json()).then(d=>{
+const box=document.getElementById("boxoffice");
+box.innerHTML="";
+d.results.slice(0,10).forEach(m=>{
+const div=document.createElement("div");
+div.className="box-card";
+const poster=m.poster_path? IMG+m.poster_path:"https://via.placeholder.com/50x75";
+div.innerHTML=`<img src="${poster}"><div class="info"><b>${m.title}</b><span style="color:yellow">⭐ ${m.vote_average}</span></div>`;
+box.appendChild(div);
+});
+});
 }
 
-// Popular celebrities
-function loadCast(){
-    fetch(`${API}/person/popular?api_key=${KEY}`)
-    .then(r=>r.json())
-    .then(d=>{
-        const box=document.getElementById("celebs");
-        box.innerHTML="";
-        d.results.slice(0,12).forEach(c=>{
-            const img=c.profile_path?IMG+c.profile_path:"https://via.placeholder.com/200";
-            const div=document.createElement("div");
-            div.innerHTML=`<img src="${img}"><div style="font-size:12px">${c.name}</div>`;
-            box.appendChild(div);
-        });
-    });
-}
-
-// Load all movie sections
+// Initial fetch
 fetch(`${API}/trending/movie/day?api_key=${KEY}`).then(r=>r.json()).then(d=>{
-    heroMovies=d.results.slice(0,10);
-    showMovies(d.results,"trending");
-    hero();
-    setInterval(hero,3000);
+heroMovies=d.results.slice(0,10);
+showMovies(d.results,"trending");
+setHero();
+setInterval(setHero,3000);
 });
 
 fetch(`${API}/movie/top_rated?api_key=${KEY}`).then(r=>r.json()).then(d=>showMovies(d.results,"top"));
@@ -417,26 +460,25 @@ fetch(`${API}/movie/upcoming?api_key=${KEY}`).then(r=>r.json()).then(d=>showMovi
 loadCast();
 loadBoxOffice();
 
-// Search functionality
+// Search
 const search=document.getElementById("search");
 const results=document.getElementById("searchResults");
+
 search.addEventListener("input",function(){
-    const q=this.value;
-    if(q.length<2){ results.style.display="none"; return; }
-    fetch(`${API}/search/movie?api_key=${KEY}&query=${q}`)
-    .then(r=>r.json())
-    .then(d=>{
-        results.innerHTML="";
-        d.results.slice(0,5).forEach(m=>{
-            const div=document.createElement("div");
-            div.innerText=m.title;
-            div.onclick=()=>{ location.href="movie.html?id="+m.id; };
-            results.appendChild(div);
-        });
-        results.style.display="block";
-    });
+const q=this.value;
+if(q.length<2){results.style.display="none";return;}
+fetch(`${API}/search/movie?api_key=${KEY}&query=${q}`).then(r=>r.json()).then(d=>{
+results.innerHTML="";
+d.results.slice(0,5).forEach(m=>{
+const div=document.createElement("div");
+div.innerText=m.title;
+div.onclick=()=>{location.href="movie.html?id="+m.id;};
+results.appendChild(div);
+});
+results.style.display="block";
+});
 });
 </script>
 
 </body>
-  </html>
+    </html>
