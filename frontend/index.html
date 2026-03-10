@@ -100,7 +100,7 @@ header {
     background: #e5e5e5;
 }
 
-/* ===== IMDB HERO ===== */
+/* ===== CINEMATIC HERO ===== */
 
 .hero{
 position:relative;
@@ -109,6 +109,7 @@ overflow:hidden;
 display:flex;
 flex-direction:column;
 justify-content:flex-end;
+border-bottom:1px solid #222;
 }
 
 .hero-backdrop{
@@ -119,66 +120,127 @@ width:100%;
 height:100%;
 background-size:cover;
 background-position:center;
-filter:brightness(40%);
+transform:scale(1.1);
+filter:brightness(50%);
 z-index:0;
+transition:transform 8s ease;
+}
+
+.hero:hover .hero-backdrop{
+transform:scale(1.2);
+}
+
+.hero-overlay{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.2));
+z-index:1;
 }
 
 .hero-container{
 position:relative;
 display:flex;
-gap:20px;
-padding:20px;
+gap:25px;
+padding:25px;
 align-items:flex-end;
-z-index:1;
+z-index:2;
 }
 
 .hero-poster img{
-width:160px;
-border-radius:8px;
+width:170px;
+border-radius:10px;
+box-shadow:0 10px 40px rgba(0,0,0,0.9);
+transition:0.3s;
+}
+
+.hero-poster img:hover{
+transform:scale(1.05);
 }
 
 .hero-info{
-max-width:500px;
+max-width:550px;
 }
 
 .hero-info h1{
-font-size:32px;
+font-size:34px;
 margin:0;
+font-weight:700;
 }
 
 .hero-meta{
-margin-top:6px;
+margin-top:8px;
 font-weight:bold;
 color:#f5c518;
+font-size:16px;
 }
 
 .hero-info p{
 font-size:14px;
-margin-top:10px;
-line-height:1.4;
-max-height:90px;
+margin-top:12px;
+line-height:1.5;
+max-height:95px;
 overflow:hidden;
+color:#ddd;
 }
 
 .hero-info button{
-margin-top:10px;
+margin-top:12px;
 background:#f5c518;
 border:none;
-padding:8px 16px;
-border-radius:20px;
+padding:10px 18px;
+border-radius:25px;
 font-weight:bold;
 cursor:pointer;
+font-size:14px;
+}
+
+.hero-info button:hover{
+background:#ffd54f;
 }
 
 .hero-bottom{
 position:relative;
-padding:10px 20px;
-z-index:1;
+padding:10px 20px 20px 20px;
+z-index:2;
 }
 
 .hero-bottom h3{
 margin:0 0 6px 0;
+font-size:16px;
 }
+
+.row-scroll{
+display:flex;
+gap:12px;
+overflow-x:auto;
+padding-bottom:6px;
+scroll-behavior:smooth;
+}
+
+.row-scroll img{
+width:150px;
+border-radius:8px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.row-scroll img:hover{
+transform:scale(1.08);
+}
+
+.row-scroll::-webkit-scrollbar{
+height:6px;
+}
+
+.row-scroll::-webkit-scrollbar-thumb{
+background:#f5c518;
+border-radius:3px;
+}
+
+/* MOBILE */
 
 @media(max-width:600px){
 
@@ -187,8 +249,8 @@ height:420px;
 }
 
 .hero-container{
-flex-direction:row;
-align-items:flex-end;
+gap:15px;
+padding:15px;
 }
 
 .hero-poster img{
@@ -203,31 +265,7 @@ font-size:18px;
 font-size:12px;
 }
 
-}
-
-
-.row-scroll {
-    display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    padding-bottom: 6px;
-}
-
-.row-scroll::-webkit-scrollbar {
-    height:6px;
-}
-
-.row-scroll::-webkit-scrollbar-thumb {
-    background:red;
-    border-radius:3px;
-}
-
-.row-scroll .card {
-    min-width: 120px;
-    cursor:pointer;
-    border-radius:6px;
-}
+    }
 
 /* ===== SECTIONS ===== */
 .section {
@@ -419,7 +457,7 @@ const backdrop = movie.backdrop_path
 document.getElementById("hero-poster").src = poster;
 
 document.getElementById("hero-backdrop").style.backgroundImage =
-`linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.1)), url(${backdrop})`;
+`url(${backdrop})`;
 
 document.getElementById("hero-title").innerText =
 movie.title || movie.name || "Unknown";
