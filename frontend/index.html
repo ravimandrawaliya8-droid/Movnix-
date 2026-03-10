@@ -45,7 +45,7 @@ header {
 }
 
 .search {
-    display:none; /* hidden initially, toggled by icon */
+    display:none; 
     background: #1c1c1c;
     border: none;
     padding: 6px 12px;
@@ -100,58 +100,32 @@ header {
     background: #e5e5e5;
 }
 
-<!-- ===== HERO BANNER ===== -->
-<div id="hero" class="hero">
-    <!-- Full dark background layer -->
-    <div class="hero-dark-bg"></div>
+/* ===== HERO BANNER ===== */
+.hero {
+    position: relative;
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    color: white;
+}
 
-    <div class="hero-content">
-        <!-- Left Poster -->
-        <div class="hero-left">
-            <img id="hero-poster" src="" alt="Hero Poster">
-        </div>
-
-        <!-- Right Info Overlay -->
-        <div class="hero-right">
-            <h1 id="hero-title">Loading...</h1>
-            <p id="hero-overview"></p>
-            <div class="hero-rating" id="hero-rating">⭐ N/A</div>
-            <button id="hero-trailer">Watch Trailer</button>
-        </div>
-    </div>
-
-    <!-- Hero Pages Below -->
-    <div id="hero-pages" class="hero-pages">
-        <!-- Trailers Row -->
-        <div class="hero-row" id="hero-trailers">
-            <h3>Trailers</h3>
-            <div class="row-scroll" id="trailers-row"></div>
-        </div>
-
-        <!-- Awards / Festivals Row -->
-        <div class="hero-row" id="hero-awards">
-            <h3>Awards & Festivals</h3>
-            <div class="row-scroll" id="awards-row"></div>
-        </div>
-    </div>
-</div>
-
-<style>
+/* Cinematic dark background */
 .hero-dark-bg {
     position: absolute;
     top: 0; left:0; width:100%; height:100%;
-    background: rgba(0,0,0,0.25); /* cinematic dark background */
+    background: rgba(0,0,0,0.3);
     z-index:0;
 }
 
+/* Hero main content */
 .hero-content {
     position: relative;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    width: 100%;
     gap: 20px;
     z-index:1;
+    justify-content: space-between;
+    align-items: flex-end;
 }
 
 .hero-left img {
@@ -162,7 +136,7 @@ header {
 
 .hero-right {
     max-width: 60%;
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(10px);
     background: rgba(0,0,0,0.5);
     padding: 16px;
     border-radius: 12px;
@@ -196,7 +170,7 @@ header {
     cursor: pointer;
 }
 
-/* Hero Pages */
+/* ===== HERO PAGES (Trailers + Awards) ===== */
 .hero-pages {
     margin-top: 20px;
     display: flex;
@@ -230,23 +204,137 @@ header {
     min-width: 120px;
     cursor:pointer;
     border-radius:6px;
+    overflow:hidden;
+}
+.row-scroll .card img {
+    width:100%;
+    border-radius:6px;
+}
+
+/* ===== OTHER SECTIONS SAME AS BEFORE ===== */
+.section { padding: 16px; }
+.section-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+.section-head h2 { font-size:18px; font-weight:bold; margin:0; }
+.row, .celebs { display:flex; gap:12px; overflow-x:auto; padding-bottom:6px; scrollbar-width: thin; }
+.row::-webkit-scrollbar, .celebs::-webkit-scrollbar { height:6px; }
+.row::-webkit-scrollbar-thumb, .celebs::-webkit-scrollbar-thumb { background:red; border-radius:3px; }
+.card { min-width:140px; cursor:pointer; }
+.card img { width:140px; border-radius:6px; }
+.title { font-size:14px; font-weight:bold; margin-top:5px; }
+.rating { font-size:12px; color:red; margin-top:2px; }
+
+/* ===== FOOTER ===== */
+footer { text-align:center; padding:20px; color:#666; }
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:600px){
+    .hero { height:300px; flex-direction:column; padding:10px;}
+    .hero-left img { width:120px; }
+    .hero-right { max-width:100%; font-size:12px; }
+    .hero-right h1 { font-size:16px; }
+    .hero-right p { font-size:12px; max-height:60px; }
+    .search { width:120px; }
 }
 </style>
+</head>
+
+<body>
+<header>
+    <div class="logo"><img src="logo.png" alt="Movnix Logo"></div>
+    <div class="search-box">
+        <button id="search-btn">&#128269;</button>
+        <input class="search" id="search" placeholder="Search">
+        <div id="searchResults" class="search-results"></div>
+    </div>
+    <div class="auth-buttons">
+        <button>Login</button>
+        <button>Signup</button>
+    </div>
+</header>
+
+<!-- ===== HERO BANNER ===== -->
+<div id="hero" class="hero">
+    <div class="hero-dark-bg"></div>
+
+    <div class="hero-content">
+        <div class="hero-left">
+            <img id="hero-poster" src="" alt="Hero Poster">
+        </div>
+        <div class="hero-right">
+            <h1 id="hero-title">Loading...</h1>
+            <p id="hero-overview"></p>
+            <div class="hero-rating" id="hero-rating">⭐ N/A</div>
+            <button id="hero-trailer">Watch Trailer</button>
+        </div>
+    </div>
+
+    <div id="hero-pages" class="hero-pages">
+        <div class="hero-row" id="hero-trailers">
+            <h3>Trailers</h3>
+            <div class="row-scroll" id="trailers-row"></div>
+        </div>
+        <div class="hero-row" id="hero-awards">
+            <h3>Awards & Festivals</h3>
+            <div class="row-scroll" id="awards-row"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== REMAINING SITE (Featured Today etc.) SAME AS BEFORE ===== -->
+<div class="section" id="trending-section">
+    <div class="section-head"><h2>Featured Today</h2></div>
+    <div id="trending-featured" style="display:flex; gap:20px; flex-wrap:wrap; margin-bottom:20px;"></div>
+    <div id="trending" class="row"></div>
+</div>
+
+<div class="section">
+    <div class="section-head"><h2>Top Rated Movies</h2></div>
+    <div id="top" class="row"></div>
+</div>
+
+<div class="section">
+    <div class="section-head"><h2>Popular Movies</h2></div>
+    <div id="popular" class="row"></div>
+</div>
+
+<div class="section">
+    <div class="section-head"><h2>Now Playing</h2></div>
+    <div id="now" class="row"></div>
+</div>
+
+<div class="section">
+    <div class="section-head"><h2>Upcoming Movies</h2></div>
+    <div id="upcoming" class="row"></div>
+</div>
+
+<div class="section">
+    <div class="section-head"><h2>Popular Celebrities</h2></div>
+    <div id="celebs" class="celebs"></div>
+</div>
+
+<div class="section">
+    <div class="section-head"><h2>Box Office Trends</h2></div>
+    <div id="boxoffice"></div>
+</div>
+
+<footer>Movnix © 2026</footer>
 
 <script>
-// Hero Movie + Pages JS
+const KEY="45fe7a9c4583e4374d3981bb55c39222";
+const API="https://api.themoviedb.org/3";
+const IMG="https://image.tmdb.org/t/p/w500";
+
+// Hero + Hero Pages
 function loadHero(movie) {
     document.getElementById("hero-poster").src = movie.poster_path? IMG+movie.poster_path : "https://via.placeholder.com/200x300";
     document.getElementById("hero-title").innerText = movie.title || movie.name;
     document.getElementById("hero-overview").innerText = movie.overview;
     document.getElementById("hero-rating").innerText = "⭐ " + (movie.vote_average ? movie.vote_average.toFixed(1) : "N/A");
-
-    // Watch Trailer button → separate trailer page
     document.getElementById("hero-trailer").onclick = () => {
         window.location.href = "trailer.html?id=" + movie.id;
     };
 
-    // Load Trailers Row
+    // Load Trailers
     fetch(`${API}/movie/${movie.id}/videos?api_key=${KEY}`)
     .then(r=>r.json())
     .then(d=>{
@@ -261,7 +349,7 @@ function loadHero(movie) {
         });
     });
 
-    // Load Awards / Festivals Row (static example)
+    // Awards / Festivals (static example)
     const awards = ["Oscars", "SXSW", "Women History", "Golden Globes"];
     const awardsRow = document.getElementById("awards-row");
     awardsRow.innerHTML="";
@@ -273,23 +361,19 @@ function loadHero(movie) {
     });
 }
 
-// Example: Load first trending movie as hero
+// Example: first trending movie as hero
 fetch(`${API}/trending/movie/day?api_key=${KEY}`)
 .then(r=>r.json())
 .then(d=>{
     const heroMovie = d.results[0];
     loadHero(heroMovie);
+    heroMovies = d.results.slice(0,10);
 });
-
-
-const KEY="45fe7a9c4583e4374d3981bb55c39222";
-const API="https://api.themoviedb.org/3";
-const IMG="https://image.tmdb.org/t/p/w500";
 
 let heroMovies=[];
 let heroIndex=0;
 
-// Show movies
+// Show Movies
 function showMovies(list,id){
     const box=document.getElementById(id);
     box.innerHTML="";
@@ -297,33 +381,26 @@ function showMovies(list,id){
         const poster=m.poster_path?IMG+m.poster_path:"https://via.placeholder.com/200x300";
         const div=document.createElement("div");
         div.className="card";
-        div.innerHTML=`<img src="${poster}">
-                        <div class="title">${m.title || m.name}</div>
-                        <div class="rating">⭐ ${m.vote_average?m.vote_average.toFixed(1):"N/A"}</div>`;
+        div.innerHTML=`<img src="${poster}"><div class="title">${m.title || m.name}</div><div class="rating">⭐ ${m.vote_average?m.vote_average.toFixed(1):"N/A"}</div>`;
         div.onclick=()=>openMovieModal(m.id);
         box.appendChild(div);
     });
 }
 
-// Featured Today (Trending) function
+// Featured Today (Trending)
 function showTrending(list){
     const featuredBox=document.getElementById("trending-featured");
     const scrollBox=document.getElementById("trending");
-    
     featuredBox.innerHTML="";
     scrollBox.innerHTML="";
-    
-    // First movie as featured
     const first=list[0];
-    const poster=first.poster_path ? IMG+first.poster_path : "https://via.placeholder.com/200x300";
-    
+    const poster=first.poster_path?IMG+first.poster_path:"https://via.placeholder.com/200x300";
     const div=document.createElement("div");
     div.style.display="flex";
     div.style.gap="20px";
     div.style.width="100%";
-    
     div.innerHTML=`
-        <img src="${poster}" style="width:200px; border-radius:10px; border:3px solid red;">
+        <img src="${poster}" style="width:200px; border-radius:10px;">
         <div style="max-width:70%; backdrop-filter:blur(8px); background:rgba(0,0,0,0.25); padding:20px; border-radius:12px;">
             <h2 style="margin:0;">${first.title || first.name}</h2>
             <p style="font-size:14px; margin:8px 0;">${first.overview}</p>
@@ -332,37 +409,25 @@ function showTrending(list){
                     onclick="window.open('movie.html?id=${first.id}&play=trailer','_blank')">
                 Watch Trailer
             </button>
-        </div>
-    `;
+        </div>`;
     featuredBox.appendChild(div);
-    
-    // Rest of the movies scrollable
+
     list.slice(1,25).forEach(m=>{
         const poster=m.poster_path?IMG+m.poster_path:"https://via.placeholder.com/200x300";
         const div=document.createElement("div");
         div.className="card";
-        div.innerHTML=`<img src="${poster}">
-                        <div class="title">${m.title || m.name}</div>
-                        <div class="rating">⭐ ${m.vote_average?m.vote_average.toFixed(1):"N/A"}</div>`;
+        div.innerHTML=`<img src="${poster}"><div class="title">${m.title || m.name}</div><div class="rating">⭐ ${m.vote_average?m.vote_average.toFixed(1):"N/A"}</div>`;
         div.onclick=()=>openMovieModal(m.id);
         scrollBox.appendChild(div);
     });
 }
 
-// Hero banner rotation
+// Hero rotation
 function hero(){
     const m=heroMovies[heroIndex];
-    document.getElementById("hero-poster").src=m.poster_path?IMG+m.poster_path:"https://via.placeholder.com/200x300";
-    document.getElementById("hero-title").innerText=m.title;
-    document.getElementById("hero-overview").innerText=m.overview;
+    loadHero(m);
     heroIndex++;
     if(heroIndex>=heroMovies.length) heroIndex=0;
-}
-
-// Open trailer modal
-document.querySelector("#trailerModal .close").onclick=function(){
-    document.getElementById("trailerFrame").src="";
-    document.getElementById("trailerModal").style.display="none";
 }
 
 // Open movie page
@@ -371,12 +436,6 @@ function openMovieModal(id){
 }
 
 // Load sections
-fetch(`${API}/trending/movie/day?api_key=${KEY}`).then(r=>r.json()).then(d=>{
-    heroMovies=d.results.slice(0,10);
-    showTrending(d.results);
-    hero();
-    setInterval(hero,5000);
-});
 fetch(`${API}/movie/top_rated?api_key=${KEY}`).then(r=>r.json()).then(d=>showMovies(d.results,"top"));
 fetch(`${API}/movie/popular?api_key=${KEY}`).then(r=>r.json()).then(d=>showMovies(d.results,"popular"));
 fetch(`${API}/movie/now_playing?api_key=${KEY}`).then(r=>r.json()).then(d=>showMovies(d.results,"now"));
@@ -436,6 +495,9 @@ search.addEventListener("input",function(){
         results.style.display="block";
     });
 });
+
+// Hero auto-rotate
+setInterval(hero,5000);
 </script>
 </body>
-        </html>
+    </html>
