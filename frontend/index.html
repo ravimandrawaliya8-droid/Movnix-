@@ -143,7 +143,7 @@ margin-top:5px;
 
 .rating{
 font-size:12px;
-color:#aaa;
+color:yellow;
 }
 
 .celebs{
@@ -275,6 +275,16 @@ color:#666;
 
 </div>
 
+<div class="section">
+
+<div class="section-head">
+<div>💰 Box Office Trends</div>
+</div>
+
+<div id="boxoffice"></div>
+
+</div>
+
 
 <footer>
 
@@ -293,7 +303,7 @@ let heroMovies=[]
 let heroIndex=0
 
 
-function show(list,id){
+function showMovies(list,id){
 
 const box=document.getElementById(id)
 
@@ -303,7 +313,7 @@ list.slice(0,25).forEach(m=>{
 
 const poster=m.poster_path
 ?IMG+m.poster_path
-:"https://via.placeholder.com/200"
+:"https://via.placeholder.com/200x300"
 
 const div=document.createElement("div")
 
@@ -311,11 +321,15 @@ div.className="card"
 
 div.innerHTML=`
 
+<a href="movie.html?id=${m.id}">
 <img src="${poster}">
+</a>
 
-<div class="title">${m.title}</div>
+<div class="title">${m.title || m.name}</div>
 
-<div class="rating">⭐ ${m.vote_average} | ${m.release_date?.slice(0,4)}</div>
+<div class="rating">
+⭐ ${m.vote_average ? m.vote_average.toFixed(1) : "N/A"}
+</div>
 
 `
 
@@ -324,7 +338,6 @@ box.appendChild(div)
 })
 
 }
-
 
 
 function hero(){
@@ -339,13 +352,107 @@ el.innerHTML=`
 
 <div>${m.title}</div>
 
-<button>Watch Trailer</button>
+<button onclick="watchTrailer(${m.id})">Watch Trailer</button>
 
 `
 
 heroIndex++
 
 if(heroIndex>=heroMovies.length) heroIndex=0
+
+}
+
+
+function watchTrailer(id){
+
+fetch(`${API}/movie/${id}/videos?api_key=${KEY}`)
+
+.then(r=>r.json())
+
+.then(d=>{
+
+const trailer=d.results.find(v=>v.type==="Trailer")
+
+if(trailer){
+
+window.open(`https://youtube.com/watch?v=${trailer.key}`)
+
+}
+
+})
+
+}
+
+
+function loadBoxOffice(){
+
+fetch(`${API}/movie/popular?api_key=${KEY}`)
+
+.then(r=>r.json())
+
+.then(d=>{
+
+const box=document.getElementById("boxoffice")
+
+box.innerHTML=""
+
+d.results.slice(0,10).forEach(m=>{
+
+const div=document.createElement("div")
+
+div.innerHTML=`
+
+<div style="margin-bottom:6px">
+<b>${m.title}</b>
+</div>
+
+<div style="color:yellow">
+⭐ ${m.vote_average}
+</div>
+
+`
+
+box.appendChild(div)
+
+})
+
+})
+
+}
+
+
+function loadCast(){
+
+fetch(`${API}/person/popular?api_key=${KEY}`)
+
+.then(r=>r.json())
+
+.then(d=>{
+
+const box=document.getElementById("celebs")
+
+box.innerHTML=""
+
+d.results.slice(0,12).forEach(c=>{
+
+const img=c.profile_path
+?IMG+c.profile_path
+:"https://via.placeholder.com/200"
+
+const div=document.createElement("div")
+
+div.innerHTML=`
+
+<img src="${img}">
+<div style="font-size:12px">${c.name}</div>
+
+`
+
+box.appendChild(div)
+
+})
+
+})
 
 }
 
@@ -357,7 +464,7 @@ fetch(`${API}/trending/movie/day?api_key=${KEY}`)
 
 heroMovies=d.results.slice(0,10)
 
-show(d.results,"trending")
+showMovies(d.results,"trending")
 
 hero()
 
@@ -368,50 +475,27 @@ setInterval(hero,3000)
 
 fetch(`${API}/movie/top_rated?api_key=${KEY}`)
 .then(r=>r.json())
-.then(d=>show(d.results,"top"))
+.then(d=>showMovies(d.results,"top"))
 
 
 fetch(`${API}/movie/popular?api_key=${KEY}`)
 .then(r=>r.json())
-.then(d=>show(d.results,"popular"))
+.then(d=>showMovies(d.results,"popular"))
 
 
 fetch(`${API}/movie/now_playing?api_key=${KEY}`)
 .then(r=>r.json())
-.then(d=>show(d.results,"now"))
+.then(d=>showMovies(d.results,"now"))
 
 
 fetch(`${API}/movie/upcoming?api_key=${KEY}`)
 .then(r=>r.json())
-.then(d=>show(d.results,"upcoming"))
+.then(d=>showMovies(d.results,"upcoming"))
 
 
-fetch(`${API}/person/popular?api_key=${KEY}`)
-.then(r=>r.json())
-.then(d=>{
+loadCast()
+loadBoxOffice()
 
-const box=document.getElementById("celebs")
-
-d.results.slice(0,10).forEach(c=>{
-
-const img=c.profile_path
-?IMG+c.profile_path
-:"https://via.placeholder.com/200"
-
-const div=document.createElement("div")
-
-div.innerHTML=`
-
-<img src="${img}">
-<div>${c.name}</div>
-
-`
-
-box.appendChild(div)
-
-})
-
-})
 
 
 const search=document.getElementById("search")
