@@ -340,11 +340,16 @@ footer {
 </div>
 
 <!-- ===== MOVIE SECTIONS ===== -->
-<div class="section">
-    <div class="section-head"><h2>Trending Today</h2></div>
+<div class="section" id="trending-section">
+    <div class="section-head"><h2>Featured Today</h2></div>
+    
+    <!-- Featured movie large -->
+    <div id="trending-featured" style="display:flex; gap:20px; flex-wrap:wrap; margin-bottom:20px;"></div>
+    
+    <!-- Scrollable next movies -->
     <div id="trending" class="row"></div>
 </div>
-
+    
 <div class="section">
     <div class="section-head"><h2>Top Rated Movies</h2></div>
     <div id="top" class="row"></div>
@@ -435,6 +440,54 @@ function openTrailerModal(id){
     });
 }
 
+JS me new function for Featured Today
+Add/replace JS function for trending:
+Js
+Copy code
+// Show Trending with Featured Today
+function showTrending(list){
+    const featuredBox=document.getElementById("trending-featured");
+    const scrollBox=document.getElementById("trending");
+    
+    featuredBox.innerHTML="";
+    scrollBox.innerHTML="";
+    
+    // First movie as featured
+    const first=list[0];
+    const poster=first.poster_path ? IMG+first.poster_path : "https://via.placeholder.com/200x300";
+    
+    const div=document.createElement("div");
+    div.style.display="flex";
+    div.style.gap="20px";
+    div.style.width="100%";
+    
+    div.innerHTML=`
+        <img src="${poster}" style="width:200px; border-radius:10px; border:2px solid red;">
+        <div style="max-width:70%; backdrop-filter:blur(6px); background:rgba(0,0,0,0.4); padding:12px; border-radius:10px;">
+            <h2 style="margin:0;">${first.title || first.name}</h2>
+            <p style="font-size:14px; margin:8px 0;">${first.overview}</p>
+            <div style="color:red; font-weight:bold;">⭐ ${first.vote_average?first.vote_average.toFixed(1):"N/A"}</div>
+            <button style="margin-top:10px; background:red; border:none; padding:6px 12px; border-radius:20px; color:white; cursor:pointer;"
+                    onclick="openTrailerModal(${first.id})">
+                Watch Trailer
+            </button>
+        </div>
+    `;
+    featuredBox.appendChild(div);
+    
+    // Rest of the movies scrollable
+    list.slice(1,25).forEach(m=>{
+        const poster=m.poster_path?IMG+m.poster_path:"https://via.placeholder.com/200x300";
+        const div=document.createElement("div");
+        div.className="card";
+        div.innerHTML=`<img src="${poster}">
+                        <div class="title">${m.title || m.name}</div>
+                        <div class="rating">⭐ ${m.vote_average?m.vote_average.toFixed(1):"N/A"}</div>`;
+        div.onclick=()=>openMovieModal(m.id);
+        scrollBox.appendChild(div);
+    });
+}
+    
 // Close modal
 document.querySelector("#trailerModal .close").onclick=function(){
     document.getElementById("trailerFrame").src="";
@@ -476,7 +529,7 @@ function openMovieModal(id){
 // Load sections
 fetch(`${API}/trending/movie/day?api_key=${KEY}`).then(r=>r.json()).then(d=>{
     heroMovies=d.results.slice(0,10);
-    showMovies(d.results,"trending");
+    showTrending(d.results);  // Use new function
     hero();
     setInterval(hero,5000);
 });
