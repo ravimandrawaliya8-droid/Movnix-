@@ -406,7 +406,6 @@ let heroIndex=0;
 
 // HERO + PAGES FUNCTION
 function loadHero(movie){
-    function loadHero(movie){
 
 document.getElementById("hero-poster").src =
 movie.poster_path ? IMG+movie.poster_path : "";
@@ -423,6 +422,11 @@ movie.overview;
 document.getElementById("hero-rating").innerText =
 "⭐ " + (movie.vote_average ? movie.vote_average.toFixed(1) : "N/A");
 
+// Trailers row
+fetch(`${API}/movie/${movie.id}/videos?api_key=${KEY}`)
+.then(r=>r.json()).then(d=>{
+...
+});
     }
     
     // Trailers row
