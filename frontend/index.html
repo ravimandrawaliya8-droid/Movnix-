@@ -1,107 +1,147 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
-<title>Movnix</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Movnix</title>
 
 <style>
 
 body{
 margin:0;
-background:#0f0f0f;
+background:#0b0b0b;
 color:white;
 font-family:Arial;
 }
 
 header{
 display:flex;
-justify-content:space-between;
 align-items:center;
-padding:15px 25px;
+justify-content:space-between;
+padding:12px 30px;
 background:black;
 position:sticky;
 top:0;
-z-index:10;
+z-index:1000;
 }
 
-.logo{
-color:red;
-font-size:32px;
-font-weight:bold;
+.logo img{
+height:42px;
 }
 
-.categories button{
-border:1px solid red;
-background:none;
+nav{
+display:flex;
+gap:20px;
+}
+
+nav a{
 color:white;
+text-decoration:none;
+font-size:14px;
 padding:6px 12px;
-margin:3px;
+border:1px solid red;
+border-radius:20px;
+}
+
+nav a:hover{
+background:red;
+}
+
+.right{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.search{
+padding:6px 10px;
+border-radius:4px;
+border:none;
+}
+
+.login{
+background:red;
+border:none;
+padding:7px 12px;
+color:white;
+border-radius:4px;
 cursor:pointer;
 }
 
-.search input{
-padding:6px;
-border:none;
-border-radius:4px;
-}
-
 .hero{
-height:450px;
+height:520px;
 background-size:cover;
 background-position:center;
 display:flex;
 align-items:flex-end;
 padding:40px;
-font-size:38px;
+font-size:40px;
 font-weight:bold;
+position:relative;
+}
+
+.hero::after{
+content:"";
+position:absolute;
+bottom:0;
+left:0;
+width:100%;
+height:60%;
+background:linear-gradient(transparent,#0b0b0b);
+}
+
+section{
+padding:20px;
+}
+
+.section-title{
+font-size:22px;
+margin-bottom:15px;
 }
 
 .row{
-padding:25px;
-}
-
-.movies{
 display:flex;
-gap:15px;
+gap:14px;
 overflow-x:auto;
-scroll-behavior:smooth;
 }
 
-.movie{
-cursor:pointer;
+.card{
+min-width:170px;
 position:relative;
-transition:.3s;
+cursor:pointer;
+transition:0.3s;
 }
 
-.movie:hover{
-transform:scale(1.08);
+.card:hover{
+transform:scale(1.15);
 }
 
-.movie img{
-width:160px;
-border-radius:6px;
+.card img{
+width:170px;
+border-radius:8px;
 }
 
 .rating{
 position:absolute;
-top:5px;
-left:5px;
+top:6px;
+left:6px;
 background:black;
-padding:3px 6px;
+padding:4px 6px;
 font-size:12px;
 border-radius:4px;
 }
 
 .watch{
 position:absolute;
-bottom:5px;
-right:5px;
+bottom:6px;
+right:6px;
 background:red;
-padding:4px;
+padding:4px 6px;
 font-size:12px;
-cursor:pointer;
+border-radius:4px;
 }
 
 .celebs{
@@ -111,57 +151,16 @@ overflow-x:auto;
 }
 
 .celebs img{
-width:110px;
+width:120px;
 border-radius:50%;
-cursor:pointer;
 }
 
-.news{
-display:flex;
-gap:15px;
-overflow-x:auto;
-}
-
-.news div{
-background:#1c1c1c;
-padding:15px;
-border-radius:6px;
-min-width:250px;
-}
-
-.quiz{
-background:#1c1c1c;
-padding:20px;
-border-radius:8px;
-max-width:400px;
-}
-
-.modal{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.9);
-display:none;
-justify-content:center;
-align-items:center;
-}
-
-.modal-content{
-max-width:900px;
-padding:20px;
-}
-
-.modal iframe{
-width:100%;
-height:400px;
-}
-
-.close{
-cursor:pointer;
-color:red;
-font-size:25px;
+footer{
+margin-top:40px;
+padding:30px;
+background:black;
+text-align:center;
+color:gray;
 }
 
 </style>
@@ -172,392 +171,257 @@ font-size:25px;
 
 <header>
 
-<div class="logo">MOVNIX</div>
-
-<div class="categories">
-
-<button>Movies</button>
-<button>Hollywood</button>
-<button>Bollywood</button>
-<button>South</button>
-<button>Anime</button>
-<button>Horror</button>
-
+<div class="logo">
+<img src="logo.png">
 </div>
 
-<div class="search">
-<input id="searchBox" placeholder="Search movies">
+<nav>
+
+<a href="movies.html">Movies</a>
+<a href="hollywood.html">Hollywood</a>
+<a href="horror.html">Horror</a>
+<a href="south.html">South</a>
+<a href="bollywood.html">Bollywood</a>
+<a href="cartoon.html">Cartoon</a>
+<a href="anime.html">Anime</a>
+<a href="drama.html">Drama</a>
+<a href="tv.html">TV Serial</a>
+
+</nav>
+
+<div class="right">
+
+<input class="search" placeholder="Search">
+
+<button class="login">Login</button>
+
 </div>
 
 </header>
 
-
-
 <div id="hero" class="hero"></div>
 
+<section>
+
+<div class="section-title">🔥 Trending Now</div>
+
+<div id="trending" class="row"></div>
+
+</section>
 
 
-<div class="row">
-<h2>🔥 Top 20 This Week</h2>
-<div id="top" class="movies"></div>
-</div>
+<section>
+
+<div class="section-title">⭐ Top 20 This Week</div>
+
+<div id="top" class="row"></div>
+
+</section>
 
 
-<div class="row">
-<h2>⭐ Fan Favorites</h2>
-<div id="popular" class="movies"></div>
-</div>
+<section>
+
+<div class="section-title">🎬 Popular Movies</div>
+
+<div id="popular" class="row"></div>
+
+</section>
 
 
-<div class="row">
-<h2>🎬 Trending Now</h2>
-<div id="trending" class="movies"></div>
-</div>
+<section>
+
+<div class="section-title">🎥 Now Playing</div>
+
+<div id="now" class="row"></div>
+
+</section>
 
 
-<div class="row">
-<h2>🔥 Recommended Picks</h2>
-<div id="recommended" class="movies"></div>
-</div>
+<section>
+
+<div class="section-title">📅 Upcoming Movies</div>
+
+<div id="upcoming" class="row"></div>
+
+</section>
 
 
-<div class="row">
-<h2>📺 Popular TV Shows</h2>
-<div id="tv" class="movies"></div>
-</div>
+<section>
+
+<div class="section-title">🏆 Fan Favorites</div>
+
+<div id="fans" class="row"></div>
+
+</section>
 
 
-<div class="row">
-<h2>🎬 Now Playing</h2>
-<div id="theaters" class="movies"></div>
-</div>
+<section>
 
+<div class="section-title">🎭 Most Popular Celebrities</div>
 
-<div class="row">
-<h2>⏳ Coming Soon</h2>
-<div id="upcoming" class="movies"></div>
-</div>
-
-
-<div class="row">
-<h2>🎥 Featured Trailers</h2>
-<div id="trailers" class="movies"></div>
-</div>
-
-
-<div class="row">
-<h2>🎭 Popular Celebrities</h2>
 <div id="celebs" class="celebs"></div>
-</div>
+
+</section>
 
 
-<div class="row">
-<h2>🎂 Born Today</h2>
-<div id="born" class="celebs"></div>
-</div>
+<footer>
 
+Movnix © 2026
 
-<div class="row">
-<h2>📰 Entertainment Buzz</h2>
-
-<div class="news">
-
-<div>Top movies dominating global cinema</div>
-<div>Actors making headlines this week</div>
-<div>Upcoming releases fans are excited for</div>
-
-</div>
-
-</div>
-
-
-
-<div class="row">
-
-<h2>🎮 Movie Quiz</h2>
-
-<div class="quiz">
-
-<p>Which movie won the Oscar for Best Picture in 2020?</p>
-
-<button onclick="quiz('wrong')">Joker</button>
-<button onclick="quiz('correct')">Parasite</button>
-<button onclick="quiz('wrong')">1917</button>
-
-<p id="quizResult"></p>
-
-</div>
-
-</div>
-
-
-
-<div id="modal" class="modal">
-
-<div class="modal-content">
-
-<span class="close" onclick="closeModal()">✖</span>
-
-<div id="modalBody"></div>
-
-</div>
-
-</div>
-
-
+</footer>
 
 <script>
 
-const API="https://movnix.onrender.com"
+const API="https://api.themoviedb.org/3"
+const KEY="YOUR_TMDB_KEY"
 const IMG="https://image.tmdb.org/t/p/w500"
 
 let heroMovies=[]
 let heroIndex=0
 
+function show(list,id){
 
+const box=document.getElementById(id)
 
-function showMovies(list,container){
+if(!box) return
 
-container.innerHTML=""
+box.innerHTML=""
 
 list.forEach(m=>{
 
-const div=document.createElement("div")
-
-div.classList.add("movie")
-
 const poster=m.poster_path
 ?IMG+m.poster_path
-:"https://via.placeholder.com/300"
-
-div.innerHTML=`
-
-<img src="${poster}">
-<div class="rating">⭐ ${m.vote_average}</div>
-<div class="watch" onclick="addWatch(${m.id})">❤️</div>
-
-`
-
-div.onclick=()=>movieDetails(m.id)
-
-container.appendChild(div)
-
-})
-
-}
-
-
-
-function heroSlider(){
-
-const hero=document.getElementById("hero")
-
-const movie=heroMovies[heroIndex]
-
-hero.style.backgroundImage=`url(${IMG+movie.backdrop_path})`
-
-hero.innerHTML=movie.title
-
-heroIndex++
-
-if(heroIndex>=heroMovies.length){
-heroIndex=0
-}
-
-}
-
-
-
-fetch(API+"/trending")
-.then(r=>r.json())
-.then(d=>{
-
-heroMovies=d.results.slice(0,10)
-
-showMovies(d.results,document.getElementById("trending"))
-
-showMovies(d.results,document.getElementById("recommended"))
-
-heroSlider()
-
-setInterval(heroSlider,3000)
-
-})
-
-
-
-fetch(API+"/popular")
-.then(r=>r.json())
-.then(d=>showMovies(d.results,document.getElementById("popular")))
-
-
-
-fetch(API+"/top")
-.then(r=>r.json())
-.then(d=>showMovies(d.results.slice(0,20),document.getElementById("top")))
-
-
-
-fetch("https://api.themoviedb.org/3/movie/now_playing?api_key=45fe7a9c4583e4374d3981bb55c39222")
-.then(r=>r.json())
-.then(d=>showMovies(d.results,document.getElementById("theaters")))
-
-
-
-fetch("https://api.themoviedb.org/3/movie/upcoming?api_key=45fe7a9c4583e4374d3981bb55c39222")
-.then(r=>r.json())
-.then(d=>showMovies(d.results,document.getElementById("upcoming")))
-
-
-
-fetch("https://api.themoviedb.org/3/trending/tv/week?api_key=45fe7a9c4583e4374d3981bb55c39222")
-.then(r=>r.json())
-.then(d=>showMovies(d.results,document.getElementById("tv")))
-
-
-
-fetch(API+"/celebs")
-.then(r=>r.json())
-.then(d=>{
-
-const c=document.getElementById("celebs")
-
-d.results.forEach(p=>{
-
-const img=p.profile_path
-?IMG+p.profile_path
 :"https://via.placeholder.com/200"
 
 const div=document.createElement("div")
 
-div.innerHTML=`<img src="${img}"><br>${p.name}`
+div.className="card"
 
-div.onclick=()=>celebrity(p.id)
+div.innerHTML=`
 
-c.appendChild(div)
+<a href="movie.html?id=${m.id}">
+<img src="${poster}">
+</a>
+
+<div class="rating">⭐ ${m.vote_average}</div>
+
+<div class="watch">❤</div>
+
+`
+
+box.appendChild(div)
 
 })
 
-})
+}
 
 
 
-function movieDetails(id){
+function hero(){
 
-fetch(API+"/movie?id="+id)
+const el=document.getElementById("hero")
+
+const m=heroMovies[heroIndex]
+
+el.style.backgroundImage=`url(${IMG+m.backdrop_path})`
+
+el.innerHTML=m.title
+
+heroIndex++
+
+if(heroIndex>=heroMovies.length){
+
+heroIndex=0
+
+}
+
+}
+
+
+
+fetch(`${API}/trending/movie/week?api_key=${KEY}`)
 
 .then(r=>r.json())
 
 .then(d=>{
 
-const cast=d.credits.cast.slice(0,5).map(c=>c.name).join(", ")
+heroMovies=d.results.slice(0,10)
 
-const trailer=d.videos.results.find(v=>v.type==="Trailer")
+show(d.results,"trending")
 
-let trailerHTML=""
+hero()
 
-if(trailer){
-
-trailerHTML=`<iframe src="https://www.youtube.com/embed/${trailer.key}"></iframe>`
-
-}
-
-document.getElementById("modalBody").innerHTML=`
-
-<h2>${d.title}</h2>
-
-<p>⭐ ${d.vote_average}</p>
-
-<p>${d.overview}</p>
-
-<p><b>Cast:</b> ${cast}</p>
-
-${trailerHTML}
-
-`
-
-document.getElementById("modal").style.display="flex"
+setInterval(hero,3000)
 
 })
 
-}
+
+
+fetch(`${API}/movie/top_rated?api_key=${KEY}`)
+
+.then(r=>r.json())
+
+.then(d=>show(d.results,"top"))
 
 
 
-function celebrity(id){
+fetch(`${API}/movie/popular?api_key=${KEY}`)
 
-fetch("https://api.themoviedb.org/3/person/"+id+"?api_key=45fe7a9c4583e4374d3981bb55c39222")
+.then(r=>r.json())
+
+.then(d=>show(d.results,"popular"))
+
+
+
+fetch(`${API}/movie/now_playing?api_key=${KEY}`)
+
+.then(r=>r.json())
+
+.then(d=>show(d.results,"now"))
+
+
+
+fetch(`${API}/movie/upcoming?api_key=${KEY}`)
+
+.then(r=>r.json())
+
+.then(d=>show(d.results,"upcoming"))
+
+
+
+fetch(`${API}/person/popular?api_key=${KEY}`)
 
 .then(r=>r.json())
 
 .then(d=>{
 
-document.getElementById("modalBody").innerHTML=`
+const box=document.getElementById("celebs")
 
-<h2>${d.name}</h2>
-<p>${d.biography}</p>
-<p>Birthday: ${d.birthday}</p>
+d.results.slice(0,10).forEach(c=>{
+
+const img=c.profile_path
+?IMG+c.profile_path
+:"https://via.placeholder.com/200"
+
+const div=document.createElement("div")
+
+div.innerHTML=`
+
+<a href="actor.html?id=${c.id}">
+<img src="${img}">
+<br>${c.name}
+</a>
 
 `
 
-document.getElementById("modal").style.display="flex"
+box.appendChild(div)
 
 })
-
-}
-
-
-
-function addWatch(id){
-
-let list=JSON.parse(localStorage.getItem("watchlist"))||[]
-
-if(!list.includes(id)){
-
-list.push(id)
-
-localStorage.setItem("watchlist",JSON.stringify(list))
-
-alert("Added to Watchlist")
-
-}
-
-}
-
-
-
-function quiz(ans){
-
-if(ans==="correct"){
-document.getElementById("quizResult").innerText="Correct 🎉"
-}else{
-document.getElementById("quizResult").innerText="Wrong answer"
-}
-
-}
-
-
-
-function closeModal(){
-document.getElementById("modal").style.display="none"
-}
-
-
-
-document.getElementById("searchBox").addEventListener("keyup",function(){
-
-const q=this.value
-
-if(q.length<3)return
-
-fetch(API+"/search?q="+q)
-
-.then(r=>r.json())
-.then(d=>showMovies(d.results,document.getElementById("trending")))
 
 })
 
 </script>
 
 </body>
+
   </html>
