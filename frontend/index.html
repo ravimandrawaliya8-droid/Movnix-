@@ -100,23 +100,47 @@ header {
     background: #e5e5e5;
 }
 
-/* ===== HERO BANNER ===== */
-.hero {
-    position: relative;
-    height: 400px;
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: flex-end;
-    padding: 20px;
-    color: white;
-}
+<!-- ===== HERO BANNER ===== -->
+<div id="hero" class="hero">
+    <!-- Full dark background layer -->
+    <div class="hero-dark-bg"></div>
 
-.hero-overlay {
+    <div class="hero-content">
+        <!-- Left Poster -->
+        <div class="hero-left">
+            <img id="hero-poster" src="" alt="Hero Poster">
+        </div>
+
+        <!-- Right Info Overlay -->
+        <div class="hero-right">
+            <h1 id="hero-title">Loading...</h1>
+            <p id="hero-overview"></p>
+            <div class="hero-rating" id="hero-rating">⭐ N/A</div>
+            <button id="hero-trailer">Watch Trailer</button>
+        </div>
+    </div>
+
+    <!-- Hero Pages Below -->
+    <div id="hero-pages" class="hero-pages">
+        <!-- Trailers Row -->
+        <div class="hero-row" id="hero-trailers">
+            <h3>Trailers</h3>
+            <div class="row-scroll" id="trailers-row"></div>
+        </div>
+
+        <!-- Awards / Festivals Row -->
+        <div class="hero-row" id="hero-awards">
+            <h3>Awards & Festivals</h3>
+            <div class="row-scroll" id="awards-row"></div>
+        </div>
+    </div>
+</div>
+
+<style>
+.hero-dark-bg {
     position: absolute;
-    top:0; left:0;
-    width:100%; height:100%;
-    background: linear-gradient(to top, rgba(0,0,0,0.6), rgba(0,0,0,0.1));
+    top: 0; left:0; width:100%; height:100%;
+    background: rgba(0,0,0,0.25); /* cinematic dark background */
     z-index:0;
 }
 
@@ -127,239 +151,137 @@ header {
     align-items: flex-end;
     width: 100%;
     gap: 20px;
-}
-
-.hero-left {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    max-width: 220px;
+    z-index:1;
 }
 
 .hero-left img {
+    width: 180px;
     border-radius: 10px;
-    width: 200px;
     object-fit: cover;
-    border: 3px solid red;
 }
 
 .hero-right {
     max-width: 60%;
     backdrop-filter: blur(8px);
-    background: rgba(0,0,0,0.25);
-    padding: 20px;
+    background: rgba(0,0,0,0.5);
+    padding: 16px;
     border-radius: 12px;
 }
 
 .hero-right h1 {
-    margin: 0;
     font-size: 28px;
-    font-weight: bold;
+    margin:0;
 }
 
 .hero-right p {
     font-size: 14px;
-    margin-top: 8px;
+    margin-top:8px;
+    max-height: 80px;
+    overflow: hidden;
+}
+
+.hero-right .hero-rating {
+    margin-top: 6px;
+    font-weight: bold;
+    color: red;
 }
 
 .hero-right button {
+    margin-top: 10px;
     background: red;
     border: none;
     padding: 6px 12px;
-    color: white;
     border-radius: 20px;
+    color: white;
     cursor: pointer;
-    margin-top: 10px;
 }
 
-/* ===== SECTIONS ===== */
-.section {
-    padding: 16px;
-}
-
-.section-head {
+/* Hero Pages */
+.hero-pages {
+    margin-top: 20px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
+    flex-direction: column;
+    gap: 20px;
+    z-index:1;
 }
 
-.section-head h2 {
-    font-size: 18px;
-    font-weight: bold;
-    margin: 0;
+.hero-row h3 {
+    margin: 0 0 6px 10px;
+    color: white;
 }
 
-.row, .celebs {
+.row-scroll {
     display: flex;
     gap: 12px;
     overflow-x: auto;
     padding-bottom: 6px;
-    scrollbar-width: thin;
 }
 
-.row::-webkit-scrollbar, .celebs::-webkit-scrollbar {
-    height: 6px;
+.row-scroll::-webkit-scrollbar {
+    height:6px;
 }
 
-.row::-webkit-scrollbar-thumb, .celebs::-webkit-scrollbar-thumb {
-    background: red;
-    border-radius: 3px;
+.row-scroll::-webkit-scrollbar-thumb {
+    background:red;
+    border-radius:3px;
 }
 
-.card {
-    min-width: 140px;
-    cursor: pointer;
-}
-
-.card img {
-    width: 140px;
-    border-radius: 6px;
-}
-
-.title {
-    font-size: 14px;
-    font-weight: bold;
-    margin-top: 5px;
-}
-
-.rating {
-    font-size: 12px;
-    color: red;
-    margin-top: 2px;
-}
-
-/* ===== BOX OFFICE ===== */
-#boxoffice div {
-    margin-bottom: 8px;
-}
-
-/* ===== FOOTER ===== */
-footer {
-    text-align: center;
-    padding: 20px;
-    color: #666;
-}
-
-/* ===== MODAL TRAILER ===== */
-#trailerModal {
-    display: none;
-    position: fixed;
-    top:0; left:0;
-    width:100%; height:100%;
-    background: rgba(0,0,0,0.9);
-    justify-content: center;
-    align-items: center;
-    z-index: 2000;
-}
-
-#trailerModal iframe {
-    width: 90%;
-    max-width: 800px;
-    height: 450px;
-    border: none;
-    border-radius: 10px;
-}
-
-#trailerModal .close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    font-size: 28px;
-    cursor: pointer;
-    color: white;
-}
-
-/* ===== RESPONSIVE ===== */
-@media(max-width:600px){
-    .hero { height: 250px; flex-direction: column; padding: 10px;}
-    .hero-left img { width: 120px; }
-    .hero-right { max-width: 100%; font-size: 12px; }
-    .hero-right h1 { font-size: 16px; }
-    .hero-right p { font-size: 12px; }
-    .search { width: 120px; }
+.row-scroll .card {
+    min-width: 120px;
+    cursor:pointer;
+    border-radius:6px;
 }
 </style>
-</head>
-
-<body>
-
-<!-- ===== HEADER ===== -->
-<header>
-    <div class="logo"><img src="logo.png" alt="Movnix Logo"></div>
-
-    <div class="search-box">
-        <button id="search-btn">🔍</button>
-        <input class="search" id="search" placeholder="Search">
-        <div id="searchResults" class="search-results"></div>
-    </div>
-
-    <div class="auth-buttons">
-        <button>Login</button>
-        <button>Signup</button>
-    </div>
-</header>
-
-<!-- ===== HERO BANNER ===== -->
-<div id="hero" class="hero">
-    <div class="hero-overlay"></div>
-    <div class="hero-content">
-        <div class="hero-left">
-            <img id="hero-poster" src="" alt="Hero Poster">
-        </div>
-        <div class="hero-right">
-            <h1 id="hero-title">Loading...</h1>
-            <p id="hero-overview"></p>
-            <button id="hero-trailer">Watch Trailer</button>
-        </div>
-    </div>
-</div>
-
-<!-- ===== SECTIONS ===== -->
-<div class="section" id="trending-section">
-    <div class="section-head"><h2>Featured Today</h2></div>
-    <div id="trending-featured" style="display:flex; gap:20px; flex-wrap:wrap; margin-bottom:20px;"></div>
-    <div id="trending" class="row"></div>
-</div>
-
-<div class="section">
-    <div class="section-head"><h2>Top Rated Movies</h2></div>
-    <div id="top" class="row"></div>
-</div>
-
-<div class="section">
-    <div class="section-head"><h2>Popular Movies</h2></div>
-    <div id="popular" class="row"></div>
-</div>
-
-<div class="section">
-    <div class="section-head"><h2>Now Playing</h2></div>
-    <div id="now" class="row"></div>
-</div>
-
-<div class="section">
-    <div class="section-head"><h2>Upcoming Movies</h2></div>
-    <div id="upcoming" class="row"></div>
-</div>
-
-<div class="section">
-    <div class="section-head"><h2>Popular Celebrities</h2></div>
-    <div id="celebs" class="celebs"></div>
-</div>
-
-<div class="section">
-    <div class="section-head"><h2>Box Office Trends</h2></div>
-    <div id="boxoffice"></div>
-</div>
-
-<footer>Movnix © 2026</footer>
-
-<div id="trailerModal">
-    <span class="close">&times;</span>
-    <iframe id="trailerFrame" src="" allowfullscreen></iframe>
-</div>
 
 <script>
+// Hero Movie + Pages JS
+function loadHero(movie) {
+    document.getElementById("hero-poster").src = movie.poster_path? IMG+movie.poster_path : "https://via.placeholder.com/200x300";
+    document.getElementById("hero-title").innerText = movie.title || movie.name;
+    document.getElementById("hero-overview").innerText = movie.overview;
+    document.getElementById("hero-rating").innerText = "⭐ " + (movie.vote_average ? movie.vote_average.toFixed(1) : "N/A");
+
+    // Watch Trailer button → separate trailer page
+    document.getElementById("hero-trailer").onclick = () => {
+        window.location.href = "trailer.html?id=" + movie.id;
+    };
+
+    // Load Trailers Row
+    fetch(`${API}/movie/${movie.id}/videos?api_key=${KEY}`)
+    .then(r=>r.json())
+    .then(d=>{
+        const row=document.getElementById("trailers-row");
+        row.innerHTML="";
+        d.results.forEach(v=>{
+            const div=document.createElement("div");
+            div.className="card";
+            div.innerHTML=`<img src="https://img.youtube.com/vi/${v.key}/0.jpg"><div style="font-size:12px;color:white">${v.name}</div>`;
+            div.onclick=()=> window.open(`https://www.youtube.com/watch?v=${v.key}`,"_blank");
+            row.appendChild(div);
+        });
+    });
+
+    // Load Awards / Festivals Row (static example)
+    const awards = ["Oscars", "SXSW", "Women History", "Golden Globes"];
+    const awardsRow = document.getElementById("awards-row");
+    awardsRow.innerHTML="";
+    awards.forEach(a=>{
+        const div=document.createElement("div");
+        div.className="card";
+        div.innerHTML=`<div style="font-size:12px;color:white;padding:8px;background:rgba(255,255,255,0.05);border-radius:6px;">${a}</div>`;
+        awardsRow.appendChild(div);
+    });
+}
+
+// Example: Load first trending movie as hero
+fetch(`${API}/trending/movie/day?api_key=${KEY}`)
+.then(r=>r.json())
+.then(d=>{
+    const heroMovie = d.results[0];
+    loadHero(heroMovie);
+});
+
+
 const KEY="45fe7a9c4583e4374d3981bb55c39222";
 const API="https://api.themoviedb.org/3";
 const IMG="https://image.tmdb.org/t/p/w500";
