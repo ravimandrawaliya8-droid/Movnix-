@@ -1,93 +1,167 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Movnix</title>
 
-<title>Metflix</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <style>
 
 body{
 margin:0;
-font-family:Arial;
 background:#0f0f0f;
 color:white;
+font-family:Arial;
 }
 
 header{
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:20px;
-background:#000;
+padding:15px 25px;
+background:black;
+position:sticky;
+top:0;
+z-index:10;
 }
 
 .logo{
 color:red;
-font-size:28px;
+font-size:32px;
 font-weight:bold;
 }
 
-.search-box{
-width:300px;
+.categories button{
+border:1px solid red;
+background:none;
+color:white;
+padding:6px 12px;
+margin:3px;
+cursor:pointer;
 }
 
-.search-box input{
-width:100%;
-padding:10px;
+.search input{
+padding:6px;
 border:none;
 border-radius:4px;
 }
 
 .hero{
-height:350px;
-background:url("https://image.tmdb.org/t/p/original/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg");
+height:450px;
 background-size:cover;
+background-position:center;
 display:flex;
 align-items:flex-end;
-padding:30px;
+padding:40px;
+font-size:38px;
+font-weight:bold;
 }
 
-section{
-padding:20px;
+.row{
+padding:25px;
 }
 
 .movies{
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
-gap:20px;
+display:flex;
+gap:15px;
+overflow-x:auto;
+scroll-behavior:smooth;
 }
 
 .movie{
 cursor:pointer;
+position:relative;
 transition:.3s;
 }
 
 .movie:hover{
-transform:scale(1.1);
+transform:scale(1.08);
 }
 
 .movie img{
-width:100%;
+width:160px;
 border-radius:6px;
 }
 
 .rating{
 position:absolute;
+top:5px;
+left:5px;
 background:black;
 padding:3px 6px;
 font-size:12px;
 border-radius:4px;
-margin-top:-28px;
-margin-left:5px;
 }
 
-footer{
-text-align:center;
-padding:30px;
-color:#777;
+.watch{
+position:absolute;
+bottom:5px;
+right:5px;
+background:red;
+padding:4px;
+font-size:12px;
+cursor:pointer;
+}
+
+.celebs{
+display:flex;
+gap:20px;
+overflow-x:auto;
+}
+
+.celebs img{
+width:110px;
+border-radius:50%;
+cursor:pointer;
+}
+
+.news{
+display:flex;
+gap:15px;
+overflow-x:auto;
+}
+
+.news div{
+background:#1c1c1c;
+padding:15px;
+border-radius:6px;
+min-width:250px;
+}
+
+.quiz{
+background:#1c1c1c;
+padding:20px;
+border-radius:8px;
+max-width:400px;
+}
+
+.modal{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.9);
+display:none;
+justify-content:center;
+align-items:center;
+}
+
+.modal-content{
+max-width:900px;
+padding:20px;
+}
+
+.modal iframe{
+width:100%;
+height:400px;
+}
+
+.close{
+cursor:pointer;
+color:red;
+font-size:25px;
 }
 
 </style>
@@ -98,103 +172,392 @@ color:#777;
 
 <header>
 
-<div class="logo">METFLIX</div>
+<div class="logo">MOVNIX</div>
 
-<div class="search-box">
-<input type="text" id="search" placeholder="Search movies...">
+<div class="categories">
+
+<button>Movies</button>
+<button>Hollywood</button>
+<button>Bollywood</button>
+<button>South</button>
+<button>Anime</button>
+<button>Horror</button>
+
+</div>
+
+<div class="search">
+<input id="searchBox" placeholder="Search movies">
 </div>
 
 </header>
 
-<div class="hero">
-<h1>Unlimited Movies</h1>
+
+
+<div id="hero" class="hero"></div>
+
+
+
+<div class="row">
+<h2>🔥 Top 20 This Week</h2>
+<div id="top" class="movies"></div>
 </div>
 
-<section>
 
-<h2>🔥 Trending Movies</h2>
+<div class="row">
+<h2>⭐ Fan Favorites</h2>
+<div id="popular" class="movies"></div>
+</div>
 
-<div id="movies" class="movies"></div>
 
-</section>
+<div class="row">
+<h2>🎬 Trending Now</h2>
+<div id="trending" class="movies"></div>
+</div>
 
-<footer>
-Metflix © 2026
-</footer>
+
+<div class="row">
+<h2>🔥 Recommended Picks</h2>
+<div id="recommended" class="movies"></div>
+</div>
+
+
+<div class="row">
+<h2>📺 Popular TV Shows</h2>
+<div id="tv" class="movies"></div>
+</div>
+
+
+<div class="row">
+<h2>🎬 Now Playing</h2>
+<div id="theaters" class="movies"></div>
+</div>
+
+
+<div class="row">
+<h2>⏳ Coming Soon</h2>
+<div id="upcoming" class="movies"></div>
+</div>
+
+
+<div class="row">
+<h2>🎥 Featured Trailers</h2>
+<div id="trailers" class="movies"></div>
+</div>
+
+
+<div class="row">
+<h2>🎭 Popular Celebrities</h2>
+<div id="celebs" class="celebs"></div>
+</div>
+
+
+<div class="row">
+<h2>🎂 Born Today</h2>
+<div id="born" class="celebs"></div>
+</div>
+
+
+<div class="row">
+<h2>📰 Entertainment Buzz</h2>
+
+<div class="news">
+
+<div>Top movies dominating global cinema</div>
+<div>Actors making headlines this week</div>
+<div>Upcoming releases fans are excited for</div>
+
+</div>
+
+</div>
+
+
+
+<div class="row">
+
+<h2>🎮 Movie Quiz</h2>
+
+<div class="quiz">
+
+<p>Which movie won the Oscar for Best Picture in 2020?</p>
+
+<button onclick="quiz('wrong')">Joker</button>
+<button onclick="quiz('correct')">Parasite</button>
+<button onclick="quiz('wrong')">1917</button>
+
+<p id="quizResult"></p>
+
+</div>
+
+</div>
+
+
+
+<div id="modal" class="modal">
+
+<div class="modal-content">
+
+<span class="close" onclick="closeModal()">✖</span>
+
+<div id="modalBody"></div>
+
+</div>
+
+</div>
+
+
 
 <script>
 
-const API_KEY="45fe7a9c4583e4374d3981bb55c39222"
-
+const API="https://movnix.onrender.com"
 const IMG="https://image.tmdb.org/t/p/w500"
 
-const movies=document.getElementById("movies")
+let heroMovies=[]
+let heroIndex=0
 
-const search=document.getElementById("search")
 
-// TRENDING MOVIES
 
-function loadTrending(){
+function showMovies(list,container){
 
-fetch(`https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}`)
+container.innerHTML=""
 
-.then(res=>res.json())
-
-.then(data=>showMovies(data.results))
-
-}
-
-function showMovies(list){
-
-movies.innerHTML=""
-
-list.forEach(movie=>{
-
-const poster = movie.poster_path
-? IMG+movie.poster_path
-: "https://via.placeholder.com/500x750"
+list.forEach(m=>{
 
 const div=document.createElement("div")
 
 div.classList.add("movie")
 
+const poster=m.poster_path
+?IMG+m.poster_path
+:"https://via.placeholder.com/300"
+
 div.innerHTML=`
 
 <img src="${poster}">
-<div class="rating">⭐ ${movie.vote_average}</div>
+<div class="rating">⭐ ${m.vote_average}</div>
+<div class="watch" onclick="addWatch(${m.id})">❤️</div>
 
 `
 
-movies.appendChild(div)
+div.onclick=()=>movieDetails(m.id)
+
+container.appendChild(div)
 
 })
 
 }
 
-// SEARCH MOVIE
 
-search.addEventListener("keyup",function(){
 
-const query=this.value
+function heroSlider(){
 
-if(query.length<3){
-loadTrending()
-return
+const hero=document.getElementById("hero")
+
+const movie=heroMovies[heroIndex]
+
+hero.style.backgroundImage=`url(${IMG+movie.backdrop_path})`
+
+hero.innerHTML=movie.title
+
+heroIndex++
+
+if(heroIndex>=heroMovies.length){
+heroIndex=0
 }
 
-fetch(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}`)
+}
 
-.then(res=>res.json())
 
-.then(data=>showMovies(data.results))
+
+fetch(API+"/trending")
+.then(r=>r.json())
+.then(d=>{
+
+heroMovies=d.results.slice(0,10)
+
+showMovies(d.results,document.getElementById("trending"))
+
+showMovies(d.results,document.getElementById("recommended"))
+
+heroSlider()
+
+setInterval(heroSlider,3000)
 
 })
 
-// INITIAL LOAD
 
-loadTrending()
+
+fetch(API+"/popular")
+.then(r=>r.json())
+.then(d=>showMovies(d.results,document.getElementById("popular")))
+
+
+
+fetch(API+"/top")
+.then(r=>r.json())
+.then(d=>showMovies(d.results.slice(0,20),document.getElementById("top")))
+
+
+
+fetch("https://api.themoviedb.org/3/movie/now_playing?api_key=45fe7a9c4583e4374d3981bb55c39222")
+.then(r=>r.json())
+.then(d=>showMovies(d.results,document.getElementById("theaters")))
+
+
+
+fetch("https://api.themoviedb.org/3/movie/upcoming?api_key=45fe7a9c4583e4374d3981bb55c39222")
+.then(r=>r.json())
+.then(d=>showMovies(d.results,document.getElementById("upcoming")))
+
+
+
+fetch("https://api.themoviedb.org/3/trending/tv/week?api_key=45fe7a9c4583e4374d3981bb55c39222")
+.then(r=>r.json())
+.then(d=>showMovies(d.results,document.getElementById("tv")))
+
+
+
+fetch(API+"/celebs")
+.then(r=>r.json())
+.then(d=>{
+
+const c=document.getElementById("celebs")
+
+d.results.forEach(p=>{
+
+const img=p.profile_path
+?IMG+p.profile_path
+:"https://via.placeholder.com/200"
+
+const div=document.createElement("div")
+
+div.innerHTML=`<img src="${img}"><br>${p.name}`
+
+div.onclick=()=>celebrity(p.id)
+
+c.appendChild(div)
+
+})
+
+})
+
+
+
+function movieDetails(id){
+
+fetch(API+"/movie?id="+id)
+
+.then(r=>r.json())
+
+.then(d=>{
+
+const cast=d.credits.cast.slice(0,5).map(c=>c.name).join(", ")
+
+const trailer=d.videos.results.find(v=>v.type==="Trailer")
+
+let trailerHTML=""
+
+if(trailer){
+
+trailerHTML=`<iframe src="https://www.youtube.com/embed/${trailer.key}"></iframe>`
+
+}
+
+document.getElementById("modalBody").innerHTML=`
+
+<h2>${d.title}</h2>
+
+<p>⭐ ${d.vote_average}</p>
+
+<p>${d.overview}</p>
+
+<p><b>Cast:</b> ${cast}</p>
+
+${trailerHTML}
+
+`
+
+document.getElementById("modal").style.display="flex"
+
+})
+
+}
+
+
+
+function celebrity(id){
+
+fetch("https://api.themoviedb.org/3/person/"+id+"?api_key=45fe7a9c4583e4374d3981bb55c39222")
+
+.then(r=>r.json())
+
+.then(d=>{
+
+document.getElementById("modalBody").innerHTML=`
+
+<h2>${d.name}</h2>
+<p>${d.biography}</p>
+<p>Birthday: ${d.birthday}</p>
+
+`
+
+document.getElementById("modal").style.display="flex"
+
+})
+
+}
+
+
+
+function addWatch(id){
+
+let list=JSON.parse(localStorage.getItem("watchlist"))||[]
+
+if(!list.includes(id)){
+
+list.push(id)
+
+localStorage.setItem("watchlist",JSON.stringify(list))
+
+alert("Added to Watchlist")
+
+}
+
+}
+
+
+
+function quiz(ans){
+
+if(ans==="correct"){
+document.getElementById("quizResult").innerText="Correct 🎉"
+}else{
+document.getElementById("quizResult").innerText="Wrong answer"
+}
+
+}
+
+
+
+function closeModal(){
+document.getElementById("modal").style.display="none"
+}
+
+
+
+document.getElementById("searchBox").addEventListener("keyup",function(){
+
+const q=this.value
+
+if(q.length<3)return
+
+fetch(API+"/search?q="+q)
+
+.then(r=>r.json())
+.then(d=>showMovies(d.results,document.getElementById("trending")))
+
+})
 
 </script>
 
 </body>
-</html>
+  </html>
