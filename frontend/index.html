@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
@@ -11,172 +10,84 @@
 <style>
 
 body{
-
 margin:0;
-font-family:Arial, Helvetica, sans-serif;
+font-family:Arial;
 background:#0f0f0f;
 color:white;
-
 }
 
-/* HEADER */
-
 header{
-
 display:flex;
 justify-content:space-between;
 align-items:center;
-
 padding:20px;
-
 background:#000;
-
-position:sticky;
-top:0;
-
 }
 
 .logo{
-
 color:red;
 font-size:28px;
 font-weight:bold;
-
 }
 
 .search-box{
-
 width:300px;
-
 }
 
 .search-box input{
-
 width:100%;
 padding:10px;
 border:none;
 border-radius:4px;
-
 }
-
-/* HERO */
 
 .hero{
-
-height:400px;
-
+height:350px;
 background:url("https://image.tmdb.org/t/p/original/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg");
-
 background-size:cover;
-background-position:center;
-
 display:flex;
 align-items:flex-end;
-
 padding:30px;
-
 }
-
-.hero h1{
-
-font-size:40px;
-
-}
-
-/* SECTION */
 
 section{
-
 padding:20px;
-
 }
-
-.section-title{
-
-font-size:22px;
-margin-bottom:15px;
-
-}
-
-/* MOVIE GRID */
 
 .movies{
-
 display:grid;
-
 grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
-
 gap:20px;
-
 }
 
 .movie{
-
-position:relative;
-
 cursor:pointer;
-
-transition:transform .3s;
-
+transition:.3s;
 }
 
 .movie:hover{
-
-transform:scale(1.08);
-
+transform:scale(1.1);
 }
 
 .movie img{
-
 width:100%;
 border-radius:6px;
-
 }
 
 .rating{
-
 position:absolute;
-
-top:8px;
-right:8px;
-
 background:black;
-
 padding:3px 6px;
-
 font-size:12px;
-
 border-radius:4px;
-
+margin-top:-28px;
+margin-left:5px;
 }
-
-/* FOOTER */
 
 footer{
-
 text-align:center;
 padding:30px;
-
-color:#888;
-
-}
-
-/* MOBILE */
-
-@media(max-width:600px){
-
-.search-box{
-
-width:150px;
-
-}
-
-.hero h1{
-
-font-size:26px;
-
-}
-
+color:#777;
 }
 
 </style>
@@ -190,75 +101,100 @@ font-size:26px;
 <div class="logo">METFLIX</div>
 
 <div class="search-box">
-
-<input
-type="text"
-id="search"
-placeholder="Search movies..."
->
-
+<input type="text" id="search" placeholder="Search movies...">
 </div>
 
 </header>
 
 <div class="hero">
-
 <h1>Unlimited Movies</h1>
-
 </div>
 
 <section>
 
-<div class="section-title">🔥 Trending Movies</div>
+<h2>🔥 Trending Movies</h2>
 
 <div id="movies" class="movies"></div>
 
 </section>
 
 <footer>
-
 Metflix © 2026
-
 </footer>
 
 <script>
 
-const API_KEY="45fe7a9c4583e4374d3981bb55c39222";
+const API_KEY="45fe7a9c4583e4374d3981bb55c39222"
 
-const API_URL=`https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}`;
+const IMG="https://image.tmdb.org/t/p/w500"
 
-const IMG="https://image.tmdb.org/t/p/w500";
+const movies=document.getElementById("movies")
 
-const movies=document.getElementById("movies");
+const search=document.getElementById("search")
 
-fetch(API_URL)
+// TRENDING MOVIES
+
+function loadTrending(){
+
+fetch(`https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}`)
 
 .then(res=>res.json())
 
-.then(data=>{
+.then(data=>showMovies(data.results))
 
-data.results.forEach(movie=>{
+}
 
-const div=document.createElement("div");
+function showMovies(list){
 
-div.classList.add("movie");
+movies.innerHTML=""
+
+list.forEach(movie=>{
+
+const poster = movie.poster_path
+? IMG+movie.poster_path
+: "https://via.placeholder.com/500x750"
+
+const div=document.createElement("div")
+
+div.classList.add("movie")
 
 div.innerHTML=`
 
-<img src="${IMG+movie.poster_path}">
-
+<img src="${poster}">
 <div class="rating">⭐ ${movie.vote_average}</div>
 
-`;
+`
 
-movies.appendChild(div);
+movies.appendChild(div)
 
-});
+})
 
-});
+}
+
+// SEARCH MOVIE
+
+search.addEventListener("keyup",function(){
+
+const query=this.value
+
+if(query.length<3){
+loadTrending()
+return
+}
+
+fetch(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}`)
+
+.then(res=>res.json())
+
+.then(data=>showMovies(data.results))
+
+})
+
+// INITIAL LOAD
+
+loadTrending()
 
 </script>
 
 </body>
-
-  </html>
+</html>
