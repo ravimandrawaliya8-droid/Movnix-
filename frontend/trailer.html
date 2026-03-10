@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trailers - Movnix</title>
+<style>
+body { margin:0; font-family:Arial,sans-serif; background:#0f0f0f; color:white; overflow-x:hidden; }
+header { display:flex; justify-content:space-between; align-items:center; padding:12px 16px; background:#000; position:sticky; top:0; z-index:1000; }
+.logo img { height:36px; }
+.auth-buttons button { background:white; border:none; color:black; padding:6px 14px; border-radius:20px; margin-left:6px; cursor:pointer; font-weight:bold; }
+.auth-buttons button:hover { background:#e5e5e5; }
+
+/* HERO SECTION */
+.hero { position:relative; min-height:450px; display:flex; flex-direction:column; padding:20px; }
+.hero-dark-bg { position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.3); z-index:0; }
+.hero-content { position:relative; display:flex; gap:20px; z-index:1; justify-content:space-between; align-items:flex-end; }
+.hero-left img { width:200px; border-radius:12px; object-fit:cover; }
+.hero-right { max-width:60%; backdrop-filter:blur(10px); background:rgba(0,0,0,0.5); padding:16px; border-radius:12px; }
+.hero-right h1 { margin:0; font-size:28px; }
+.hero-right p { margin:8px 0; max-height:80px; overflow:hidden; }
+.hero-right .hero-rating { color:red; font-weight:bold; }
+.hero-right button { margin-top:10px; background:red; border:none; padding:6px 12px; border-radius:20px; color:white; cursor:pointer; }
+
+/* ROWS */
+.section { margin-top:20px; }
+.section h3 { margin-left:10px; }
+.row-scroll { display:flex; gap:12px; overflow-x:auto; padding:6px; }
+.row-scroll::-webkit-scrollbar { height:6px; }
+.row-scroll::-webkit-scrollbar-thumb { background:red; border-radius:3px; }
+.card { min-width:150px; cursor:pointer; border-radius:6px; overflow:hidden; }
+.card img { width:100%; border-radius:6px; }
+.card div { font-size:12px; text-align:center; padding:4px; }
+
+/* TRAILER MODAL */
+#trailerModal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; z-index:2000; }
+#trailerModal iframe { width:90%; max-width:800px; height:450px; border:none; border-radius:10px; }
+#trailerModal .close { position:absolute; top:20px; right:20px; font-size:28px; cursor:pointer; color:white; }
+
+/* RESPONSIVE */
+@media(max-width:600px){
+    .hero-content { flex-direction:column; align-items:center; }
+    .hero-left img { width:120px; }
+    .hero-right { max-width:100%; font-size:12px; }
+    .hero-right h1 { font-size:16px; }
+}
+</style>
+</head>
+<body>
+<header>
+    <div class="logo"><img src="logo.png" alt="Movnix Logo"></div>
+    <div class="auth-buttons">
+        <button>Login</button>
+        <button>Signup</button>
+    </div>
+</header>
+
+<!-- HERO SECTION -->
+<div class="hero">
+    <div class="hero-dark-bg"></div>
+    <div class="hero-content">
+        <div class="hero-left">
+            <img id="hero-poster" src="" alt="Poster">
+        </div>
+        <div class="hero-right">
+            <h1 id="hero-title">Loading...</h1>
+            <p id="hero-overview"></p>
+            <div class="hero-rating" id="hero-rating">⭐ N/A</div>
+        </div>
+    </div>
+</div>
+
+<!-- TRAILERS ROW -->
+<div class="section">
+    <h3>Trailers</h3>
+    <div class="row-scroll" id="trailers-row"></div>
+</div>
+
+<!-- AWARDS ROW -->
+<div class="section">
+    <h3>Awards & Festivals</h3>
+    <div class="row-scroll" id="awards-row"></div>
+</div>
+
+<!-- TRAILER MODAL -->
+<div id="trailerModal">
+    <span class="close">&times;</span>
+    <iframe id="trailerFrame" src="" allowfullscreen></iframe>
+</div>
+
+<script>
+const KEY="45fe7a9c4583e4374d3981bb55c39222";
+const API="https://api.themoviedb.org/3";
+const IMG="https://image.tmdb.org/t/p/w500";
+
+const urlParams = new URLSearchParams(window.location.search);
+const movieId = urlParams.get('id');
+
+function loadHero(movie){
+    document.getElementById("hero-poster").src = movie.poster_path ? IMG+movie.poster_path : "https://via.placeholder.com/200x300";
+    document.getElementById("hero-title").innerText = movie.title || movie.name;
+    document.getElementById("hero-overview").innerText = movie.overview;
+    document.getElementById("hero-rating").innerText = "⭐ " + (movie.vote_average ? movie.vote_average.toFixed(1) : "N/A");
+}
+
+function loadTrailers(movieId){
+    fetch(`${API}/movie/${movieId}/videos?api_key=${KEY}`)
+    .then(r=>r.json())
+    .then(d=>{
+        const row = document.getElementById("trailers-row");
+        row.innerHTML="";
+        d.results.forEach(v=>{
+            const div = document.createElement("div");
+            div.className="card";
+            div.innerHTML=`<img src="https://img.youtube.com/vi/${v.key}/0.jpg"><div>${v.name}</div>`;
+            div.onclick = ()=>{
+                document.getElementById("trailerFrame").src = `https://www.youtube.com/embed/${v.key}`;
+                document.getElementById("trailerModal").style.display="flex";
+            };
+            row.appendChild(div);
+        });
+    });
+}
+
+function loadAwards(){
+    const awards=["Oscars","SXSW","Women History","Golden Globes"];
+    const row = document.getElementById("awards-row");
+    row.innerHTML="";
+    awards.forEach(a=>{
+        const div=document.createElement("div");
+        div.className="card";
+        div.innerHTML=`<div style="padding:8px;background:rgba(255,255,255,0.05);border-radius:6px">${a}</div>`;
+        row.appendChild(div);
+    });
+}
+
+// Close trailer modal
+document.querySelector("#trailerModal .close").onclick=function(){
+    document.getElementById("trailerFrame").src="";
+    document.getElementById("trailerModal").style.display="none";
+}
+
+// Load movie details + trailers
+fetch(`${API}/movie/${movieId}?api_key=${KEY}`)
+.then(r=>r.json())
+.then(d=>{
+    loadHero(d);
+    loadTrailers(d.id);
+    loadAwards();
+});
+</script>
+</body>
+</html>
