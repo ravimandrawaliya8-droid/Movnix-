@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <title>Movnix</title>
 
@@ -12,155 +11,156 @@
 
 body{
 margin:0;
-background:#0b0b0b;
-color:white;
+background:#0f0f0f;
 font-family:Arial;
+color:white;
 }
 
 header{
 display:flex;
 align-items:center;
 justify-content:space-between;
-padding:12px 30px;
-background:black;
+padding:12px;
+background:#000;
 position:sticky;
 top:0;
-z-index:1000;
+z-index:999;
 }
 
 .logo img{
-height:42px;
+height:34px;
 }
 
-nav{
-display:flex;
-gap:20px;
-}
-
-nav a{
-color:white;
-text-decoration:none;
-font-size:14px;
-padding:6px 12px;
-border:1px solid red;
-border-radius:20px;
-}
-
-nav a:hover{
-background:red;
-}
-
-.right{
-display:flex;
-align-items:center;
-gap:15px;
-}
-
-.search{
-padding:6px 10px;
-border-radius:4px;
-border:none;
-}
-
-.login{
-background:red;
-border:none;
-padding:7px 12px;
-color:white;
-border-radius:4px;
-cursor:pointer;
-}
-
-.hero{
-height:520px;
-background-size:cover;
-background-position:center;
-display:flex;
-align-items:flex-end;
-padding:40px;
-font-size:40px;
-font-weight:bold;
+.search-box{
 position:relative;
 }
 
-.hero::after{
-content:"";
+.search{
+background:#1c1c1c;
+border:none;
+padding:7px 10px;
+border-radius:4px;
+color:white;
+width:160px;
+}
+
+.search-results{
 position:absolute;
-bottom:0;
+top:32px;
 left:0;
-width:100%;
-height:60%;
-background:linear-gradient(transparent,#0b0b0b);
+background:#111;
+width:220px;
+display:none;
+border-radius:6px;
 }
 
-section{
+.search-results div{
+padding:8px;
+cursor:pointer;
+}
+
+.search-results div:hover{
+background:#222;
+}
+
+.categories{
+display:flex;
+gap:10px;
+overflow-x:auto;
+padding:10px;
+}
+
+.cat{
+border:1px solid red;
+padding:6px 12px;
+border-radius:20px;
+white-space:nowrap;
+font-size:13px;
+cursor:pointer;
+}
+
+.cat:hover{
+background:red;
+}
+
+.hero{
+height:420px;
+background-size:cover;
+background-position:center;
+display:flex;
+flex-direction:column;
+justify-content:flex-end;
 padding:20px;
+font-size:28px;
+font-weight:bold;
 }
 
-.section-title{
-font-size:22px;
-margin-bottom:15px;
+.hero button{
+background:red;
+border:none;
+padding:8px 14px;
+margin-top:10px;
+color:white;
+border-radius:4px;
+}
+
+.section{
+padding:15px;
+}
+
+.section-head{
+display:flex;
+justify-content:space-between;
+margin-bottom:10px;
+}
+
+.see{
+color:#3ea6ff;
+font-size:13px;
+cursor:pointer;
 }
 
 .row{
 display:flex;
-gap:14px;
+gap:12px;
 overflow-x:auto;
 }
 
 .card{
-min-width:170px;
-position:relative;
+min-width:140px;
 cursor:pointer;
-transition:0.3s;
-}
-
-.card:hover{
-transform:scale(1.15);
 }
 
 .card img{
-width:170px;
-border-radius:8px;
+width:140px;
+border-radius:6px;
+}
+
+.title{
+font-size:13px;
+margin-top:5px;
 }
 
 .rating{
-position:absolute;
-top:6px;
-left:6px;
-background:black;
-padding:4px 6px;
 font-size:12px;
-border-radius:4px;
-}
-
-.watch{
-position:absolute;
-bottom:6px;
-right:6px;
-background:red;
-padding:4px 6px;
-font-size:12px;
-border-radius:4px;
+color:#aaa;
 }
 
 .celebs{
 display:flex;
-gap:20px;
+gap:16px;
 overflow-x:auto;
 }
 
 .celebs img{
-width:120px;
+width:85px;
 border-radius:50%;
 }
 
 footer{
-margin-top:40px;
-padding:30px;
-background:black;
 text-align:center;
-color:gray;
+padding:20px;
+color:#666;
 }
 
 </style>
@@ -175,93 +175,105 @@ color:gray;
 <img src="logo.png">
 </div>
 
-<nav>
+<div class="search-box">
 
-<a href="movies.html">Movies</a>
-<a href="hollywood.html">Hollywood</a>
-<a href="horror.html">Horror</a>
-<a href="south.html">South</a>
-<a href="bollywood.html">Bollywood</a>
-<a href="cartoon.html">Cartoon</a>
-<a href="anime.html">Anime</a>
-<a href="drama.html">Drama</a>
-<a href="tv.html">TV Serial</a>
+<input class="search" id="search" placeholder="Search">
 
-</nav>
-
-<div class="right">
-
-<input class="search" placeholder="Search">
-
-<button class="login">Login</button>
+<div id="searchResults" class="search-results"></div>
 
 </div>
 
 </header>
 
+
+<div class="categories">
+
+<div class="cat">Movies</div>
+<div class="cat">Hollywood</div>
+<div class="cat">Horror</div>
+<div class="cat">South</div>
+<div class="cat">Bollywood</div>
+<div class="cat">Cartoon</div>
+<div class="cat">Anime</div>
+<div class="cat">Drama</div>
+<div class="cat">TV Serial</div>
+
+</div>
+
+
 <div id="hero" class="hero"></div>
 
-<section>
 
-<div class="section-title">🔥 Trending Now</div>
+<div class="section">
+
+<div class="section-head">
+<div>🔥 Trending Today</div>
+<div class="see">See All</div>
+</div>
 
 <div id="trending" class="row"></div>
 
-</section>
+</div>
 
 
-<section>
+<div class="section">
 
-<div class="section-title">⭐ Top 20 This Week</div>
+<div class="section-head">
+<div>⭐ Top Rated Movies</div>
+<div class="see">See All</div>
+</div>
 
 <div id="top" class="row"></div>
 
-</section>
+</div>
 
 
-<section>
+<div class="section">
 
-<div class="section-title">🎬 Popular Movies</div>
+<div class="section-head">
+<div>🎬 Popular Movies</div>
+<div class="see">See All</div>
+</div>
 
 <div id="popular" class="row"></div>
 
-</section>
+</div>
 
 
-<section>
+<div class="section">
 
-<div class="section-title">🎥 Now Playing</div>
+<div class="section-head">
+<div>🎥 Now Playing</div>
+<div class="see">See All</div>
+</div>
 
 <div id="now" class="row"></div>
 
-</section>
+</div>
 
 
-<section>
+<div class="section">
 
-<div class="section-title"> Upcoming Movies</div>
+<div class="section-head">
+<div>📅 Upcoming Movies</div>
+<div class="see">See All</div>
+</div>
 
 <div id="upcoming" class="row"></div>
 
-</section>
+</div>
 
 
-<section>
+<div class="section">
 
-<div class="section-title"> Fan Favorites</div>
-
-<div id="fans" class="row"></div>
-
-</section>
-
-
-<section>
-
-<div class="section-title"> Most Popular Celebrities</div>
+<div class="section-head">
+<div>🎭 Popular Celebrities</div>
+<div class="see">See All</div>
+</div>
 
 <div id="celebs" class="celebs"></div>
 
-</section>
+</div>
 
 
 <footer>
@@ -270,24 +282,24 @@ Movnix © 2026
 
 </footer>
 
+
 <script>
 
+const KEY="YOUR_TMDB_KEY"
 const API="https://api.themoviedb.org/3"
-const KEY="45fe7a9c4583e4374d3981bb55c39222"
 const IMG="https://image.tmdb.org/t/p/w500"
 
 let heroMovies=[]
 let heroIndex=0
 
+
 function show(list,id){
 
 const box=document.getElementById(id)
 
-if(!box) return
-
 box.innerHTML=""
 
-list.forEach(m=>{
+list.slice(0,25).forEach(m=>{
 
 const poster=m.poster_path
 ?IMG+m.poster_path
@@ -299,13 +311,11 @@ div.className="card"
 
 div.innerHTML=`
 
-<a href="movie.html?id=${m.id}">
 <img src="${poster}">
-</a>
 
-<div class="rating">⭐ ${m.vote_average}</div>
+<div class="title">${m.title}</div>
 
-<div class="watch">❤</div>
+<div class="rating">⭐ ${m.vote_average} | ${m.release_date?.slice(0,4)}</div>
 
 `
 
@@ -325,24 +335,24 @@ const m=heroMovies[heroIndex]
 
 el.style.backgroundImage=`url(${IMG+m.backdrop_path})`
 
-el.innerHTML=m.title
+el.innerHTML=`
+
+<div>${m.title}</div>
+
+<button>Watch Trailer</button>
+
+`
 
 heroIndex++
 
-if(heroIndex>=heroMovies.length){
-
-heroIndex=0
-
-}
+if(heroIndex>=heroMovies.length) heroIndex=0
 
 }
 
 
 
-fetch(`${API}/trending/movie/week?api_key=${KEY}`)
-
+fetch(`${API}/trending/movie/day?api_key=${KEY}`)
 .then(r=>r.json())
-
 .then(d=>{
 
 heroMovies=d.results.slice(0,10)
@@ -356,43 +366,28 @@ setInterval(hero,3000)
 })
 
 
-
 fetch(`${API}/movie/top_rated?api_key=${KEY}`)
-
 .then(r=>r.json())
-
 .then(d=>show(d.results,"top"))
 
 
-
 fetch(`${API}/movie/popular?api_key=${KEY}`)
-
 .then(r=>r.json())
-
 .then(d=>show(d.results,"popular"))
 
 
-
 fetch(`${API}/movie/now_playing?api_key=${KEY}`)
-
 .then(r=>r.json())
-
 .then(d=>show(d.results,"now"))
 
 
-
 fetch(`${API}/movie/upcoming?api_key=${KEY}`)
-
 .then(r=>r.json())
-
 .then(d=>show(d.results,"upcoming"))
 
 
-
 fetch(`${API}/person/popular?api_key=${KEY}`)
-
 .then(r=>r.json())
-
 .then(d=>{
 
 const box=document.getElementById("celebs")
@@ -407,10 +402,8 @@ const div=document.createElement("div")
 
 div.innerHTML=`
 
-<a href="actor.html?id=${c.id}">
 <img src="${img}">
-<br>${c.name}
-</a>
+<div>${c.name}</div>
 
 `
 
@@ -420,8 +413,52 @@ box.appendChild(div)
 
 })
 
+
+const search=document.getElementById("search")
+const results=document.getElementById("searchResults")
+
+search.addEventListener("input",function(){
+
+const q=this.value
+
+if(q.length<2){
+
+results.style.display="none"
+return
+
+}
+
+fetch(`${API}/search/movie?api_key=${KEY}&query=${q}`)
+
+.then(r=>r.json())
+
+.then(d=>{
+
+results.innerHTML=""
+
+d.results.slice(0,5).forEach(m=>{
+
+const div=document.createElement("div")
+
+div.innerText=m.title
+
+div.onclick=()=>{
+
+location.href="movie.html?id="+m.id
+
+}
+
+results.appendChild(div)
+
+})
+
+results.style.display="block"
+
+})
+
+})
+
 </script>
 
 </body>
-
   </html>
