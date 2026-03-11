@@ -470,30 +470,35 @@ const backdrop = movie.backdrop_path
 ? IMG + movie.backdrop_path 
 : poster;
 
+// HERO BACKGROUND
 document.getElementById("hero-bg").style.backgroundImage =
 `url(${backdrop})`;
 
+// HERO TITLE
 document.getElementById("hero-title").innerText =
 movie.title || movie.name || "Unknown";
 
+// RANDOM REACTIONS
 document.getElementById("hero-like").innerText =
 Math.floor(Math.random()*500)+50;
 
 document.getElementById("hero-love").innerText =
 Math.floor(Math.random()*200)+20;
 
+// PLAY BUTTON
 document.getElementById("hero-play").onclick = ()=>{
 window.open(`movie.html?id=${movie.id}&play=trailer`,"_blank");
 };
 
+// TRAILERS FETCH
 fetch(`${API}/movie/${movie.id}/videos?api_key=${KEY}`)
 .then(r=>r.json())
 .then(d=>{
 
-const row=document.getElementById("trailers-row");
-row.innerHTML="";
+const row = document.getElementById("trailers-row");
+row.innerHTML = "";
 
-const trailers=d.results.filter(v=>v.site==="YouTube");
+const trailers = d.results.filter(v=>v.site==="YouTube");
 
 trailers.slice(0,10).forEach(v=>{
 
@@ -513,16 +518,12 @@ row.appendChild(div);
 
 });
 
-})
-.catch(err=>console.log(err));
 
-    }
-
-
-// AUTO SCROLL TRAILERS
+// HERO TRAILER AUTO SCROLL (6 sec)
 let scrollPos = 0;
 
 setInterval(()=>{
+
 scrollPos += 200;
 
 if(scrollPos >= row.scrollWidth){
