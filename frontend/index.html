@@ -519,26 +519,28 @@ const backdrop = movie.backdrop_path
 ? IMG + movie.backdrop_path 
 : poster;
 
-// HERO CONTENT
-document.getElementById("hero-poster").src = poster;
 
-document.getElementById("hero-backdrop").style.backgroundImage =
+// ===== HERO BACKGROUND =====
+document.getElementById("hero-bg").style.backgroundImage =
 `url(${backdrop})`;
 
+
+// ===== HERO TITLE =====
 document.getElementById("hero-title").innerText =
 movie.title || movie.name || "Unknown";
 
-document.getElementById("hero-overview").innerText =
-movie.overview || "No description available.";
 
-document.getElementById("hero-rating").innerText =
-"⭐ " + (movie.vote_average ? movie.vote_average.toFixed(1) : "N/A");
+// ===== RANDOM REACTIONS =====
+document.getElementById("hero-like").innerText =
+Math.floor(Math.random()*500)+50;
+
+document.getElementById("hero-love").innerText =
+Math.floor(Math.random()*200)+20;
 
 
-// WATCH TRAILER BUTTON
-const trailerBtn = document.getElementById("hero-trailer");
-trailerBtn.onclick = () => {
-    window.open(`movie.html?id=${movie.id}&play=trailer`, "_blank");
+// ===== PLAY BUTTON =====
+document.getElementById("hero-play").onclick = ()=>{
+window.open(`movie.html?id=${movie.id}&play=trailer`,"_blank");
 };
 
 
@@ -590,6 +592,8 @@ behavior: "smooth"
 
 })
 .catch(err=>console.log("Trailer error",err));
+
+    }
 
 
 // ===== AWARDS ROW (SAFE) =====
