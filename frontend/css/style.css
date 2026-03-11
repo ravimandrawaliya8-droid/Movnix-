@@ -126,3 +126,33 @@ text-align:center;
 width:100%;
 border-radius:8px;
 }
+
+.trailer-card{
+min-width:220px;
+cursor:pointer;
+}
+
+.trailer-thumb{
+position:relative;
+}
+
+.trailer-thumb img{
+width:100%;
+border-radius:8px;
+}
+
+.play-btn{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:28px;
+background:rgba(0,0,0,0.7);
+padding:10px 14px;
+border-radius:50%;
+}
+
+.trailer-title{
+margin-top:6px;
+font-size:13px;
+  }
