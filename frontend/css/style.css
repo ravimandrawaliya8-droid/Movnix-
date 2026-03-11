@@ -1,12 +1,73 @@
+body{
+margin:0;
+font-family:Arial,Helvetica,sans-serif;
+background:#0f0f0f;
+color:white;
+}
+
+/* HEADER */
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:14px 16px;
+background:#121212;
+position:sticky;
+top:0;
+z-index:100;
+}
+
+.logo{
+font-size:20px;
+font-weight:700;
+color:#f5c518;
+}
+
+.search{
+font-size:18px;
+cursor:pointer;
+}
+
+
+/* SECTION */
+
+.section{
+padding:18px 14px;
+}
+
+.section h2{
+margin:0 0 12px 0;
+font-size:18px;
+}
+
+
+/* ROW SCROLL */
+
+.row{
+display:flex;
+gap:12px;
+overflow-x:auto;
+scrollbar-width:none;
+}
+
+.row::-webkit-scrollbar{
+display:none;
+}
+
+
+/* MOVIE CARD */
+
 .movie-card{
 min-width:110px;
 max-width:110px;
 cursor:pointer;
-transition:transform .2s;
+transition:transform .25s;
 }
 
 .movie-card:hover{
 transform:scale(1.06);
+box-shadow:0 8px 20px rgba(0,0,0,0.6);
 }
 
 .poster-wrap{
@@ -38,6 +99,9 @@ color:#f5c518;
 margin-top:2px;
 }
 
+
+/* HERO */
+
 #hero{
 width:100%;
 height:60vh;
@@ -51,17 +115,35 @@ background-size:cover;
 background-position:center;
 display:flex;
 align-items:flex-end;
+position:relative;
+}
+
+.hero-banner::before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:linear-gradient(
+to top,
+rgba(0,0,0,0.95),
+rgba(0,0,0,0.6),
+rgba(0,0,0,0.2)
+);
 }
 
 .hero-content{
 padding:20px;
-background:linear-gradient(transparent, rgba(0,0,0,0.9));
-width:100%;
+position:relative;
+z-index:2;
+max-width:500px;
 }
 
 .hero-title{
-font-size:24px;
+font-size:26px;
 margin:0;
+font-weight:700;
 }
 
 .hero-rating{
@@ -80,13 +162,18 @@ background:#e50914;
 border:none;
 padding:8px 14px;
 color:white;
-border-radius:6px;
+border-radius:20px;
 cursor:pointer;
+font-size:13px;
 }
 
 .hero-btn.trailer{
-background:#333;
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(6px);
 }
+
+
+/* MOVIE PAGE */
 
 .movie-banner{
 background-size:cover;
@@ -97,7 +184,7 @@ padding:40px 20px;
 .movie-banner-content{
 display:flex;
 gap:20px;
-background:rgba(0,0,0,0.7);
+background:rgba(0,0,0,0.75);
 padding:20px;
 border-radius:10px;
 }
@@ -117,15 +204,22 @@ font-size:13px;
 opacity:0.8;
 }
 
+
+/* CAST */
+
 .cast-card{
 min-width:100px;
 text-align:center;
+cursor:pointer;
 }
 
 .cast-card img{
 width:100%;
 border-radius:8px;
 }
+
+
+/* TRAILER CARD */
 
 .trailer-card{
 min-width:220px;
@@ -155,4 +249,14 @@ border-radius:50%;
 .trailer-title{
 margin-top:6px;
 font-size:13px;
+}
+
+
+/* FOOTER */
+
+.footer{
+text-align:center;
+padding:20px;
+font-size:13px;
+opacity:.7;
   }
