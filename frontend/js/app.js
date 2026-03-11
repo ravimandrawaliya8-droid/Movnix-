@@ -1,4 +1,4 @@
-const API_KEY = "45fe7a9c4583e4374d3981bb55c39222;
+const API_KEY = "45fe7a9c4583e4374d3981bb55c39222";
 const BASE = "https://api.themoviedb.org/3";
 
 async function getMovies(endpoint){
