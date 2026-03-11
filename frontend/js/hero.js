@@ -1,59 +1,74 @@
-const HERO_IMG = "https://image.tmdb.org/t/p/original";
+const HERO_BACKDROP = "https://image.tmdb.org/t/p/original";
+const HERO_POSTER = "https://image.tmdb.org/t/p/w342";
 
 let heroMovies = [];
 let heroIndex = 0;
 
 function renderHero(movie){
 
-    const hero = document.getElementById("hero");
+const hero = document.getElementById("hero");
 
-    const backdrop = movie.backdrop_path
-        ? HERO_IMG + movie.backdrop_path
-        : "";
+const backdrop = movie.backdrop_path
+? HERO_BACKDROP + movie.backdrop_path
+: "";
 
-    hero.innerHTML = `
-        <div class="hero-banner" style="background-image:url('${backdrop}')">
+const poster = movie.poster_path
+? HERO_POSTER + movie.poster_path
+: "";
 
-            <div class="hero-content">
+const rating = movie.vote_average
+? movie.vote_average.toFixed(1)
+: "N/A";
 
-                <h1 class="hero-title">${movie.title}</h1>
+hero.innerHTML = `
 
-                <div class="hero-rating">
-                    ⭐ ${movie.vote_average.toFixed(1)}
-                </div>
+<div class="hero-card">
 
-                <div class="hero-buttons">
+<img class="hero-poster" src="${poster}">
 
-                    <button class="hero-btn"
-                        onclick="window.location.href='movie.html?id=${movie.id}'">
-                        View Movie
-                    </button>
+<div class="hero-video">
 
-                    <button class="hero-btn trailer"
-                        onclick="window.location.href='trailer.html?id=${movie.id}'">
-                        Watch Trailer
-                    </button>
+<img src="${backdrop}">
 
-                </div>
+<div class="play">▶</div>
 
-            </div>
+<div class="hero-info">
 
-        </div>
-    `;
+<h2>${movie.title}</h2>
+
+<p>
+${movie.overview ? movie.overview.slice(0,120) : ""}
+</p>
+
+<div class="reactions">
+
+<span>⭐ ${rating}</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
 }
+
 
 function startHeroSlider(){
 
-    setInterval(()=>{
+setInterval(()=>{
 
-        heroIndex++;
+heroIndex++;
 
-        if(heroIndex >= heroMovies.length){
-            heroIndex = 0;
-        }
+if(heroIndex >= heroMovies.length){
+heroIndex = 0;
+}
 
-        renderHero(heroMovies[heroIndex]);
+renderHero(heroMovies[heroIndex]);
 
-    },10000);
+},7000);
 
 }
