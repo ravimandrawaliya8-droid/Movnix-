@@ -45,7 +45,7 @@ header {
 }
 
 .search {
-    display:none; /* hidden initially, toggled by icon */
+    display:none;
     background: #1c1c1c;
     border: none;
     padding: 6px 12px;
@@ -100,6 +100,7 @@ header {
     background: #e5e5e5;
 }
 
+/* ===== HERO TEXT AREA ===== */
 
 .hero-info h1{
 font-size:34px;
@@ -149,6 +150,8 @@ margin:0 0 6px 0;
 font-size:16px;
 }
 
+/* ===== TRAILER SCROLL ===== */
+
 .row-scroll{
 display:flex;
 gap:12px;
@@ -176,32 +179,6 @@ height:6px;
 background:#f5c518;
 border-radius:3px;
 }
-
-/* MOBILE */
-
-@media(max-width:600px){
-
-.hero{
-height:420px;
-}
-
-.hero-container{
-gap:15px;
-padding:15px;
-}
-
-.hero-poster img{
-width:110px;
-}
-
-.hero-info h1{
-font-size:18px;
-}
-
-.hero-info p{
-font-size:12px;
-}
-
 
 /* ===== IMDB STYLE HERO ===== */
 
@@ -284,6 +261,7 @@ align-items:center;
 }
 
 /* ===== SECTIONS ===== */
+
 .section {
     padding: 16px;
 }
@@ -319,13 +297,14 @@ align-items:center;
 }
 
 .card {
-    min-width: 140px;
-    cursor: pointer;
+    min-width:140px;
+    flex-shrink:0;
+    cursor:pointer;
 }
 
 .card img {
-    width: 140px;
-    border-radius: 6px;
+    width:140px;
+    border-radius:6px;
 }
 
 .title {
@@ -341,26 +320,53 @@ align-items:center;
 }
 
 /* ===== BOX OFFICE ===== */
+
 #boxoffice div {
     margin-bottom: 8px;
 }
 
 /* ===== FOOTER ===== */
+
 footer {
     text-align: center;
     padding: 20px;
     color: #666;
 }
 
-/* ===== RESPONSIVE ===== */
+/* ===== MOBILE ===== */
+
 @media(max-width:600px){
-    .hero { height: 400px; flex-direction: column; padding: 10px;}
-    .hero-left img { width: 120px; }
-    .hero-right { max-width: 100%; font-size: 12px; }
-    .hero-right h1 { font-size: 16px; }
-    .hero-right p { font-size: 12px; }
-    .search { width: 120px; }
+
+.hero{
+height:420px;
 }
+
+.hero-container{
+gap:15px;
+padding:15px;
+}
+
+.hero-poster img{
+width:110px;
+}
+
+.hero-info h1{
+font-size:18px;
+}
+
+.hero-info p{
+font-size:12px;
+}
+
+.hero { height: 400px; flex-direction: column; padding: 10px;}
+.hero-left img { width: 120px; }
+.hero-right { max-width: 100%; font-size: 12px; }
+.hero-right h1 { font-size: 16px; }
+.hero-right p { font-size: 12px; }
+.search { width: 120px; }
+
+}
+
 </style>
 </head>
 
