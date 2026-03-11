@@ -464,8 +464,10 @@ const IMG="https://image.tmdb.org/t/p/w500";
 
 let heroMovies=[];
 let heroIndex=0;
+let trailerScrollInterval=null;
 
-// HERO + PAGES FUNCTION
+
+// HERO FUNCTION
 function loadHero(movie){
 
 const poster = movie.poster_path 
@@ -476,13 +478,16 @@ const backdrop = movie.backdrop_path
 ? IMG + movie.backdrop_path 
 : poster;
 
+
 // HERO BACKGROUND
 document.getElementById("hero-bg").style.backgroundImage =
 `url(${backdrop})`;
 
+
 // HERO TITLE
 document.getElementById("hero-title").innerText =
 movie.title || movie.name || "Unknown";
+
 
 // RANDOM REACTIONS
 document.getElementById("hero-like").innerText =
@@ -491,12 +496,14 @@ Math.floor(Math.random()*500)+50;
 document.getElementById("hero-love").innerText =
 Math.floor(Math.random()*200)+20;
 
+
 // PLAY BUTTON
 document.getElementById("hero-play").onclick = ()=>{
 window.open(`movie.html?id=${movie.id}&play=trailer`,"_blank");
 };
 
-// TRAILERS FETCH
+
+// TRAILERS
 fetch(`${API}/movie/${movie.id}/videos?api_key=${KEY}`)
 .then(r=>r.json())
 .then(d=>{
@@ -525,10 +532,14 @@ row.appendChild(div);
 });
 
 
-// HERO TRAILER AUTO SCROLL (6 sec)
+// AUTO SCROLL FIX
 let scrollPos = 0;
 
-setInterval(()=>{
+if(trailerScrollInterval){
+clearInterval(trailerScrollInterval);
+}
+
+trailerScrollInterval=setInterval(()=>{
 
 scrollPos += 200;
 
@@ -546,8 +557,7 @@ behavior: "smooth"
 })
 .catch(err=>console.log("Trailer error",err));
 
-    }
-
+}
 
 // ===== AWARDS ROW (SAFE) =====
 const awardsRow = document.getElementById("awards-row");
