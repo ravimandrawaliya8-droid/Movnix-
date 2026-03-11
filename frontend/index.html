@@ -199,7 +199,8 @@ width:100%;
 height:100%;
 background-size:cover;
 background-position:center;
-filter:brightness(0.7);
+filter:blur(3px) brightness(0.6);
+transform:scale(1.1);
 }
 
 .hero-overlay{
@@ -390,6 +391,7 @@ font-size:12px;
 <div id="hero" class="hero">
 
 <div id="hero-bg" class="hero-bg"></div>
+<div class="hero-overlay"></div>
 
 <div class="hero-content">
 
@@ -472,7 +474,7 @@ function loadHero(movie){
 
 const poster = movie.poster_path 
 ? IMG + movie.poster_path 
-: "https://via.placeholder.com/200x300";
+: "https://via.placeholder.com/342x513?text=No+Poster";
 
 const backdrop = movie.backdrop_path 
 ? "https://image.tmdb.org/t/p/w780" + movie.backdrop_path
