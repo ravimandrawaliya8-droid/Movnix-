@@ -17,11 +17,11 @@ const hero = document.getElementById("movie-hero");
 
 const backdrop = movie.backdrop_path
 ? IMG + movie.backdrop_path
-: "";
+: "https://via.placeholder.com/1280x720?text=No+Backdrop";
 
 const poster = movie.poster_path
 ? POSTER + movie.poster_path
-: "";
+: "https://via.placeholder.com/342x513?text=No+Poster";
 
 hero.innerHTML = `
 <div class="movie-banner" style="background-image:url('${backdrop}')">
@@ -54,7 +54,8 @@ Watch Trailer
 </div>
 `;
 
-document.getElementById("overview").innerText = movie.overview;
+document.getElementById("overview").innerText =
+movie.overview || "No overview available.";
 
 }
 
@@ -69,11 +70,13 @@ const data = await res.json();
 
 const container = document.getElementById("cast");
 
+container.innerHTML = "";
+
 data.cast.slice(0,10).forEach(actor=>{
 
 const photo = actor.profile_path
-? "https://image.tmdb.org/t/p/w185"+actor.profile_path
-: "https://via.placeholder.com/100";
+? "https://image.tmdb.org/t/p/w185" + actor.profile_path
+: "https://via.placeholder.com/100x150?text=No+Photo";
 
 const card = document.createElement("div");
 
@@ -83,6 +86,10 @@ card.innerHTML = `
 <img src="${photo}">
 <div>${actor.name}</div>
 `;
+
+card.onclick = () => {
+window.location.href = "person.html?id=" + actor.id;
+};
 
 container.appendChild(card);
 
@@ -100,6 +107,8 @@ const res = await fetch(
 const data = await res.json();
 
 const container = document.getElementById("similar");
+
+container.innerHTML = "";
 
 data.results.slice(0,12).forEach(movie=>{
 
