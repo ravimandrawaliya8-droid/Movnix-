@@ -523,25 +523,20 @@ row.appendChild(div);
 
 });
 
-})
-.catch(err=>console.log(err));
-
-    }
-
 
 // AUTO SCROLL TRAILERS
-let scrollPos = 0;
+let scrollPos=0;
 
 setInterval(()=>{
-scrollPos += 200;
+scrollPos+=200;
 
-if(scrollPos >= row.scrollWidth){
-scrollPos = 0;
+if(scrollPos>=row.scrollWidth){
+scrollPos=0;
 }
 
 row.scrollTo({
-left: scrollPos,
-behavior: "smooth"
+left:scrollPos,
+behavior:"smooth"
 });
 
 },6000);
