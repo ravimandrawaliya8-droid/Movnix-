@@ -426,23 +426,20 @@ font-size:12px;
 <footer>Movnix © 2026</footer>
 
 <script>
-const KEY="45fe7a9c4583e4374d3981bb55c39222";
-const API="https://api.themoviedb.org/3";
-const IMG="https://image.tmdb.org/t/p/w342";
+const KEY = "45fe7a9c4583e4374d3981bb55c39222";
+const API = "https://api.themoviedb.org/3";
+const IMG = "https://image.tmdb.org/t/p/w342";
 
-let heroMovies=[];
-let heroIndex=0;
-let trailerScrollInterval=null;
+let heroMovies = [];
+let trailerScrollInterval = null;
 
-
-// HERO FUNCTION
-function loadHero(movie){
-
-    const poster = movie.poster_path 
-        ? IMG + movie.poster_path 
+// ---------------- HERO FUNCTION ----------------
+function loadHero(movie) {
+    const poster = movie.poster_path
+        ? IMG + movie.poster_path
         : "https://via.placeholder.com/342x513?text=No+Poster";
 
-    const backdrop = movie.backdrop_path 
+    const backdrop = movie.backdrop_path
         ? "https://image.tmdb.org/t/p/w780" + movie.backdrop_path
         : poster;
 
@@ -462,67 +459,118 @@ function loadHero(movie){
     document.getElementById("hero-description").innerText = movie.overview || "No description available.";
 
     // Play button
-    document.getElementById("hero-play").onclick = ()=>{
-        window.open(`movie.html?id=${movie.id}&play=trailer`,"_blank");
+    document.getElementById("hero-play").onclick = () => {
+        window.open(`movie.html?id=${movie.id}&play=trailer`, "_blank");
     };
-    }
-
-
-// TRAILERS
-fetch(`${API}/movie/${movie.id}/videos?api_key=${KEY}`)
-.then(r=>r.json())
-.then(d=>{
-
-const row = document.getElementById("trailers-row");
-row.innerHTML = "";
-
-const trailers = d.results.filter(v=>v.site==="YouTube");
-
-trailers.slice(0,10).forEach(v=>{
-
-const div=document.createElement("div");
-div.className="card";
-
-div.innerHTML=`
-<img src="https://img.youtube.com/vi/${v.key}/0.jpg">
-<div style="font-size:12px">${v.name}</div>
-`;
-
-div.onclick=()=>{
-window.open(`https://www.youtube.com/watch?v=${v.key}`,"_blank");
-};
-
-row.appendChild(div);
-
-});
-
-
-// AUTO SCROLL FIX
-let scrollPos = 0;
-
-if(trailerScrollInterval){
-clearInterval(trailerScrollInterval);
 }
 
-trailerScrollInterval=setInterval(()=>{
+// ---------------- TRAILERS FUNCTION ----------------
+function loadTrailers(movieId) {
+    fetch(`${API}/movie/${movieId}/videos?api_key=${KEY}`)
+        .then(r => r.json())
+        .then(d => {
+            const row = document.getElementById("trailers-row");
+            row.innerHTML = "";
 
-scrollPos += 200;
+            const trailers = d.results.filter(v => v.site === "YouTube");
+            trailers.slice(0, 10).forEach(v => {
+                const div = document.createElement("div");
+                div.className = "card";
+                div.innerHTML = `<img src="https://img.youtube.com/vi/${v.key}/0.jpg"><div style="font-size:12px">${v.name}</div>`;
+                div.onclick = () => { window.open(`https://www.youtube.com/watch?v=${v.key}`, "_blank"); };
+                row.appendChild(div);
+            });
 
-if(scrollPos >= row.scrollWidth){
-scrollPos = 0;
+            // Auto scroll
+            let scrollPos = 0;
+            if (trailerScrollInterval) clearInterval(trailerScrollInterval);
+            trailerScrollInterval = setInterval(() => {
+                scrollPos += 200;
+                if (scrollPos >= row.scrollWidth) scrollPos = 0;
+                row.scrollTo({ left: scrollPos, behavior: "smooth" });
+            }, 6000);
+        })
+        .catch(err => console.log("Trailer error", err));
 }
 
-row.scrollTo({
-left: scrollPos,
-behavior: "smooth"
-});
+// ---------------- LOAD TRENDING HERO ----------------
+fetch(`${API}/trending/movie/day?api_key=${KEY}`)
+    .then(r => r.json())
+    .then(d => {
+        heroMovies = d.results.slice(0, 10);
+        showTrending(d.results);       // Your Featured Today section
+        loadHero(d.results[0]);        // Hero update
+        loadTrailers(d.results[0].id); // Trailers scroll
+    });
 
-},6000);
-
-})
-.catch(err=>console.log("Trailer error",err));
-
+// ---------------- SHOW MOVIES FUNCTION ----------------
+function showMovies(list, id) {
+    const box = document.getElementById(id);
+    box.innerHTML = "";
+    list.slice(0, 25).forEach(m => {
+        const poster = m.poster_path ? IMG + m.poster_path : "https://via.placeholder.com/200x300";
+        const div = document.createElement("div");
+        div.className = "card";
+        div.innerHTML = `<img src="${poster}"><div class="title">${m.title || m.name}</div><div class="rating">⭐ ${m.vote_average ? m.vote_average.toFixed(1) : "N/A"}</div>`;
+        div.onclick = () => window.location.href = "movie.html?id=" + m.id;
+        box.appendChild(div);
+    });
 }
+
+// ---------------- SHOW TRENDING FUNCTION ----------------
+function showTrending(list) {
+    const featuredBox = document.getElementById("trending-featured");
+    const scrollBox = document.getElementById("trending");
+    featuredBox.innerHTML = "";
+    scrollBox.innerHTML = "";
+
+    const first = list[0];
+    const poster = first.poster_path ? IMG + first.poster_path : "https://via.placeholder.com/200x300";
+
+    const div = document.createElement("div");
+    div.style.display = "flex";
+    div.style.gap = "20px";
+    div.style.width = "100%";
+    div.innerHTML = `
+        <img src="${poster}" style="width:200px; border-radius:10px; border:3px solid red;">
+        <div style="max-width:70%; backdrop-filter:blur(8px); background:rgba(0,0,0,0.25); padding:20px; border-radius:12px;">
+            <h2 style="margin:0;">${first.title || first.name}</h2>
+            <p style="font-size:14px; margin:8px 0;">${first.overview}</p>
+            <div style="color:red; font-weight:bold;">⭐ ${first.vote_average ? first.vote_average.toFixed(1) : "N/A"}</div>
+            <button style="margin-top:10px; background:red; border:none; padding:6px 12px; border-radius:20px; color:white; cursor:pointer;"
+                onclick="window.open('movie.html?id=${first.id}&play=trailer','_blank')">
+                Watch Trailer
+            </button>
+        </div>`;
+    featuredBox.appendChild(div);
+
+    list.slice(1, 25).forEach(m => {
+        const poster = m.poster_path ? IMG + m.poster_path : "https://via.placeholder.com/200x300";
+        const div = document.createElement("div");
+        div.className = "card";
+        div.innerHTML = `<img src="${poster}"><div class="title">${m.title || m.name}</div><div class="rating">⭐ ${m.vote_average ? m.vote_average.toFixed(1) : "N/A"}</div>`;
+        div.onclick = () => window.location.href = "movie.html?id=" + m.id;
+        scrollBox.appendChild(div);
+    });
+}
+
+ 
+// ---------------- LOAD CAST ----------------
+function loadCast() {
+    fetch(`${API}/person/popular?api_key=${KEY}`).then(r => r.json()).then(d => {
+        const box = document.getElementById("celebs");
+        box.innerHTML = "";
+        d.results.slice(0, 12).forEach(c => {
+            const img = c.profile_path ? IMG + c.profile_path : "https://via.placeholder.com/200";
+            const div = document.createElement("div");
+            div.innerHTML = `<img src="${img}"><div style="font-size:12px">${c.name}</div>`;
+            box.appendChild(div);
+        });
+    });
+}
+loadCast();
+
+
 
 // ===== AWARDS ROW (SAFE) =====
 const awardsRow = document.getElementById("awards-row");
@@ -605,19 +653,6 @@ fetch(`${API}/movie/popular?api_key=${KEY}`).then(r=>r.json()).then(d=>showMovie
 fetch(`${API}/movie/now_playing?api_key=${KEY}`).then(r=>r.json()).then(d=>showMovies(d.results,"now"));
 fetch(`${API}/movie/upcoming?api_key=${KEY}`).then(r=>r.json()).then(d=>showMovies(d.results,"upcoming"));
 
-// Load cast
-function loadCast(){
-    fetch(`${API}/person/popular?api_key=${KEY}`).then(r=>r.json()).then(d=>{
-        const box=document.getElementById("celebs"); box.innerHTML="";
-        d.results.slice(0,12).forEach(c=>{
-            const img=c.profile_path?IMG+c.profile_path:"https://via.placeholder.com/200";
-            const div=document.createElement("div");
-            div.innerHTML=`<img src="${img}"><div style="font-size:12px">${c.name}</div>`;
-            box.appendChild(div);
-        });
-    });
-}
-loadCast();
 
 // Load box office
 function loadBoxOffice(){
