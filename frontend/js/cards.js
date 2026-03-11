@@ -21,7 +21,7 @@ function createMovieCard(movie){
     `;
 
     card.onclick = () => {
-        window.location.href = "/movie?id=" + movie.id;
+        window.location.href = "movie.html?id=" + movie.id;
     };
 
     return card;
