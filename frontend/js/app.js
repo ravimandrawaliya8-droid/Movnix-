@@ -37,6 +37,8 @@ async function init(){
 
     startHeroSlider();
 
+    loadTrailers();
+
     loadSection("/trending/movie/day","trending");
 
     loadSection("/movie/popular","popular");
