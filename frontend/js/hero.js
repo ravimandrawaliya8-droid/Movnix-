@@ -25,12 +25,12 @@ function renderHero(movie){
                 <div class="hero-buttons">
 
                     <button class="hero-btn"
-                        onclick="window.location.href='/movie?id=${movie.id}'">
+                        onclick="window.location.href='movie.html?id=${movie.id}'">
                         View Movie
                     </button>
 
                     <button class="hero-btn trailer"
-                        onclick="window.location.href='/trailer?id=${movie.id}'">
+                        onclick="window.location.href='trailer.html?id=${movie.id}'">
                         Watch Trailer
                     </button>
 
