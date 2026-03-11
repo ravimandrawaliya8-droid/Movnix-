@@ -47,4 +47,33 @@ async function init(){
 
 }
 
+async function loadTrailers(){
+
+    const movies = await getMovies("/trending/movie/day");
+
+    const container = document.getElementById("trailers");
+
+    container.innerHTML = "";
+
+    for(const movie of movies.slice(0,10)){
+
+        const res = await fetch(`${BASE}/movie/${movie.id}/videos?api_key=${API_KEY}`);
+
+        const data = await res.json();
+
+        const trailer = data.results.find(v => v.type === "Trailer");
+
+        if(trailer){
+
+            const card = createTrailerCard(trailer, movie);
+
+            container.appendChild(card);
+
+        }
+
+    }
+
+            }
+
 init();
+
