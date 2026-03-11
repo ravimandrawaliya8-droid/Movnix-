@@ -360,30 +360,24 @@ font-size:12px;
 </header>
 
 <!-- HERO IMDB STYLE -->
+<!-- TOP AD SPACE -->
+<div class="top-ad">Advertisement Space</div>
+
+<!-- HERO CINEMATIC STYLE -->
 <div id="hero" class="hero">
-
-<div id="hero-bg" class="hero-bg"></div>
-<div class="hero-overlay"></div>
-
-<div class="hero-content">
-
-<div class="hero-play" id="hero-play">▶</div>
-
-<div class="hero-text">
-
-<h2 id="hero-title">Loading...</h2>
-
-<p class="hero-watch">Watch the Trailer</p>
-
-<div class="hero-reactions">
-<span>👍 <span id="hero-like">0</span></span>
-<span>❤️ <span id="hero-love">0</span></span>
-</div>
-
-</div>
-
-</div>
-
+    <div id="hero-bg" class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <div class="hero-left">
+            <img id="hero-poster" src="https://via.placeholder.com/342x513?text=Loading..." alt="Movie Poster">
+        </div>
+        <div class="hero-right">
+            <h1 id="hero-title">Loading...</h1>
+            <div class="hero-meta" id="hero-rating">⭐ 0.0</div>
+            <p id="hero-description">Movie description will appear here...</p>
+            <button id="hero-play">Watch Trailer</button>
+        </div>
+    </div>
 </div>
 
 <!-- Browse trailers -->
@@ -444,37 +438,34 @@ let trailerScrollInterval=null;
 // HERO FUNCTION
 function loadHero(movie){
 
-const poster = movie.poster_path 
-? IMG + movie.poster_path 
-: "https://via.placeholder.com/342x513?text=No+Poster";
+    const poster = movie.poster_path 
+        ? IMG + movie.poster_path 
+        : "https://via.placeholder.com/342x513?text=No+Poster";
 
-const backdrop = movie.backdrop_path 
-? "https://image.tmdb.org/t/p/w780" + movie.backdrop_path
-: poster;
+    const backdrop = movie.backdrop_path 
+        ? "https://image.tmdb.org/t/p/w780" + movie.backdrop_path
+        : poster;
 
+    // Hero background
+    document.getElementById("hero-bg").style.backgroundImage = `url(${backdrop})`;
 
-// HERO BACKGROUND
-document.getElementById("hero-bg").style.backgroundImage =
-`url(${backdrop})`;
+    // Hero poster
+    document.getElementById("hero-poster").src = poster;
 
+    // Hero title
+    document.getElementById("hero-title").innerText = movie.title || movie.name || "Unknown";
 
-// HERO TITLE
-document.getElementById("hero-title").innerText =
-movie.title || movie.name || "Unknown";
+    // Hero rating
+    document.getElementById("hero-rating").innerText = "⭐ " + (movie.vote_average ? movie.vote_average.toFixed(1) : "N/A");
 
+    // Hero description
+    document.getElementById("hero-description").innerText = movie.overview || "No description available.";
 
-// RANDOM REACTIONS
-document.getElementById("hero-like").innerText =
-Math.floor(Math.random()*500)+50;
-
-document.getElementById("hero-love").innerText =
-Math.floor(Math.random()*200)+20;
-
-
-// PLAY BUTTON
-document.getElementById("hero-play").onclick = ()=>{
-window.open(`movie.html?id=${movie.id}&play=trailer`,"_blank");
-};
+    // Play button
+    document.getElementById("hero-play").onclick = ()=>{
+        window.open(`movie.html?id=${movie.id}&play=trailer`,"_blank");
+    };
+    }
 
 
 // TRAILERS
