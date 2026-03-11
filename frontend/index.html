@@ -460,7 +460,7 @@ font-size:12px;
 <script>
 const KEY="45fe7a9c4583e4374d3981bb55c39222";
 const API="https://api.themoviedb.org/3";
-const IMG="https://image.tmdb.org/t/p/w500";
+const IMG="https://image.tmdb.org/t/p/w342";
 
 let heroMovies=[];
 let heroIndex=0;
@@ -475,7 +475,7 @@ const poster = movie.poster_path
 : "https://via.placeholder.com/200x300";
 
 const backdrop = movie.backdrop_path 
-? IMG + movie.backdrop_path 
+? "https://image.tmdb.org/t/p/w780" + movie.backdrop_path
 : poster;
 
 
