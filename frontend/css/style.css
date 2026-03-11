@@ -87,3 +87,42 @@ cursor:pointer;
 .hero-btn.trailer{
 background:#333;
 }
+
+.movie-banner{
+background-size:cover;
+background-position:center;
+padding:40px 20px;
+}
+
+.movie-banner-content{
+display:flex;
+gap:20px;
+background:rgba(0,0,0,0.7);
+padding:20px;
+border-radius:10px;
+}
+
+.movie-poster{
+width:140px;
+border-radius:8px;
+}
+
+.movie-info h1{
+margin:0;
+}
+
+.meta{
+margin-top:6px;
+font-size:13px;
+opacity:0.8;
+}
+
+.cast-card{
+min-width:100px;
+text-align:center;
+}
+
+.cast-card img{
+width:100%;
+border-radius:8px;
+}
