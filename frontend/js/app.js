@@ -209,6 +209,24 @@ activateCelebrityEffect();
 
 }
 
+/* SEE ALL CARD */
+
+const seeAll = `
+<a href="celebrities.html" class="celebrity-seeall">
+
+<div class="seeall-box">
+
+<div class="seeall-text">
+See<br>All
+</div>
+
+</div>
+
+</a>
+`;
+
+container.innerHTML += seeAll;
+
 function activateCelebrityEffect(){
 
 const cards = document.querySelectorAll(".celebrity-card");
