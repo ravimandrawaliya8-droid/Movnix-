@@ -41,7 +41,8 @@ async function loadHero(){
     const heroContainer = document.getElementById("hero");
     if(!heroContainer) return;
 
-    heroMovies = await getMovies("/trending/movie/day");
+    heroMovies = await getMovies("/trending/movie/week");
+    heroMovies = heroMovies.slice(0,25);
 
     if(heroMovies.length === 0) return;
 
@@ -256,6 +257,48 @@ updateCenter();
 
     }
 
+/* ---------------- HERO RENDER ---------------- */
+
+let heroIndex = 0;
+
+function renderHero(movie){
+
+const poster =
+"https://image.tmdb.org/t/p/w342" + movie.poster_path;
+
+const backdrop =
+"https://image.tmdb.org/t/p/original" + movie.backdrop_path;
+
+document.getElementById("heroPoster").src = poster;
+
+document.getElementById("heroBackdrop").innerHTML =
+`<img src="${backdrop}" alt="${movie.title}">`;
+
+document.getElementById("heroTitle").innerText = movie.title;
+
+document.getElementById("heroOverview").innerText =
+movie.overview ? movie.overview.slice(0,140)+"..." : "";
+
+}
+
+/* ---------------- HERO SLIDER ---------------- */
+
+function startHeroSlider(){
+
+setInterval(()=>{
+
+heroIndex++;
+
+if(heroIndex >= heroMovies.length){
+heroIndex = 0;
+}
+
+renderHero(heroMovies[heroIndex]);
+
+},6000);
+
+    }
+
 /* ---------------- MOVNIX PICKS ---------------- */
 
 async function loadMovnixPicks(){
@@ -319,27 +362,6 @@ container.innerHTML += card;
 
 });
 
-/* SEE ALL CARD */
-
-const seeAll = `
-
-<a href="discover.html" class="picks-card seeall-card">
-
-<div class="seeall-box">
-
-<span class="seeall-text">
-See<br>All
-</span>
-
-</div>
-
-</a>
-
-`;
-
-container.innerHTML += seeAll;
-
-    }
 
 /* ---------------- INIT ---------------- */
 
