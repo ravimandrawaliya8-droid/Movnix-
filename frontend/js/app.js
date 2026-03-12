@@ -256,6 +256,71 @@ updateCenter();
 
     }
 
+/* ---------------- MOVNIX PICKS ---------------- */
+
+async function loadMovnixPicks(){
+
+const container = document.getElementById("movnixPicks");
+if(!container) return;
+
+const movies = await getMovies("/movie/top_rated");
+
+container.innerHTML = "";
+
+movies.slice(0,12).forEach(movie=>{
+
+const poster = movie.poster_path
+? "https://image.tmdb.org/t/p/w500" + movie.poster_path
+: "https://via.placeholder.com/500x750?text=No+Poster";
+
+const rating = movie.vote_average
+? movie.vote_average.toFixed(1)
+: "0";
+
+const card = `
+
+<div class="picks-card">
+
+<img src="${poster}" alt="${movie.title}">
+
+<div class="picks-info">
+
+<div class="picks-rating">
+⭐ ${rating}
+</div>
+
+<div class="picks-title-text">
+${movie.title}
+</div>
+
+<a href="watch.html?id=${movie.id}" class="picks-btn">
+Watch Options
+</a>
+
+<a href="watchlist.html?id=${movie.id}" class="picks-btn">
++ Watchlist
+</a>
+
+<div class="picks-actions">
+
+<span>▶ Trailer</span>
+
+<span>ℹ Info</span>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+container.innerHTML += card;
+
+});
+
+    }
+
 /* ---------------- INIT ---------------- */
 
 async function init(){
@@ -267,6 +332,8 @@ async function init(){
     loadTopWeek();
 
     loadCelebrities();
+
+    loadMovnixPicks();
 
     loadSection("/trending/movie/day","trending");
 
