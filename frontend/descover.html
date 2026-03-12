@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Movnix Picks</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+/* PAGE HEADER */
+
+.list-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin:20px;
+}
+
+.list-title{
+color:#f5c518;
+font-size:22px;
+font-weight:600;
+}
+
+/* GRID */
+
+.picks-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+
+gap:16px;
+
+padding:20px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="header">
+
+<div class="logo">Movnix</div>
+
+<div class="icons">
+<a href="index.html">🏠</a>
+</div>
+
+</header>
+
+
+<div class="list-header">
+
+<h2 class="list-title">Movnix Picks</h2>
+
+</div>
+
+
+<div class="picks-grid" id="picksGrid"></div>
+
+
+<script>
+
+const API_KEY="45fe7a9c4583e4374d3981bb55c39222";
+const BASE="https://api.themoviedb.org/3";
+
+async function loadPicks(){
+
+const res=await fetch(`${BASE}/movie/top_rated?api_key=${API_KEY}`);
+
+const data=await res.json();
+
+const movies=data.results;
+
+const container=document.getElementById("picksGrid");
+
+movies.slice(0,40).forEach(movie=>{
+
+const poster=movie.poster_path
+? "https://image.tmdb.org/t/p/w500"+movie.poster_path
+: "https://via.placeholder.com/500x750?text=No+Poster";
+
+const rating=movie.vote_average.toFixed(1);
+
+const card=`
+
+<div class="picks-card">
+
+<img src="${poster}">
+
+<div class="picks-info">
+
+<div class="picks-rating">⭐ ${rating}</div>
+
+<div class="picks-title-text">${movie.title}</div>
+
+<a href="watch.html?id=${movie.id}" class="picks-btn">
+Watch Options
+</a>
+
+<a href="watchlist.html?id=${movie.id}" class="picks-btn">
++ Watchlist
+</a>
+
+<div class="picks-actions">
+
+<span>▶ Trailer</span>
+
+<span>ℹ Info</span>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+container.innerHTML+=card;
+
+});
+
+}
+
+loadPicks();
+
+</script>
+
+</body>
+  </html>
