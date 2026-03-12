@@ -821,3 +821,61 @@ box-shadow:
 0 0 30px rgba(30,120,255,.4);
 
   }
+
+/* BROWSE CATEGORIES */
+
+.browse-section{
+
+margin:25px 0;
+
+}
+
+.browse-head h2{
+
+color:#fff;
+font-size:20px;
+margin-bottom:12px;
+
+}
+
+.browse-row{
+
+display:flex;
+gap:12px;
+overflow-x:auto;
+padding-bottom:6px;
+
+}
+
+.browse-row::-webkit-scrollbar{
+display:none;
+}
+
+.browse-chip{
+
+padding:10px 16px;
+
+border:1px solid #fff;
+
+border-radius:25px;
+
+background:#111;
+
+color:#fff;
+
+text-decoration:none;
+
+font-size:14px;
+
+white-space:nowrap;
+
+transition:0.25s;
+
+}
+
+.browse-chip:hover{
+
+background:#222;
+border-color:#f5c518;
+
+  }
