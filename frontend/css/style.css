@@ -222,9 +222,10 @@ cursor:pointer;
 
 .trailer-row{
 display:flex;
-gap:14px;
+gap:12px;
 overflow-x:auto;
 scroll-behavior:smooth;
+padding-bottom:4px;
 }
 
 .trailer-row::-webkit-scrollbar{
@@ -234,18 +235,33 @@ display:none;
 /* TRAILER CARD */
 
 .trailer-card{
-min-width:230px;
+min-width:185px;
 position:relative;
 }
 
+/* TRAILER IMAGE */
+
 .trailer-card img{
 width:100%;
-height:130px;
+height:105px;
 object-fit:cover;
-border-radius:12px;
+border-radius:10px;
 }
 
-/* SMALL PLAY BUTTON */
+/* WATCH TIME */
+
+.watch-time{
+position:absolute;
+top:6px;
+left:6px;
+background:rgba(0,0,0,0.75);
+padding:3px 6px;
+font-size:11px;
+border-radius:4px;
+font-weight:600;
+}
+
+/* PLAY BUTTON */
 
 .play-sm{
 position:absolute;
@@ -253,17 +269,36 @@ top:50%;
 left:50%;
 transform:translate(-50%,-50%);
 border:2px solid #fff;
-padding:8px 10px;
-border-radius:50%;
-font-size:18px;
 background:rgba(0,0,0,0.25);
-backdrop-filter:blur(3px);
+padding:7px 9px;
+border-radius:50%;
+font-size:16px;
+backdrop-filter:blur(4px);
 }
+
+/* MOVIE TITLE */
 
 .trailer-card p{
 margin-top:6px;
 font-size:14px;
+font-weight:700;
 }
+
+/* META INFO */
+
+.trailer-meta{
+display:flex;
+gap:10px;
+font-size:12px;
+opacity:.85;
+margin-top:2px;
+}
+
+.trailer-meta span{
+display:flex;
+align-items:center;
+gap:3px;
+  }
 
 /* MOVIE ROW */
 
