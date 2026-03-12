@@ -350,3 +350,52 @@ text-align:center;
 opacity:.7;
 font-size:13px;
   }
+
+/* TRAILER PAGE */
+
+.trailer-page{
+padding:16px;
+}
+
+.trailer-container{
+width:100%;
+aspect-ratio:16/9;
+background:#000;
+border-radius:12px;
+overflow:hidden;
+margin-bottom:12px;
+}
+
+#player iframe{
+width:100%;
+height:100%;
+border:none;
+}
+
+#movie-title{
+font-size:20px;
+margin-bottom:10px;
+}
+
+.trailer-actions{
+display:flex;
+gap:10px;
+}
+
+.watch-btn{
+background:#e50914;
+border:none;
+padding:8px 14px;
+border-radius:20px;
+color:#fff;
+font-weight:600;
+}
+
+.like-btn,
+.save-btn{
+background:rgba(255,255,255,0.08);
+border:none;
+padding:8px 12px;
+border-radius:20px;
+color:#fff;
+  }
