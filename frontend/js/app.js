@@ -156,13 +156,10 @@ async function loadTopWeek(){
         }
 
 /* ---------------- CELEBRITIES ---------------- */
-
 async function loadCelebrities(){
 
 const container = document.getElementById("celebs");
 if(!container) return;
-
-/* GLOBAL POPULAR CELEBRITIES */
 
 const res = await fetch(`${BASE}/person/popular?api_key=${API_KEY}`);
 const data = await res.json();
@@ -205,9 +202,6 @@ container.innerHTML += card;
 
 });
 
-activateCelebrityEffect();
-
-}
 
 /* SEE ALL CARD */
 
@@ -215,11 +209,9 @@ const seeAll = `
 <a href="celebrities.html" class="celebrity-seeall">
 
 <div class="seeall-box">
-
 <div class="seeall-text">
 See<br>All
 </div>
-
 </div>
 
 </a>
@@ -227,10 +219,15 @@ See<br>All
 
 container.innerHTML += seeAll;
 
+activateCelebrityEffect();
+
+}
+
+
 function activateCelebrityEffect(){
 
 const cards = document.querySelectorAll(".celebrity-card");
-const container = document.querySelector(".celebrity-row");
+const container = document.getElementById("celebs");
 
 function updateCenter(){
 
