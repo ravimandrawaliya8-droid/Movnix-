@@ -879,3 +879,127 @@ background:#222;
 border-color:#f5c518;
 
   }
+
+/* DISCOVER SECTION */
+
+.discover{
+margin-top:25px;
+}
+
+/* HEADER ROW */
+
+.discover-head{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:12px;
+}
+
+/* DISCOVER MOVIES TITLE */
+
+.discover-title{
+color:#ffffff;
+font-size:22px;
+font-weight:600;
+}
+
+/* BLUE LINK */
+
+.discover-link{
+color:#4ea1ff;
+font-size:14px;
+text-decoration:none;
+}
+
+.discover-link:hover{
+opacity:0.8;
+}
+
+/* MOVNIX PICKS TITLE */
+
+.picks-head{
+margin-bottom:10px;
+}
+
+.picks-title{
+color:#f5c518;
+font-size:18px;
+font-weight:600;
+}
+
+/* MOVIE ROW */
+
+.picks-row{
+display:flex;
+gap:14px;
+overflow-x:auto;
+padding-bottom:10px;
+}
+
+.picks-row::-webkit-scrollbar{
+display:none;
+}
+
+/* CARD */
+
+.picks-card{
+min-width:160px;
+background:#151515;
+border-radius:14px;
+overflow:hidden;
+flex-shrink:0;
+}
+
+/* POSTER */
+
+.picks-card img{
+width:100%;
+height:240px;
+object-fit:cover;
+}
+
+/* INFO */
+
+.picks-info{
+padding:10px;
+}
+
+/* RATING */
+
+.picks-rating{
+color:#f5c518;
+font-size:14px;
+margin-bottom:4px;
+}
+
+/* TITLE */
+
+.picks-title-text{
+font-size:14px;
+color:#ffffff;
+margin-bottom:8px;
+}
+
+/* BUTTON */
+
+.picks-btn{
+display:block;
+width:100%;
+padding:8px;
+background:#222;
+border-radius:20px;
+text-align:center;
+color:#9ecbff;
+margin-bottom:6px;
+font-size:13px;
+text-decoration:none;
+}
+
+/* ACTIONS */
+
+.picks-actions{
+display:flex;
+justify-content:space-between;
+font-size:12px;
+color:#cccccc;
+}
