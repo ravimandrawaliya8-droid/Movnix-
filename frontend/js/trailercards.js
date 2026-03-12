@@ -27,10 +27,8 @@ function createTrailerCard(video, movie){
         <p>${movie.title}</p>
 
         <div class="trailer-meta">
-
             <span>⭐ ${rating}</span>
             <span>❤️ ${likes}</span>
-
         </div>
 
     `;
