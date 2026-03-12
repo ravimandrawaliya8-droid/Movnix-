@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded",()=>{
+window.addEventListener("load",()=>{
 
 const rows = document.querySelectorAll(
 ".movie-row, .trailer-row, .picks-row"
@@ -12,7 +12,7 @@ const posters = row.querySelectorAll("img");
 
 posters.forEach((img,index)=>{
 
-/* IMPORTANT FIX */
+/* FIX 1: CORS issue */
 img.crossOrigin = "anonymous";
 
 if(index < 10){
@@ -36,9 +36,7 @@ const data = ctx.getImageData(
 let brightness = 0;
 
 for(let i=0;i<data.length;i+=4){
-
 brightness += (data[i]+data[i+1]+data[i+2])/3;
-
 }
 
 brightness = brightness/(data.length/4);
@@ -53,7 +51,7 @@ img.style.filter =
 }
 
 }catch(e){
-console.log("poster check skipped");
+console.log("Poster brightness check skipped");
 }
 
 };
