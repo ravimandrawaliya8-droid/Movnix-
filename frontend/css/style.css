@@ -633,7 +633,6 @@ height:150px;        /* पहले 120px था */
 border-radius:14px;
 overflow:hidden;
 }
-
 /* IMAGE */
 
 .ad-banner img{
@@ -653,40 +652,51 @@ height:100%;
 }
 
 
+
 /* ========================= */
 /* MOST POPULAR CELEBRITIES */
 /* ========================= */
 
-.celebrity-row{
-display:flex;
-gap:24px;
-overflow-x:auto;
-scroll-behavior:smooth;
-padding:10px 0 20px 0;
+.section{
+padding:30px 20px;
 }
 
-.celebrity-row::-webkit-scrollbar{
-display:none;
-}
-
-/* YELLOW LINE */
+/* TITLE LINE */
 
 .celeb-line{
-width:140px;
+width:150px;
 height:3px;
 background:#f5c518;
 margin-top:6px;
 border-radius:2px;
 }
 
+/* ROW */
+
+.celebrity-row{
+display:flex;
+gap:26px;
+overflow-x:auto;
+overflow-y:visible;
+scroll-behavior:smooth;
+padding-top:25px;      /* ring ke liye space */
+padding-bottom:35px;   /* section height increase */
+}
+
+.celebrity-row::-webkit-scrollbar{
+display:none;
+}
+
 /* CARD */
 
 .celebrity-card{
-min-width:150px;
+min-width:160px;
 text-align:center;
 flex-shrink:0;
 opacity:.55;
 transition:all .35s ease;
+padding-top:20px;
+overflow:visible;
 }
 
 /* PHOTO */
@@ -699,6 +709,7 @@ border-radius:50%;
 overflow:hidden;
 border:3px solid #222;
 transition:all .35s ease;
+position:relative;
 }
 
 .celebrity-photo img{
@@ -710,7 +721,7 @@ object-fit:cover;
 /* ACTIVE CENTER CARD */
 
 .celebrity-card.active{
-transform:scale(1.25);
+transform:scale(1.28);
 opacity:1;
 }
 
@@ -719,9 +730,9 @@ opacity:1;
 border:3px solid #f5c518;
 
 box-shadow:
-0 0 10px #f5c518,
-0 0 20px #f5c518,
-0 0 35px rgba(245,197,24,.7);
+0 0 12px #f5c518,
+0 0 22px #f5c518,
+0 0 38px rgba(245,197,24,.75);
 
 }
 
@@ -730,18 +741,19 @@ box-shadow:
 .celebrity-name{
 font-size:15px;
 font-weight:700;
-margin-top:10px;
+margin-top:12px;
+color:#fff;
 }
 
 .celebrity-meta{
 font-size:12px;
 color:#aaa;
-margin-top:2px;
+margin-top:3px;
 }
 
 .celebrity-popularity{
 font-size:12px;
 color:#f5c518;
 font-weight:600;
-margin-top:3px;
-              }
+margin-top:4px;
+}
