@@ -757,3 +757,67 @@ color:#f5c518;
 font-weight:600;
 margin-top:4px;
 }
+
+
+/* ========================= */
+/* SEE ALL CELEBRITY CARD */
+/* ========================= */
+
+.celebrity-seeall{
+display:flex;
+align-items:center;
+justify-content:center;
+flex-shrink:0;
+text-decoration:none;
+}
+
+/* BOX */
+
+.seeall-box{
+
+width:95px;
+height:160px;
+
+border-radius:18px;
+
+background:linear-gradient(
+135deg,
+#1b6cff,
+#0a47c9
+);
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+margin-top:20px;
+margin-bottom:20px;
+
+box-shadow:
+0 6px 18px rgba(0,0,0,0.5);
+
+transition:all .3s ease;
+
+}
+
+/* TEXT */
+
+.seeall-text{
+color:#fff;
+font-size:16px;
+font-weight:700;
+line-height:1.2;
+text-align:center;
+}
+
+/* HOVER EFFECT */
+
+.seeall-box:hover{
+
+transform:scale(1.08);
+
+box-shadow:
+0 0 15px rgba(30,120,255,.8),
+0 0 30px rgba(30,120,255,.4);
+
+  }
