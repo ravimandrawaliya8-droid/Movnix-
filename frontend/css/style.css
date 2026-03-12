@@ -654,39 +654,51 @@ height:100%;
 
 
 /* ========================= */
-/* TRENDING CELEBRITIES */
+/* MOST POPULAR CELEBRITIES */
 /* ========================= */
 
 .celebrity-row{
 display:flex;
-gap:20px;
+gap:24px;
 overflow-x:auto;
-padding:10px 0 20px 0;
 scroll-behavior:smooth;
+padding:10px 0 20px 0;
 }
 
 .celebrity-row::-webkit-scrollbar{
 display:none;
 }
 
+/* YELLOW LINE */
+
+.celeb-line{
+width:140px;
+height:3px;
+background:#f5c518;
+margin-top:6px;
+border-radius:2px;
+}
+
 /* CARD */
 
 .celebrity-card{
-min-width:140px;
+min-width:150px;
 text-align:center;
 flex-shrink:0;
-transition:transform .35s ease, opacity .35s ease;
+opacity:.55;
+transition:all .35s ease;
 }
 
 /* PHOTO */
 
 .celebrity-photo{
-width:110px;
-height:110px;
+width:120px;
+height:120px;
 margin:auto;
 border-radius:50%;
 overflow:hidden;
 border:3px solid #222;
+transition:all .35s ease;
 }
 
 .celebrity-photo img{
@@ -695,37 +707,41 @@ height:100%;
 object-fit:cover;
 }
 
-/* NAME */
-
-.celebrity-name{
-font-size:14px;
-font-weight:700;
-margin-top:8px;
-}
-
-/* META */
-
-.celebrity-meta{
-font-size:12px;
-opacity:.8;
-margin-top:2px;
-}
-
-/* POPULARITY */
-
-.celebrity-popularity{
-font-size:12px;
-opacity:.7;
-margin-top:2px;
-}
-
-/* PARALLAX ACTIVE */
+/* ACTIVE CENTER CARD */
 
 .celebrity-card.active{
-transform:scale(1.15);
+transform:scale(1.25);
 opacity:1;
 }
 
-.celebrity-card:not(.active){
-opacity:.6;
+.celebrity-card.active .celebrity-photo{
+
+border:3px solid #f5c518;
+
+box-shadow:
+0 0 10px #f5c518,
+0 0 20px #f5c518,
+0 0 35px rgba(245,197,24,.7);
+
 }
+
+/* TEXT */
+
+.celebrity-name{
+font-size:15px;
+font-weight:700;
+margin-top:10px;
+}
+
+.celebrity-meta{
+font-size:12px;
+color:#aaa;
+margin-top:2px;
+}
+
+.celebrity-popularity{
+font-size:12px;
+color:#f5c518;
+font-weight:600;
+margin-top:3px;
+              }
