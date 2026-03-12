@@ -912,7 +912,7 @@ font-size:22px;
 font-weight:600;
 }
 
-/* BLUE LINK (Find your next favorite) */
+/* SUBTITLE LINK */
 
 .discover-link{
 color:#4ea1ff;
@@ -959,18 +959,27 @@ scroll-behavior:smooth;
 display:none;
 }
 
-/* CARD */
+/* CARD (FIXED SIZE) */
 
 .picks-card{
-min-width:160px;
-background:#151515;
-border-radius:14px;
-overflow:hidden;
-flex-shrink:0;
-transition:0.25s;
-}
 
-/* CARD HOVER (slight lift) */
+min-width:160px;
+height:360px;
+
+background:#151515;
+
+border-radius:14px;
+
+overflow:hidden;
+
+flex-shrink:0;
+
+display:flex;
+flex-direction:column;
+
+transition:0.25s;
+
+}
 
 .picks-card:hover{
 transform:translateY(-3px);
@@ -987,7 +996,15 @@ object-fit:cover;
 /* INFO */
 
 .picks-info{
+
 padding:10px;
+
+flex:1;
+
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+
 }
 
 /* RATING */
@@ -1026,7 +1043,7 @@ transition:0.2s;
 background:#2a2a2a;
 }
 
-/* ACTION BUTTON ROW */
+/* ACTION ROW */
 
 .picks-actions{
 display:flex;
@@ -1034,7 +1051,7 @@ gap:6px;
 margin-top:6px;
 }
 
-/* GLASS BUTTONS (Trailer + Info) */
+/* GLASS BUTTONS */
 
 .picks-actions span{
 
@@ -1054,3 +1071,30 @@ color:#e6e6e6;
 
 }
 
+/* SEE ALL CARD */
+
+.seeall-card{
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.seeall-box{
+width:100%;
+height:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.seeall-text{
+
+color:#4ea1ff;
+
+font-size:22px;
+
+font-weight:600;
+
+text-align:center;
+
+}
