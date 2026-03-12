@@ -430,3 +430,142 @@ padding:8px 12px;
 border-radius:20px;
 color:#fff;
   }
+
+/* ========================= /
+/ TOP THIS WEEK MOVIE CARDS /
+/ ========================= */
+
+.movie-row{
+display:flex;
+gap:16px;
+overflow-x:auto;
+scroll-behavior:smooth;
+padding-bottom:6px;
+}
+
+.movie-row::-webkit-scrollbar{
+display:none;
+}
+
+/* MOVIE CARD */
+
+.movie-card{
+min-width:165px;
+background:#111;
+border-radius:18px;
+overflow:hidden;
+box-shadow:0 10px 24px rgba(0,0,0,0.7);
+flex-shrink:0;
+transition:transform .25s ease, box-shadow .25s ease;
+}
+
+.movie-card:hover{
+transform:scale(1.05);
+box-shadow:0 12px 28px rgba(0,0,0,0.9);
+}
+
+/* POSTER */
+
+.poster-box{
+position:relative;
+width:100%;
+height:210px;
+}
+
+.poster-box img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+/* RATING BADGE */
+
+.rating-badge{
+position:absolute;
+top:8px;
+left:8px;
+background:rgba(0,0,0,0.75);
+padding:4px 8px;
+border-radius:8px;
+font-size:12px;
+font-weight:600;
+}
+
+/* RANK BADGE */
+
+.rank{
+position:absolute;
+top:8px;
+right:8px;
+background:#f5c518;
+color:#000;
+padding:3px 7px;
+border-radius:7px;
+font-size:11px;
+font-weight:700;
+}
+
+/* MOVIE INFO */
+
+.movie-info{
+padding:10px;
+}
+
+.movie-info h4{
+font-size:14px;
+font-weight:700;
+margin-bottom:4px;
+}
+
+/* GENRE */
+
+.genre{
+font-size:11px;
+opacity:.8;
+margin-bottom:7px;
+}
+
+/* POPULARITY BAR */
+
+.popularity{
+height:4px;
+background:#333;
+border-radius:4px;
+overflow:hidden;
+margin-bottom:10px;
+}
+
+.bar{
+height:100%;
+background:#f5c518;
+}
+
+/* ACTION BUTTONS */
+
+.actions{
+display:flex;
+gap:6px;
+}
+
+.rate-btn{
+flex:1;
+background:#1c1c1c;
+border:none;
+color:#fff;
+padding:6px;
+border-radius:8px;
+font-size:12px;
+cursor:pointer;
+}
+
+.trailer-btn{
+flex:1;
+background:#e50914;
+color:#fff;
+text-align:center;
+padding:6px;
+border-radius:8px;
+font-size:12px;
+text-decoration:none;
+font-weight:600;
+}
