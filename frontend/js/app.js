@@ -112,7 +112,7 @@ async function loadTopWeek(){
 
             <div class="poster-box">
 
-                <img src="${poster}">
+                <img src="${poster}" alt="${movie.title}">
 
                 <div class="rating-badge">⭐ ${rating}</div>
 
@@ -124,7 +124,7 @@ async function loadTopWeek(){
 
                 <h4>${movie.title}</h4>
 
-                <div class="genre">🔥 Trending</div>
+                <div class="genre">Trending</div>
 
                 <div class="popularity">
                     <div class="bar" style="width:${popularity}%"></div>
@@ -138,6 +138,10 @@ async function loadTopWeek(){
                     ▶ Trailer
                     </a>
 
+                    <a href="watchlist.html?id=${movie.id}" class="watchlist-btn">
+                    Watchlist
+                    </a>
+
                 </div>
 
             </div>
@@ -149,8 +153,7 @@ async function loadTopWeek(){
 
     });
 
-}
-
+        }
 /* ---------------- INIT ---------------- */
 
 async function init(){
