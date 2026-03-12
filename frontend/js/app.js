@@ -206,6 +206,38 @@ container.innerHTML += card;
 activateCelebrityEffect();
 
                                                }
+
+function activateCelebrityEffect(){
+
+const cards = document.querySelectorAll(".celebrity-card");
+const container = document.querySelector(".celebrity-row");
+
+function updateCenter(){
+
+const center = window.innerWidth/2;
+
+cards.forEach(card=>{
+
+const rect = card.getBoundingClientRect();
+const cardCenter = rect.left + rect.width/2;
+
+const distance = Math.abs(center - cardCenter);
+
+if(distance < 80){
+card.classList.add("active");
+}else{
+card.classList.remove("active");
+}
+
+});
+
+}
+
+container.addEventListener("scroll",updateCenter);
+
+updateCenter();
+
+}
 /* ---------------- INIT ---------------- */
 
 async function init(){
@@ -215,6 +247,8 @@ async function init(){
     loadTrailers();
 
     loadTopWeek();
+
+    loadCelebrities();
 
     loadSection("/trending/movie/day","trending");
 
