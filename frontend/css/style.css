@@ -131,21 +131,6 @@ box-shadow:0 8px 20px rgba(0,0,0,0.8);
 z-index:3;
 }
 
-/* PLAY BUTTON */
-
-.play{
-position:absolute;
-top:45%;
-left:50%;
-transform:translate(-50%,-50%);
-font-size:28px;
-border:2px solid #fff;
-background:rgba(0,0,0,0.3);
-padding:10px 14px;
-border-radius:50%;
-backdrop-filter:blur(4px);
-}
-
 /* HERO INFO */
 
 .hero-info{
@@ -174,10 +159,11 @@ margin-bottom:8px;
 .trailer-btn{
 display:inline-block;
 background:#e50914;
-padding:6px 14px;
+padding:7px 16px;
 border-radius:20px;
 font-size:13px;
-font-weight:600;
+font-weight:700;
+letter-spacing:.3px;
 margin-bottom:8px;
 }
 
