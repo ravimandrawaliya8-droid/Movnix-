@@ -319,6 +319,26 @@ container.innerHTML += card;
 
 });
 
+/* SEE ALL CARD */
+
+const seeAll = `
+
+<a href="discover.html" class="picks-card seeall-card">
+
+<div class="seeall-box">
+
+<span class="seeall-text">
+See<br>All
+</span>
+
+</div>
+
+</a>
+
+`;
+
+container.innerHTML += seeAll;
+
     }
 
 /* ---------------- INIT ---------------- */
