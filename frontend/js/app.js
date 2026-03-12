@@ -39,6 +39,8 @@ async function init(){
 
     loadTrailers();
 
+    loadTopWeek();
+
     loadSection("/trending/movie/day","trending");
 
     loadSection("/movie/popular","popular");
@@ -76,6 +78,66 @@ async function loadTrailers(){
     }
 
             }
+
+
+async function loadTopWeek(){
+
+    const movies = await getMovies("/trending/movie/week");
+
+    const container = document.getElementById("topweek");
+
+    container.innerHTML = "";
+
+    movies.slice(0,10).forEach((movie,index)=>{
+
+        const poster =
+        "https://image.tmdb.org/t/p/w500" + movie.poster_path;
+
+        const rating = movie.vote_average.toFixed(1);
+
+        const popularity = Math.min(movie.popularity/5,100);
+
+        const card = `
+        <div class="movie-card">
+
+        <div class="poster-box">
+
+        <img src="${poster}">
+
+        <div class="rating-badge">⭐ ${rating}</div>
+
+        <div class="rank">#${index+1}</div>
+
+        </div>
+
+        <div class="movie-info">
+
+        <h4>${movie.title}</h4>
+
+        <div class="genre">🔥 Trending</div>
+
+        <div class="popularity">
+        <div class="bar" style="width:${popularity}%"></div>
+        </div>
+
+        <div class="actions">
+
+        <button class="rate-btn">⭐ Rate</button>
+
+        <a href="trailer.html?id=${movie.id}" class="trailer-btn">▶ Trailer</a>
+
+        </div>
+
+        </div>
+
+        </div>
+        `;
+
+        container.innerHTML += card;
+
+    });
+
+                }
 
 init();
 
