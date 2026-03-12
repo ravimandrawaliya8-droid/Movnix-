@@ -77,43 +77,30 @@ padding:14px;
 }
 
 .hero-card{
-display:flex;
-gap:12px;
-background:#111;
+position:relative;
+width:100%;
+height:330px;
 border-radius:18px;
-padding:10px;
-align-items:center;
 overflow:hidden;
 }
 
-/* POSTER */
-
-.hero-poster{
-width:110px;
-height:165px;
-border-radius:12px;
-object-fit:cover;
-position:relative;
-z-index:2;
-}
-
-/* VIDEO AREA */
+/* BACKDROP */
 
 .hero-video{
-position:relative;
-flex:1;
-border-radius:14px;
-overflow:hidden;
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
 }
 
 .hero-video img{
 width:100%;
-height:220px;
+height:100%;
 object-fit:cover;
-display:block;
 }
 
-/* GRADIENT */
+/* GRADIENT OVER BACKDROP */
 
 .hero-video::after{
 content:"";
@@ -121,20 +108,34 @@ position:absolute;
 left:0;
 right:0;
 bottom:0;
-top:0;
+height:75%;
 background:linear-gradient(
 to top,
 rgba(0,0,0,0.95),
-rgba(0,0,0,0.65),
+rgba(0,0,0,0.7),
 transparent
 );
+}
+
+/* POSTER FLOATING */
+
+.hero-poster{
+position:absolute;
+bottom:20px;
+left:16px;
+width:95px;
+height:140px;
+border-radius:10px;
+object-fit:cover;
+box-shadow:0 8px 20px rgba(0,0,0,0.8);
+z-index:3;
 }
 
 /* PLAY BUTTON */
 
 .play{
 position:absolute;
-top:50%;
+top:45%;
 left:50%;
 transform:translate(-50%,-50%);
 font-size:28px;
@@ -149,34 +150,49 @@ backdrop-filter:blur(4px);
 
 .hero-info{
 position:absolute;
-bottom:14px;
-left:14px;
+bottom:18px;
+left:125px;
 right:14px;
-z-index:2;
+z-index:3;
 }
 
 .hero-info h2{
 font-size:19px;
 font-weight:700;
-margin-bottom:3px;
+margin-bottom:4px;
 }
 
 .hero-info p{
 font-size:13px;
-opacity:.9;
-margin-bottom:5px;
 line-height:1.4;
-max-width:75%;
+opacity:.9;
+margin-bottom:8px;
 }
 
-.reactions{
+/* TRAILER BUTTON */
+
+.trailer-btn{
+display:inline-block;
+background:#e50914;
+padding:6px 14px;
+border-radius:20px;
 font-size:13px;
+font-weight:600;
+margin-bottom:8px;
+}
+
+/* REACTIONS */
+
+.reactions{
 display:flex;
 gap:12px;
+font-size:13px;
 }
 
 .reactions span{
-opacity:.9;
+background:rgba(255,255,255,0.08);
+padding:4px 10px;
+border-radius:20px;
 }
 
 /* SECTION */
