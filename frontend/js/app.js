@@ -154,6 +154,58 @@ async function loadTopWeek(){
     });
 
         }
+
+/* ---------------- CELEBRITIES ---------------- */
+
+async function loadCelebrities(){
+
+const container = document.getElementById("celebs");
+if(!container) return;
+
+const res = await fetch(`${BASE}/trending/person/week?api_key=${API_KEY}`);
+const data = await res.json();
+
+const people = data.results;
+
+container.innerHTML = "";
+
+people.slice(0,15).forEach(person=>{
+
+const photo = person.profile_path
+? "https://image.tmdb.org/t/p/w300" + person.profile_path
+: "https://via.placeholder.com/300x300?text=No+Image";
+
+const titles = person.known_for ? person.known_for.length : 0;
+
+const card = `
+<a href="celebrity.html?id=${person.id}" class="celebrity-card">
+
+<div class="celebrity-photo">
+<img src="${photo}">
+</div>
+
+<div class="celebrity-name">
+${person.name}
+</div>
+
+<div class="celebrity-meta">
+${person.known_for_department} • ${titles} titles
+</div>
+
+<div class="celebrity-popularity">
+Popularity ${Math.round(person.popularity)}
+</div>
+
+</a>
+`;
+
+container.innerHTML += card;
+
+});
+
+activateCelebrityEffect();
+
+                                               }
 /* ---------------- INIT ---------------- */
 
 async function init(){
