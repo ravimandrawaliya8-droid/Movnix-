@@ -154,6 +154,42 @@ opacity:.9;
 margin-bottom:8px;
 }
 
+/* HERO BUTTONS */
+
+.hero-buttons{
+display:flex;
+gap:10px;
+margin-top:8px;
+}
+
+
+/* RED TRAILER BUTTON */
+
+.trailer-btn{
+background:#e50914;
+border:none;
+padding:7px 16px;
+border-radius:20px;
+color:#fff;
+font-size:13px;
+font-weight:700;
+cursor:pointer;
+}
+
+
+/* TRANSPARENT ICON BUTTONS */
+
+.icon-btn{
+background:rgba(255,255,255,0.08);
+border:none;
+padding:6px 10px;
+border-radius:20px;
+color:#fff;
+font-size:14px;
+cursor:pointer;
+}
+
+
 /* TRAILER BUTTON */
 
 .trailer-btn{
@@ -169,17 +205,6 @@ margin-bottom:8px;
 
 /* REACTIONS */
 
-.reactions{
-display:flex;
-gap:12px;
-font-size:13px;
-}
-
-.reactions span{
-background:rgba(255,255,255,0.08);
-padding:4px 10px;
-border-radius:20px;
-}
 
 /* SECTION */
 
@@ -263,21 +288,6 @@ font-weight:600;
 
 /* PLAY BUTTON */
 
-.play-sm{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-width:32px;
-height:32px;
-display:flex;
-align-items:center;
-justify-content:center;
-border:2px solid #fff;
-border-radius:50%;
-background:rgba(0,0,0,0.35);
-font-size:14px;
-}
 
 
 /* MOVIE TITLE */
