@@ -154,9 +154,10 @@ async function loadTopWeek(){
 
     });
 
-        }
+}
 
 /* ---------------- CELEBRITIES ---------------- */
+
 async function loadCelebrities(){
 
 const container = document.getElementById("celebs");
@@ -203,9 +204,6 @@ container.innerHTML += card;
 
 });
 
-
-/* SEE ALL CARD */
-
 const seeAll = `
 <a href="celebrities.html" class="celebrity-seeall">
 
@@ -223,7 +221,6 @@ container.innerHTML += seeAll;
 activateCelebrityEffect();
 
 }
-
 
 function activateCelebrityEffect(){
 
@@ -255,7 +252,7 @@ container.addEventListener("scroll",updateCenter);
 
 updateCenter();
 
-    }
+}
 
 /* ---------------- HERO RENDER ---------------- */
 
@@ -263,11 +260,13 @@ let heroIndex = 0;
 
 function renderHero(movie){
 
-const poster =
-"https://image.tmdb.org/t/p/w342" + movie.poster_path;
+const poster = movie.poster_path
+? "https://image.tmdb.org/t/p/w342" + movie.poster_path
+: "https://via.placeholder.com/300x450?text=No+Poster";
 
-const backdrop =
-"https://image.tmdb.org/t/p/original" + movie.backdrop_path;
+const backdrop = movie.backdrop_path
+? "https://image.tmdb.org/t/p/original" + movie.backdrop_path
+: "";
 
 document.getElementById("heroPoster").src = poster;
 
@@ -297,7 +296,7 @@ renderHero(heroMovies[heroIndex]);
 
 },6000);
 
-    }
+}
 
 /* ---------------- MOVNIX PICKS ---------------- */
 
@@ -361,7 +360,6 @@ Watch Options
 container.innerHTML += card;
 
 });
-
 
 /* ---------------- INIT ---------------- */
 
