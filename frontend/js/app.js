@@ -162,7 +162,9 @@ async function loadCelebrities(){
 const container = document.getElementById("celebs");
 if(!container) return;
 
-const res = await fetch(`${BASE}/trending/person/week?api_key=${API_KEY}`);
+/* GLOBAL POPULAR CELEBRITIES */
+
+const res = await fetch(`${BASE}/person/popular?api_key=${API_KEY}`);
 const data = await res.json();
 
 const people = data.results;
@@ -181,7 +183,7 @@ const card = `
 <a href="celebrity.html?id=${person.id}" class="celebrity-card">
 
 <div class="celebrity-photo">
-<img src="${photo}">
+<img src="${photo}" alt="${person.name}">
 </div>
 
 <div class="celebrity-name">
@@ -205,7 +207,7 @@ container.innerHTML += card;
 
 activateCelebrityEffect();
 
-                                               }
+}
 
 function activateCelebrityEffect(){
 
@@ -221,9 +223,9 @@ cards.forEach(card=>{
 const rect = card.getBoundingClientRect();
 const cardCenter = rect.left + rect.width/2;
 
-const distance = Math.abs(center - cardCenter);
+const distance = Math.abs(center-cardCenter);
 
-if(distance < 80){
+if(distance < 100){
 card.classList.add("active");
 }else{
 card.classList.remove("active");
@@ -237,7 +239,8 @@ container.addEventListener("scroll",updateCenter);
 
 updateCenter();
 
-}
+    }
+
 /* ---------------- INIT ---------------- */
 
 async function init(){
