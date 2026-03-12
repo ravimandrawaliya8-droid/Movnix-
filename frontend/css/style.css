@@ -895,6 +895,15 @@ align-items:center;
 margin-bottom:12px;
 }
 
+/* DISCOVER HEADER */
+
+.discover-head{
+display:flex;
+flex-direction:column;
+gap:6px;
+margin-bottom:14px;
+}
+
 /* DISCOVER MOVIES TITLE */
 
 .discover-title{
@@ -903,16 +912,25 @@ font-size:22px;
 font-weight:600;
 }
 
-/* BLUE LINK */
+/* BLUE LINK (Find your next favorite) */
 
 .discover-link{
 color:#4ea1ff;
-font-size:14px;
+font-size:16px;
 text-decoration:none;
+display:flex;
+align-items:center;
+gap:6px;
 }
 
 .discover-link:hover{
-opacity:0.8;
+opacity:0.85;
+}
+
+/* BIG ARROW */
+
+.discover-arrow{
+font-size:20px;
 }
 
 /* MOVNIX PICKS TITLE */
@@ -934,6 +952,7 @@ display:flex;
 gap:14px;
 overflow-x:auto;
 padding-bottom:10px;
+scroll-behavior:smooth;
 }
 
 .picks-row::-webkit-scrollbar{
@@ -948,6 +967,13 @@ background:#151515;
 border-radius:14px;
 overflow:hidden;
 flex-shrink:0;
+transition:0.25s;
+}
+
+/* CARD HOVER (slight lift) */
+
+.picks-card:hover{
+transform:translateY(-3px);
 }
 
 /* POSTER */
@@ -993,13 +1019,38 @@ color:#9ecbff;
 margin-bottom:6px;
 font-size:13px;
 text-decoration:none;
+transition:0.2s;
 }
 
-/* ACTIONS */
+.picks-btn:hover{
+background:#2a2a2a;
+}
+
+/* ACTION BUTTON ROW */
 
 .picks-actions{
 display:flex;
-justify-content:space-between;
-font-size:12px;
-color:#cccccc;
+gap:6px;
+margin-top:6px;
 }
+
+/* GLASS BUTTONS (Trailer + Info) */
+
+.picks-actions span{
+
+padding:6px 10px;
+
+border-radius:14px;
+
+background:rgba(255,255,255,0.08);
+
+backdrop-filter:blur(6px);
+
+border:1px solid rgba(255,255,255,0.15);
+
+font-size:12px;
+
+color:#e6e6e6;
+
+}
+
