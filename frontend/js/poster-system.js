@@ -12,9 +12,14 @@ const posters = row.querySelectorAll("img");
 
 posters.forEach((img,index)=>{
 
+/* IMPORTANT FIX */
+img.crossOrigin = "anonymous";
+
 if(index < 10){
 
 img.onload = ()=>{
+
+try{
 
 const canvas = document.createElement("canvas");
 const ctx = canvas.getContext("2d");
@@ -47,6 +52,10 @@ img.style.filter =
 
 }
 
+}catch(e){
+console.log("poster check skipped");
+}
+
 };
 
 }
@@ -57,14 +66,10 @@ img.style.filter =
 
 row.addEventListener("scroll",()=>{
 
-const scrollLeft = row.scrollLeft;
-
 posters.forEach((img,index)=>{
 
 if(index >= 10){
-
 img.style.filter = "none";
-
 }
 
 });
