@@ -396,6 +396,7 @@ Watch Options
 container.innerHTML += card;
 
 });
+}
 
 /* ---------------- MOVIE CARD SYSTEM ---------------- */
 
