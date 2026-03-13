@@ -279,22 +279,36 @@ if(bannerIndex >= todayCelebs.length){
 bannerIndex = 0;
 }
 
+banner.classList.remove("slide-in","slide-out");
+
+void banner.offsetWidth;
+
+banner.classList.add("slide-out");
+
+setTimeout(()=>{
+
+const celeb = todayCelebs[bannerIndex];
+
+const text =
+bannerTexts[Math.floor(Math.random()*bannerTexts.length)];
+
+title.innerText = text.replace("{name}",celeb.name);
+
+btn.href = "explore.html?actor=" + celeb.id;
+
+bannerIndex++;
+
+if(bannerIndex >= todayCelebs.length){
+bannerIndex = 0;
+}
+
 banner.classList.remove("slide-out");
-banner.classList.remove("slide-in");
 
 void banner.offsetWidth;
 
 banner.classList.add("slide-in");
 
-},400);
-
-}
-
-updateBanner();
-
-setInterval(updateBanner,10000);
-
-}
+},500);
 
 /* ---------------- LOAD HERO ---------------- */
 
