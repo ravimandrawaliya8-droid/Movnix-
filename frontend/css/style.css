@@ -1281,4 +1281,73 @@ color:#e6e6e6;
 
 }
 
- 
+/* LEFT GROUP */
+
+.picks-left{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+/* BLUE START LINE */
+
+.picks-line{
+width:5px;
+height:20px;
+background:#4ea1ff;
+border-radius:3px;
+}
+
+/* MOVNIX PICKS TITLE */
+
+.picks-title{
+color:#f5c518;
+font-size:18px;
+font-weight:600;
+}
+
+/* ARROW (M SIZE) */
+
+.picks-arrow{
+
+width:14px;
+height:14px;
+
+border-top:3px solid #ffffff;
+border-right:3px solid #ffffff;
+
+transform:rotate(45deg);
+
+margin-left:6px;
+
+}
+
+/* SEE LIST BUTTON */
+
+.picks-list-btn{
+
+color:#4ea1ff;
+
+font-size:13px;
+
+text-decoration:none;
+
+padding:5px 12px;
+
+border-radius:16px;
+
+border:1.5px solid #4ea1ff;
+
+background:rgba(255,255,255,0.05);
+
+backdrop-filter:blur(6px);
+
+transition:0.25s;
+
+}
+
+.picks-list-btn:hover{
+
+background:rgba(78,161,255,0.15);
+
+}
