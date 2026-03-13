@@ -171,7 +171,7 @@ right:0;
 
 top:0;
 
-width:45%;
+width:40%;
 
 height:100%;
 
@@ -182,6 +182,8 @@ display:flex;
 align-items:flex-end;
 
 justify-content:flex-end;
+
+padding-right:10px;
 
 overflow:hidden;
 
@@ -202,30 +204,6 @@ object-fit:contain;
 
 }
 
-
-/* ---------- DIAGONAL SPLIT ---------- */
-
-.watchlist-banner::after{
-
-content:"";
-
-position:absolute;
-
-right:40%;
-
-top:0;
-
-width:120px;
-
-height:100%;
-
-background:#f5c518;
-
-transform:skewX(-25deg);
-
-z-index:2;
-
-}
 
 
 /* ---------- SLIDER ANIMATION ---------- */
