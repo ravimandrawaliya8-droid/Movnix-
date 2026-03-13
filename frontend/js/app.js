@@ -41,7 +41,7 @@ async function loadHero(){
     const heroContainer = document.getElementById("hero");
     if(!heroContainer) return;
 
-    heroMovies = await getMovies("/trending/movie/week");
+    heroMovies = await getMovies("/discover/movie&with_origin_country=IN&region=IN");
     heroMovies = heroMovies.slice(0,25);
 
     if(heroMovies.length === 0) return;
@@ -128,7 +128,7 @@ async function loadTopWeek(){
     const container = document.getElementById("topweek");
     if(!container) return;
 
-    const movies = await getMovies("/trending/movie/week");
+    const movies = await getMovies("/discover/movie&with_origin_country=IN&region=IN&sort_by=popularity.desc");
 
     container.innerHTML = "";
 
@@ -341,7 +341,7 @@ async function loadMovnixPicks(){
 const container = document.getElementById("movnixPicks");
 if(!container) return;
 
-const movies = await getMovies("/movie/top_rated");
+const movies = await getMovies("/discover/movie&with_origin_country=IN&sort_by=vote_average.desc");
 
 container.innerHTML = "";
 
