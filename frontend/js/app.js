@@ -456,8 +456,6 @@ async function init(){
 
     await loadHero();
 
-    startBannerSlider();
-
     startExploreSlider();
 
     loadTrailers();
