@@ -211,7 +211,8 @@ return list;
 const todayCelebs = getDailyCelebs();
 
 
-/* -------- SLIDER SYSTEM -------- */
+
+/* -------- FINAL EXPLORE BANNER SLIDER -------- */
 
 let bannerIndex = 0;
 
@@ -220,70 +221,52 @@ function startExploreSlider(){
 const img = document.getElementById("exploreImg");
 const title = document.getElementById("exploreTitle");
 const btn = document.getElementById("exploreBtn");
+const banner = document.getElementById("exploreBanner");
 
 function updateBanner(){
 
+banner.classList.add("slide-out");
+
+setTimeout(()=>{
+
 const celeb = todayCelebs[bannerIndex];
 
-const text = bannerTexts[Math.floor(Math.random()*bannerTexts.length)];
+const text =
+bannerTexts[Math.floor(Math.random()*bannerTexts.length)];
 
 title.innerText = text.replace("{name}",celeb.name);
 
+/* celebrity image fetch */
+
+fetch(`${BASE}/search/person?api_key=${API_KEY}&query=${celeb.name}`)
+.then(res=>res.json())
+.then(data=>{
+
+if(data.results && data.results[0]){
+
+const photo = data.results[0].profile_path;
+
+if(photo){
 img.src =
-"https://image.tmdb.org/t/p/original" + celeb.profile_path;
+"https://image.tmdb.org/t/p/original" + photo;
+}
+
+}
+
+});
 
 btn.href = "explore.html?actor=" + celeb.id;
 
 bannerIndex++;
 
 if(bannerIndex >= todayCelebs.length){
-
 bannerIndex = 0;
-
 }
 
-}
+banner.classList.remove("slide-out");
+banner.classList.add("slide-in");
 
-updateBanner();
-
-setInterval(updateBanner,10000);
-
-}
-
-startExploreSlider();
-
-/* ---------------- EXPLORE CELEBRITY SLIDER ---------------- */
-
-let celebIndex = 0;
-let celebList = [];
-
-async function startExploreSlider(){
-
-const res = await fetch(`${BASE}/person/popular?api_key=${API_KEY}`);
-const data = await res.json();
-
-celebList = data.results.slice(0,10);
-
-const img = document.getElementById("bannerImg");
-const title = document.getElementById("bannerTitle");
-
-function updateBanner(){
-
-const celeb = celebList[celebIndex];
-
-const photo = celeb.profile_path
-? "https://image.tmdb.org/t/p/original" + celeb.profile_path
-: "";
-
-img.src = photo;
-
-title.innerText = celeb.name + " Spotlight";
-
-celebIndex++;
-
-if(celebIndex >= celebList.length){
-celebIndex = 0;
-}
+},400);
 
 }
 
