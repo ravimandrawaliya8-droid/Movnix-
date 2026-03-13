@@ -458,6 +458,8 @@ async function init(){
 
     startBannerSlider();
 
+    startExploreSlider();
+
     loadTrailers();
 
     loadTopWeek();
