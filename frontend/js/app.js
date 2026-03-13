@@ -397,6 +397,8 @@ container.innerHTML += card;
 
 });
 
+}
+
 /* ---------------- MOVIE CARD SYSTEM ---------------- */
 
 function createMovieCard(movie){
