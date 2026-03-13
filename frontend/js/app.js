@@ -266,22 +266,44 @@ if(!movieData.cast || movieData.cast.length === 0) return;
 const movie =
 movieData.cast[Math.floor(Math.random()*movieData.cast.length)];
 
-if(movie.backdrop_path){
+let url = "";
 
-const url =
-"https://image.tmdb.org/t/p/original" + movie.backdrop_path;
+/* BACKDROP CHECK */
+
+if(movie && movie.backdrop_path){
+
+url = "https://image.tmdb.org/t/p/original" + movie.backdrop_path;
+
+}else{
+
+/* FALLBACK IMAGE */
+
+url = "https://image.tmdb.org/t/p/original" + heroMovies[0].backdrop_path;
+
+}
+
+/* LOAD IMAGE */
+
+img.onload = () => {
+
+banner.classList.remove("slide-out");
+
+void banner.offsetWidth;
+
+banner.classList.add("slide-in");
+
+};
 
 img.src = url;
 
 celebCache[celeb.name] = url;
 
-}
-
 });
 
 });
 
 }
+
 btn.href = "explore.html?actor=" + celeb.id;
 
 bannerIndex++;
@@ -289,12 +311,6 @@ bannerIndex++;
 if(bannerIndex >= todayCelebs.length){
 bannerIndex = 0;
 }
-
-banner.classList.remove("slide-out");
-
-void banner.offsetWidth;
-
-banner.classList.add("slide-in");
 
 },500);
 
@@ -305,6 +321,7 @@ updateBanner();
 setInterval(updateBanner,10000);
 
 }
+
 
 /* ---------------- LOAD HERO ---------------- */
 
