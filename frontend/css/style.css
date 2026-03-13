@@ -50,68 +50,202 @@ gap:14px;
 }
 
 /* WATCHLIST BANNER */
+/* -------- EXPLORE OUTER SPACE -------- */
+
+#exploreBanner{
+margin:20px;
+padding:0.3cm;
+background:#e8e8e8;
+border-radius:16px;
+}
+
+
+/* -------- MAIN BANNER -------- */
+
+.watchlist-banner{
+
+display:flex;
+align-items:center;
+justify-content:space-between;
+
+background:#111;
+border-radius:14px;
+
+overflow:hidden;
+
+height:150px;
+
+position:relative;
+
+}
+
+
+/* -------- TEXT AREA (LEFT BLACK) -------- */
 
 .banner-text{
+
 width:60%;
+
 padding-left:30px;
+
 color:white;
+
 z-index:2;
+
 }
 
 #exploreTitle{
+
 font-size:26px;
 font-weight:700;
 line-height:1.3;
+
 margin-bottom:14px;
+
 }
 
-.watchlist-banner::after{
-content:"";
-position:absolute;
-right:40%;
-top:0;
-width:120px;
-height:100%;
+
+/* -------- EXPLORE BUTTON -------- */
+
+#exploreBtn button{
+
 background:#f4c018;
-transform:skewX(-25deg);
-z-index:1;
-}
 
-.banner-text h3{
-font-size:18px;
-line-height:1.3;
-}
-
-.banner-text span{
-color:#f5c518;
-}
-
-.banner-text button{
-margin-top:8px;
-background:#f5c518;
 border:none;
-padding:8px 16px;
-border-radius:22px;
+
+padding:10px 22px;
+
 font-weight:600;
+
+border-radius:8px;
+
 cursor:pointer;
+
+color:black;
+
 }
+
+#exploreBtn button:hover{
+
+background:#ffd23f;
+
+  }
+
+
+/* -------- POSTER AREA (RIGHT YELLOW) -------- */
 
 .banner-image{
+
 width:40%;
+
 height:100%;
+
 background:#f4c018;
+
 display:flex;
+
 align-items:flex-end;
+
 justify-content:flex-end;
+
 overflow:hidden;
+
 position:relative;
+
 }
 
 #exploreImg{
-width:100%;
+
 height:100%;
+
+width:100%;
+
 object-fit:cover;
+
 }
+
+
+/* -------- DIAGONAL CUT -------- */
+
+.watchlist-banner::after{
+
+content:"";
+
+position:absolute;
+
+right:40%;
+
+top:0;
+
+width:120px;
+
+height:100%;
+
+background:#f4c018;
+
+transform:skewX(-25deg);
+
+z-index:1;
+
+}
+
+
+/* -------- SLIDER ANIMATION -------- */
+
+.slide-in{
+
+animation:slideIn 0.6s ease forwards;
+
+}
+
+.slide-out{
+
+animation:slideOut 0.6s ease forwards;
+
+}
+
+
+@keyframes slideOut{
+
+0%{
+
+transform:translateX(0);
+
+opacity:1;
+
+}
+
+100%{
+
+transform:translateX(-100%);
+
+opacity:0;
+
+}
+
+}
+
+
+@keyframes slideIn{
+
+0%{
+
+transform:translateX(100%);
+
+opacity:0;
+
+}
+
+100%{
+
+transform:translateX(0);
+
+opacity:1;
+
+}
+
+}
+
 
 /* HERO */
 
@@ -1128,198 +1262,4 @@ color:#e6e6e6;
 
 }
 
-/* -------- EXPLORE OUTER SPACE -------- */
-
-#exploreBanner{
-margin:20px;
-padding:0.3cm;
-background:#e8e8e8;
-border-radius:16px;
-}
-
-
-/* -------- MAIN BANNER -------- */
-
-.watchlist-banner{
-
-display:flex;
-align-items:center;
-justify-content:space-between;
-
-background:#111;
-border-radius:14px;
-
-overflow:hidden;
-
-height:150px;
-
-position:relative;
-
-}
-
-
-/* -------- TEXT AREA (LEFT BLACK) -------- */
-
-.banner-text{
-
-width:60%;
-
-padding-left:30px;
-
-color:white;
-
-z-index:2;
-
-}
-
-#exploreTitle{
-
-font-size:26px;
-font-weight:700;
-line-height:1.3;
-
-margin-bottom:14px;
-
-}
-
-
-/* -------- EXPLORE BUTTON -------- */
-
-#exploreBtn button{
-
-background:#f4c018;
-
-border:none;
-
-padding:10px 22px;
-
-font-weight:600;
-
-border-radius:8px;
-
-cursor:pointer;
-
-color:black;
-
-}
-
-#exploreBtn button:hover{
-
-background:#ffd23f;
-
-}
-
-
-/* -------- POSTER AREA (RIGHT YELLOW) -------- */
-
-.banner-image{
-
-width:40%;
-
-height:100%;
-
-background:#f4c018;
-
-display:flex;
-
-align-items:flex-end;
-
-justify-content:flex-end;
-
-overflow:hidden;
-
-position:relative;
-
-}
-
-#exploreImg{
-
-height:100%;
-
-width:100%;
-
-object-fit:cover;
-
-}
-
-
-/* -------- DIAGONAL CUT -------- */
-
-.watchlist-banner::after{
-
-content:"";
-
-position:absolute;
-
-right:40%;
-
-top:0;
-
-width:120px;
-
-height:100%;
-
-background:#f4c018;
-
-transform:skewX(-25deg);
-
-z-index:1;
-
-}
-
-
-/* -------- SLIDER ANIMATION -------- */
-
-.slide-in{
-
-animation:slideIn 0.6s ease forwards;
-
-}
-
-.slide-out{
-
-animation:slideOut 0.6s ease forwards;
-
-}
-
-
-@keyframes slideOut{
-
-0%{
-
-transform:translateX(0);
-
-opacity:1;
-
-}
-
-100%{
-
-transform:translateX(-100%);
-
-opacity:0;
-
-}
-
-}
-
-
-@keyframes slideIn{
-
-0%{
-
-transform:translateX(100%);
-
-opacity:0;
-
-}
-
-100%{
-
-transform:translateX(0);
-
-opacity:1;
-
-}
-
-}
+ 
