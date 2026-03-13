@@ -209,7 +209,7 @@ return list;
 }
 
 const todayCelebs = getDailyCelebs();
-
+const celebCache = {};
 
 
 /* -------- FINAL EXPLORE BANNER SLIDER -------- */
@@ -217,7 +217,8 @@ const todayCelebs = getDailyCelebs();
 let bannerIndex = 0;
 
 function startExploreSlider(){
-
+if(!img || !title || !btn || !banner) return;
+    
 const img = document.getElementById("exploreImg");
 const title = document.getElementById("exploreTitle");
 const btn = document.getElementById("exploreBtn");
@@ -238,6 +239,12 @@ title.innerText = text.replace("{name}",celeb.name);
 
 /* celebrity image fetch */
 
+if(celebCache[celeb.name]){
+
+img.src = celebCache[celeb.name];
+
+}else{
+
 fetch(`${BASE}/search/person?api_key=${API_KEY}&query=${celeb.name}`)
 .then(res=>res.json())
 .then(data=>{
@@ -247,13 +254,21 @@ if(data.results && data.results[0]){
 const photo = data.results[0].profile_path;
 
 if(photo){
-img.src =
+
+const url =
 "https://image.tmdb.org/t/p/original" + photo;
+
+img.src = url;
+
+celebCache[celeb.name] = url;
+
 }
 
 }
 
 });
+
+}
 
 btn.href = "explore.html?actor=" + celeb.id;
 
@@ -264,6 +279,10 @@ bannerIndex = 0;
 }
 
 banner.classList.remove("slide-out");
+banner.classList.remove("slide-in");
+
+void banner.offsetWidth;
+
 banner.classList.add("slide-in");
 
 },400);
@@ -313,7 +332,7 @@ container.innerHTML = "";
 
 let count = 0;
 
-for(const movie of movies){
+for(const movie of movies.slice(0,15)){
 
 if(count >= 30) break;
 
