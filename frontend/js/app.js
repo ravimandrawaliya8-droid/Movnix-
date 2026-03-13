@@ -60,28 +60,64 @@ async function loadHero(){
 
 async function loadTrailers(){
 
-    const container = document.getElementById("trailers");
-    if(!container) return;
+const container = document.getElementById("trailers");
+if(!container) return;
 
-    const movies = await getMovies("/trending/movie/day");
+const movies = await getMovies("/trending/movie/day");
 
-    container.innerHTML = "";
+container.innerHTML = "";
 
-    for(const movie of movies.slice(0,10)){
+let count = 0;
 
-        const res = await fetch(`${BASE}/movie/${movie.id}/videos?api_key=${API_KEY}`);
-        const data = await res.json();
+for(const movie of movies){
 
-        const trailer = data.results.find(v => v.type === "Trailer");
+if(count >= 30) break;
 
-        if(trailer){
+const res = await fetch(`${BASE}/movie/${movie.id}/videos?api_key=${API_KEY}`);
+const data = await res.json();
 
-            const card = createTrailerCard(trailer, movie);
-            container.appendChild(card);
+const trailer = data.results.find(
+v => v.type === "Trailer" && v.site === "YouTube"
+);
 
-        }
+if(!trailer) continue;
 
-    }
+const thumb = `https://img.youtube.com/vi/${trailer.key}/hqdefault.jpg`;
+
+const card = document.createElement("a");
+card.href = `trailer.html?id=${movie.id}`;
+card.className = "trailer-card";
+
+card.innerHTML = `
+
+<div class="trailer-thumb">
+<img src="${thumb}">
+<div class="play-sm">▶</div>
+</div>
+
+<p>${movie.title}</p>
+
+<div class="trailer-meta">
+<span>⭐ ${movie.vote_average.toFixed(1)}</span>
+<span>🔥 ${Math.round(movie.popularity)}</span>
+</div>
+
+`;
+
+container.appendChild(card);
+
+count++;
+
+}
+
+/* SEE ALL BUTTON */
+
+const seeAll = document.createElement("a");
+seeAll.href = "trailers.html";
+seeAll.className = "see-all-card";
+seeAll.innerText = "See All";
+
+container.appendChild(seeAll);
 
 }
 
