@@ -38,89 +38,44 @@ async function loadSection(endpoint, containerId){
 
 /* ---------------- EXPLORE SLIDER ---------------- */
 
-const banners = [
+const bannerTitles = [
 
-{
-title:"Movie Promotion",
-img:"https://image.tmdb.org/t/p/original/9Gtg2DzBhmYamXBS1hKAhiwbBKS.jpg",
-link:"trailers.html"
-},
-
-{
-title:"Celebrity Interview",
-img:"https://image.tmdb.org/t/p/original/xDMIl84Qo5Tsu62c9DGWhmPI67A.jpg",
-link:"celebrities.html"
-},
-
-{
-title:"Brand Collaboration",
-img:"https://image.tmdb.org/t/p/original/5YZbUmjbMa3ClvSW1Wj3D6XGolb.jpg",
-link:"#"
-},
-
-{
-title:"Upcoming Trailer",
-img:"https://image.tmdb.org/t/p/original/rAiYTfKGqDCRIIqo664sY9XZIvQ.jpg",
-link:"trailers.html"
-},
-
-{
-title:"OTT Release",
-img:"https://image.tmdb.org/t/p/original/4HodYYKEIsGOdinkGi2Ucz6X9i0.jpg",
-link:"#"
-},
-
-{
-title:"Award Winners",
-img:"https://image.tmdb.org/t/p/original/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
-link:"#"
-},
-
-{
-title:"Behind The Scenes",
-img:"https://image.tmdb.org/t/p/original/8UlWHLMpgZm9bx6QYh0NFoq67TZ.jpg",
-link:"#"
-},
-
-{
-title:"Celebrity Products",
-img:"https://image.tmdb.org/t/p/original/yF1eOkaYvwiORauRCPWznV9xVvi.jpg",
-link:"#"
-},
-
-{
-title:"New Star Spotlight",
-img:"https://image.tmdb.org/t/p/original/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg",
-link:"celebrities.html"
-},
-
-{
-title:"Movnix Picks",
-img:"https://image.tmdb.org/t/p/original/3CxUndGhUcZdt1Zggjdb2HkLLQX.jpg",
-link:"discover.html"
-}
+"Movie Promotion",
+"Celebrity Interview",
+"Upcoming Trailer",
+"OTT Release",
+"Award Winners",
+"Behind The Scenes",
+"New Star Spotlight",
+"Movnix Picks"
 
 ];
 
 let bannerIndex = 0;
+let bannerMovies = [];
 
-function startBannerSlider(){
+async function startBannerSlider(){
+
+bannerMovies = await getMovies("/discover/movie?with_origin_country=IN&sort_by=popularity.desc");
 
 const img = document.getElementById("bannerImg");
 const title = document.getElementById("bannerTitle");
-const link = document.getElementById("bannerLink");
 
 function updateBanner(){
 
-const banner = banners[bannerIndex];
+const movie = bannerMovies[Math.floor(Math.random()*bannerMovies.length)];
 
-img.src = banner.img;
-title.innerText = banner.title;
-link.href = banner.link;
+const poster = movie.backdrop_path
+? "https://image.tmdb.org/t/p/original"+movie.backdrop_path
+: "";
+
+img.src = poster;
+
+title.innerText = bannerTitles[bannerIndex];
 
 bannerIndex++;
 
-if(bannerIndex >= banners.length){
+if(bannerIndex >= bannerTitles.length){
 bannerIndex = 0;
 }
 
