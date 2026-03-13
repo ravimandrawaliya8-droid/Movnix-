@@ -1172,9 +1172,9 @@ display:none;
 /* CARD (FIXED SIZE) */
 
 .picks-card{
-
-min-width:160px;
-height:360px;
+min-width:180px;
+height:380px;
+}
 
 background:#151515;
 
@@ -1349,5 +1349,21 @@ transition:0.25s;
 .picks-list-btn:hover{
 
 background:rgba(78,161,255,0.15);
+
+}
+
+.discover-arrow{
+
+width:14px;
+height:14px;
+
+border-top:3px solid #4ea1ff;
+border-right:3px solid #4ea1ff;
+
+transform:rotate(45deg);
+
+display:inline-block;
+
+margin-left:6px;
 
 }
