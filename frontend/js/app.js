@@ -237,7 +237,7 @@ bannerTexts[Math.floor(Math.random()*bannerTexts.length)];
 title.innerHTML = text.replace("{name}",
 `<span class="actor-name">${celeb.name}</span>`);
 
-/* IMAGE LOAD */
+/* BACKDROP IMAGE LOAD */
 
 if(celebCache[celeb.name]){
 
@@ -249,10 +249,27 @@ fetch(`${BASE}/search/person?api_key=${API_KEY}&query=${celeb.name}`)
 .then(res=>res.json())
 .then(data=>{
 
-if(data.results && data.results[0] && data.results[0].profile_path){
+if(!data.results || !data.results[0]) return;
+
+const personId = data.results[0].id;
+
+/* GET ACTOR MOVIES */
+
+fetch(`${BASE}/person/${personId}/movie_credits?api_key=${API_KEY}`)
+.then(res=>res.json())
+.then(movieData=>{
+
+if(!movieData.cast || movieData.cast.length === 0) return;
+
+/* PICK RANDOM MOVIE */
+
+const movie =
+movieData.cast[Math.floor(Math.random()*movieData.cast.length)];
+
+if(movie.backdrop_path){
 
 const url =
-"https://image.tmdb.org/t/p/w500" + data.results[0].profile_path;
+"https://image.tmdb.org/t/p/original" + movie.backdrop_path;
 
 img.src = url;
 
@@ -262,8 +279,9 @@ celebCache[celeb.name] = url;
 
 });
 
-}
+});
 
+}
 btn.href = "explore.html?actor=" + celeb.id;
 
 bannerIndex++;
