@@ -361,6 +361,47 @@ container.innerHTML += card;
 
 });
 
+/* ---------------- MOVIE CARD SYSTEM ---------------- */
+
+function createMovieCard(movie){
+
+const poster = movie.poster_path
+? "https://image.tmdb.org/t/p/w500" + movie.poster_path
+: "https://via.placeholder.com/500x750?text=No+Poster";
+
+const rating = movie.vote_average
+? movie.vote_average.toFixed(1)
+: "0";
+
+const card = document.createElement("div");
+card.className = "movie-card";
+
+card.innerHTML = `
+
+<div class="poster-box">
+
+<img src="${poster}" alt="${movie.title}">
+
+<div class="rating-badge">⭐ ${rating}</div>
+
+</div>
+
+<div class="movie-info">
+
+<h4>${movie.title}</h4>
+
+<a href="movie.html?id=${movie.id}" class="info-btn">
+View Details
+</a>
+
+</div>
+
+`;
+
+return card;
+
+}
+    
 /* ---------------- INIT ---------------- */
 
 async function init(){
