@@ -234,7 +234,8 @@ const celeb = todayCelebs[bannerIndex];
 const text =
 bannerTexts[Math.floor(Math.random()*bannerTexts.length)];
 
-title.innerText = text.replace("{name}",celeb.name);
+title.innerHTML = text.replace("{name}",
+`<span class="actor-name">${celeb.name}</span>`);
 
 /* IMAGE LOAD */
 
