@@ -36,47 +36,37 @@ async function loadSection(endpoint, containerId){
 
 }
 
-/* ---------------- EXPLORE SLIDER ---------------- */
+/* ---------------- EXPLORE CELEBRITY SLIDER ---------------- */
 
-const bannerTitles = [
+let celebIndex = 0;
+let celebList = [];
 
-"Movie Promotion",
-"Celebrity Interview",
-"Upcoming Trailer",
-"OTT Release",
-"Award Winners",
-"Behind The Scenes",
-"New Star Spotlight",
-"Movnix Picks"
+async function startExploreSlider(){
 
-];
+const res = await fetch(`${BASE}/person/popular?api_key=${API_KEY}`);
+const data = await res.json();
 
-let bannerIndex = 0;
-let bannerMovies = [];
-
-async function startBannerSlider(){
-
-bannerMovies = await getMovies("/discover/movie?with_origin_country=IN&sort_by=popularity.desc");
+celebList = data.results.slice(0,10);
 
 const img = document.getElementById("bannerImg");
 const title = document.getElementById("bannerTitle");
 
 function updateBanner(){
 
-const movie = bannerMovies[Math.floor(Math.random()*bannerMovies.length)];
+const celeb = celebList[celebIndex];
 
-const poster = movie.backdrop_path
-? "https://image.tmdb.org/t/p/original"+movie.backdrop_path
+const photo = celeb.profile_path
+? "https://image.tmdb.org/t/p/original" + celeb.profile_path
 : "";
 
-img.src = poster;
+img.src = photo;
 
-title.innerText = bannerTitles[bannerIndex];
+title.innerText = celeb.name + " Spotlight";
 
-bannerIndex++;
+celebIndex++;
 
-if(bannerIndex >= bannerTitles.length){
-bannerIndex = 0;
+if(celebIndex >= celebList.length){
+celebIndex = 0;
 }
 
 }
