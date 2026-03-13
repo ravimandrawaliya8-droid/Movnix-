@@ -381,12 +381,15 @@ Watch Options
 
 <div class="picks-actions">
 
-<span>▶ Trailer</span>
+<a href="trailer.html?id=${movie.id}" class="glass-btn">
+▶ Trailer
+</a>
 
-<span>ℹ Info</span>
+<a href="movie.html?id=${movie.id}" class="glass-btn">
+ℹ Info
+</a>
 
 </div>
-
 </div>
 
 </div>
