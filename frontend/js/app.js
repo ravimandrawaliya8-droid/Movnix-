@@ -416,13 +416,6 @@ async function init(){
 
     loadMovnixPicks();
 
-    loadSection("/trending/movie/day","trending");
-
-    loadSection("/movie/popular","popular");
-
-    loadSection("/movie/top_rated","toprated");
-
-    loadSection("/movie/upcoming","upcoming");
 
 }
 
