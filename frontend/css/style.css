@@ -49,30 +49,26 @@ display:flex;
 gap:14px;
 }
 
-/* ---------------- EXPLORE OUTER FRAME ---------------- */
+/* ---------- OUTER FRAME ---------- */
 
 #exploreBanner{
 
 margin:18px;
 
-padding:4px;
+padding:6px;
+
+background:#1a1a1a;
 
 border-radius:16px;
-
-/* white border */
-
-border:3px solid white;
-
-/* background transparent */
-
-background:transparent;
 
 }
 
 
-/* ---------------- MAIN BANNER ---------------- */
+/* ---------- MAIN BANNER ---------- */
 
 .watchlist-banner{
+
+position:relative;
 
 display:flex;
 
@@ -80,26 +76,32 @@ align-items:center;
 
 justify-content:space-between;
 
-height:140px;
+height:150px;
 
 border-radius:14px;
 
 overflow:hidden;
 
-}
+/* white border like mockup */
 
-
-/* ---------------- LEFT TEXT AREA (BLACK) ---------------- */
-
-.banner-text{
-
-width:60%;
+border:2px solid #fff;
 
 background:#000;
 
-color:#fff;
+}
 
-padding:20px;
+
+/* ---------- LEFT TEXT AREA ---------- */
+
+.banner-text{
+
+width:58%;
+
+padding:22px;
+
+color:white;
+
+z-index:3;
 
 display:flex;
 
@@ -110,17 +112,13 @@ justify-content:center;
 }
 
 
-/* ---------------- TITLE ---------------- */
-
 #exploreTitle{
-
-color:white;
 
 font-size:20px;
 
 line-height:1.35;
 
-margin-bottom:12px;
+margin-bottom:14px;
 
 min-height:48px;
 
@@ -131,22 +129,22 @@ min-height:48px;
 
 .actor-name{
 
-color:#f4c018;
+color:#f5c518;
 
 font-weight:700;
 
 }
 
 
-/* ---------------- EXPLORE BUTTON ---------------- */
+/* ---------- BUTTON ---------- */
 
 #exploreBtn{
 
-background:#f4c018;
+background:#f5c518;
 
-color:black;
+color:#000;
 
-padding:8px 18px;
+padding:8px 20px;
 
 border-radius:6px;
 
@@ -160,34 +158,34 @@ display:inline-block;
 
 width:max-content;
 
-transition:0.2s;
-
-}
-
-#exploreBtn:hover{
-
-background:#ffd23f;
-
 }
 
 
-/* ---------------- RIGHT IMAGE AREA (YELLOW) ---------------- */
+/* ---------- RIGHT IMAGE AREA ---------- */
 
 .banner-image{
 
-width:40%;
+position:absolute;
+
+right:0;
+
+top:0;
+
+width:45%;
 
 height:100%;
 
-background:#f4c018;
+background:#f5c518;
 
 display:flex;
 
 align-items:flex-end;
 
-justify-content:center;
+justify-content:flex-end;
 
 overflow:hidden;
+
+z-index:1;
 
 }
 
@@ -205,7 +203,32 @@ object-fit:contain;
 }
 
 
-/* ---------------- SLIDER ANIMATION ---------------- */
+/* ---------- DIAGONAL SPLIT ---------- */
+
+.watchlist-banner::after{
+
+content:"";
+
+position:absolute;
+
+right:40%;
+
+top:0;
+
+width:120px;
+
+height:100%;
+
+background:#f5c518;
+
+transform:skewX(-25deg);
+
+z-index:2;
+
+}
+
+
+/* ---------- SLIDER ANIMATION ---------- */
 
 .slide-in{
 
@@ -262,19 +285,21 @@ opacity:1;
 }
 
 
-/* ---------------- MOBILE OPTIMIZATION ---------------- */
+/* ---------- MOBILE ---------- */
 
 @media (max-width:600px){
 
 .watchlist-banner{
 
-height:120px;
+height:130px;
 
 }
 
 .banner-text{
 
-padding:14px;
+padding:16px;
+
+width:60%;
 
 }
 
@@ -293,7 +318,6 @@ font-size:12px;
 }
 
 }
-
 
 /* HERO */
 
