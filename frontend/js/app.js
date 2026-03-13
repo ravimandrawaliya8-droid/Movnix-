@@ -217,12 +217,13 @@ const celebCache = {};
 let bannerIndex = 0;
 
 function startExploreSlider(){
-if(!img || !title || !btn || !banner) return;
-    
+
 const img = document.getElementById("exploreImg");
 const title = document.getElementById("exploreTitle");
 const btn = document.getElementById("exploreBtn");
 const banner = document.getElementById("exploreBanner");
+
+if(!img || !title || !btn || !banner) return;
 
 function updateBanner(){
 
@@ -515,7 +516,9 @@ See<br>All
 
 container.innerHTML += seeAll;
 
+if(typeof activateCelebrityEffect === "function"){
 activateCelebrityEffect();
+}
 
     }
 
@@ -547,9 +550,13 @@ movie.overview ? movie.overview.slice(0,140)+"..." : "";
 
 /* ---------------- HERO SLIDER ---------------- */
 
+let heroTimer;
+
 function startHeroSlider(){
 
-setInterval(()=>{
+clearInterval(heroTimer);
+
+heroTimer = setInterval(()=>{
 
 heroIndex++;
 
@@ -561,7 +568,7 @@ renderHero(heroMovies[heroIndex]);
 
 },6000);
 
-}
+    }
 
 /* ---------------- MOVNIX PICKS ---------------- */
 async function loadMovnixPicks(){
