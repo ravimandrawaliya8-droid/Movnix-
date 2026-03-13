@@ -49,22 +49,28 @@ display:flex;
 gap:14px;
 }
 
-/* ------- EXPLORE OUTER SPACE -------- */
+/* ---------------- EXPLORE OUTER FRAME ---------------- */
 
 #exploreBanner{
 
 margin:18px;
 
-padding:6px;
-
-background:#e6e6e6;
+padding:4px;
 
 border-radius:16px;
+
+/* white border */
+
+border:3px solid white;
+
+/* background transparent */
+
+background:transparent;
 
 }
 
 
-/* -------- MAIN BANNER -------- */
+/* ---------------- MAIN BANNER ---------------- */
 
 .watchlist-banner{
 
@@ -74,36 +80,26 @@ align-items:center;
 
 justify-content:space-between;
 
-background:#000;
+height:140px;
 
 border-radius:14px;
 
 overflow:hidden;
 
-height:140px;
-
-position:relative;
-
-/* white border like mockup */
-
-border:2px solid white;
-
 }
 
 
-/* -------- TEXT AREA (LEFT BLACK) -------- */
+/* ---------------- LEFT TEXT AREA (BLACK) ---------------- */
 
 .banner-text{
 
 width:60%;
 
-padding-left:20px;
+background:#000;
 
-padding-right:10px;
+color:#fff;
 
-color:white;
-
-z-index:3;
+padding:20px;
 
 display:flex;
 
@@ -114,9 +110,11 @@ justify-content:center;
 }
 
 
-/* title */
+/* ---------------- TITLE ---------------- */
 
 #exploreTitle{
+
+color:white;
 
 font-size:20px;
 
@@ -124,10 +122,12 @@ line-height:1.35;
 
 margin-bottom:12px;
 
+min-height:48px;
+
 }
 
 
-/* actor name yellow */
+/* actor highlight */
 
 .actor-name{
 
@@ -138,36 +138,40 @@ font-weight:700;
 }
 
 
-/* -------- EXPLORE BUTTON -------- */
+/* ---------------- EXPLORE BUTTON ---------------- */
 
-#exploreBtn button{
+#exploreBtn{
 
 background:#f4c018;
 
-border:none;
+color:black;
 
 padding:8px 18px;
 
-font-size:13px;
+border-radius:6px;
+
+font-size:14px;
 
 font-weight:600;
 
-border-radius:6px;
+text-decoration:none;
 
-cursor:pointer;
+display:inline-block;
 
-color:black;
+width:max-content;
+
+transition:0.2s;
 
 }
 
-#exploreBtn button:hover{
+#exploreBtn:hover{
 
 background:#ffd23f;
 
 }
 
 
-/* -------- POSTER AREA (RIGHT YELLOW) -------- */
+/* ---------------- RIGHT IMAGE AREA (YELLOW) ---------------- */
 
 .banner-image{
 
@@ -181,16 +185,14 @@ display:flex;
 
 align-items:flex-end;
 
-justify-content:flex-end;
+justify-content:center;
 
 overflow:hidden;
-
-position:relative;
 
 }
 
 
-/* celebrity image */
+/* actor image */
 
 #exploreImg{
 
@@ -203,32 +205,7 @@ object-fit:contain;
 }
 
 
-/* -------- DIAGONAL CUT -------- */
-
-.watchlist-banner::after{
-
-content:"";
-
-position:absolute;
-
-right:40%;
-
-top:0;
-
-width:90px;
-
-height:100%;
-
-background:#f4c018;
-
-transform:skewX(-25deg);
-
-z-index:1;
-
-}
-
-
-/* -------- SLIDER ANIMATION -------- */
+/* ---------------- SLIDER ANIMATION ---------------- */
 
 .slide-in{
 
@@ -279,6 +256,39 @@ opacity:0;
 transform:translateX(0);
 
 opacity:1;
+
+}
+
+}
+
+
+/* ---------------- MOBILE OPTIMIZATION ---------------- */
+
+@media (max-width:600px){
+
+.watchlist-banner{
+
+height:120px;
+
+}
+
+.banner-text{
+
+padding:14px;
+
+}
+
+#exploreTitle{
+
+font-size:16px;
+
+}
+
+#exploreBtn{
+
+padding:6px 14px;
+
+font-size:12px;
 
 }
 
