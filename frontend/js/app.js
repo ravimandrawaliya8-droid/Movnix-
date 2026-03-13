@@ -379,6 +379,8 @@ Watch Options
 + Watchlist
 </a>
 
+</div>
+
 <div class="picks-actions">
 
 <a href="trailer.html?id=${movie.id}" class="glass-btn">
@@ -389,7 +391,6 @@ Watch Options
 ℹ Info
 </a>
 
-</div>
 </div>
 
 </div>
