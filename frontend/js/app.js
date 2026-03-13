@@ -268,19 +268,45 @@ movieData.cast[Math.floor(Math.random()*movieData.cast.length)];
 
 let url = "";
 
-/* BACKDROP CHECK */
+/* BACKDROP IMAGE LOAD */
 
-if(movie && movie.backdrop_path){
+if(celebCache[celeb.name]){
 
-url = "https://image.tmdb.org/t/p/original" + movie.backdrop_path;
+img.src = celebCache[celeb.name];
 
 }else{
 
-/* FALLBACK IMAGE */
+fetch(`${BASE}/person/${celeb.id}/movie_credits?api_key=${API_KEY}`)
+.then(res=>res.json())
+.then(movieData=>{
 
-url = "https://image.tmdb.org/t/p/original" + heroMovies[0].backdrop_path;
+if(!movieData.cast) return;
+
+/* FILTER MOVIES WITH BACKDROP */
+
+const movies = movieData.cast.filter(
+m => m.backdrop_path
+);
+
+/* IF NO MOVIE FOUND */
+
+if(movies.length === 0){
+
+img.src =
+"https://image.tmdb.org/t/p/original" +
+heroMovies[0].backdrop_path;
+
+return;
 
 }
+
+/* PICK RANDOM MOVIE */
+
+const movie =
+movies[Math.floor(Math.random()*movies.length)];
+
+const url =
+"https://image.tmdb.org/t/p/original" + movie.backdrop_path;
 
 /* LOAD IMAGE */
 
@@ -297,8 +323,6 @@ banner.classList.add("slide-in");
 img.src = url;
 
 celebCache[celeb.name] = url;
-
-});
 
 });
 
@@ -319,9 +343,6 @@ bannerIndex = 0;
 updateBanner();
 
 setInterval(updateBanner,10000);
-
-}
-
 
 /* ---------------- LOAD HERO ---------------- */
 
