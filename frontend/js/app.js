@@ -212,8 +212,6 @@ const todayCelebs = getDailyCelebs();
 const celebCache = {};
 
 
-/* -------- FINAL EXPLORE BANNER SLIDER -------- */
-
 let bannerIndex = 0;
 
 function startExploreSlider(){
@@ -238,7 +236,7 @@ bannerTexts[Math.floor(Math.random()*bannerTexts.length)];
 
 title.innerText = text.replace("{name}",celeb.name);
 
-/* celebrity image fetch */
+/* IMAGE LOAD */
 
 if(celebCache[celeb.name]){
 
@@ -250,14 +248,10 @@ fetch(`${BASE}/search/person?api_key=${API_KEY}&query=${celeb.name}`)
 .then(res=>res.json())
 .then(data=>{
 
-if(data.results && data.results[0]){
-
-const photo = data.results[0].profile_path;
-
-if(photo){
+if(data.results && data.results[0] && data.results[0].profile_path){
 
 const url =
-"https://image.tmdb.org/t/p/original" + photo;
+"https://image.tmdb.org/t/p/w500" + data.results[0].profile_path;
 
 img.src = url;
 
@@ -265,34 +259,9 @@ celebCache[celeb.name] = url;
 
 }
 
-}
-
 });
 
 }
-
-btn.href = "explore.html?actor=" + celeb.id;
-
-bannerIndex++;
-
-if(bannerIndex >= todayCelebs.length){
-bannerIndex = 0;
-}
-
-banner.classList.remove("slide-in","slide-out");
-
-void banner.offsetWidth;
-
-banner.classList.add("slide-out");
-
-setTimeout(()=>{
-
-const celeb = todayCelebs[bannerIndex];
-
-const text =
-bannerTexts[Math.floor(Math.random()*bannerTexts.length)];
-
-title.innerText = text.replace("{name}",celeb.name);
 
 btn.href = "explore.html?actor=" + celeb.id;
 
@@ -309,6 +278,14 @@ void banner.offsetWidth;
 banner.classList.add("slide-in");
 
 },500);
+
+}
+
+updateBanner();
+
+setInterval(updateBanner,10000);
+
+}
 
 /* ---------------- LOAD HERO ---------------- */
 
