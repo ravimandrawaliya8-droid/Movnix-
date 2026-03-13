@@ -5,7 +5,11 @@ const BASE = "https://api.themoviedb.org/3";
 
 async function getMovies(endpoint){
 
-    const res = await fetch(`${BASE}${endpoint}?api_key=${API_KEY}`);
+    const url = endpoint.includes("?")
+    ? `${BASE}${endpoint}&api_key=${API_KEY}`
+    : `${BASE}${endpoint}?api_key=${API_KEY}`;
+
+    const res = await fetch(url);
     const data = await res.json();
 
     return data.results || [];
@@ -41,7 +45,7 @@ async function loadHero(){
     const heroContainer = document.getElementById("hero");
     if(!heroContainer) return;
 
-    heroMovies = await getMovies("/discover/movie&with_origin_country=IN&region=IN");
+    heroMovies = await getMovies("/discover/movie?with_origin_country=IN&sort_by=popularity.desc");
     heroMovies = heroMovies.slice(0,25);
 
     if(heroMovies.length === 0) return;
@@ -63,7 +67,7 @@ async function loadTrailers(){
 const container = document.getElementById("trailers");
 if(!container) return;
 
-const movies = await getMovies("/trending/movie/day");
+const movies = await getMovies("/discover/movie?with_origin_country=IN&sort_by=popularity.desc");
 
 container.innerHTML = "";
 
@@ -110,8 +114,6 @@ count++;
 
 }
 
-/* SEE ALL BUTTON */
-
 const seeAll = document.createElement("a");
 seeAll.href = "trailers.html";
 seeAll.className = "see-all-card";
@@ -128,7 +130,7 @@ async function loadTopWeek(){
     const container = document.getElementById("topweek");
     if(!container) return;
 
-    const movies = await getMovies("/discover/movie&with_origin_country=IN&region=IN&sort_by=popularity.desc");
+    const movies = await getMovies("/discover/movie?with_origin_country=IN&sort_by=popularity.desc");
 
     container.innerHTML = "";
 
@@ -256,39 +258,7 @@ container.innerHTML += seeAll;
 
 activateCelebrityEffect();
 
-}
-
-function activateCelebrityEffect(){
-
-const cards = document.querySelectorAll(".celebrity-card");
-const container = document.getElementById("celebs");
-
-function updateCenter(){
-
-const center = window.innerWidth/2;
-
-cards.forEach(card=>{
-
-const rect = card.getBoundingClientRect();
-const cardCenter = rect.left + rect.width/2;
-
-const distance = Math.abs(center-cardCenter);
-
-if(distance < 100){
-card.classList.add("active");
-}else{
-card.classList.remove("active");
-}
-
-});
-
-}
-
-container.addEventListener("scroll",updateCenter);
-
-updateCenter();
-
-}
+    }
 
 /* ---------------- HERO RENDER ---------------- */
 
