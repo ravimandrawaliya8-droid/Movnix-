@@ -305,13 +305,12 @@ renderHero(heroMovies[heroIndex]);
 }
 
 /* ---------------- MOVNIX PICKS ---------------- */
-
 async function loadMovnixPicks(){
 
 const container = document.getElementById("movnixPicks");
 if(!container) return;
 
-const movies = await getMovies("/discover/movie&with_origin_country=IN&sort_by=vote_average.desc");
+const movies = await getMovies("/discover/movie?with_origin_country=IN&sort_by=vote_average.desc");
 
 container.innerHTML = "";
 
@@ -352,7 +351,6 @@ Watch Options
 <div class="picks-actions">
 
 <span>▶ Trailer</span>
-
 <span>ℹ Info</span>
 
 </div>
@@ -366,7 +364,9 @@ Watch Options
 container.innerHTML += card;
 
 });
-}
+
+    }
+
 
 /* ---------------- MOVIE CARD SYSTEM ---------------- */
 
