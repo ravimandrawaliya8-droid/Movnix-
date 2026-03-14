@@ -937,7 +937,7 @@ text-align:center;
 
 flex-shrink:0;
 
-opacity:.55;
+opacity:.1;
 
 transition:all .35s ease;
 
@@ -990,18 +990,18 @@ box-shadow:
 font-size:15px;
 font-weight:700;
 margin-top:12px;
-color:#fff;
+color:#ffffff;
 }
 
 .celebrity-meta{
 font-size:12px;
-color:#aaa;
+color:#cccccc;
 margin-top:3px;
 }
 
 .celebrity-popularity{
 font-size:12px;
-color:#f5c518;
+color:#ffd54a;
 font-weight:600;
 margin-top:4px;
 }
