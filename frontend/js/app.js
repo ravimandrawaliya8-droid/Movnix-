@@ -287,9 +287,12 @@ setInterval(updateBanner,10000);
 
 }
 
-/* ---------------- LOAD HERO ---------------- */
+/* ---------------- HERO SYSTEM ---------------- */
 
 let heroMovies = [];
+let heroIndex = 0;
+let heroTimer;
+
 async function loadHero(){
 
 const heroContainer = document.getElementById("hero");
@@ -298,30 +301,136 @@ if(!heroContainer) return;
 try{
 
 heroMovies = await getMovies(
-"/discover/movie?with_origin_country=IN&primary_release_year=2026&sort_by=popularity.desc"
+"/discover/movie?with_origin_country=IN&primary_release_date.gte=2024-01-01&sort_by=popularity.desc"
 );
 
-/* backdrop वाली movies ही रखें */
+heroMovies = heroMovies.filter(m => m.backdrop_path);
 
-heroMovies = heroMovies.filter(movie => movie.backdrop_path);
-
-/* limit */
-
-heroMovies = heroMovies.slice(0,25);
+heroMovies = heroMovies.slice(0,20);
 
 if(heroMovies.length === 0) return;
 
-renderHero(heroMovies[0]);
+createHeroSlides();
 
 startHeroSlider();
 
-}catch(error){
+}catch(err){
 
-console.error("Hero movies load error:",error);
+console.error("Hero load error",err);
+
+}
 
 }
 
+/* -------- CREATE HERO SLIDES -------- */
+
+function createHeroSlides(){
+
+const hero = document.getElementById("hero");
+
+hero.innerHTML = "";
+
+heroMovies.forEach((movie,i)=>{
+
+if(!movie) return;
+
+const poster = movie.poster_path
+? "https://image.tmdb.org/t/p/w342"+movie.poster_path
+: "";
+
+const backdrop = movie.backdrop_path
+? "https://image.tmdb.org/t/p/original"+movie.backdrop_path
+: "";
+
+const slide = document.createElement("div");
+slide.className="hero-slide";
+
+if(i===0) slide.classList.add("active");
+if(i===1) slide.classList.add("next");
+
+slide.innerHTML=`
+
+<div class="hero-video">
+<img src="${backdrop}" alt="${movie.title}">
+</div>
+
+<img class="hero-poster" src="${poster}" alt="${movie.title}">
+
+<div class="hero-info">
+
+<h2>${movie.title}</h2>
+
+<p>${movie.overview ? movie.overview.slice(0,140)+"..." : ""}</p>
+
+<div class="hero-buttons">
+
+<a href="trailer.html?id=${movie.id}" class="trailer-btn">
+▶ Watch Trailer
+</a>
+
+<a href="watchlist.html?id=${movie.id}" class="icon-btn">
+♡
+</a>
+
+<a href="watchlist.html?id=${movie.id}" class="icon-btn">
+🔖
+</a>
+
+</div>
+
+</div>
+
+`;
+
+hero.appendChild(slide);
+
+});
+
 }
+
+/* -------- HERO SLIDER -------- */
+
+function startHeroSlider(){
+
+clearInterval(heroTimer);
+
+heroTimer = setInterval(()=>{
+
+const slides = document.querySelectorAll(".hero-slide");
+
+const current = slides[heroIndex];
+
+heroIndex++;
+
+if(heroIndex >= slides.length){
+heroIndex = 0;
+}
+
+const next = slides[heroIndex];
+
+current.classList.remove("active");
+current.classList.add("exit");
+
+next.classList.remove("next");
+next.classList.add("active");
+
+let upcomingIndex = heroIndex + 1;
+
+if(upcomingIndex >= slides.length){
+upcomingIndex = 0;
+}
+
+slides[upcomingIndex].classList.add("next");
+
+setTimeout(()=>{
+current.classList.remove("exit");
+current.classList.add("next");
+},800);
+
+},6000);
+
+}
+
 
 /* ---------------- LOAD TRAILERS ---------------- */
 
@@ -551,27 +660,7 @@ movie.overview ? movie.overview.slice(0,140)+"..." : "";
 
 }
 
-/* ---------------- HERO SLIDER ---------------- */
 
-let heroTimer;
-
-function startHeroSlider(){
-
-clearInterval(heroTimer);
-
-heroTimer = setInterval(()=>{
-
-heroIndex++;
-
-if(heroIndex >= heroMovies.length){
-heroIndex = 0;
-}
-
-renderHero(heroMovies[heroIndex]);
-
-},6000);
-
-    }
 
 /* ---------------- MOVNIX PICKS ---------------- */
 async function loadMovnixPicks(){
