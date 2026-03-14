@@ -299,8 +299,7 @@ if(!heroContainer) return;
 try{
 
 heroMovies = await getMovies(
-"/discover/movie?with_origin_country=IN&primary_release_date.gte=2025-01-01&primary_release_date.lte=2026-12-31&sort_by=popularity.desc"
-);
+"/discover/movie?region=IN&primary_release_date.gte=2025-01-01&sort_by=primary_release_date.desc"
 
 /* safety filter */
 
