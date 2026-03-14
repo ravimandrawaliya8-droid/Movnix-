@@ -579,7 +579,7 @@ async function loadTopWeek(){
                     Watchlist
                     </a>
 
-                </div>
+               </div>
 
             </div>
 
@@ -599,14 +599,25 @@ async function loadCelebrities(){
 const container = document.getElementById("celebs");
 if(!container) return;
 
-const res = await fetch(`${BASE}/person/popular?api_key=${API_KEY}`);
-const data = await res.json();
-
-const people = data.results;
-
 container.innerHTML = "";
 
-people.slice(0,15).forEach(person=>{
+/* MERGE MALE + FEMALE LIST */
+
+const allCelebs = [...maleCelebs, ...femaleCelebs].slice(0,50);
+
+for(const celeb of allCelebs){
+
+try{
+
+const res = await fetch(
+`${BASE}/search/person?api_key=${API_KEY}&query=${encodeURIComponent(celeb.name)}`
+);
+
+const data = await res.json();
+
+const person = data.results[0];
+
+if(!person) continue;
 
 const photo = person.profile_path
 ? "https://image.tmdb.org/t/p/w300" + person.profile_path
@@ -615,6 +626,7 @@ const photo = person.profile_path
 const titles = person.known_for ? person.known_for.length : 0;
 
 const card = `
+
 <a href="celebrity.html?id=${person.id}" class="celebrity-card">
 
 <div class="celebrity-photo">
@@ -634,11 +646,20 @@ Popularity ${Math.round(person.popularity)}
 </div>
 
 </a>
+
 `;
 
 container.innerHTML += card;
 
-});
+}catch(err){
+
+console.log("Celebrity load error",err);
+
+}
+
+}
+
+/* SEE ALL CARD */
 
 const seeAll = `
 <a href="celebrities.html" class="celebrity-seeall">
@@ -658,7 +679,7 @@ if(typeof activateCelebrityEffect === "function"){
 activateCelebrityEffect();
 }
 
-    }
+}
 
 
 /* ---------------- MOVNIX PICKS ---------------- */
