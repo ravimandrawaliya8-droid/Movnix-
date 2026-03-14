@@ -252,8 +252,7 @@ fetch(`${BASE}/search/person?api_key=${API_KEY}&query=${celeb.name}`)
 if(data.results && data.results[0] && data.results[0].profile_path){
 
 const url =
-"https://image.tmdb.org/t/p/w500" + data.results[0].profile_path;
-
+"https://image.tmdb.org/t/p/w780" + data.results[0].profile_path;
 img.src = url;
 
 celebCache[celeb.name] = url;
