@@ -469,13 +469,16 @@ async function loadTrailers(){
 const container = document.getElementById("trailers");
 if(!container) return;
 
-const movies = await getMovies("/discover/movie?with_origin_country=IN&sort_by=popularity.desc");
+const movies1 = await getMovies("/discover/movie?with_origin_country=IN&sort_by=popularity.desc&page=1");
+const movies2 = await getMovies("/discover/movie?with_origin_country=IN&sort_by=popularity.desc&page=2");
+
+const movies = [...movies1, ...movies2];
 
 container.innerHTML = "";
 
 let count = 0;
 
-for(const movie of movies.slice(0,15)){
+for(const movie of movies){
 
 if(count >= 30) break;
 
@@ -515,13 +518,6 @@ container.appendChild(card);
 count++;
 
 }
-
-const seeAll = document.createElement("a");
-seeAll.href = "trailers.html";
-seeAll.className = "see-all-card";
-seeAll.innerText = "See All";
-
-container.appendChild(seeAll);
 
 }
 
