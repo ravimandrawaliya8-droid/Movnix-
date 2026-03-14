@@ -378,28 +378,30 @@ margin-top:10px;
 background:#e50914;
 color:white;
 
-padding:7px 14px;
-border-radius:10px;
+padding:4px 10px;
+border-radius:4px;
 
-font-size:13px;
+font-size:12px;
 text-decoration:none;
 }
 
 /* GLASS ICONS */
 
 .icon-btn{
-background:rgba(255,255,255,.15);
-backdrop-filter:blur(10px);
+background:rgba(255,255,255,.08);
+backdrop-filter:blur(12px);
 
-padding:6px 9px;
-border-radius:8px;
+padding:4px 6px;
+border-radius:6px;
+
+font-size:12px;
 }
 
 /* COUNTER */
 
 .hero-count{
-font-size:12px;
-opacity:.85;
+font-size:10px;
+opacity:.8;
 }
 
 
