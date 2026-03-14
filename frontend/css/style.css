@@ -251,7 +251,7 @@ height:100%;
 display:flex;
 align-items:flex-end;
 gap:18px;
-padding:18px;
+padding:0;
 
 transition:transform .8s ease;
 }
@@ -304,10 +304,9 @@ width:100%;
 height:100%;
 
 background:linear-gradient(
-90deg,
-rgba(0,0,0,.75) 0%,
-rgba(0,0,0,.45) 40%,
-rgba(0,0,0,.1) 100%
+to bottom,
+rgba(0,0,0,0) 70%,
+rgba(0,0,0,.2) 100%
 );
 }
 
@@ -322,6 +321,9 @@ z-index:3;
 
 box-shadow:0 10px 30px rgba(0,0,0,.6);
 align-self:flex-end;
+
+margin-left:16px;
+margin-bottom:10px;
 }
 
 /* INFO */
