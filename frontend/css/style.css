@@ -801,7 +801,7 @@ cursor:pointer;
 
 .trailer-btn{
 flex:1;
-background:#e50914;
+background:#ff4d4f;
 color:#fff;
 text-align:center;
 padding:6px;
@@ -811,13 +811,17 @@ text-decoration:none;
 font-weight:600;
 }
 
+.trailer-btn:hover{
+background:#ff6b6b;
+}
+
 /* WATCHLIST BUTTON */
 
 .watchlist-btn{
 width:100%;
 background:#000;
-border:1.5px solid #1e6bff;
-color:#1e6bff;
+border:1.5px solid #4ea1ff;
+color:#4ea1ff;
 padding:6px;
 border-radius:8px;
 font-size:12px;
@@ -828,7 +832,7 @@ transition:.2s;
 }
 
 .watchlist-btn:hover{
-background:#1e6bff;
+background:#4ea1ff;
 color:#fff;
 }
 
