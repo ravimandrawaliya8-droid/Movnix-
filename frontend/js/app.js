@@ -293,23 +293,44 @@ let heroMovies = [];
 
 async function loadHero(){
 
-    const heroContainer = document.getElementById("hero");
-    if(!heroContainer) return;
+const heroContainer = document.getElementById("hero");
+if(!heroContainer) return;
 
-    heroMovies = await getMovies("/discover/movie?with_origin_country=IN&sort_by=popularity.desc");
-    heroMovies = heroMovies.slice(0,25);
+try{
 
-    if(heroMovies.length === 0) return;
+heroMovies = await getMovies(
+"/discover/movie?with_origin_country=IN&primary_release_date.gte=2025-01-01&primary_release_date.lte=2026-12-31&sort_by=popularity.desc"
+);
 
-    if(typeof renderHero === "function"){
-        renderHero(heroMovies[0]);
-    }
+/* safety filter */
 
-    if(typeof startHeroSlider === "function"){
-        startHeroSlider();
-    }
+heroMovies = heroMovies.filter(movie => movie.backdrop_path);
+
+/* limit */
+
+heroMovies = heroMovies.slice(0,25);
+
+if(heroMovies.length === 0) return;
+
+/* first render */
+
+if(typeof renderHero === "function"){
+renderHero(heroMovies[0]);
+}
+
+/* start slider */
+
+if(typeof startHeroSlider === "function"){
+startHeroSlider();
+}
+
+}catch(error){
+
+console.error("Hero movies load error:",error);
 
 }
+
+    }
 
 /* ---------------- LOAD TRAILERS ---------------- */
 
