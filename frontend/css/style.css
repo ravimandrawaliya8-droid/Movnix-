@@ -904,15 +904,6 @@ border-radius:16px;
 margin:22px 14px;
 }
 
-/* TITLE LINE */
-
-.celeb-line{
-width:150px;
-height:3px;
-background:#f5c518;
-margin-top:6px;
-border-radius:2px;
-}
 
 /* ROW */
 
@@ -1456,3 +1447,41 @@ display:inline-block;
 margin-left:6px;
 
   }
+
+/* CELEBRITY HEADER */
+
+.celeb-head{
+display:flex;
+align-items:center;
+gap:10px;
+margin-bottom:18px;
+}
+
+/* SMALL YELLOW LINE */
+
+.celeb-line{
+width:4px;
+height:18px;
+background:#f5c518;
+border-radius:2px;
+}
+
+/* TITLE LINK */
+
+.celeb-title{
+font-size:20px;
+font-weight:700;
+color:#fff;
+text-decoration:none;
+display:flex;
+align-items:center;
+gap:6px;
+white-space:nowrap;
+}
+
+/* ARROW */
+
+.celeb-arrow{
+font-size:18px;
+color:#fff;
+}
