@@ -629,6 +629,37 @@ border-radius:20px;
 color:#fff;
   }
 
+/* FEATURED TRAILER SEE ALL BUTTON */
+
+.trailer-see-btn{
+
+color:#4ea1ff;
+
+font-size:13px;
+
+text-decoration:none;
+
+padding:5px 12px;
+
+border-radius:16px;
+
+border:1.5px solid #4ea1ff;
+
+background:rgba(255,255,255,0.05);
+
+backdrop-filter:blur(6px);
+
+transition:0.25s;
+
+}
+
+.trailer-see-btn:hover{
+
+background:rgba(78,161,255,0.15);
+
+}
+
+
 /* ========================= */
 /* TOP THIS WEEK MOVIE CARDS */
 /* ========================= */
