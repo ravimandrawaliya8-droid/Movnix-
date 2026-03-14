@@ -807,3 +807,44 @@ async function init(){
 }
 
 init();
+
+
+function activateCelebrityEffect(){
+
+const row = document.querySelector(".celebrity-row");
+if(!row) return;
+
+const cards = row.querySelectorAll(".celebrity-card");
+
+function updateActive(){
+
+const center = row.scrollLeft + row.offsetWidth / 2;
+
+let closest = null;
+let closestOffset = Infinity;
+
+cards.forEach(card=>{
+
+const cardCenter = card.offsetLeft + card.offsetWidth/2;
+const diff = Math.abs(center - cardCenter);
+
+if(diff < closestOffset){
+closestOffset = diff;
+closest = card;
+}
+
+});
+
+cards.forEach(c=>c.classList.remove("active"));
+
+if(closest){
+closest.classList.add("active");
+}
+
+}
+
+row.addEventListener("scroll",updateActive);
+
+updateActive();
+
+                      }
