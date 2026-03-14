@@ -913,20 +913,28 @@ display:none;
 /* CARD */
 
 .celebrity-card{
+
 min-width:160px;
+
 background:#151515;
+
 border:1px solid rgba(255,255,255,0.25);
+
 border-radius:14px;
+
 text-align:center;
+
 flex-shrink:0;
 
 transition:all .35s ease;
 
 padding-top:20px;
+
 padding-bottom:12px;
+
 }
 
-/* INACTIVE CARDS */
+/* FADED SIDE CARDS */
 
 .celebrity-card:not(.active){
 opacity:.55;
