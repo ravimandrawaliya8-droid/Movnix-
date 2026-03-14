@@ -289,6 +289,7 @@ setInterval(updateBanner,10000);
 
 /* ---------------- LOAD HERO ---------------- */
 
+let heroMovies = [];
 async function loadHero(){
 
 const heroContainer = document.getElementById("hero");
