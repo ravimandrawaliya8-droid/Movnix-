@@ -327,20 +327,36 @@ console.error("Hero load error",err);
 function createHeroSlides(){
 
 const hero = document.getElementById("hero");
-
 hero.innerHTML = "";
 
 heroMovies.forEach((movie,i)=>{
 
 if(!movie) return;
 
+/* POSTER */
+
 const poster = movie.poster_path
 ? "https://image.tmdb.org/t/p/w342"+movie.poster_path
-: "";
+: "https://via.placeholder.com/300x450?text=No+Poster";
+
+/* BACKDROP */
 
 const backdrop = movie.backdrop_path
 ? "https://image.tmdb.org/t/p/original"+movie.backdrop_path
 : "";
+
+/* RATING */
+
+const rating = movie.vote_average
+? movie.vote_average.toFixed(1)
+: "0";
+
+/* FAKE SOCIAL COUNTS */
+
+const likes = Math.floor(movie.popularity * 12);
+const saves = Math.floor(movie.popularity * 6);
+
+/* CREATE SLIDE */
 
 const slide = document.createElement("div");
 slide.className="hero-slide";
@@ -360,21 +376,35 @@ slide.innerHTML=`
 
 <h2>${movie.title}</h2>
 
-<p>${movie.overview ? movie.overview.slice(0,140)+"..." : ""}</p>
+<div class="hero-rating">
+⭐ ${rating}
+</div>
+
+<p>
+${movie.overview ? movie.overview : ""}
+</p>
 
 <div class="hero-buttons">
 
-<a href="trailer.html?id=${movie.id}" class="trailer-btn">
-▶ Watch Trailer
+<a href="trailer.html?id=${movie.id}" class="hero-trailer-btn">
+▶ Trailer
 </a>
 
-<a href="watchlist.html?id=${movie.id}" class="icon-btn">
-♡
-</a>
+<div class="icon-btn">
+❤️
+</div>
 
-<a href="watchlist.html?id=${movie.id}" class="icon-btn">
+<div class="hero-count">
+${likes}
+</div>
+
+<div class="icon-btn">
 🔖
-</a>
+</div>
+
+<div class="hero-count">
+${saves}
+</div>
 
 </div>
 
@@ -388,7 +418,7 @@ hero.appendChild(slide);
 
 }
 
-/* -------- HERO SLIDER -------- */
+
 
 function startHeroSlider(){
 
@@ -633,33 +663,6 @@ activateCelebrityEffect();
 }
 
     }
-
-/* ---------------- HERO RENDER ---------------- */
-
-let heroIndex = 0;
-
-function renderHero(movie){
-
-const poster = movie.poster_path
-? "https://image.tmdb.org/t/p/w342" + movie.poster_path
-: "https://via.placeholder.com/300x450?text=No+Poster";
-
-const backdrop = movie.backdrop_path
-? "https://image.tmdb.org/t/p/original" + movie.backdrop_path
-: "";
-
-document.getElementById("heroPoster").src = poster;
-
-document.getElementById("heroBackdrop").innerHTML =
-`<img src="${backdrop}" alt="${movie.title}">`;
-
-document.getElementById("heroTitle").innerText = movie.title;
-
-document.getElementById("heroOverview").innerText =
-movie.overview ? movie.overview.slice(0,140)+"..." : "";
-
-}
-
 
 
 /* ---------------- MOVNIX PICKS ---------------- */
