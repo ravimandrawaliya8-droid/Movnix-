@@ -289,8 +289,6 @@ setInterval(updateBanner,10000);
 
 /* ---------------- LOAD HERO ---------------- */
 
-let heroMovies = [];
-
 async function loadHero(){
 
 const heroContainer = document.getElementById("hero");
@@ -299,9 +297,10 @@ if(!heroContainer) return;
 try{
 
 heroMovies = await getMovies(
-"/discover/movie?region=IN&primary_release_date.gte=2025-01-01&sort_by=primary_release_date.desc"
+"/discover/movie?with_origin_country=IN&primary_release_year=2026&sort_by=popularity.desc"
+);
 
-/* safety filter */
+/* backdrop वाली movies ही रखें */
 
 heroMovies = heroMovies.filter(movie => movie.backdrop_path);
 
@@ -311,17 +310,9 @@ heroMovies = heroMovies.slice(0,25);
 
 if(heroMovies.length === 0) return;
 
-/* first render */
-
-if(typeof renderHero === "function"){
 renderHero(heroMovies[0]);
-}
 
-/* start slider */
-
-if(typeof startHeroSlider === "function"){
 startHeroSlider();
-}
 
 }catch(error){
 
@@ -329,7 +320,7 @@ console.error("Hero movies load error:",error);
 
 }
 
-    }
+}
 
 /* ---------------- LOAD TRAILERS ---------------- */
 
