@@ -539,20 +539,10 @@ gap:3px;
 
 /* MOVIE ROW */
 
-.movie-row{
-display:flex;
-gap:14px;
-overflow-x:auto;
-scroll-behavior:smooth;
-}
-
 .movie-row::-webkit-scrollbar{
 display:none;
 }
 
-.movie-card{
-min-width:125px;
-}
 
 .movie-card img{
 width:100%;
@@ -936,7 +926,7 @@ text-align:center;
 
 flex-shrink:0;
 
-opacity:.35;
+opacity:.55;
 
 transition:all .35s ease;
 
@@ -954,7 +944,7 @@ height:120px;
 margin:auto;
 border-radius:50%;
 overflow:hidden;
-border:3px solid #222;
+border:3px solid #2c2c2c;
 transition:all .35s ease;
 position:relative;
 }
