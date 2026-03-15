@@ -761,6 +761,88 @@ container.innerHTML += card;
     }
 
 
+/* ---------------- TRENDING MOVIES ---------------- */
+
+async function loadTrending(){
+
+const container = document.getElementById("trendingList");
+if(!container) return;
+
+const movies = await getMovies(
+"/discover/movie?region=IN&sort_by=popularity.desc&primary_release_date.gte=2025-01-01&vote_count.gte=300"
+);
+
+container.innerHTML = "";
+
+movies.slice(0,3).forEach((movie,index)=>{
+
+const poster = movie.poster_path
+? "https://image.tmdb.org/t/p/w500"+movie.poster_path
+: "https://via.placeholder.com/500x750?text=No+Poster";
+
+const rating = movie.vote_average
+? movie.vote_average.toFixed(1)
+: "0";
+
+const votes = Math.floor(movie.vote_count/1000)+"K";
+
+const trend = Math.min(100,Math.round(movie.popularity));
+
+const card = `
+
+<div class="trend-card">
+
+<div class="trend-poster">
+
+<img src="${poster}" alt="${movie.title}">
+
+<div class="watch-icon">+</div>
+
+</div>
+
+<div class="trend-info">
+
+<div class="rank">#${index+1}</div>
+
+<h3>${movie.title}</h3>
+
+<div class="meta">
+${movie.release_date}
+</div>
+
+<div class="rating">
+⭐ ${rating} (${votes})
+</div>
+
+<div class="trend-score">
+🔥 ${trend}% Trend Score
+</div>
+
+<div class="trend-actions">
+
+<a href="trailer.html?id=${movie.id}" class="btn">
+▶ Trailer
+</a>
+
+<a href="watchlist.html?id=${movie.id}" class="btn">
+🔖 Watchlist
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+container.innerHTML += card;
+
+});
+
+}
+
+
 /* ---------------- MOVIE CARD SYSTEM ---------------- */
 
 function createMovieCard(movie){
@@ -862,6 +944,8 @@ registerSection("topweek", loadTopWeek);
 registerSection("celebs", loadCelebrities);
 
 registerSection("movnixPicks", loadMovnixPicks);
+
+registerSection("trendingList", loadTrending);
 
 
 /* ---------------- INIT ---------------- */
