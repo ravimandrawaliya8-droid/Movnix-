@@ -1259,12 +1259,20 @@ font-weight:600;
 /* SUBTITLE LINK */
 
 .discover-link{
+
 color:#4ea1ff;
+
 font-size:16px;
+
 text-decoration:none;
+
 display:flex;
 align-items:center;
-gap:8px;
+
+gap:6px;
+
+margin-left:64px; /* R letter alignment */
+
 }
 
 .discover-link:hover{
@@ -1586,17 +1594,17 @@ background:rgba(78,161,255,0.15);
 
 .discover-arrow{
 
-width:14px;
-height:14px;
+width:11px;
+height:11px;
 
-border-top:3px solid #4ea1ff;
-border-right:3px solid #4ea1ff;
+border-top:2px solid #4ea1ff;
+border-right:2px solid #4ea1ff;
 
 transform:rotate(45deg);
 
 display:inline-block;
 
-margin-left:6px;
+margin-left:4px;
 
-  }
+}
 
