@@ -1339,9 +1339,9 @@ display:none;
 
 .picks-card{
 
-flex:0 0 42%;   /* IMDb style width */
+flex:0 0 42%;
 
-height:360px;
+height:480px;   /* card bigger */
 
 background:#1b1b1b;
 
@@ -1360,16 +1360,17 @@ transition:0.25s;
 
 }
 
-.picks-card:hover{
-transform:translateY(-3px);
-}
-
 /* POSTER */
 
 .picks-card img{
 width:100%;
-height:240px;
+height:320px;   /* bigger poster */
 object-fit:cover;
+}
+
+
+.picks-row{
+min-height:520px;
 }
 
 /* INFO */
