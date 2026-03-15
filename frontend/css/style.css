@@ -1271,8 +1271,8 @@ align-items:center;
 
 gap:6px;
 
-margin-left:64px; /* R letter alignment */
-
+margin-left:0;
+padding-left:2px;
 }
 
 .discover-link:hover{
@@ -1676,4 +1676,24 @@ margin-left:4px;
 
 .picks-btn{
 transform:translateY(-8px);
+}
+
+/* DISCOVER HEADER OUTSIDE SECTION */
+
+.discover{
+
+background:transparent;   /* section background remove */
+
+margin-top:30px;
+
+}
+
+.discover-head{
+
+background:#000;          /* body background */
+
+margin:0 10px 14px 10px;  /* spacing */
+
+padding:0;
+
 }
