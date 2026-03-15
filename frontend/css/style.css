@@ -1372,7 +1372,7 @@ transition:0.25s;
 
 .picks-card img{
 width:100%;
-height:290px;   /* bigger poster */
+height:320px;   /* bigger poster */
 object-fit:cover;
 }
 
