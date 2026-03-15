@@ -778,19 +778,33 @@ container.innerHTML = "";
 
 movies.slice(0,3).forEach((movie,index)=>{
 
+/* POSTER */
+
 const poster = movie.poster_path
 ? "https://image.tmdb.org/t/p/w500"+movie.poster_path
 : "https://via.placeholder.com/500x750?text=No+Poster";
+
+/* RATING */
 
 const rating = movie.vote_average
 ? movie.vote_average.toFixed(1)
 : "0";
 
-/* VOTE FORMAT */
+/* VOTES FORMAT */
 
 const votes = movie.vote_count
 ? Math.floor(movie.vote_count/1000)+"K"
 : "0";
+
+/* WATCH TIME (H M S FORMAT) */
+
+const totalSeconds = Math.floor(Math.random()*5400) + 5400;
+
+const hours = Math.floor(totalSeconds / 3600);
+const minutes = Math.floor((totalSeconds % 3600) / 60);
+const seconds = totalSeconds % 60;
+
+const watchTime = `${hours}h ${minutes}m ${seconds}s`;
 
 /* SMART TREND SCORE */
 
@@ -798,7 +812,7 @@ let trend = Math.round((movie.popularity / 10) + (movie.vote_average * 5));
 
 if(trend > 100) trend = 100;
 
-/* CARD */
+/* CARD HTML */
 
 const card = `
 
@@ -819,11 +833,19 @@ const card = `
 <h3>${movie.title}</h3>
 
 <div class="meta">
-${movie.release_date}
+${movie.release_date} • ${watchTime}
 </div>
+
+<div class="rating-row">
 
 <div class="rating">
 ⭐ ${rating} (${votes})
+</div>
+
+<button class="rate-btn-small">
+Rate
+</button>
+
 </div>
 
 <div class="trend-score">
@@ -852,7 +874,8 @@ container.innerHTML += card;
 
 });
 
-}
+   }
+
 
 
 /* ---------------- MOVIE CARD SYSTEM ---------------- */
