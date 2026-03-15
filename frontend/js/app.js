@@ -718,7 +718,11 @@ const card = `
 <div class="picks-info">
 
 <div class="picks-rating">
+
 ⭐ ${rating}
+
+<span class="rate-star">★</span>
+
 </div>
 
 <div class="picks-title-text">
@@ -733,19 +737,23 @@ Watch Options
 + Watchlist
 </a>
 
+</div>
+
 <div class="picks-actions">
 
-<span>▶ Trailer</span>
-<span>ℹ Info</span>
+<a href="trailer.html?id=${movie.id}">
+▶
+</a>
 
-</div>
+<a href="movie.html?id=${movie.id}" class="info-btn">
+i
+</a>
 
 </div>
 
 </div>
 
 `;
-
 container.innerHTML += card;
 
 });
