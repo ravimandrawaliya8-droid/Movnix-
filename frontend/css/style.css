@@ -1377,7 +1377,7 @@ object-fit:cover;
 .picks-info{
 
 padding:10px;
-padding-bottom:55px;   /* IMPORTANT */
+padding-bottom:70px;   /* IMPORTANT */
 
 flex:1;
 
@@ -1444,9 +1444,9 @@ z-index:5;
 
 .picks-actions a{
 
-padding:6px 10px;
+padding:4px 8px;
 
-border-radius:14px;
+border-radius:10px;
 
 background:rgba(255,255,255,0.08);
 
@@ -1454,12 +1454,19 @@ backdrop-filter:blur(6px);
 
 border:1px solid rgba(255,255,255,0.15);
 
-font-size:12px;
+font-size:11px;
 
 color:#e6e6e6;
 
-text-decoration:none;
+cursor:pointer;
 
+transition:0.2s;
+
+}
+
+.picks-actions a:active{
+transform:scale(0.92);
+background:rgba(255,255,255,0.18);
 }
 
 /* LEFT GROUP */
