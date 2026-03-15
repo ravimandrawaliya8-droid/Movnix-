@@ -1697,3 +1697,270 @@ margin:0 10px 14px 10px;  /* spacing */
 padding:0;
 
 }
+
+
+/* TRENDING SECTION */
+
+.trending-section{
+
+margin:30px 10px;
+
+}
+
+/* HEADER */
+
+.trending-head{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:16px;
+
+}
+
+.trend-left{
+
+display:flex;
+align-items:center;
+gap:10px;
+
+}
+
+.trend-line{
+
+width:5px;
+height:22px;
+background:#4ea1ff;
+border-radius:3px;
+
+}
+
+.trending-head h2{
+
+font-size:20px;
+font-weight:700;
+
+}
+
+/* LIST */
+
+.trending-list{
+
+display:flex;
+flex-direction:column;
+gap:18px;
+
+}
+
+/* CARD */
+
+.trend-card{
+
+display:flex;
+gap:14px;
+
+background:#1b1b1b;
+
+border-radius:18px;
+
+padding:14px;
+
+box-shadow:0 8px 20px rgba(0,0,0,0.6);
+
+}
+
+/* POSTER */
+
+.trend-poster{
+
+position:relative;
+
+}
+
+.trend-poster img{
+
+width:95px;
+height:140px;
+
+object-fit:cover;
+
+border-radius:12px;
+
+}
+
+/* WATCH ICON */
+
+.watch-icon{
+
+position:absolute;
+
+top:6px;
+left:6px;
+
+background:rgba(0,0,0,0.8);
+
+color:#fff;
+
+width:24px;
+height:24px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+border-radius:6px;
+
+font-size:16px;
+
+}
+
+/* INFO */
+
+.trend-info{
+
+flex:1;
+
+display:flex;
+
+flex-direction:column;
+
+gap:6px;
+
+}
+
+/* RANK */
+
+.rank{
+
+background:#1b6cff;
+
+color:#fff;
+
+font-size:12px;
+
+padding:3px 8px;
+
+border-radius:8px;
+
+width:max-content;
+
+font-weight:700;
+
+}
+
+/* TITLE */
+
+.trend-info h3{
+
+font-size:17px;
+font-weight:700;
+
+}
+
+/* META */
+
+.meta{
+
+font-size:12px;
+
+opacity:.8;
+
+}
+
+/* RATING */
+
+.rating{
+
+color:#f5c518;
+
+font-size:13px;
+
+}
+
+/* TREND SCORE */
+
+.trend-score{
+
+background:linear-gradient(90deg,#ff7a18,#ff3d3d);
+
+padding:6px 12px;
+
+border-radius:20px;
+
+font-size:12px;
+
+width:max-content;
+
+font-weight:600;
+
+}
+
+/* BUTTONS */
+
+.trend-actions{
+
+display:flex;
+
+gap:10px;
+
+margin-top:4px;
+
+}
+
+.btn{
+
+background:rgba(255,255,255,0.08);
+
+backdrop-filter:blur(8px);
+
+padding:6px 12px;
+
+border-radius:20px;
+
+font-size:12px;
+
+color:#fff;
+
+text-decoration:none;
+
+}
+
+/* SEE ALL */
+
+.trend-seeall{
+
+display:flex;
+
+justify-content:center;
+
+margin-top:18px;
+
+}
+
+.see-btn{
+
+color:#4ea1ff;
+
+border:1.5px solid #4ea1ff;
+
+background:rgba(255,255,255,0.05);
+
+backdrop-filter:blur(8px);
+
+padding:8px 26px;
+
+border-radius:24px;
+
+text-decoration:none;
+
+font-size:14px;
+
+}
+
+.see-btn:hover{
+
+background:rgba(78,161,255,0.15);
+
+box-shadow:0 0 10px rgba(78,161,255,0.4);
+
+  }
