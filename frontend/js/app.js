@@ -794,22 +794,76 @@ return card;
 
 }
     
+/* ---------------- SMART LAZY LOAD SYSTEM ---------------- */
+
+const lazySections = [];
+
+/* REGISTER SECTION */
+
+function registerSection(id, loader){
+
+lazySections.push({
+id: id,
+loader: loader,
+loaded: false
+});
+
+}
+
+/* LAZY LOAD ENGINE */
+
+function lazyLoadSections(){
+
+function checkSections(){
+
+lazySections.forEach(section => {
+
+if(section.loaded) return;
+
+const el = document.getElementById(section.id);
+
+if(!el) return;
+
+const pos = el.getBoundingClientRect().top;
+
+if(pos < window.innerHeight){
+
+section.loader();
+
+section.loaded = true;
+
+}
+
+});
+
+}
+
+window.addEventListener("scroll", checkSections);
+
+checkSections();
+
+}
+
+
+/* ---------------- REGISTER ALL SECTIONS ---------------- */
+
+registerSection("trailers", loadTrailers);
+
+registerSection("topweek", loadTopWeek);
+
+registerSection("celebs", loadCelebrities);
+
+registerSection("movnixPicks", loadMovnixPicks);
+
+
 /* ---------------- INIT ---------------- */
 
 async function init(){
 
-    await loadHero();
+await loadHero();          // Hero section
+startExploreSlider();      // Explore banner
 
-    startExploreSlider();
-
-    loadTrailers();
-
-    loadTopWeek();
-
-    loadCelebrities();
-
-    loadMovnixPicks();
-
+lazyLoadSections();        // Lazy load system start
 
 }
 
