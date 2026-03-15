@@ -623,8 +623,15 @@ const photo = person.profile_path
 ? "https://image.tmdb.org/t/p/w300" + person.profile_path
 : "https://via.placeholder.com/300x300?text=No+Image";
 
-const titles = person.known_for ? person.known_for.length : 0;
+/* GET REAL MOVIE COUNT */
 
+const creditsRes = await fetch(
+`${BASE}/person/${person.id}/movie_credits?api_key=${API_KEY}`
+);
+
+const creditsData = await creditsRes.json();
+
+const titles = creditsData.cast ? creditsData.cast.length : 0;
 const card = `
 
 <a href="celebrity.html?id=${person.id}" class="celebrity-card">
