@@ -1789,27 +1789,45 @@ border-radius:12px;
 }
 
 
-/* LEFT BLUR FADE */
+.trend-card{
+position:relative;
 
-.trend-poster::after{
+display:flex;
+gap:14px;
+
+background:#1b1b1b;
+
+border-radius:18px;
+
+padding:14px;
+
+box-shadow:0 8px 20px rgba(0,0,0,0.6);
+
+overflow:hidden;
+}
+
+
+/* LEFT BLUR FADE (CARD SIDE) */
+
+.trend-card::before{
 
 content:"";
+
 position:absolute;
 
 left:0;
 top:0;
 bottom:0;
 
-width:60px;
+width:70px;
 
 background:linear-gradient(
 to right,
-rgba(0,110,255,0.35),
+rgba(0,110,255,0.30),
 rgba(0,110,255,0)
 );
 
-backdrop-filter:blur(8px);
--webkit-backdrop-filter:blur(8px);
+filter:blur(18px);
 
 pointer-events:none;
 
@@ -1857,24 +1875,6 @@ gap:6px;
 }
 
 /* RANK */
-
-.rank{
-
-background:#1b6cff;
-
-color:#fff;
-
-font-size:12px;
-
-padding:3px 8px;
-
-border-radius:8px;
-
-width:max-content;
-
-font-weight:700;
-
-}
 
 
 .rank-badge{
@@ -1939,6 +1939,22 @@ font-size:12px;
 width:max-content;
 
 font-weight:600;
+
+}
+
+.trend-rank{
+
+font-size:26px;
+font-weight:800;
+
+color:#4ea1ff;
+
+position:absolute;
+
+left:10px;
+top:8px;
+
+opacity:.9;
 
 }
 
