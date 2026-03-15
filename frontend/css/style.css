@@ -1412,28 +1412,29 @@ font-size:14px;
 
 .rate-star{
 
+position:absolute;
+
+top:8px;
+right:8px;
+
+width:26px;
+height:26px;
+
 display:flex;
 align-items:center;
 justify-content:center;
 
-width:22px;
-height:22px;
-
 border-radius:50%;
 
-background:rgba(255,255,255,0.08);
+background:rgba(255,255,255,0.05);
 
-backdrop-filter:blur(6px);
+backdrop-filter:blur(8px);
 
-border:1px solid rgba(255,255,255,0.25);
+border:1px solid rgba(255,255,255,0.2);
 
-color:#ffd54a;
+color:#4ea1ff;
 
-font-size:13px;
-
-cursor:pointer;
-
-transition:.2s;
+font-size:14px;
 
 }
 
