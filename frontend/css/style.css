@@ -1341,7 +1341,7 @@ display:none;
 
 flex:0 0 42%;
 
-height:480px;   /* card bigger */
+height:430px;   /* card bigger */
 
 background:#1b1b1b;
 
@@ -1364,13 +1364,13 @@ transition:0.25s;
 
 .picks-card img{
 width:100%;
-height:320px;   /* bigger poster */
+height:290px;   /* bigger poster */
 object-fit:cover;
 }
 
 
 .picks-row{
-min-height:520px;
+min-height:450px;
 }
 
 /* INFO */
