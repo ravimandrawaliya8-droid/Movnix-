@@ -1219,6 +1219,25 @@ object-fit:cover;
 margin-top:25px;
 }
 
+/* DISCOVER MOVIE ROW */
+
+.discover-row{
+display:flex;
+gap:14px;
+overflow-x:auto;
+scroll-behavior:smooth;
+padding-bottom:8px;
+}
+
+.discover-row::-webkit-scrollbar{
+display:none;
+}
+
+/* DISCOVER CARD SIZE (IMDB STYLE) */
+
+.discover-row .picks-card{
+flex:0 0 42%;   /* 2 cards full + 3rd peek */
+}
 
 /* DISCOVER HEADER */
 
