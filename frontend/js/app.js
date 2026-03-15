@@ -768,8 +768,10 @@ async function loadTrending(){
 const container = document.getElementById("trendingList");
 if(!container) return;
 
+/* INDIAN TRENDING MOVIES */
+
 const movies = await getMovies(
-"/discover/movie?region=IN&sort_by=popularity.desc&primary_release_date.gte=2025-01-01&vote_count.gte=300"
+"/discover/movie?with_origin_country=IN&primary_release_date.gte=2024-01-01&sort_by=popularity.desc&vote_count.gte=200"
 );
 
 container.innerHTML = "";
@@ -784,13 +786,25 @@ const rating = movie.vote_average
 ? movie.vote_average.toFixed(1)
 : "0";
 
-const votes = Math.floor(movie.vote_count/1000)+"K";
+/* VOTE FORMAT */
 
-const trend = Math.min(100,Math.round(movie.popularity));
+const votes = movie.vote_count
+? Math.floor(movie.vote_count/1000)+"K"
+: "0";
+
+/* SMART TREND SCORE */
+
+let trend = Math.round((movie.popularity / 10) + (movie.vote_average * 5));
+
+if(trend > 100) trend = 100;
+
+/* CARD */
 
 const card = `
 
 <div class="trend-card">
+
+<div class="rank">#${index+1}</div>
 
 <div class="trend-poster">
 
@@ -801,8 +815,6 @@ const card = `
 </div>
 
 <div class="trend-info">
-
-<div class="rank">#${index+1}</div>
 
 <h3>${movie.title}</h3>
 
