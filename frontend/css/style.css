@@ -1769,6 +1769,29 @@ box-shadow:0 8px 20px rgba(0,0,0,0.6);
 
 }
 
+
+.trend-title{
+
+font-size:20px;
+
+font-weight:700;
+
+display:flex;
+
+align-items:center;
+
+gap:6px;
+
+}
+
+.trend-arrow{
+
+font-size:20px;
+
+color:#4ea1ff;
+
+}
+
 /* POSTER */
 
 .trend-poster{
@@ -1895,24 +1918,29 @@ backdrop-filter:blur(6px);
 border-radius:8px;
 }
 
+
 /* TITLE */
 
 .trend-info h3{
 
 font-size:17px;
 font-weight:700;
+color:#ffffff;
 
 }
 
-/* META */
+
+/* META (hashtags / year / genre) */
 
 .meta{
 
 font-size:12px;
+color:#4ea1ff;
 
-opacity:.8;
+opacity:0.9;
 
 }
+
 
 /* RATING */
 
@@ -2027,3 +2055,17 @@ background:rgba(78,161,255,0.15);
 box-shadow:0 0 10px rgba(78,161,255,0.4);
 
   }
+
+.trending-section{
+
+background: rgba(0,0,0,0.55);
+
+backdrop-filter: blur(6px);
+
+padding:20px 16px;
+
+border-radius:18px;
+
+margin:20px 0;
+
+}
