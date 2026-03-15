@@ -1499,7 +1499,7 @@ background:#2a2a2a;
 
 position:absolute;
 
-bottom:60px;
+bottom:10px;
 left:10px;
 right:10px;
 
@@ -1670,3 +1670,9 @@ margin-left:4px;
 
 }
 
+
+/* MOVE WATCH & WATCHLIST UP */
+
+.picks-btn{
+transform:translateY(-8px);
+}
