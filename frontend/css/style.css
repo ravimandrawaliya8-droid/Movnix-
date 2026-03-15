@@ -1465,6 +1465,31 @@ transition:0.2s;
 
 }
 
+
+/* INFO ICON BUTTON (IMDb style) */
+
+.info-btn{
+
+width:22px;
+height:22px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+border-radius:50%;
+
+border:1.5px solid #ffffff;
+
+background:rgba(255,255,255,0.08);
+
+font-size:12px;
+font-weight:700;
+
+padding:0;
+
+}
+
 .picks-actions a:active{
 transform:scale(0.92);
 background:rgba(255,255,255,0.18);
