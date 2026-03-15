@@ -747,7 +747,7 @@ margin-bottom:4px;
 
 .genre{
 font-size:11px;
-opacity:.8;
+color:#4ea1ff;
 margin-bottom:7px;
 }
 
@@ -1949,6 +1949,30 @@ opacity:0.9;
 color:#f5c518;
 
 font-size:13px;
+
+}
+
+.rating-row{
+display:flex;
+align-items:center;
+gap:8px;
+}
+
+.rate-btn-small{
+
+font-size:12px;
+
+padding:2px 8px;
+
+border:1.5px solid #4ea1ff;
+
+border-radius:6px;
+
+background:transparent;
+
+color:#4ea1ff;
+
+cursor:pointer;
 
 }
 
