@@ -1772,9 +1772,9 @@ box-shadow:0 8px 20px rgba(0,0,0,0.6);
 /* POSTER */
 
 .trend-poster{
-
 position:relative;
-
+overflow:hidden;
+border-radius:14px;
 }
 
 .trend-poster img{
@@ -1788,30 +1788,58 @@ border-radius:12px;
 
 }
 
+
+/* LEFT BLUR FADE */
+
+.trend-poster::after{
+
+content:"";
+position:absolute;
+
+left:0;
+top:0;
+bottom:0;
+
+width:60px;
+
+background:linear-gradient(
+to right,
+rgba(0,110,255,0.35),
+rgba(0,110,255,0)
+);
+
+backdrop-filter:blur(8px);
+-webkit-backdrop-filter:blur(8px);
+
+pointer-events:none;
+
+}
+
 /* WATCH ICON */
 
 .watch-icon{
-
 position:absolute;
+top:8px;
+left:8px;
 
-top:6px;
-left:6px;
-
-background:rgba(0,0,0,0.8);
-
-color:#fff;
-
-width:24px;
-height:24px;
+width:30px;
+height:30px;
 
 display:flex;
 align-items:center;
 justify-content:center;
 
-border-radius:6px;
+font-size:18px;
+font-weight:600;
 
-font-size:16px;
+color:white;
 
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(8px);
+
+border-radius:8px;
+
+border:1px solid rgba(255,255,255,0.25);
 }
 
 /* INFO */
@@ -1846,6 +1874,25 @@ width:max-content;
 
 font-weight:700;
 
+}
+
+
+.rank-badge{
+position:absolute;
+top:8px;
+right:8px;
+
+padding:4px 10px;
+
+font-size:12px;
+font-weight:600;
+
+color:white;
+
+background:rgba(0,0,0,0.45);
+backdrop-filter:blur(6px);
+
+border-radius:8px;
 }
 
 /* TITLE */
