@@ -1033,6 +1033,138 @@ container.innerHTML += card;
     }
 
 
+/* =====================================================
+   POPULAR INTERESTS (IMDB STYLE CATEGORY CARDS)
+===================================================== */
+
+const interestCategories = [
+
+{title:"Horror",genre:"27"},
+{title:"Comedy",genre:"35"},
+{title:"Action",genre:"28"},
+{title:"Crime & Mystery",genre:"80,9648"},
+{title:"Love Stories",genre:"10749"},
+{title:"Family Movies",genre:"10751"},
+{title:"Mind Blowing Thrillers",genre:"53"},
+{title:"South Mass Movies",genre:"28"},
+{title:"Real Story Movies",genre:"18"},
+{title:"Patriotic Movies",genre:"36"},
+{title:"Sad Love Stories",genre:"10749"},
+{title:"Weekend Movies",genre:"28"},
+{title:"Late Night Thrillers",genre:"53"},
+{title:"Adventure Movies",genre:"12"},
+{title:"Sci-Fi Movies",genre:"878"},
+{title:"Romantic Comedy",genre:"35,10749"},
+{title:"Epic Blockbusters",genre:"28"},
+{title:"Hidden Gems",genre:"18"}
+
+];
+
+
+/* LOAD INTEREST SECTION */
+
+async function loadPopularInterests(){
+
+const container = document.getElementById("popularInterests");
+if(!container) return;
+
+container.innerHTML = "";
+
+for(const cat of interestCategories){
+
+try{
+
+const url =
+`${BASE}/discover/movie?api_key=${API_KEY}&with_genres=${cat.genre}&page=1`;
+
+const res = await fetch(url);
+const data = await res.json();
+
+if(!data.results) continue;
+
+const movies = data.results.slice(0,4);
+const count = data.total_results || 0;
+
+/* RANDOM POSTER COUNT (1-4) */
+
+const posterCount = Math.floor(Math.random()*4)+1;
+
+let posters = movies.slice(0,posterCount);
+
+/* CREATE COLLAGE */
+
+let collageHTML = "";
+
+posters.forEach(movie=>{
+
+if(!movie.poster_path) return;
+
+const poster =
+"https://image.tmdb.org/t/p/w500" + movie.poster_path;
+
+collageHTML += `<img src="${poster}" alt="${movie.title}">`;
+
+});
+
+/* CARD HTML */
+
+const card = `
+
+<div class="interest-card">
+
+<div class="poster-collage">
+
+${collageHTML}
+
+</div>
+
+<div class="interest-info">
+
+<a href="explore.html?genre=${cat.genre}" class="interest-title">
+${cat.title}
+</a>
+
+<div class="movie-count">
+${formatMovieCount(count)} movies
+</div>
+
+<a href="explore.html?genre=${cat.genre}" class="see-list">
+See list
+</a>
+
+</div>
+
+</div>
+
+`;
+
+container.innerHTML += card;
+
+}catch(err){
+
+console.log("Interest load error",err);
+
+}
+
+}
+
+}
+
+
+/* FORMAT MOVIE COUNT */
+
+function formatMovieCount(num){
+
+if(num > 1000){
+
+return (num/1000).toFixed(1)+"K";
+
+}
+
+return num;
+
+    }
+
 
 /* ---------------- MOVIE CARD SYSTEM ---------------- */
 
