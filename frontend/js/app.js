@@ -525,72 +525,127 @@ count++;
 
 async function loadTopWeek(){
 
-    const container = document.getElementById("topweek");
-    if(!container) return;
+const container = document.getElementById("topweek");
+if(!container) return;
 
-    const movies = await getMovies("/discover/movie?with_origin_country=IN&sort_by=popularity.desc");
+container.innerHTML = "";
 
-    container.innerHTML = "";
+/* STEP 1 — WEEKLY TRENDING (REAL DATA) */
 
-    movies.slice(0,10).forEach((movie,index)=>{
+const [page1,page2] = await Promise.all([
+getMovies("/trending/movie/week?page=1"),
+getMovies("/trending/movie/week?page=2")
+]);
 
-        const poster = movie.poster_path
-        ? "https://image.tmdb.org/t/p/w500" + movie.poster_path
-        : "https://via.placeholder.com/500x750?text=No+Poster";
+let movies = [...page1,...page2];
 
-        const rating = movie.vote_average
-        ? movie.vote_average.toFixed(1)
-        : "0";
+/* STEP 2 — FILTER INDIAN MOVIES */
 
-        const popularity = Math.min(movie.popularity/5,100);
+let indianMovies = movies.filter(movie =>
+movie.original_language === "hi" ||
+movie.original_language === "ta" ||
+movie.original_language === "te" ||
+movie.original_language === "ml" ||
+movie.original_language === "kn"
+);
 
-        const card = `
-        <div class="movie-card">
+/* STEP 3 — FALLBACK IF LESS MOVIES */
 
-            <div class="poster-box">
+if(indianMovies.length < 10){
 
-                <img src="${poster}" alt="${movie.title}">
+const fallback = await getMovies(
+"/discover/movie?with_origin_country=IN&sort_by=popularity.desc&page=1"
+);
 
-                <div class="rating-badge">⭐ ${rating}</div>
-
-                <div class="rank">#${index+1}</div>
-
-            </div>
-
-            <div class="movie-info">
-
-                <h4>${movie.title}</h4>
-
-                <div class="genre">Trending</div>
-
-                <div class="popularity">
-                    <div class="bar" style="width:${popularity}%"></div>
-                </div>
-
-                <div class="actions">
-
-                    <button class="rate-btn">⭐ Rate</button>
-
-                    <a href="trailer.html?id=${movie.id}" class="trailer-btn">
-                    ▶ Trailer
-                    </a>
-
-                    <a href="watchlist.html?id=${movie.id}" class="watchlist-btn">
-                    Watchlist
-                    </a>
-
-               </div>
-
-            </div>
-
-        </div>
-        `;
-
-        container.innerHTML += card;
-
-    });
+indianMovies = [...indianMovies,...fallback];
 
 }
+
+/* STEP 4 — REMOVE DUPLICATES */
+
+const unique = [];
+const ids = new Set();
+
+indianMovies.forEach(movie=>{
+
+if(!ids.has(movie.id)){
+ids.add(movie.id);
+unique.push(movie);
+}
+
+});
+
+/* STEP 5 — FINAL TOP 10 */
+
+const finalMovies = unique.slice(0,10);
+
+/* STEP 6 — CREATE CARDS */
+
+finalMovies.forEach((movie,index)=>{
+
+const poster = movie.poster_path
+? "https://image.tmdb.org/t/p/w500" + movie.poster_path
+: "https://via.placeholder.com/500x750?text=No+Poster";
+
+const rating = movie.vote_average
+? movie.vote_average.toFixed(1)
+: "0";
+
+/* REAL TREND BAR */
+
+const popularity = Math.min(movie.popularity/5,100);
+
+const card = `
+
+<div class="movie-card">
+
+<div class="poster-box">
+
+<img src="${poster}" alt="${movie.title}">
+
+<div class="rating-badge">⭐ ${rating}</div>
+
+<div class="rank">#${index+1}</div>
+
+</div>
+
+<div class="movie-info">
+
+<h4>${movie.title}</h4>
+
+<div class="genre">Top This Week</div>
+
+<div class="popularity">
+<div class="bar" style="width:${popularity}%"></div>
+</div>
+
+<div class="actions">
+
+<button class="rate-btn">⭐ Rate</button>
+
+<a href="trailer.html?id=${movie.id}" class="trailer-btn">
+▶ Trailer
+</a>
+
+<a href="watchlist.html?id=${movie.id}" class="watchlist-btn">
+Watchlist
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+container.innerHTML += card;
+
+});
+
+    }
+
+
 
 /* ---------------- CELEBRITIES ---------------- */
 
