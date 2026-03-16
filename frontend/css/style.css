@@ -2296,46 +2296,49 @@ font-size:18px;
   }
 
 
-/* ============================= */
-/* POPULAR INTERESTS SECTION */
-/* ============================= */
+/* ========================= */
+/* POPULAR INTERESTS (IMDB STYLE) */
+/* ========================= */
 
 .interests-section{
-padding:22px 15px 30px;
+margin:26px 10px;
+padding:18px 14px;
+background:#151515;
+border-radius:16px;
 }
 
-/* horizontal scroll */
+/* HEADER */
+
+.interests-section .section-head h2{
+font-size:22px;
+font-weight:700;
+color:#ffffff;
+margin-bottom:12px;
+}
+
+/* SCROLL ROW */
 
 .interests-scroll{
+
 display:flex;
-gap:16px;
+gap:14px;
+
 overflow-x:auto;
 scroll-behavior:smooth;
-padding-top:10px;
+
+padding-bottom:10px;
+
 }
 
 .interests-scroll::-webkit-scrollbar{
 display:none;
 }
 
+/* CARD */
 
-.popular-row{
-display:flex;
-gap:16px;
-overflow-x:auto;
-scroll-behavior:smooth;
-padding-bottom:30px;   /* section height increase */
-}
+.interest-card{
 
-.popular-row::-webkit-scrollbar{
-display:none;
-}
-
-.popular-card{
-
-flex:0 0 65%;   /* card width increase */
-
-height:520px;   /* card height increase */
+flex:0 0 30%;      /* 3 cards visible */
 
 background:#1b1b1b;
 
@@ -2343,211 +2346,71 @@ border-radius:16px;
 
 overflow:hidden;
 
-flex-shrink:0;
+box-shadow:0 8px 20px rgba(0,0,0,0.7);
 
-box-shadow:0 10px 24px rgba(0,0,0,0.7);
-
-}
-
-.popular-card img{
-
-width:100%;
-
-height:320px;   /* poster height increase */
-
-object-fit:cover;
+transition:.25s;
 
 }
 
-
-/* ============================= */
-/* INTEREST CARD */
-/* ============================= */
-
-.interest-card{
-
-width:185px;
-background:#111;
-border-radius:16px;
-overflow:hidden;
-flex-shrink:0;
-
-box-shadow:0 6px 20px rgba(0,0,0,0.5);
-
-display:flex;
-flex-direction:column;
-
-transition:transform .25s ease;
-
-}
-
-.interest-card:hover{
-transform:scale(1.04);
-}
-
-
-/* ============================= */
-/* POSTER COLLAGE */
-/* ============================= */
-
-.poster-collage{
-
-display:flex;
-
-height:150px;
-
-overflow:hidden;
-
-}
-
-.poster-collage img{
-
-width:33.33%;
-height:100%;
-
-object-fit:cover;
-
-}
-
-
-/* ============================= */
-/* CARD INFO */
-/* ============================= */
-
-.interest-info{
-
-padding:12px;
-
-background:#111;
-
-display:flex;
-flex-direction:column;
-gap:4px;
-
-}
-
-
-/* title */
-
-.interest-title{
-
-font-size:16px;
-font-weight:600;
-
-color:#fff;
-
-text-decoration:none;
-
-line-height:1.3;
-
-}
-
-
-.interest-card{
-
-width:200px;
-height:240px;
-
-background:#1b1b1b;
-
-border-radius:16px;
-
-overflow:hidden;
-
-flex-shrink:0;
-
-display:flex;
-flex-direction:column;
-
-}
-
-
-/* movie count */
-
-.movie-count{
-
-font-size:13px;
-color:#9aa0a6;
-
-}
-
-
-/* see list */
-
-.see-list{
-
-font-size:13px;
-
-color:#4da3ff;
-
-text-decoration:none;
-
-margin-top:3px;
-
-}
-
-.see-list:hover{
-text-decoration:underline;
-}
-
-
-/* ============================= */
-/* MOBILE OPTIMIZATION */
-/* ============================= */
-
-@media (max-width:480px){
-
-.interest-card{
-width:175px;
-}
-
-.poster-collage{
-height:160px;
-}
-
-.interest-title{
-font-size:15px;
-}
-
-}
-
-
-/* ========================= */
-/* POPULAR INTERESTS FIX */
-/* ========================= */
-
-.interest-card{
-flex:0 0 65%;
-height:360px;
-background:#1b1b1b;
-border-radius:14px;
-overflow:hidden;
-
-display:flex;
-flex-direction:column;
-}
-
-/* POSTER AREA */
+/* POSTER */
 
 .interest-card img{
+
 width:100%;
-height:260px;   /* poster height increase */
+height:190px;
+
 object-fit:cover;
+
+display:block;
+
 }
 
 /* TEXT AREA */
 
 .interest-info{
+
 padding:10px;
-margin-top:auto;   /* text automatically bottom pe */
+
 }
 
-.interest-info h4{
-font-size:14px;
-margin-bottom:4px;
+/* TITLE */
+
+.interest-title{
+
+font-size:13px;
+
+font-weight:700;
+
+line-height:1.3;
+
+color:#ffffff;
+
+margin-bottom:6px;
+
 }
 
-.interest-info p{
+/* SEE LIST LINK */
+
+.interest-link{
+
 font-size:12px;
-opacity:.8;
-  }
+
+color:#4ea1ff;
+
+text-decoration:none;
+
+}
+
+.interest-link:hover{
+opacity:.85;
+}
+
+/* HOVER */
+
+.interest-card:hover{
+
+transform:scale(1.04);
+
+box-shadow:0 12px 26px rgba(0,0,0,0.9);
+
+}
