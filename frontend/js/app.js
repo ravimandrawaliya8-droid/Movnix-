@@ -877,6 +877,125 @@ container.innerHTML += card;
    }
 
 
+/* ---------------- FAN FAVOURITES (SMART) ---------------- */
+
+async function loadFanFavourites(){
+
+const container = document.getElementById("fanFavourites");
+if(!container) return;
+
+/* RANDOM PAGE SYSTEM */
+
+const randomPage1 = Math.floor(Math.random()*5)+1;
+const randomPage2 = Math.floor(Math.random()*5)+6;
+
+/* FETCH TWO PAGES */
+
+const movies1 = await getMovies(
+`/discover/movie?with_origin_country=IN&primary_release_date.gte=2020-01-01&primary_release_date.lte=2026-12-31&sort_by=vote_average.desc&vote_count.gte=300&page=${randomPage1}`
+);
+
+const movies2 = await getMovies(
+`/discover/movie?with_origin_country=IN&primary_release_date.gte=2020-01-01&primary_release_date.lte=2026-12-31&sort_by=vote_average.desc&vote_count.gte=300&page=${randomPage2}`
+);
+
+/* MERGE */
+
+let movies = [...movies1, ...movies2];
+
+/* REMOVE DUPLICATES */
+
+const seen = new Set();
+
+movies = movies.filter(movie => {
+
+if(seen.has(movie.id)) return false;
+
+seen.add(movie.id);
+
+return true;
+
+});
+
+container.innerHTML = "";
+
+/* LIMIT 25 CARDS */
+
+movies.slice(0,25).forEach(movie=>{
+
+const poster = movie.poster_path
+? "https://image.tmdb.org/t/p/w500"+movie.poster_path
+: "https://via.placeholder.com/500x750?text=No+Poster";
+
+const rating = movie.vote_average
+? movie.vote_average.toFixed(1)
+: "0";
+
+/* WATCH TIME */
+
+const totalSeconds = Math.floor(Math.random()*5400)+5400;
+
+const hours = Math.floor(totalSeconds/3600);
+const minutes = Math.floor((totalSeconds%3600)/60);
+const seconds = totalSeconds%60;
+
+const watchTime = `${hours}h ${minutes}m ${seconds}s`;
+
+const card = `
+
+<div class="fan-card">
+
+<div class="fan-poster">
+
+<img src="${poster}" alt="${movie.title}">
+
+<div class="watchlist-icon">+</div>
+
+</div>
+
+<div class="fan-info">
+
+<div class="fan-rating">
+⭐ ${rating}
+</div>
+
+<h3 class="fan-title">
+${movie.title}
+</h3>
+
+<div class="meta">
+${watchTime}
+</div>
+
+<a href="watch.html?id=${movie.id}" class="fan-watch-btn">
+Watch
+</a>
+
+<div class="fan-actions">
+
+<a href="trailer.html?id=${movie.id}" class="fan-trailer">
+▶ Trailer
+</a>
+
+<a href="movie.html?id=${movie.id}" class="fan-info-btn">
+ⓘ
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+container.innerHTML += card;
+
+});
+
+}
+
+
 
 /* ---------------- MOVIE CARD SYSTEM ---------------- */
 
@@ -981,6 +1100,8 @@ registerSection("celebs", loadCelebrities);
 registerSection("movnixPicks", loadMovnixPicks);
 
 registerSection("trendingList", loadTrending);
+
+registerSection("fanFavourites", loadFanFavourites);
 
 
 /* ---------------- INIT ---------------- */
