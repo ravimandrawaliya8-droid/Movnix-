@@ -916,7 +916,7 @@ container.innerHTML += card;
    }
 
 
-/* ---------------- FAN FAVOURITES (FAST 40 MOVIES) ---------------- */
+/* ---------------- FAN FAVOURITES (SMART FILTER) ---------------- */
 
 async function loadFanFavourites(){
 
@@ -925,11 +925,14 @@ if(!container) return;
 
 container.innerHTML = "";
 
-/* FETCH 2 PAGES (20 + 20 = 40 MOVIES) */
+/* FETCH 2 PAGES */
 
 const [page1, page2] = await Promise.all([
-getMovies("/discover/movie?with_origin_country=IN&primary_release_date.gte=2020-01-01&primary_release_date.lte=2026-12-31&sort_by=popularity.desc&page=1"),
-getMovies("/discover/movie?with_origin_country=IN&primary_release_date.gte=2020-01-01&primary_release_date.lte=2026-12-31&sort_by=popularity.desc&page=2")
+
+getMovies("/discover/movie?with_origin_country=IN&primary_release_date.gte=2022-01-01&vote_count.gte=800&vote_average.gte=7&sort_by=vote_average.desc&page=1"),
+
+getMovies("/discover/movie?with_origin_country=IN&primary_release_date.gte=2022-01-01&vote_count.gte=800&vote_average.gte=7&sort_by=vote_average.desc&page=2")
+
 ]);
 
 /* MERGE MOVIES */
@@ -996,7 +999,9 @@ container.innerHTML += card;
 
 });
 
-   }
+    }
+
+
 
 /* ---------------- MOVIE CARD SYSTEM ---------------- */
 
