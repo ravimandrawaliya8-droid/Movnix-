@@ -2319,6 +2319,47 @@ display:none;
 }
 
 
+.popular-row{
+display:flex;
+gap:16px;
+overflow-x:auto;
+scroll-behavior:smooth;
+padding-bottom:30px;   /* section height increase */
+}
+
+.popular-row::-webkit-scrollbar{
+display:none;
+}
+
+.popular-card{
+
+flex:0 0 65%;   /* card width increase */
+
+height:520px;   /* card height increase */
+
+background:#1b1b1b;
+
+border-radius:16px;
+
+overflow:hidden;
+
+flex-shrink:0;
+
+box-shadow:0 10px 24px rgba(0,0,0,0.7);
+
+}
+
+.popular-card img{
+
+width:100%;
+
+height:320px;   /* poster height increase */
+
+object-fit:cover;
+
+}
+
+
 /* ============================= */
 /* INTEREST CARD */
 /* ============================= */
