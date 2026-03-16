@@ -2093,3 +2093,187 @@ border-radius:18px;
 margin:20px 0;
 
 }
+
+
+
+/* ============================= */
+/* FAN FAVOURITES SECTION */
+/* ============================= */
+
+.fan-section{
+margin-top:40px;
+}
+
+/* ROW */
+
+.fan-row{
+display:flex;
+gap:16px;
+overflow-x:auto;
+padding:10px 0;
+scrollbar-width:none;
+}
+
+.fan-row::-webkit-scrollbar{
+display:none;
+}
+
+
+/* CARD */
+
+.fan-card{
+
+min-width:170px;
+background:#111;
+border-radius:14px;
+overflow:hidden;
+
+transition:transform .25s ease;
+
+}
+
+.fan-card:hover{
+transform:translateY(-6px);
+}
+
+
+/* POSTER */
+
+.fan-poster{
+position:relative;
+}
+
+.fan-poster img{
+width:100%;
+display:block;
+border-radius:14px 14px 0 0;
+}
+
+
+/* WATCHLIST ICON */
+
+.watchlist-icon{
+
+position:absolute;
+top:8px;
+left:8px;
+
+background:rgba(0,0,0,0.6);
+backdrop-filter:blur(6px);
+
+padding:6px 8px;
+border-radius:6px;
+
+font-size:14px;
+cursor:pointer;
+
+}
+
+
+/* INFO AREA */
+
+.fan-info{
+padding:12px;
+}
+
+
+/* RATING */
+
+.fan-rating{
+color:#f5c518;
+font-size:14px;
+margin-bottom:4px;
+}
+
+
+/* TITLE */
+
+.fan-title{
+font-size:15px;
+font-weight:600;
+margin-bottom:6px;
+
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
+}
+
+
+/* META */
+
+.meta{
+font-size:12px;
+color:#aaa;
+margin-bottom:10px;
+}
+
+
+/* WATCH BUTTON */
+
+.fan-watch-btn{
+
+display:block;
+
+background:#1a1a1a;
+color:#6ea8ff;
+
+text-align:center;
+padding:8px 0;
+
+border-radius:20px;
+
+font-size:14px;
+text-decoration:none;
+
+margin-bottom:10px;
+
+transition:.2s;
+
+}
+
+.fan-watch-btn:hover{
+background:#222;
+}
+
+
+/* ACTIONS */
+
+.fan-actions{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+font-size:13px;
+
+}
+
+
+/* TRAILER */
+
+.fan-trailer{
+color:#fff;
+text-decoration:none;
+opacity:.9;
+}
+
+.fan-trailer:hover{
+opacity:1;
+}
+
+
+/* INFO BUTTON */
+
+.fan-info-btn{
+
+font-size:16px;
+color:#fff;
+text-decoration:none;
+
+opacity:.8;
+
+}
+
+.fan-info-btn:hover{
+opacity:1;
+                         }
