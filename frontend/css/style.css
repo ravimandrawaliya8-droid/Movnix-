@@ -2296,27 +2296,18 @@ font-size:18px;
   }
 
 
-/* ========================= */
-/* POPULAR INTERESTS (IMDB STYLE) */
-/* ========================= */
+/* ======================= */
+/* POPULAR INTERESTS */
+/* ======================= */
 
 .interests-section{
-margin:26px 10px;
+margin:24px 10px;
 padding:18px 14px;
 background:#151515;
 border-radius:16px;
 }
 
-/* HEADER */
-
-.interests-section .section-head h2{
-font-size:22px;
-font-weight:700;
-color:#ffffff;
-margin-bottom:12px;
-}
-
-/* SCROLL ROW */
+/* scroll row */
 
 .interests-scroll{
 
@@ -2324,9 +2315,7 @@ display:flex;
 gap:14px;
 
 overflow-x:auto;
-scroll-behavior:smooth;
-
-padding-bottom:10px;
+padding-bottom:6px;
 
 }
 
@@ -2338,30 +2327,34 @@ display:none;
 
 .interest-card{
 
-flex:0 0 30%;      /* 3 cards visible */
+flex:0 0 120px;
 
 background:#1b1b1b;
 
-border-radius:16px;
+border-radius:14px;
 
 overflow:hidden;
 
-box-shadow:0 8px 20px rgba(0,0,0,0.7);
+}
 
-transition:.25s;
+/* COLLAGE */
+
+.interest-collage{
+
+display:grid;
+
+grid-template-rows:repeat(3, 90px);
 
 }
 
-/* POSTER */
+/* POSTERS */
 
-.interest-card img{
+.interest-collage img{
 
 width:100%;
-height:190px;
+height:100%;
 
 object-fit:cover;
-
-display:block;
 
 }
 
@@ -2379,17 +2372,25 @@ padding:10px;
 
 font-size:13px;
 
-font-weight:700;
+font-weight:600;
 
-line-height:1.3;
-
-color:#ffffff;
-
-margin-bottom:6px;
+color:#fff;
 
 }
 
-/* SEE LIST LINK */
+/* MOVIE COUNT */
+
+.interest-count{
+
+font-size:12px;
+
+color:#bdbdbd;
+
+margin-top:3px;
+
+}
+
+/* SEE LIST */
 
 .interest-link{
 
@@ -2397,20 +2398,8 @@ font-size:12px;
 
 color:#4ea1ff;
 
-text-decoration:none;
+display:block;
 
-}
-
-.interest-link:hover{
-opacity:.85;
-}
-
-/* HOVER */
-
-.interest-card:hover{
-
-transform:scale(1.04);
-
-box-shadow:0 12px 26px rgba(0,0,0,0.9);
+margin-top:4px;
 
 }
