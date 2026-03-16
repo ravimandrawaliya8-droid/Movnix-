@@ -530,68 +530,71 @@ if(!container) return;
 
 container.innerHTML = "";
 
-/* STEP 1 — WEEKLY TRENDING (REAL DATA) */
+/* STEP 1 — TRENDING WEEK (GLOBAL SIGNAL) */
 
-const [page1,page2] = await Promise.all([
-getMovies("/trending/movie/week?page=1"),
-getMovies("/trending/movie/week?page=2")
-]);
+const trending = await getMovies("/trending/movie/week");
 
-let movies = [...page1,...page2];
+/* STEP 2 — DISCOVER INDIAN MOVIES (REAL BASE) */
 
-/* STEP 2 — FILTER INDIAN MOVIES */
-
-let indianMovies = movies.filter(movie =>
-movie.original_language === "hi" ||
-movie.original_language === "ta" ||
-movie.original_language === "te" ||
-movie.original_language === "ml" ||
-movie.original_language === "kn"
+const indian = await getMovies(
+"/discover/movie?with_origin_country=IN&sort_by=popularity.desc&vote_count.gte=200"
 );
 
-/* STEP 3 — FALLBACK IF LESS MOVIES */
+/* STEP 3 — MERGE SIGNALS */
 
-if(indianMovies.length < 10){
+let combined = [...trending, ...indian];
 
-const fallback = await getMovies(
-"/discover/movie?with_origin_country=IN&sort_by=popularity.desc&page=1"
+/* STEP 4 — KEEP INDIAN LANGUAGES */
+
+combined = combined.filter(movie =>
+["hi","ta","te","ml","kn"].includes(movie.original_language)
 );
 
-indianMovies = [...indianMovies,...fallback];
+/* STEP 5 — REMOVE DUPLICATES */
 
+const map = new Map();
+
+combined.forEach(movie=>{
+if(!map.has(movie.id)){
+map.set(movie.id, movie);
 }
+});
 
-/* STEP 4 — REMOVE DUPLICATES */
+const unique = [...map.values()];
 
-const unique = [];
-const ids = new Set();
+/* STEP 6 — SORT BY REAL TREND SCORE */
 
-indianMovies.forEach(movie=>{
+unique.sort((a,b)=>{
 
-if(!ids.has(movie.id)){
-ids.add(movie.id);
-unique.push(movie);
-}
+const scoreA =
+(a.popularity * 0.7) +
+(a.vote_average * 20) +
+(a.vote_count * 0.01);
+
+const scoreB =
+(b.popularity * 0.7) +
+(b.vote_average * 20) +
+(b.vote_count * 0.01);
+
+return scoreB - scoreA;
 
 });
 
-/* STEP 5 — FINAL TOP 10 */
+/* STEP 7 — FINAL TOP 10 */
 
-const finalMovies = unique.slice(0,10);
+const top10 = unique.slice(0,10);
 
-/* STEP 6 — CREATE CARDS */
+/* STEP 8 — RENDER CARDS */
 
-finalMovies.forEach((movie,index)=>{
+top10.forEach((movie,index)=>{
 
 const poster = movie.poster_path
-? "https://image.tmdb.org/t/p/w500" + movie.poster_path
+? "https://image.tmdb.org/t/p/w500"+movie.poster_path
 : "https://via.placeholder.com/500x750?text=No+Poster";
 
 const rating = movie.vote_average
 ? movie.vote_average.toFixed(1)
 : "0";
-
-/* REAL TREND BAR */
 
 const popularity = Math.min(movie.popularity/5,100);
 
@@ -621,8 +624,6 @@ const card = `
 
 <div class="actions">
 
-<button class="rate-btn">⭐ Rate</button>
-
 <a href="trailer.html?id=${movie.id}" class="trailer-btn">
 ▶ Trailer
 </a>
@@ -643,7 +644,7 @@ container.innerHTML += card;
 
 });
 
-    }
+}
 
 
 
