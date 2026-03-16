@@ -523,68 +523,70 @@ count++;
 
 /* ---------------- TOP THIS WEEK ---------------- */
 
-async function loadTopWeek(){
+ async function loadTopWeek(){
 
 const container = document.getElementById("topweek");
 if(!container) return;
 
 container.innerHTML = "";
 
-/* STEP 1 — TRENDING WEEK (GLOBAL SIGNAL) */
+/* GET WEEKLY TRENDING */
 
 const trending = await getMovies("/trending/movie/week");
 
-/* STEP 2 — DISCOVER INDIAN MOVIES (REAL BASE) */
+/* YEAR FILTER (last 3 years) */
 
-const indian = await getMovies(
-"/discover/movie?with_origin_country=IN&sort_by=popularity.desc&vote_count.gte=200"
-);
+const currentYear = new Date().getFullYear();
+const minYear = currentYear - 3;
 
-/* STEP 3 — MERGE SIGNALS */
+/* FILTER MOVIES */
 
-let combined = [...trending, ...indian];
+let filtered = trending.filter(movie => {
 
-/* STEP 4 — KEEP INDIAN LANGUAGES */
+if(!movie.release_date) return false;
 
-combined = combined.filter(movie =>
+const year = parseInt(movie.release_date.split("-")[0]);
+
+return (
+year >= minYear &&
 ["hi","ta","te","ml","kn"].includes(movie.original_language)
 );
 
-/* STEP 5 — REMOVE DUPLICATES */
+});
+
+/* FALLBACK (INDIAN POPULAR MOVIES) */
+
+if(filtered.length < 10){
+
+const fallback = await getMovies(
+"/discover/movie?with_origin_country=IN&primary_release_date.gte=2023-01-01&sort_by=popularity.desc"
+);
+
+filtered = [...filtered, ...fallback];
+
+}
+
+/* REMOVE DUPLICATES */
 
 const map = new Map();
 
-combined.forEach(movie=>{
+filtered.forEach(movie=>{
 if(!map.has(movie.id)){
-map.set(movie.id, movie);
+map.set(movie.id,movie);
 }
 });
 
 const unique = [...map.values()];
 
-/* STEP 6 — SORT BY REAL TREND SCORE */
+/* SORT BY POPULARITY */
 
-unique.sort((a,b)=>{
+unique.sort((a,b)=> b.popularity - a.popularity);
 
-const scoreA =
-(a.popularity * 0.7) +
-(a.vote_average * 20) +
-(a.vote_count * 0.01);
-
-const scoreB =
-(b.popularity * 0.7) +
-(b.vote_average * 20) +
-(b.vote_count * 0.01);
-
-return scoreB - scoreA;
-
-});
-
-/* STEP 7 — FINAL TOP 10 */
+/* FINAL TOP 10 */
 
 const top10 = unique.slice(0,10);
 
-/* STEP 8 — RENDER CARDS */
+/* RENDER */
 
 top10.forEach((movie,index)=>{
 
@@ -595,8 +597,6 @@ const poster = movie.poster_path
 const rating = movie.vote_average
 ? movie.vote_average.toFixed(1)
 : "0";
-
-const popularity = Math.min(movie.popularity/5,100);
 
 const card = `
 
@@ -618,22 +618,6 @@ const card = `
 
 <div class="genre">Top This Week</div>
 
-<div class="popularity">
-<div class="bar" style="width:${popularity}%"></div>
-</div>
-
-<div class="actions">
-
-<a href="trailer.html?id=${movie.id}" class="trailer-btn">
-▶ Trailer
-</a>
-
-<a href="watchlist.html?id=${movie.id}" class="watchlist-btn">
-Watchlist
-</a>
-
-</div>
-
 </div>
 
 </div>
@@ -645,7 +629,6 @@ container.innerHTML += card;
 });
 
 }
-
 
 
 /* ---------------- CELEBRITIES ---------------- */
