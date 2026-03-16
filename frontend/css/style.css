@@ -2510,3 +2510,58 @@ font-size:15px;
 }
 
 }
+
+
+/* ========================= */
+/* POPULAR INTERESTS SECTION */
+/* ========================= */
+
+/* section height increase */
+
+.interests-section{
+padding-bottom:40px;
+}
+
+/* cards row */
+
+.interests-scroll{
+display:flex;
+gap:16px;
+overflow-x:auto;
+scroll-behavior:smooth;
+padding-bottom:20px;
+}
+
+.interests-scroll::-webkit-scrollbar{
+display:none;
+}
+
+/* cards */
+
+.interest-card{
+
+flex:0 0 65%;   /* card width increase */
+
+height:320px;   /* card height increase */
+
+background:#1b1b1b;
+
+border-radius:14px;
+
+overflow:hidden;
+
+flex-shrink:0;
+
+}
+
+/* poster */
+
+.interest-card img{
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
+}
