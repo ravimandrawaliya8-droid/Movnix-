@@ -927,19 +927,50 @@ container.innerHTML = "";
 
 /* FETCH 2 PAGES */
 
-const [page1, page2] = await Promise.all([
+const [page1,page2] = await Promise.all([
 
-getMovies("/discover/movie?with_origin_country=IN&primary_release_date.gte=2022-01-01&vote_count.gte=800&vote_average.gte=7&sort_by=vote_average.desc&page=1"),
+getMovies("/discover/movie?with_origin_country=IN&vote_count.gte=1000&sort_by=popularity.desc&page=1"),
 
-getMovies("/discover/movie?with_origin_country=IN&primary_release_date.gte=2022-01-01&vote_count.gte=800&vote_average.gte=7&sort_by=vote_average.desc&page=2")
+getMovies("/discover/movie?with_origin_country=IN&vote_count.gte=1000&sort_by=popularity.desc&page=2")
 
 ]);
 
-/* MERGE MOVIES */
+/* MERGE */
 
-const movies = [...page1, ...page2].slice(0,40);
+let movies = [...page1,...page2];
 
-/* CREATE CARDS */
+/* REMOVE LOW RATING */
+
+movies = movies.filter(m => m.vote_average >= 6.5);
+
+/* REMOVE DUPLICATES */
+
+const map = new Map();
+
+movies.forEach(m=>{
+if(!map.has(m.id)){
+map.set(m.id,m);
+}
+});
+
+movies = [...map.values()];
+
+/* SORT BY FAN SCORE */
+
+movies.sort((a,b)=>{
+
+const scoreA = (a.vote_average * 10) + a.popularity;
+const scoreB = (b.vote_average * 10) + b.popularity;
+
+return scoreB - scoreA;
+
+});
+
+/* TOP 20 */
+
+movies = movies.slice(0,20);
+
+/* RENDER */
 
 movies.forEach(movie=>{
 
