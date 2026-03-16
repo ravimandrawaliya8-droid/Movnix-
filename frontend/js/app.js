@@ -1272,6 +1272,7 @@ registerSection("trendingList", loadTrending);
 
 registerSection("fanFavourites", loadFanFavourites);
 
+registerSection("popularInterests", loadPopularInterests);
 
 /* ---------------- INIT ---------------- */
 
