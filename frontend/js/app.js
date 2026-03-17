@@ -1034,7 +1034,7 @@ container.innerHTML += card;
 
 
 /* =====================================================
-   POPULAR INTERESTS (IMDB STYLE CATEGORY CARDS)
+   POPULAR INTERESTS (FULL WORKING)
 ===================================================== */
 
 const interestCategories = [
@@ -1070,75 +1070,54 @@ if(!container) return;
 
 container.innerHTML = "";
 
+/* LOOP CATEGORIES */
+
 for(const cat of interestCategories){
 
 try{
 
-const url =
-`${BASE}/discover/movie?api_key=${API_KEY}&with_genres=${cat.genre}&page=1`;
+/* FETCH MOVIES BY GENRE */
 
-const res = await fetch(url);
+const res = await fetch(
+`${BASE}/discover/movie?api_key=${API_KEY}&with_genres=${cat.genre}&sort_by=popularity.desc`
+);
+
 const data = await res.json();
 
-if(!data.results) continue;
+if(!data.results || data.results.length === 0) continue;
 
-const movies = data.results.slice(0,4);
-const count = data.total_results || 0;
+/* RANDOM MOVIE FOR IMAGE */
 
-/* RANDOM POSTER COUNT (1-4) */
+const movie = data.results[Math.floor(Math.random()*data.results.length)];
 
-const posterCount = Math.floor(Math.random()*4)+1;
+const backdrop = movie.backdrop_path
+? "https://image.tmdb.org/t/p/w780" + movie.backdrop_path
+: "https://via.placeholder.com/780x450?text=No+Image";
 
-let posters = movies.slice(0,posterCount);
+/* CREATE CARD */
 
-/* CREATE COLLAGE */
-
-let collageHTML = "";
-
-posters.forEach(movie=>{
-
-if(!movie.poster_path) return;
-
-const poster =
-"https://image.tmdb.org/t/p/w500" + movie.poster_path;
-
-collageHTML += `<img src="${poster}" alt="${movie.title}">`;
-
-});
+const card = document.createElement("a");
+card.className = "interest-card";
+card.href = `interest.html?genre=${cat.genre}&title=${encodeURIComponent(cat.title)}`;
 
 /* CARD HTML */
 
-const card = `
+card.innerHTML = `
 
-<div class="interest-card">
-
-<div class="poster-collage">
-
-${collageHTML}
-
+<div class="interest-bg">
+<img src="${backdrop}" alt="${cat.title}">
+<div class="overlay"></div>
 </div>
 
-<div class="interest-info">
-
-<a href="explore.html?genre=${cat.genre}" class="interest-title">
+<div class="interest-title">
 ${cat.title}
-</a>
-
-<div class="movie-count">
-${formatMovieCount(count)} movies
-</div>
-
-<a href="explore.html?genre=${cat.genre}" class="see-list">
-See list
-</a>
-
-</div>
-
 </div>
 
 `;
 
-container.innerHTML += card;
+/* APPEND */
+
+container.appendChild(card);
 
 }catch(err){
 
@@ -1149,21 +1128,6 @@ console.log("Interest load error",err);
 }
 
 }
-
-
-/* FORMAT MOVIE COUNT */
-
-function formatMovieCount(num){
-
-if(num > 1000){
-
-return (num/1000).toFixed(1)+"K";
-
-}
-
-return num;
-
-    }
 
 
 /* ---------------- MOVIE CARD SYSTEM ---------------- */
