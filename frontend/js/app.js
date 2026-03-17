@@ -1034,35 +1034,36 @@ container.innerHTML += card;
 
 
 /* =====================================================
-   POPULAR INTERESTS (FULL WORKING)
+   POPULAR INTERESTS (FINAL - INDIA + 2010-2020)
 ===================================================== */
 
+/* ==== TMDB CONFIG ==== */
+const API_KEY = "YOUR_TMDB_API_KEY"; // apni key daalo
+const BASE = "https://api.themoviedb.org/3";
+
+/* ==== CATEGORIES ==== */
 const interestCategories = [
 
-{title:"Horror",genre:"27"},
-{title:"Comedy",genre:"35"},
-{title:"Action",genre:"28"},
-{title:"Crime & Mystery",genre:"80,9648"},
-{title:"Love Stories",genre:"10749"},
-{title:"Family Movies",genre:"10751"},
-{title:"Mind Blowing Thrillers",genre:"53"},
-{title:"South Mass Movies",genre:"28"},
-{title:"Real Story Movies",genre:"18"},
-{title:"Patriotic Movies",genre:"36"},
-{title:"Sad Love Stories",genre:"10749"},
-{title:"Weekend Movies",genre:"28"},
-{title:"Late Night Thrillers",genre:"53"},
-{title:"Adventure Movies",genre:"12"},
-{title:"Sci-Fi Movies",genre:"878"},
-{title:"Romantic Comedy",genre:"35,10749"},
-{title:"Epic Blockbusters",genre:"28"},
-{title:"Hidden Gems",genre:"18"}
+{title:"Horror", genre:"27"},
+{title:"Comedy", genre:"35"},
+{title:"Action", genre:"28"},
+{title:"Crime & Mystery", genre:"80,9648"},
+{title:"Love Stories", genre:"10749"},
+{title:"Family Movies", genre:"10751"},
+{title:"Thrillers", genre:"53"},
+{title:"South Blockbusters", genre:"28"},
+{title:"Drama", genre:"18"},
+{title:"Historical & Patriotic", genre:"36"},
+{title:"Romantic Comedy", genre:"35,10749"},
+{title:"Adventure", genre:"12"},
+{title:"Sci-Fi", genre:"878"},
+{title:"Feel Good Movies", genre:"35,18"},
+{title:"Hidden Gems", genre:"18"},
+{title:"Mass Entertainers", genre:"28,35"}
 
 ];
 
-
-/* LOAD INTEREST SECTION */
-
+/* ==== MAIN FUNCTION ==== */
 async function loadPopularInterests(){
 
 const container = document.getElementById("popularInterests");
@@ -1070,64 +1071,83 @@ if(!container) return;
 
 container.innerHTML = "";
 
-/* LOOP CATEGORIES */
-
 for(const cat of interestCategories){
 
 try{
 
-/* FETCH MOVIES BY GENRE */
-
+/* ==== FETCH INDIA MOVIES (2010–2020) ==== */
 const res = await fetch(
-`${BASE}/discover/movie?api_key=${API_KEY}&with_genres=${cat.genre}&sort_by=popularity.desc`
+`${BASE}/discover/movie?api_key=${API_KEY}
+&with_origin_country=IN
+&with_original_language=hi
+&with_genres=${cat.genre}
+&primary_release_date.gte=2010-01-01
+&primary_release_date.lte=2020-12-31
+&sort_by=popularity.desc`
 );
 
 const data = await res.json();
 
 if(!data.results || data.results.length === 0) continue;
 
-/* RANDOM MOVIE FOR IMAGE */
+/* ==== RANDOM POSTER COUNT (1-3) ==== */
+const count = Math.floor(Math.random()*3) + 1;
 
-const movie = data.results[Math.floor(Math.random()*data.results.length)];
+/* ==== PICK MOVIES ==== */
+const movies = data.results.slice(0, count);
 
-const backdrop = movie.backdrop_path
-? "https://image.tmdb.org/t/p/w780" + movie.backdrop_path
-: "https://via.placeholder.com/780x450?text=No+Image";
-
-/* CREATE CARD */
-
-const card = document.createElement("a");
+/* ==== CREATE CARD ==== */
+const card = document.createElement("div");
 card.className = "interest-card";
-card.href = `interest.html?genre=${cat.genre}&title=${encodeURIComponent(cat.title)}`;
 
-/* CARD HTML */
+/* ==== POSTERS HTML ==== */
+let postersHTML = `<div class="interest-posters count-${count}">`;
 
+movies.forEach(m => {
+
+const poster = m.poster_path
+? "https://image.tmdb.org/t/p/w342" + m.poster_path
+: "https://via.placeholder.com/300x450?text=No+Image";
+
+postersHTML += `<img src="${poster}" loading="lazy">`;
+
+});
+
+postersHTML += `</div>`;
+
+/* ==== FINAL CARD HTML ==== */
 card.innerHTML = `
 
-<div class="interest-bg">
-<img src="${backdrop}" alt="${cat.title}">
-<div class="overlay"></div>
-</div>
+${postersHTML}
+
+<div class="interest-info">
 
 <div class="interest-title">
 ${cat.title}
 </div>
 
+<a href="interest.html?genre=${cat.genre}" class="see-list">
+See list
+</a>
+
+</div>
+
 `;
 
-/* APPEND */
-
+/* ==== APPEND ==== */
 container.appendChild(card);
 
 }catch(err){
-
-console.log("Interest load error",err);
-
+console.log("Interest error:", err);
 }
 
 }
 
 }
+
+/* ==== AUTO LOAD ==== */
+document.addEventListener("DOMContentLoaded", loadPopularInterests);
+
 
 
 /* ---------------- MOVIE CARD SYSTEM ---------------- */
