@@ -1037,9 +1037,6 @@ container.innerHTML += card;
    POPULAR INTERESTS (FINAL - INDIA + 2010-2020)
 ===================================================== */
 
-/* ==== TMDB CONFIG ==== */
-const API_KEY = "YOUR_TMDB_API_KEY"; // apni key daalo
-const BASE = "https://api.themoviedb.org/3";
 
 /* ==== CATEGORIES ==== */
 const interestCategories = [
