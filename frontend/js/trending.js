@@ -136,6 +136,43 @@ document.addEventListener("DOMContentLoaded",()=>{
 
 });
 
+
+/* ================= YEAR DROPDOWN ================= */
+
+function toggleYearDropdown(){
+    const list = document.getElementById("yearList");
+    list.style.display = list.style.display === "block" ? "none" : "block";
+}
+
+/* AUTO GENERATE YEARS */
+function generateYears(){
+
+    const list = document.getElementById("yearList");
+
+    const currentYear = new Date().getFullYear();
+
+    let yearsHTML = "";
+
+    for(let y = currentYear + 2; y >= 2010; y--){
+        yearsHTML += `<div onclick="selectYear(${y})">${y}</div>`;
+    }
+
+    list.innerHTML = yearsHTML;
+}
+
+/* SELECT YEAR */
+function selectYear(year){
+
+    filters.year = year;
+
+    document.querySelector(".year-btn").innerText = year + " ▼";
+
+    document.getElementById("yearList").style.display = "none";
+
+    loadMovies(currentSort);
+}
+
+
 /* ================= SORT TOGGLE BUTTON ================= */
 function toggleSort(){
 
