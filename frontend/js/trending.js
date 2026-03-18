@@ -1,11 +1,10 @@
 const API_KEY = "45fe7a9c4583e4374d3981bb55c39222";
 const BASE_URL = "https://api.themoviedb.org/3";
 
-const list = document.getElementById("movieList");
-const sortSelect = document.getElementById("sortSelect");
-
 /* LOAD MOVIES */
 async function loadMovies(sort="popularity.desc"){
+
+const list = document.getElementById("movieList");
 
 list.innerHTML = "<p style='padding:20px;'>Loading...</p>";
 
@@ -19,13 +18,11 @@ const data = await res.json();
 
 list.innerHTML = "";
 
-/* SAFETY CHECK */
 if(!data.results){
 list.innerHTML = "No data found";
 return;
 }
 
-/* SHOW 15 MOVIES */
 data.results.slice(0,15).forEach((movie,index)=>{
 
 const poster = movie.poster_path
@@ -40,7 +37,6 @@ const rating = movie.vote_average
 ? movie.vote_average.toFixed(1)
 : "0";
 
-/* BADGE LOGIC */
 let badge = "";
 if(index < 3){
 badge = '<span class="badge">🔥 Trending</span>';
@@ -85,21 +81,26 @@ list.innerHTML += card;
 });
 
 }catch(error){
-
 console.error("Error:", error);
-
 list.innerHTML = "<p style='color:red;padding:20px;'>Failed to load</p>";
-
 }
 
 }
 
-/* SORT CHANGE */
+/* ============================= */
+/* INIT AFTER LOAD */
+/* ============================= */
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+const sortSelect = document.getElementById("sortSelect");
+
+if(sortSelect){
 sortSelect.addEventListener("change",()=>{
 loadMovies(sortSelect.value);
 });
+}
 
-/* DEFAULT LOAD */
-document.addEventListener("DOMContentLoaded",()=>{
 loadMovies();
+
 });
