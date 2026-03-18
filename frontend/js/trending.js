@@ -95,7 +95,7 @@ async function loadMovies(sort="popularity.desc"){
                 <div class="poster">
                     <img src="${poster}">
 
-                    <!-- 🔖 SAVE ICON -->
+                    <!--  SAVE ICON -->
                     <div class="save-btn" onclick="event.stopPropagation()">🔖</div>
                 </div>
 
@@ -211,6 +211,30 @@ function toggleSort(){
     loadMovies(currentSort);
 }
 
+/* ================= USER RATING SYSTEM ================= */
+
+function getUserRating(id){
+    return localStorage.getItem("rating_"+id);
+}
+
+function rateMovie(id, el){
+
+    let rating = prompt("Rate this movie (1 to 10):");
+
+    if(!rating) return;
+
+    rating = parseFloat(rating);
+
+    if(rating < 1 || rating > 10){
+        alert("Enter rating between 1 - 10");
+        return;
+    }
+
+    localStorage.setItem("rating_"+id, rating.toFixed(1));
+
+    // update UI instantly
+    el.querySelector("span").innerText = rating.toFixed(1);
+}
 
 /* ================= INIT (SAFE ZONE) ================= */
 document.addEventListener("DOMContentLoaded",()=>{
