@@ -186,7 +186,7 @@ function toggleSort(){
 }
 
 
-/* ================= INIT (SABSE NICHE - SAFE ZONE) ================= */
+/* ================= INIT (SAFE ZONE) ================= */
 document.addEventListener("DOMContentLoaded",()=>{
 
     const sortSelect = document.getElementById("sortSelect");
@@ -202,6 +202,37 @@ document.addEventListener("DOMContentLoaded",()=>{
         sortSelect.addEventListener("change",()=>{
             loadMovies(sortSelect.value);
         });
+    }
+
+    /* ✅ CHIP CLICK LOGIC */
+    document.querySelectorAll(".chip").forEach(chip=>{
+
+        chip.addEventListener("click",()=>{
+
+            chip.classList.toggle("active");
+
+            if(chip.dataset.country){
+                filters.country = chip.classList.contains("active") 
+                ? chip.dataset.country 
+                : null;
+            }
+
+            if(chip.dataset.rating){
+                filters.rating = chip.classList.contains("active") 
+                ? chip.dataset.rating 
+                : null;
+            }
+
+            loadMovies(currentSort);
+
+        });
+
+    });
+
+    /* ✅ DEFAULT ACTIVE INDIA */
+    const indiaChip = document.querySelector('[data-country="IN"]');
+    if(indiaChip){
+        indiaChip.classList.add("active");
     }
 
     generateYears();
