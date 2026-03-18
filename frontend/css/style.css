@@ -2420,3 +2420,132 @@ text-decoration:none;
 .see-list:hover{
 background:#1e4fc4;
 }
+
+
+
+/* ============================= */
+/* OTT SECTION */
+/* ============================= */
+
+.ott-section{
+margin-top:20px;
+}
+
+/* HEADER */
+
+.ott-title{
+color:#f5c518;
+font-size:22px;
+font-weight:700;
+}
+
+.ott-setting{
+color:#5799ef;
+font-size:14px;
+margin-top:5px;
+}
+
+/* TABS */
+
+.ott-tabs{
+display:flex;
+gap:16px;
+margin:15px 0;
+overflow-x:auto;
+}
+
+.ott-tab{
+background:none;
+border:none;
+color:#aaa;
+font-size:14px;
+padding-bottom:6px;
+cursor:pointer;
+}
+
+.ott-tab.active{
+color:#fff;
+border-bottom:2px solid #5799ef;
+}
+
+/* ROW */
+
+.ott-row{
+display:flex;
+gap:14px;
+overflow-x:auto;
+}
+
+/* CARD */
+
+.ott-card{
+width:150px;
+background:#1a1a1a;
+border-radius:12px;
+overflow:hidden;
+flex-shrink:0;
+}
+
+/* POSTER */
+
+.ott-poster{
+position:relative;
+}
+
+.ott-poster img{
+width:100%;
+border-radius:12px 12px 0 0;
+}
+
+/* WATCHLIST ICON */
+
+.watchlist-icon{
+position:absolute;
+top:8px;
+left:8px;
+background:rgba(0,0,0,0.7);
+padding:4px 6px;
+border-radius:6px;
+color:#fff;
+font-size:14px;
+}
+
+/* INFO */
+
+.ott-info{
+padding:10px;
+}
+
+.ott-rating{
+color:#f5c518;
+font-size:13px;
+margin-bottom:4px;
+}
+
+.ott-title-text{
+font-size:14px;
+color:#fff;
+margin-bottom:8px;
+}
+
+/* BUTTON */
+
+.watch-btn{
+display:block;
+background:#2a2a2a;
+color:#5799ef;
+text-align:center;
+padding:6px;
+border-radius:20px;
+text-decoration:none;
+margin-bottom:6px;
+font-size:13px;
+}
+
+.trailer-btn{
+display:block;
+text-align:center;
+color:#ccc;
+font-size:13px;
+text-decoration:none;
+  }
