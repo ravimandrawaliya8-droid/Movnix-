@@ -7,7 +7,6 @@
 
 <title>Trending on Movnix</title>
 
-<!-- ✅ FIXED PATH -->
 <link rel="stylesheet" href="css/trending.css">
 
 </head>
@@ -20,12 +19,24 @@
   <h1> Trending on Movnix</h1>
   <p>Updated daily • Based on popularity</p>
 
-  <!-- FILTERS -->
+  <!-- ✅ UPDATED FILTERS -->
   <div class="filter-chips">
-    <span>Action</span>
-    <span>India</span>
-    <span>2024</span>
-    <span>Rating 7+</span>
+
+    <span class="chip" data-country="IN">India</span>
+
+    <!-- YEAR DROPDOWN -->
+    <div class="year-dropdown">
+
+      <button class="year-btn" onclick="toggleYearDropdown()">
+        Year ▼
+      </button>
+
+      <div id="yearList" class="year-list"></div>
+
+    </div>
+
+    <span class="chip" data-rating="7">Rating 7+</span>
+
   </div>
 
 </div>
@@ -44,7 +55,6 @@
     </select>
   </div>
 
-  <!-- 🔥 YAHI BUTTON ADD KARNA HAI -->
   <div class="sort-right">
     <button class="sort-toggle" onclick="toggleSort()">
       ⬆⬇
@@ -55,14 +65,10 @@
 
 
 <!-- ================= MOVIE LIST ================= -->
-<div id="movieList" class="movie-list">
-
-  <!-- JS yaha load karega -->
-
-</div>
+<div id="movieList" class="movie-list"></div>
 
 
-<!-- ================= LOADING FALLBACK ================= -->
+<!-- ================= NO JS ================= -->
 <noscript>
   <p style="padding:20px;color:red;">
     JavaScript is disabled. Please enable it.
@@ -71,9 +77,7 @@
 
 
 <!-- ================= JS ================= -->
-
-<!-- ✅ FIXED PATH -->
 <script src="js/trending.js"></script>
 
 </body>
-  </html>
+</html>
