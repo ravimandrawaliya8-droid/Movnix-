@@ -1,106 +1,113 @@
 const API_KEY = "45fe7a9c4583e4374d3981bb55c39222";
-const BASE_URL = "https://api.themoviedb.org/3";
+const BASE = "https://api.themoviedb.org/3";
 
-/* LOAD MOVIES */
+/* COMMON FETCH */
+async function getMovies(endpoint){
+
+    const url = endpoint.includes("?")
+    ? `${BASE}${endpoint}&api_key=${API_KEY}`
+    : `${BASE}${endpoint}?api_key=${API_KEY}`;
+
+    const res = await fetch(url);
+    const data = await res.json();
+
+    return data.results || [];
+}
+
+/* LOAD TRENDING */
 async function loadMovies(sort="popularity.desc"){
 
-const list = document.getElementById("movieList");
+    const list = document.getElementById("movieList");
 
-list.innerHTML = "<p style='padding:20px;'>Loading...</p>";
+    list.innerHTML = "<p style='padding:20px;'>Loading...</p>";
 
-try{
+    try{
 
-const res = await fetch(
-`${BASE_URL}/discover/movie?api_key=${API_KEY}&sort_by=${sort}&vote_count.gte=200`
-);
+        const movies = await getMovies(
+            `/discover/movie?with_origin_country=IN&sort_by=${sort}&vote_count.gte=200`
+        );
 
-const data = await res.json();
+        list.innerHTML = "";
 
-list.innerHTML = "";
+        movies.slice(0,15).forEach((movie,index)=>{
 
-if(!data.results){
-list.innerHTML = "No data found";
-return;
-}
+            const poster = movie.poster_path
+            ? "https://image.tmdb.org/t/p/w500"+movie.poster_path
+            : "https://via.placeholder.com/500x750?text=No+Image";
 
-data.results.slice(0,15).forEach((movie,index)=>{
+            const rating = movie.vote_average
+            ? movie.vote_average.toFixed(1)
+            : "0";
 
-const poster = movie.poster_path
-? "https://image.tmdb.org/t/p/w500"+movie.poster_path
-: "https://via.placeholder.com/500x750?text=No+Image";
+            const year = movie.release_date
+            ? movie.release_date.split("-")[0]
+            : "NA";
 
-const year = movie.release_date
-? movie.release_date.split("-")[0]
-: "NA";
+            /* TREND SCORE */
+            let trend = Math.round((movie.popularity / 10) + (movie.vote_average * 5));
+            if(trend > 100) trend = 100;
 
-const rating = movie.vote_average
-? movie.vote_average.toFixed(1)
-: "0";
+            const card = `
+            <div class="trend-card">
 
-let badge = "";
-if(index < 3){
-badge = '<span class="badge">🔥 Trending</span>';
-}
+                <div class="rank">#${index+1}</div>
 
-const card = `
-<div class="movie-card">
+                <div class="trend-poster">
+                    <img src="${poster}" alt="${movie.title}">
+                    <div class="watch-icon">+</div>
+                </div>
 
-  <div class="poster">
-    <img src="${poster}">
-    <div class="watchlist">+</div>
-  </div>
+                <div class="trend-info">
 
-  <div class="details">
+                    <h3>${movie.title}</h3>
 
-    <div class="title">
-      ${index+1}. ${movie.title} ${badge}
-    </div>
+                    <div class="meta">
+                        ${year} • ⭐ ${rating}
+                    </div>
 
-    <div class="meta">
-      ${year} • ⭐ ${rating}
-    </div>
+                    <div class="trend-score">
+                        🔥 ${trend}% Trending
+                    </div>
 
-    <div class="desc">
-      ${movie.overview
-        ? movie.overview.substring(0,90) + "..."
-        : "No description available"}
-    </div>
+                    <div class="trend-actions">
 
-    <div class="buttons">
-      <button class="btn watch-btn">▶ Watch Now</button>
-      <button class="btn trailer-btn">Trailer</button>
-    </div>
+                        <a href="trailer.html?id=${movie.id}" class="btn">
+                            ▶ Trailer
+                        </a>
 
-  </div>
+                        <a href="movie.html?id=${movie.id}" class="btn">
+                            ℹ Details
+                        </a>
 
-</div>
-`;
+                    </div>
 
-list.innerHTML += card;
+                </div>
 
-});
+            </div>
+            `;
 
-}catch(error){
-console.error("Error:", error);
-list.innerHTML = "<p style='color:red;padding:20px;'>Failed to load</p>";
-}
+            list.innerHTML += card;
+
+        });
+
+    }catch(err){
+        console.error(err);
+        list.innerHTML = "<p style='color:red;padding:20px;'>Failed to load</p>";
+    }
 
 }
 
-/* ============================= */
-/* INIT AFTER LOAD */
-/* ============================= */
-
+/* INIT */
 document.addEventListener("DOMContentLoaded",()=>{
 
-const sortSelect = document.getElementById("sortSelect");
+    const sortSelect = document.getElementById("sortSelect");
 
-if(sortSelect){
-sortSelect.addEventListener("change",()=>{
-loadMovies(sortSelect.value);
-});
-}
+    if(sortSelect){
+        sortSelect.addEventListener("change",()=>{
+            loadMovies(sortSelect.value);
+        });
+    }
 
-loadMovies();
+    loadMovies();
 
 });
