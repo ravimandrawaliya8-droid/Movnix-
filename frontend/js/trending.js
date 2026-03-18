@@ -1,7 +1,7 @@
 const API_KEY = "45fe7a9c4583e4374d3981bb55c39222";
 const BASE = "https://api.themoviedb.org/3";
 
-/* COMMON FETCH */
+/* FETCH */
 async function getMovies(endpoint){
 
     const url = endpoint.includes("?")
@@ -14,7 +14,7 @@ async function getMovies(endpoint){
     return data.results || [];
 }
 
-/* LOAD TRENDING */
+/* LOAD */
 async function loadMovies(sort="popularity.desc"){
 
     const list = document.getElementById("movieList");
@@ -43,40 +43,44 @@ async function loadMovies(sort="popularity.desc"){
             ? movie.release_date.split("-")[0]
             : "NA";
 
-            /* TREND SCORE */
-            let trend = Math.round((movie.popularity / 10) + (movie.vote_average * 5));
-            if(trend > 100) trend = 100;
+            const overview = movie.overview
+            ? movie.overview.slice(0,120) + "..."
+            : "No description available.";
 
             const card = `
-            <div class="trend-card">
+            <div class="movie-card">
 
-                <div class="rank">#${index+1}</div>
-
-                <div class="trend-poster">
-                    <img src="${poster}" alt="${movie.title}">
-                    <div class="watch-icon">+</div>
+                <div class="poster">
+                    <img src="${poster}">
+                    <div class="watchlist">+</div>
                 </div>
 
-                <div class="trend-info">
+                <div class="details">
 
-                    <h3>${movie.title}</h3>
+                    <div class="title">
+                        ${index+1}. ${movie.title}
+                    </div>
 
                     <div class="meta">
-                        ${year} • ⭐ ${rating}
+                        ${year} • Movie
                     </div>
 
-                    <div class="trend-score">
-                        🔥 ${trend}% Trending
+                    <div class="rating">
+                        ⭐ <span>${rating}</span>
                     </div>
 
-                    <div class="trend-actions">
+                    <div class="desc">
+                        ${overview}
+                    </div>
 
-                        <a href="trailer.html?id=${movie.id}" class="btn">
-                            ▶ Trailer
+                    <div class="actions">
+
+                        <a href="#" class="watched">
+                            👁 Mark as watched
                         </a>
 
-                        <a href="movie.html?id=${movie.id}" class="btn">
-                            ℹ Details
+                        <a href="movie.html?id=${movie.id}" class="info-btn">
+                            ℹ️
                         </a>
 
                     </div>
