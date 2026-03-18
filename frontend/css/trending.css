@@ -254,6 +254,29 @@ body{
   margin:4px 0;
 }
 
+/* RATING ROW */
+.rating-row{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  margin:4px 0;
+}
+
+/* USER RATING (BLUE) */
+.user-rating{
+  background:#e6f0ff;
+  color:#007bff;
+  padding:3px 8px;
+  border-radius:12px;
+  font-size:13px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.user-rating:hover{
+  background:#cce0ff;
+}
+
 /* DESC */
 .desc{
   font-size:13px;
