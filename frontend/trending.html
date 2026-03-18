@@ -39,6 +39,21 @@
     <!-- RATING -->
     <span class="chip" data-rating="7">⭐ 7+ Rating</span>
 
+    /* ⭐ + 🔵 DUAL RATING */
+<div class="rating-row">
+
+    <!-- TMDB RATING -->
+    <div class="rating-badge">
+        ⭐ ${rating}
+    </div>
+
+    <!-- USER RATING -->
+    <div class="user-rating" onclick="event.stopPropagation();rateMovie(${movie.id}, this)">
+        🔵 <span>${getUserRating(movie.id) || "Rate"}</span>
+    </div>
+
+</div>
+
     <!-- SEARCH -->
     <div class="search-box">
       <input type="text" placeholder="All Genres..." id="searchInput">
