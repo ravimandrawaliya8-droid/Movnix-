@@ -3,6 +3,14 @@ const BASE = "https://api.themoviedb.org/3";
 
 let currentSort = "popularity.desc";
 
+/* ================= FILTER STATE ================= */
+let filters = {
+    country: "IN",
+    rating: null,
+    year: null
+};
+
+
 /* ================= FETCH ================= */
 async function getMovies(endpoint){
 
@@ -16,12 +24,14 @@ async function getMovies(endpoint){
     return data.results || [];
 }
 
+
 /* ================= OPEN MOVIE ================= */
 function openMovie(id){
     window.location.href = `movie.html?id=${id}`;
 }
 
-/* ================= LOAD ================= */
+
+/* ================= LOAD MOVIES ================= */
 async function loadMovies(sort="popularity.desc"){
 
     currentSort = sort;
@@ -32,9 +42,21 @@ async function loadMovies(sort="popularity.desc"){
 
     try{
 
-        const movies = await getMovies(
-            `/discover/movie?with_origin_country=IN&sort_by=${sort}&vote_count.gte=200`
-        );
+        let url = `/discover/movie?sort_by=${sort}&vote_count.gte=200`;
+
+        if(filters.country){
+            url += `&with_origin_country=${filters.country}`;
+        }
+
+        if(filters.rating){
+            url += `&vote_average.gte=${filters.rating}`;
+        }
+
+        if(filters.year){
+            url += `&primary_release_year=${filters.year}`;
+        }
+
+        const movies = await getMovies(url);
 
         list.innerHTML = "";
 
@@ -112,30 +134,6 @@ async function loadMovies(sort="popularity.desc"){
 
 }
 
-/* ================= SORT ================= */
-document.addEventListener("DOMContentLoaded",()=>{
-
-    const sortSelect = document.getElementById("sortSelect");
-
-    if(sortSelect){
-
-        // ADD MORE OPTIONS DYNAMICALLY
-        sortSelect.innerHTML = `
-            <option value="popularity.desc">🔥 Popularity</option>
-            <option value="vote_average.desc">⭐ Rating</option>
-            <option value="release_date.desc">🆕 Latest</option>
-            <option value="release_date.asc">📅 Oldest</option>
-        `;
-
-        sortSelect.addEventListener("change",()=>{
-            loadMovies(sortSelect.value);
-        });
-    }
-
-    loadMovies();
-
-});
-
 
 /* ================= YEAR DROPDOWN ================= */
 
@@ -144,7 +142,6 @@ function toggleYearDropdown(){
     list.style.display = list.style.display === "block" ? "none" : "block";
 }
 
-/* AUTO GENERATE YEARS */
 function generateYears(){
 
     const list = document.getElementById("yearList");
@@ -160,7 +157,6 @@ function generateYears(){
     list.innerHTML = yearsHTML;
 }
 
-/* SELECT YEAR */
 function selectYear(year){
 
     filters.year = year;
@@ -173,7 +169,7 @@ function selectYear(year){
 }
 
 
-/* ================= SORT TOGGLE BUTTON ================= */
+/* ================= SORT TOGGLE ================= */
 function toggleSort(){
 
     const btn = document.querySelector(".sort-toggle");
@@ -188,3 +184,27 @@ function toggleSort(){
 
     loadMovies(currentSort);
 }
+
+
+/* ================= INIT (SABSE NICHE - SAFE ZONE) ================= */
+document.addEventListener("DOMContentLoaded",()=>{
+
+    const sortSelect = document.getElementById("sortSelect");
+
+    if(sortSelect){
+        sortSelect.innerHTML = `
+            <option value="popularity.desc"> Popularity</option>
+            <option value="vote_average.desc"> Rating</option>
+            <option value="release_date.desc"> Latest</option>
+            <option value="release_date.asc"> Oldest</option>
+        `;
+
+        sortSelect.addEventListener("change",()=>{
+            loadMovies(sortSelect.value);
+        });
+    }
+
+    generateYears();
+    loadMovies();
+
+});
