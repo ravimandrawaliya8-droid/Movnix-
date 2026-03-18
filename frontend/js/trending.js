@@ -31,7 +31,7 @@ function openMovie(id){
 }
 
 
-/* ================= LOAD MOVIES ================= */
+/* ================= LOAD MOVIES (PREMIUM UI) ================= */
 async function loadMovies(sort="popularity.desc"){
 
     currentSort = sort;
@@ -78,14 +78,28 @@ async function loadMovies(sort="popularity.desc"){
             ? movie.overview.slice(0,100) + "..."
             : "No description available.";
 
+            /* 🎨 DYNAMIC ACCENT COLOR (TOP RANK GOLD) */
+            let accentColor = index === 0 
+                ? "linear-gradient(#ffd700,#ffae00)" 
+                : index === 1 
+                ? "linear-gradient(#c0c0c0,#999)" 
+                : "linear-gradient(#ff4d4d,#ff0000)";
+
             const card = `
             <div class="movie-card" onclick="openMovie(${movie.id})">
 
+                <!-- LEFT ACCENT -->
+                <div class="accent" style="background:${accentColor}"></div>
+
+                <!-- POSTER -->
                 <div class="poster">
                     <img src="${poster}">
-                    <div class="watchlist">+</div>
+
+                    <!-- 🔖 SAVE ICON -->
+                    <div class="save-btn" onclick="event.stopPropagation()">🔖</div>
                 </div>
 
+                <!-- DETAILS -->
                 <div class="details">
 
                     <div class="title">
@@ -96,26 +110,38 @@ async function loadMovies(sort="popularity.desc"){
                         ${year} • Movie
                     </div>
 
-                    <div class="rating">
-                        ⭐ <span>${rating}</span>
+                    <!-- ⭐ RATING BADGE -->
+                    <div class="rating-badge">
+                        ⭐ ${rating}
                     </div>
 
                     <div class="desc">
                         ${overview}
                     </div>
 
+                    <!-- 🎭 GENRES (STATIC FOR NOW) -->
+                    <div class="genres">
+                        <span>Drama</span>
+                        <span>Romance</span>
+                    </div>
+
+                    <!-- ACTIONS -->
                     <div class="actions">
 
-                        <a href="#" class="watched" onclick="event.stopPropagation()">
-                            👁 Watched
-                        </a>
+                        <button class="watchlist-btn" onclick="event.stopPropagation()">
+                            + Watchlist
+                        </button>
 
-                        <a href="movie.html?id=${movie.id}" 
-                           class="info-btn" 
-                           onclick="event.stopPropagation()">
-                           ℹ️
-                        </a>
+                        <button class="details-btn" 
+                            onclick="event.stopPropagation();window.location.href='movie.html?id=${movie.id}'">
+                            ℹ Details
+                        </button>
 
+                    </div>
+
+                    <!-- 📊 PROGRESS BAR -->
+                    <div class="progress">
+                        <div style="width:${rating*10}%"></div>
                     </div>
 
                 </div>
