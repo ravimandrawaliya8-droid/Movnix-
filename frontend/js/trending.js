@@ -235,6 +235,25 @@ document.addEventListener("DOMContentLoaded",()=>{
         indiaChip.classList.add("active");
     }
 
+    /* ✅ SEARCH FEATURE */
+    const searchInput = document.getElementById("searchInput");
+
+    if(searchInput){
+        searchInput.addEventListener("input",()=>{
+
+            const value = searchInput.value.toLowerCase();
+
+            document.querySelectorAll(".movie-card").forEach(card=>{
+
+                const title = card.querySelector(".title").innerText.toLowerCase();
+
+                card.style.display = title.includes(value) ? "flex" : "none";
+
+            });
+
+        });
+    }
+
     generateYears();
     loadMovies();
 
