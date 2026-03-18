@@ -1075,6 +1075,31 @@ url="/discover/movie?sort_by=vote_average.desc&vote_count.gte=500";
 if(heading) heading.innerText = "Top Rated Picks";
 }
 
+else if(type==="zee5"){
+url="/discover/movie?with_origin_country=IN&sort_by=popularity.desc";
+if(heading) heading.innerText = "ZEE5 Picks";
+}
+
+else if(type==="sony"){
+url="/discover/movie?sort_by=popularity.desc";
+if(heading) heading.innerText = "SonyLIV Trending";
+}
+
+else if(type==="mx"){
+url="/discover/movie?sort_by=popularity.desc";
+if(heading) heading.innerText = "MX Player Free Picks";
+}
+
+else if(type==="jio"){
+url="/trending/movie/week";
+if(heading) heading.innerText = "JioCinema Trending";
+}
+
+else if(type==="youtube"){
+url="/discover/movie?sort_by=popularity.desc";
+if(heading) heading.innerText = "YouTube Movies";
+}
+
 /* DEFAULT FALLBACK */
 
 if(!url){
