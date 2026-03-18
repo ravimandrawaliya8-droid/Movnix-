@@ -222,38 +222,124 @@ body{
 }
 
 
+
+
+/* ================= HEADER ================= */
+
+.trending-header{
+  padding:20px;
+  background:linear-gradient(135deg,#ffffff,#eef2f7);
+}
+
+/* TITLE */
+.header-content h1{
+  margin:0;
+  font-size:26px;
+  font-weight:800;
+}
+
+.header-content h1 span{
+  background:linear-gradient(90deg,#4facfe,#00c6ff);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.header-content p{
+  margin-top:6px;
+  color:#666;
+  font-size:14px;
+}
+
+/* ================= FILTER BAR ================= */
+
+.filter-bar{
+  margin-top:18px;
+  padding:12px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  flex-wrap:wrap;
+
+  background:rgba(255,255,255,0.7);
+  backdrop-filter:blur(10px);
+  border-radius:30px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.08);
+}
+
+/* CHIP */
+.chip{
+  padding:8px 14px;
+  background:#f1f1f1;
+  border-radius:20px;
+  cursor:pointer;
+  font-size:13px;
+  transition:0.2s;
+}
+
+.chip:hover{
+  background:#e5e5e5;
+}
+
+.chip.active{
+  background:#000;
+  color:#fff;
+}
+
+/* YEAR */
+.year-btn{
+  border:none;
+  padding:8px 14px;
+  border-radius:20px;
+  background:#f1f1f1;
+  cursor:pointer;
+}
+
+/* DROPDOWN */
 .year-dropdown{
   position:relative;
 }
 
-.year-btn{
-  background:#f1f1f1;
-  border:none;
-  padding:6px 12px;
-  border-radius:20px;
-  cursor:pointer;
-}
-
 .year-list{
   position:absolute;
-  top:40px;
+  top:45px;
   left:0;
-  background:#fff;
-  border:1px solid #ddd;
-  border-radius:10px;
-  max-height:200px;
+  width:120px;
+  max-height:220px;
   overflow-y:auto;
+  background:#fff;
+  border-radius:12px;
   display:none;
-  width:100px;
-  z-index:10;
+  box-shadow:0 10px 25px rgba(0,0,0,0.1);
 }
 
 .year-list div{
-  padding:8px;
+  padding:10px;
   cursor:pointer;
-  font-size:14px;
 }
 
 .year-list div:hover{
-  background:#eee;
+  background:#f3f3f3;
+}
+
+/* SEARCH */
+.search-box{
+  flex:1;
+  display:flex;
+  align-items:center;
+  background:#f5f5f5;
+  border-radius:25px;
+  padding:6px 10px;
+  min-width:150px;
+}
+
+.search-box input{
+  border:none;
+  outline:none;
+  background:transparent;
+  flex:1;
+  padding:6px;
+}
+
+.search-icon{
+  opacity:0.6;
   }
