@@ -1,7 +1,9 @@
 const API_KEY = "45fe7a9c4583e4374d3981bb55c39222";
 const BASE = "https://api.themoviedb.org/3";
 
-/* FETCH */
+let currentSort = "popularity.desc";
+
+/* ================= FETCH ================= */
 async function getMovies(endpoint){
 
     const url = endpoint.includes("?")
@@ -14,8 +16,15 @@ async function getMovies(endpoint){
     return data.results || [];
 }
 
-/* LOAD */
+/* ================= OPEN MOVIE ================= */
+function openMovie(id){
+    window.location.href = `movie.html?id=${id}`;
+}
+
+/* ================= LOAD ================= */
 async function loadMovies(sort="popularity.desc"){
+
+    currentSort = sort;
 
     const list = document.getElementById("movieList");
 
@@ -44,11 +53,11 @@ async function loadMovies(sort="popularity.desc"){
             : "NA";
 
             const overview = movie.overview
-            ? movie.overview.slice(0,120) + "..."
+            ? movie.overview.slice(0,100) + "..."
             : "No description available.";
 
             const card = `
-            <div class="movie-card">
+            <div class="movie-card" onclick="openMovie(${movie.id})">
 
                 <div class="poster">
                     <img src="${poster}">
@@ -75,12 +84,14 @@ async function loadMovies(sort="popularity.desc"){
 
                     <div class="actions">
 
-                        <a href="#" class="watched">
-                            👁 Mark as watched
+                        <a href="#" class="watched" onclick="event.stopPropagation()">
+                            👁 Watched
                         </a>
 
-                        <a href="movie.html?id=${movie.id}" class="info-btn">
-                            ℹ️
+                        <a href="movie.html?id=${movie.id}" 
+                           class="info-btn" 
+                           onclick="event.stopPropagation()">
+                           ℹ️
                         </a>
 
                     </div>
@@ -101,12 +112,21 @@ async function loadMovies(sort="popularity.desc"){
 
 }
 
-/* INIT */
+/* ================= SORT ================= */
 document.addEventListener("DOMContentLoaded",()=>{
 
     const sortSelect = document.getElementById("sortSelect");
 
     if(sortSelect){
+
+        // ADD MORE OPTIONS DYNAMICALLY
+        sortSelect.innerHTML = `
+            <option value="popularity.desc">🔥 Popularity</option>
+            <option value="vote_average.desc">⭐ Rating</option>
+            <option value="release_date.desc">🆕 Latest</option>
+            <option value="release_date.asc">📅 Oldest</option>
+        `;
+
         sortSelect.addEventListener("change",()=>{
             loadMovies(sortSelect.value);
         });
@@ -115,3 +135,15 @@ document.addEventListener("DOMContentLoaded",()=>{
     loadMovies();
 
 });
+
+/* ================= SORT TOGGLE BUTTON ================= */
+function toggleSort(){
+
+    if(currentSort.includes(".desc")){
+        currentSort = currentSort.replace(".desc",".asc");
+    }else{
+        currentSort = currentSort.replace(".asc",".desc");
+    }
+
+    loadMovies(currentSort);
+}
