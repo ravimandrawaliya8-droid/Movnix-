@@ -1033,6 +1033,163 @@ container.innerHTML += card;
     }
 
 
+
+/* ============================= */
+/* OTT SECTION (COMPLETE) */
+/* ============================= */
+
+async function loadOTT(type="prime"){
+
+const container = document.getElementById("ottMovies");
+const heading = document.getElementById("ottHeading");
+
+if(!container) return;
+
+/* LOADER (instant feel) */
+
+container.innerHTML = `<div style="color:#aaa;padding:20px;">Loading...</div>`;
+
+let url = "";
+
+/* ============================= */
+/* PLATFORM + HEADING LOGIC */
+/* ============================= */
+
+if(type==="prime"){
+url="/discover/movie?sort_by=popularity.desc&page=1";
+heading.innerText = "Included with Prime";
+}
+
+if(type==="netflix"){
+url="/trending/movie/week";
+heading.innerText = "Trending on Netflix";
+}
+
+if(type==="hotstar"){
+url="/discover/movie?with_origin_country=IN&sort_by=popularity.desc";
+heading.innerText = "Popular in India";
+}
+
+if(type==="apple"){
+url="/discover/movie?sort_by=vote_average.desc&vote_count.gte=500";
+heading.innerText = "Top Rated Picks";
+}
+
+/* ============================= */
+/* FETCH DATA */
+/* ============================= */
+
+try{
+
+const movies = await getMovies(url);
+
+container.innerHTML = "";
+
+/* अगर data empty आया */
+
+if(!movies || movies.length === 0){
+container.innerHTML = `<div style="color:#aaa;padding:20px;">No movies found</div>`;
+return;
+}
+
+/* ============================= */
+/* RENDER MOVIES */
+/* ============================= */
+
+movies.slice(0,15).forEach(movie=>{
+
+const poster = movie.poster_path
+? "https://image.tmdb.org/t/p/w500"+movie.poster_path
+: "https://via.placeholder.com/500x750?text=No+Image";
+
+const rating = movie.vote_average
+? movie.vote_average.toFixed(1)
+: "0";
+
+const card = `
+
+<div class="ott-card">
+
+<div class="ott-poster">
+
+<img src="${poster}" alt="${movie.title}">
+
+<div class="watchlist-icon">+</div>
+
+</div>
+
+<div class="ott-info">
+
+<div class="ott-rating">
+⭐ ${rating}
+</div>
+
+<div class="ott-title-text">
+${movie.title}
+</div>
+
+<a href="watch.html?id=${movie.id}" class="watch-btn">
+Watch now
+</a>
+
+<a href="trailer.html?id=${movie.id}" class="trailer-btn">
+▶ Trailer
+</a>
+
+</div>
+
+</div>
+
+`;
+
+container.innerHTML += card;
+
+});
+
+}catch(error){
+
+console.error("OTT Error:", error);
+
+container.innerHTML = `<div style="color:red;padding:20px;">Failed to load</div>`;
+
+}
+
+}
+
+
+/* ============================= */
+/* TAB SWITCH SYSTEM */
+/* ============================= */
+
+document.querySelectorAll(".ott-tab").forEach(btn=>{
+
+btn.addEventListener("click",()=>{
+
+/* active class */
+
+document.querySelectorAll(".ott-tab")
+.forEach(b=>b.classList.remove("active"));
+
+btn.classList.add("active");
+
+/* load new data */
+
+loadOTT(btn.dataset.tab);
+
+});
+
+});
+
+
+/* ============================= */
+/* DEFAULT LOAD */
+/* ============================= */
+
+document.addEventListener("DOMContentLoaded",()=>{
+loadOTT("prime");
+});
+
+
 /* =====================================================
    POPULAR INTERESTS (FINAL - INDIA + 2010-2020)
 ===================================================== */
