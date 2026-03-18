@@ -1035,7 +1035,7 @@ container.innerHTML += card;
 
 
 /* ============================= */
-/* OTT SECTION (COMPLETE) */
+/* OTT SECTION (FIXED + SAFE) */
 /* ============================= */
 
 async function loadOTT(type="prime"){
@@ -1045,38 +1045,45 @@ const heading = document.getElementById("ottHeading");
 
 if(!container) return;
 
-/* LOADER (instant feel) */
+/* LOADER */
 
 container.innerHTML = `<div style="color:#aaa;padding:20px;">Loading...</div>`;
 
 let url = "";
 
 /* ============================= */
-/* PLATFORM + HEADING LOGIC */
+/* PLATFORM + HEADING */
 /* ============================= */
 
 if(type==="prime"){
 url="/discover/movie?sort_by=popularity.desc&page=1";
-heading.innerText = "Included with Prime";
+if(heading) heading.innerText = "Included with Prime";
 }
 
-if(type==="netflix"){
+else if(type==="netflix"){
 url="/trending/movie/week";
-heading.innerText = "Trending on Netflix";
+if(heading) heading.innerText = "Trending on Netflix";
 }
 
-if(type==="hotstar"){
+else if(type==="hotstar"){
 url="/discover/movie?with_origin_country=IN&sort_by=popularity.desc";
-heading.innerText = "Popular in India";
+if(heading) heading.innerText = "Popular in India";
 }
 
-if(type==="apple"){
+else if(type==="apple"){
 url="/discover/movie?sort_by=vote_average.desc&vote_count.gte=500";
-heading.innerText = "Top Rated Picks";
+if(heading) heading.innerText = "Top Rated Picks";
+}
+
+/* DEFAULT FALLBACK */
+
+if(!url){
+url="/discover/movie?sort_by=popularity.desc";
+if(heading) heading.innerText = "Popular Movies";
 }
 
 /* ============================= */
-/* FETCH DATA */
+/* FETCH */
 /* ============================= */
 
 try{
@@ -1085,7 +1092,7 @@ const movies = await getMovies(url);
 
 container.innerHTML = "";
 
-/* अगर data empty आया */
+/* EMPTY DATA */
 
 if(!movies || movies.length === 0){
 container.innerHTML = `<div style="color:#aaa;padding:20px;">No movies found</div>`;
@@ -1093,8 +1100,10 @@ return;
 }
 
 /* ============================= */
-/* RENDER MOVIES */
+/* RENDER */
 /* ============================= */
+
+let html = "";
 
 movies.slice(0,15).forEach(movie=>{
 
@@ -1106,23 +1115,18 @@ const rating = movie.vote_average
 ? movie.vote_average.toFixed(1)
 : "0";
 
-const card = `
+html += `
 
 <div class="ott-card">
 
 <div class="ott-poster">
-
 <img src="${poster}" alt="${movie.title}">
-
 <div class="watchlist-icon">+</div>
-
 </div>
 
 <div class="ott-info">
 
-<div class="ott-rating">
-⭐ ${rating}
-</div>
+<div class="ott-rating">⭐ ${rating}</div>
 
 <div class="ott-title-text">
 ${movie.title}
@@ -1142,9 +1146,10 @@ Watch now
 
 `;
 
-container.innerHTML += card;
-
 });
+
+/* ONE TIME INSERT (FAST) */
+container.innerHTML = html;
 
 }catch(error){
 
@@ -1158,36 +1163,34 @@ container.innerHTML = `<div style="color:red;padding:20px;">Failed to load</div>
 
 
 /* ============================= */
-/* TAB SWITCH SYSTEM */
-/* ============================= */
-
-document.querySelectorAll(".ott-tab").forEach(btn=>{
-
-btn.addEventListener("click",()=>{
-
-/* active class */
-
-document.querySelectorAll(".ott-tab")
-.forEach(b=>b.classList.remove("active"));
-
-btn.classList.add("active");
-
-/* load new data */
-
-loadOTT(btn.dataset.tab);
-
-});
-
-});
-
-
-/* ============================= */
-/* DEFAULT LOAD */
+/* TAB SWITCH SYSTEM (SAFE) */
 /* ============================= */
 
 document.addEventListener("DOMContentLoaded",()=>{
-loadOTT("prime");
+
+const tabs = document.querySelectorAll(".ott-tab");
+
+tabs.forEach(btn=>{
+
+btn.addEventListener("click",()=>{
+
+tabs.forEach(b=>b.classList.remove("active"));
+btn.classList.add("active");
+
+const type = btn.dataset.tab || "prime";
+
+loadOTT(type);
+
 });
+
+});
+
+/* DEFAULT LOAD */
+loadOTT("prime");
+
+});
+
+
 
 
 /* =====================================================
@@ -1409,6 +1412,8 @@ registerSection("movnixPicks", loadMovnixPicks);
 registerSection("trendingList", loadTrending);
 
 registerSection("fanFavourites", loadFanFavourites);
+
+registerSection("ottMovies", loadOTT);
 
 registerSection("popularInterests", loadPopularInterests);
 
