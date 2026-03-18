@@ -139,10 +139,14 @@ document.addEventListener("DOMContentLoaded",()=>{
 /* ================= SORT TOGGLE BUTTON ================= */
 function toggleSort(){
 
+    const btn = document.querySelector(".sort-toggle");
+
     if(currentSort.includes(".desc")){
         currentSort = currentSort.replace(".desc",".asc");
+        btn.innerText = "⬆ Asc";
     }else{
         currentSort = currentSort.replace(".asc",".desc");
+        btn.innerText = "⬇ Desc";
     }
 
     loadMovies(currentSort);
