@@ -16,26 +16,34 @@
 <!-- ================= HEADER ================= -->
 <div class="trending-header">
 
-  <h1> Trending on Movnix</h1>
-  <p>Updated daily • Based on popularity</p>
+  <!-- TITLE -->
+  <div class="header-content">
+    <h1>🔥 Trending on <span>Movnix</span></h1>
+    <p>Discover what’s popular right now • Updated daily</p>
+  </div>
 
-  <!-- ✅ UPDATED FILTERS -->
-  <div class="filter-chips">
+  <!-- PREMIUM FILTER BAR -->
+  <div class="filter-bar">
 
-    <span class="chip" data-country="IN">India</span>
+    <!-- INDIA -->
+    <span class="chip active" data-country="IN">🇮🇳 India</span>
 
-    <!-- YEAR DROPDOWN -->
+    <!-- YEAR -->
     <div class="year-dropdown">
-
       <button class="year-btn" onclick="toggleYearDropdown()">
-        Year ▼
+        📅 Year
       </button>
-
       <div id="yearList" class="year-list"></div>
-
     </div>
 
-    <span class="chip" data-rating="7">Rating 7+</span>
+    <!-- RATING -->
+    <span class="chip" data-rating="7">⭐ 7+ Rating</span>
+
+    <!-- SEARCH -->
+    <div class="search-box">
+      <input type="text" placeholder="All Genres..." id="searchInput">
+      <span class="search-icon">🔍</span>
+    </div>
 
   </div>
 
