@@ -6,38 +6,7 @@ body{
   color:#111;
 }
 
-/* ================= HEADER ================= */
-.trending-header{
-  padding:16px;
-}
 
-.trending-header h1{
-  font-size:22px;
-  margin:0;
-  font-weight:700;
-}
-
-.trending-header p{
-  font-size:13px;
-  color:#666;
-  margin-top:4px;
-}
-
-/* FILTER CHIPS */
-.filter-chips{
-  display:flex;
-  gap:8px;
-  margin-top:10px;
-  overflow-x:auto;
-}
-
-.filter-chips span{
-  background:#f2f2f2;
-  padding:6px 12px;
-  border-radius:20px;
-  font-size:13px;
-  white-space:nowrap;
-}
 
 /* ================= SORT ================= */
 .sort-bar{
@@ -70,24 +39,8 @@ body{
   padding:0 12px;
 }
 
-/* ================= CARD ================= */
-.movie-card{
-  display:flex;
-  gap:14px;
-  padding:14px;
-  margin-bottom:14px;
 
-  border-radius:14px;
-  background:#fff;
 
-  box-shadow:0 2px 8px rgba(0,0,0,0.06);
-  transition:0.25s;
-}
-
-.movie-card:hover{
-  transform:scale(1.02);
-  box-shadow:0 6px 18px rgba(0,0,0,0.12);
-}
 
 /* ================= POSTER ================= */
 .poster{
@@ -222,7 +175,140 @@ body{
 }
 
 
+/* ================= MOVIE CARD ================= */
 
+.movie-card{
+  display:flex;
+  gap:12px;
+  padding:12px;
+  background:#fff;
+  border-radius:18px;
+  margin-bottom:15px;
+  position:relative;
+  box-shadow:0 8px 25px rgba(0,0,0,0.08);
+  transition:0.2s;
+}
+
+.movie-card:hover{
+  transform:translateY(-3px);
+}
+
+/* LEFT ACCENT */
+.accent{
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:5px;
+  background:linear-gradient(#ffd000,#ffae00);
+  border-radius:10px;
+}
+
+/* POSTER */
+.poster{
+  position:relative;
+}
+
+.poster img{
+  width:90px;
+  height:130px;
+  object-fit:cover;
+  border-radius:12px;
+}
+
+/* SAVE BUTTON */
+.save-btn{
+  position:absolute;
+  top:6px;
+  left:6px;
+  background:rgba(0,0,0,0.5);
+  color:#fff;
+  padding:4px 6px;
+  border-radius:8px;
+  font-size:12px;
+}
+
+/* DETAILS */
+.details{
+  flex:1;
+}
+
+.title{
+  font-weight:700;
+  font-size:16px;
+}
+
+.meta{
+  font-size:13px;
+  color:#777;
+  margin:2px 0;
+}
+
+/* RATING BADGE */
+.rating-badge{
+  display:inline-block;
+  background:#fff3c4;
+  padding:3px 8px;
+  border-radius:12px;
+  font-size:13px;
+  margin:4px 0;
+}
+
+/* DESC */
+.desc{
+  font-size:13px;
+  color:#555;
+}
+
+/* GENRES */
+.genres{
+  margin-top:6px;
+}
+
+.genres span{
+  background:#f1f1f1;
+  padding:4px 8px;
+  border-radius:12px;
+  font-size:12px;
+  margin-right:6px;
+}
+
+/* ACTIONS */
+.actions{
+  margin-top:8px;
+  display:flex;
+  gap:8px;
+}
+
+.actions button{
+  border:none;
+  padding:6px 10px;
+  border-radius:10px;
+  font-size:12px;
+  cursor:pointer;
+}
+
+.watchlist-btn{
+  background:#f1f1f1;
+}
+
+.details-btn{
+  background:#e6e6e6;
+}
+
+/* PROGRESS BAR */
+.progress{
+  margin-top:8px;
+  height:5px;
+  background:#eee;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.progress div{
+  height:100%;
+  background:linear-gradient(90deg,#ffd000,#ffae00);
+}
 
 /* ================= HEADER ================= */
 
