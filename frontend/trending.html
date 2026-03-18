@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trending on Movnix</title>
+
+<link rel="stylesheet" href="trending.css">
+
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<div class="trending-header">
+
+  <h1>🔥 Trending on Movnix</h1>
+  <p>Updated daily • Based on popularity</p>
+
+  <!-- FILTERS -->
+  <div class="filter-chips">
+    <span>Action</span>
+    <span>India</span>
+    <span>2024</span>
+    <span>Rating 7+</span>
+  </div>
+
+</div>
+
+
+<!-- ================= SORT BAR ================= -->
+<div class="sort-bar">
+
+  <div class="sort-left">
+    Sort:
+    <select id="sortSelect">
+      <option value="popularity.desc">Popularity</option>
+      <option value="vote_average.desc">Rating</option>
+      <option value="release_date.desc">Latest</option>
+    </select>
+  </div>
+
+</div>
+
+
+<!-- ================= MOVIE LIST ================= -->
+<div id="movieList" class="movie-list">
+
+  <!-- JS load karega -->
+
+</div>
+
+
+<script src="trending.js"></script>
+
+</body>
+</html>
