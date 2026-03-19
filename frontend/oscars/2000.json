@@ -1,0 +1,10 @@
+[
+ {"category":"Best Picture","name":"Gladiator","type":"movie"},
+ {"category":"Best Director","name":"Steven Soderbergh","type":"person"},
+ {"category":"Best Actor","name":"Russell Crowe","type":"person"},
+ {"category":"Best Actress","name":"Julia Roberts","type":"person"},
+ {"category":"Best Supporting Actor","name":"Benicio del Toro","type":"person"},
+ {"category":"Best Supporting Actress","name":"Marcia Gay Harden","type":"person"},
+ {"category":"Best Animated Feature","name":"N/A","type":"movie"},
+ {"category":"Best International Feature","name":"Crouching Tiger, Hidden Dragon","type":"movie"}
+]
