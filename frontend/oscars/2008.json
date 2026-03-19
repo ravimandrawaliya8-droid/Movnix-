@@ -1,0 +1,10 @@
+[
+ {"category":"Best Picture","name":"Slumdog Millionaire","type":"movie"},
+ {"category":"Best Director","name":"Danny Boyle","type":"person"},
+ {"category":"Best Actor","name":"Sean Penn","type":"person"},
+ {"category":"Best Actress","name":"Kate Winslet","type":"person"},
+ {"category":"Best Supporting Actor","name":"Heath Ledger","type":"person"},
+ {"category":"Best Supporting Actress","name":"Penélope Cruz","type":"person"},
+ {"category":"Best Animated Feature","name":"WALL-E","type":"movie"},
+ {"category":"Best International Feature","name":"Departures","type":"movie"}
+]
