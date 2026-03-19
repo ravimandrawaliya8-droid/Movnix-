@@ -7,22 +7,18 @@
 
 <title>Oscars Universe - Movnix</title>
 
-<!-- SEO -->
 <meta name="description" content="Explore Oscars winners, nominees & iconic moments from 2000 to 2026.">
 <meta name="theme-color" content="#0b0b0f">
 
-<!-- CSS -->
 <link rel="stylesheet" href="css/oscars.css">
-
-<!-- Preload Hero Image (faster load) -->
-<link rel="preload" as="image" href="images/hero.jpg">
 
 </head>
 
 <body>
 
-<!-- ✅ NAVBAR (यहाँ डालो) -->
-<div class="navbar">
+<!-- ================= NAVBAR ================= -->
+<header class="navbar">
+
   <div class="logo">
     <div class="logo-icon"></div>
     MOVNIX
@@ -34,8 +30,14 @@
     <span>TV Shows</span>
   </div>
 
-  <button class="login-btn">Login</button>
-</div>
+  <!-- 🔥 SEARCH -->
+  <input type="text" id="searchInput" placeholder="Search movies...">
+
+  <div class="nav-actions">
+    <button class="login-btn">Login</button>
+  </div>
+
+</header>
 
 <!-- ================= HERO ================= -->
 <section class="hero">
@@ -43,24 +45,27 @@
   <div class="hero-overlay"></div>
 
   <div class="hero-content">
-    <h1 id="heroTitle">🏆 The Oscars Universe</h1>
-    <p id="heroDesc">Explore every Academy Awards year, winners & moments</p>
+    <h1 id="heroTitle">The Oscars Universe</h1>
+    <p id="heroDesc">Explore every Academy Awards year, winners & iconic moments</p>
+
+    <!-- 🔥 YEAR SELECT -->
+    <select id="yearSelect"></select>
 
     <div class="hero-buttons">
-      <button onclick="goToYear(2026)">🔥 Latest Oscars (2026)</button>
-      <button onclick="scrollToYears()">📂 Browse All Years</button>
-      <button id="topRatedBtn">⭐ Top Rated Winners</button>
+      <button onclick="goToYear(2026)">Latest Oscars</button>
+      <button onclick="scrollToYears()">Browse All Years</button>
+      <button id="topRatedBtn">Top Rated Winners</button>
     </div>
   </div>
 
 </section>
 
-<!-- ================= NAV ================= -->
+<!-- ================= TABS ================= -->
 <div class="tabs">
-  <span class="active">🏆 Winners</span>
-  <span>🎭 Nominees</span>
-  <span>🎥 Highlights</span>
-  <span>🔥 Trending</span>
+  <span class="active">Winners</span>
+  <span>Nominees</span>
+  <span>Highlights</span>
+  <span>Trending</span>
 </div>
 
 <!-- ================= FEATURED ================= -->
@@ -69,7 +74,7 @@
   <div class="featured-card">
 
     <div class="featured-text">
-      <h2 id="featuredTitle">🏆 The 2026 Oscars</h2>
+      <h2 id="featuredTitle">The 2026 Oscars</h2>
       <p id="featuredDesc">Explore winners, nominees & highlights</p>
       <button id="exploreBtn">Explore Winners →</button>
     </div>
@@ -80,38 +85,66 @@
 
 </section>
 
-<!-- ================= ICONIC ================= -->
+<!-- ================= WINNERS ================= -->
 <section class="iconic">
 
-  <h2>Iconic Oscar Winners</h2>
+  <h2>Oscar Winners</h2>
 
-  <!-- Loader -->
-  <div id="loader" style="display:none; text-align:center; padding:20px;">
-    <p>Loading winners...</p>
-  </div>
+  <div id="loader" class="loader">Loading...</div>
 
   <div class="card-row" id="winnersContainer"></div>
+
+</section>
+
+<!-- ================= NOMINEES ================= -->
+<section class="nominees">
+
+  <h2>Top Nominees</h2>
+
+  <div class="card-row" id="nomineesContainer"></div>
+
+</section>
+
+<!-- ================= HIGHLIGHTS ================= -->
+<section class="highlights">
+
+  <h2>Memorable Moments</h2>
+
+  <div class="card-row" id="highlightsContainer"></div>
 
 </section>
 
 <!-- ================= TRENDING ================= -->
 <section class="trending">
 
-  <h2>🔥 Trending Oscar Movies</h2>
+  <h2>Top Rated Movies</h2>
 
   <div class="card-row" id="trendingContainer"></div>
 
 </section>
 
+<!-- ================= SEARCH RESULT ================= -->
+<section class="search-results" id="searchResults" style="display:none;">
+  <h2>Search Results</h2>
+  <div class="card-row" id="searchContainer"></div>
+</section>
+
+<!-- ================= POPUP ================= -->
+<div id="popup" class="popup"></div>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <p>© 2026 Movnix • Oscars Universe</p>
+</footer>
+
 <!-- ================= NO JS ================= -->
 <noscript>
   <p style="padding:20px;color:red;">
-    JavaScript is disabled. Please enable it to view Oscars data.
+    Enable JavaScript to explore Oscars data.
   </p>
 </noscript>
 
-<!-- ================= SCRIPT ================= -->
 <script src="js/oscars.js" defer></script>
 
 </body>
-  </html>
+    </html>
