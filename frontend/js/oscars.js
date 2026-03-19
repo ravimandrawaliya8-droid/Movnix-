@@ -1,6 +1,6 @@
 /* ================= CONFIG ================= */
 
-const API_KEY = "YOUR_TMDB_API_KEY_HERE"; // 🔥 यहाँ अपनी key डालो
+const API_KEY = "45fe7a9c4583e4374d3981bb55c39222"; // 🔥 यहाँ अपनी key डालो
 const IMG_URL = "https://image.tmdb.org/t/p/w500";
 
 /* ================= NAVIGATION ================= */
