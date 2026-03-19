@@ -1,0 +1,10 @@
+[
+ {"category":"Best Picture","name":"Crash","type":"movie"},
+ {"category":"Best Director","name":"Ang Lee","type":"person"},
+ {"category":"Best Actor","name":"Philip Seymour Hoffman","type":"person"},
+ {"category":"Best Actress","name":"Reese Witherspoon","type":"person"},
+ {"category":"Best Supporting Actor","name":"George Clooney","type":"person"},
+ {"category":"Best Supporting Actress","name":"Rachel Weisz","type":"person"},
+ {"category":"Best Animated Feature","name":"Wallace & Gromit: The Curse of the Were-Rabbit","type":"movie"},
+ {"category":"Best International Feature","name":"Tsotsi","type":"movie"}
+]
