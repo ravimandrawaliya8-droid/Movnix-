@@ -1,0 +1,10 @@
+[
+ {"category":"Best Picture","name":"Birdman","type":"movie"},
+ {"category":"Best Director","name":"Alejandro G. Iñárritu","type":"person"},
+ {"category":"Best Actor","name":"Eddie Redmayne","type":"person"},
+ {"category":"Best Actress","name":"Julianne Moore","type":"person"},
+ {"category":"Best Supporting Actor","name":"J.K. Simmons","type":"person"},
+ {"category":"Best Supporting Actress","name":"Patricia Arquette","type":"person"},
+ {"category":"Best Animated Feature","name":"Big Hero 6","type":"movie"},
+ {"category":"Best International Feature","name":"Ida","type":"movie"}
+]
