@@ -1,0 +1,10 @@
+[
+ {"category":"Best Picture","name":"Nomadland","type":"movie"},
+ {"category":"Best Director","name":"Chloé Zhao","type":"person"},
+ {"category":"Best Actor","name":"Anthony Hopkins","type":"person"},
+ {"category":"Best Actress","name":"Frances McDormand","type":"person"},
+ {"category":"Best Supporting Actor","name":"Daniel Kaluuya","type":"person"},
+ {"category":"Best Supporting Actress","name":"Youn Yuh-jung","type":"person"},
+ {"category":"Best Animated Feature","name":"Soul","type":"movie"},
+ {"category":"Best International Feature","name":"Another Round","type":"movie"}
+]
