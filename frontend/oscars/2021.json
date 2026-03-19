@@ -1,0 +1,10 @@
+[
+ {"category":"Best Picture","name":"CODA","type":"movie"},
+ {"category":"Best Director","name":"Jane Campion","type":"person"},
+ {"category":"Best Actor","name":"Will Smith","type":"person"},
+ {"category":"Best Actress","name":"Jessica Chastain","type":"person"},
+ {"category":"Best Supporting Actor","name":"Troy Kotsur","type":"person"},
+ {"category":"Best Supporting Actress","name":"Ariana DeBose","type":"person"},
+ {"category":"Best Animated Feature","name":"Encanto","type":"movie"},
+ {"category":"Best International Feature","name":"Drive My Car","type":"movie"}
+]
