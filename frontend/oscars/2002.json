@@ -1,0 +1,10 @@
+[
+ {"category":"Best Picture","name":"Chicago","type":"movie"},
+ {"category":"Best Director","name":"Roman Polanski","type":"person"},
+ {"category":"Best Actor","name":"Adrien Brody","type":"person"},
+ {"category":"Best Actress","name":"Nicole Kidman","type":"person"},
+ {"category":"Best Supporting Actor","name":"Chris Cooper","type":"person"},
+ {"category":"Best Supporting Actress","name":"Catherine Zeta-Jones","type":"person"},
+ {"category":"Best Animated Feature","name":"Spirited Away","type":"movie"},
+ {"category":"Best International Feature","name":"Nowhere in Africa","type":"movie"}
+]
