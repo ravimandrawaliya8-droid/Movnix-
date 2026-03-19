@@ -1,0 +1,10 @@
+[
+ {"category":"Best Picture","name":"Argo","type":"movie"},
+ {"category":"Best Director","name":"Ang Lee","type":"person"},
+ {"category":"Best Actor","name":"Daniel Day-Lewis","type":"person"},
+ {"category":"Best Actress","name":"Jennifer Lawrence","type":"person"},
+ {"category":"Best Supporting Actor","name":"Christoph Waltz","type":"person"},
+ {"category":"Best Supporting Actress","name":"Anne Hathaway","type":"person"},
+ {"category":"Best Animated Feature","name":"Brave","type":"movie"},
+ {"category":"Best International Feature","name":"Amour","type":"movie"}
+]
