@@ -120,3 +120,17 @@ body{
   width:100%;
   border-radius:12px;
 }
+
+
+
+.winner-card,
+.trend-card{
+  opacity:0;
+  transform:translateY(20px);
+  transition:0.4s;
+}
+
+.show{
+  opacity:1;
+  transform:translateY(0);
+}
