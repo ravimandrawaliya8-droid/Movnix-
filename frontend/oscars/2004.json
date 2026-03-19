@@ -1,0 +1,10 @@
+[
+ {"category":"Best Picture","name":"Million Dollar Baby","type":"movie"},
+ {"category":"Best Director","name":"Clint Eastwood","type":"person"},
+ {"category":"Best Actor","name":"Jamie Foxx","type":"person"},
+ {"category":"Best Actress","name":"Hilary Swank","type":"person"},
+ {"category":"Best Supporting Actor","name":"Morgan Freeman","type":"person"},
+ {"category":"Best Supporting Actress","name":"Cate Blanchett","type":"person"},
+ {"category":"Best Animated Feature","name":"The Incredibles","type":"movie"},
+ {"category":"Best International Feature","name":"The Sea Inside","type":"movie"}
+]
