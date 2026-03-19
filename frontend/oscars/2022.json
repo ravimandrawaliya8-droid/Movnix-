@@ -1,0 +1,10 @@
+[
+ {"category":"Best Picture","name":"Everything Everywhere All at Once","type":"movie"},
+ {"category":"Best Director","name":"Daniel Kwan & Daniel Scheinert","type":"person"},
+ {"category":"Best Actor","name":"Brendan Fraser","type":"person"},
+ {"category":"Best Actress","name":"Michelle Yeoh","type":"person"},
+ {"category":"Best Supporting Actor","name":"Ke Huy Quan","type":"person"},
+ {"category":"Best Supporting Actress","name":"Jamie Lee Curtis","type":"person"},
+ {"category":"Best Animated Feature","name":"Guillermo del Toro's Pinocchio","type":"movie"},
+ {"category":"Best International Feature","name":"All Quiet on the Western Front","type":"movie"}
+]
