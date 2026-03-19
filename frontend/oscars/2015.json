@@ -1,0 +1,10 @@
+[
+ {"category":"Best Picture","name":"Spotlight","type":"movie"},
+ {"category":"Best Director","name":"Alejandro G. Iñárritu","type":"person"},
+ {"category":"Best Actor","name":"Leonardo DiCaprio","type":"person"},
+ {"category":"Best Actress","name":"Brie Larson","type":"person"},
+ {"category":"Best Supporting Actor","name":"Mark Rylance","type":"person"},
+ {"category":"Best Supporting Actress","name":"Alicia Vikander","type":"person"},
+ {"category":"Best Animated Feature","name":"Inside Out","type":"movie"},
+ {"category":"Best International Feature","name":"Son of Saul","type":"movie"}
+]
