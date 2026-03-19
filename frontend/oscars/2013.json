@@ -1,0 +1,10 @@
+[
+ {"category":"Best Picture","name":"12 Years a Slave","type":"movie"},
+ {"category":"Best Director","name":"Alfonso Cuarón","type":"person"},
+ {"category":"Best Actor","name":"Matthew McConaughey","type":"person"},
+ {"category":"Best Actress","name":"Cate Blanchett","type":"person"},
+ {"category":"Best Supporting Actor","name":"Jared Leto","type":"person"},
+ {"category":"Best Supporting Actress","name":"Lupita Nyong'o","type":"person"},
+ {"category":"Best Animated Feature","name":"Frozen","type":"movie"},
+ {"category":"Best International Feature","name":"The Great Beauty","type":"movie"}
+]
