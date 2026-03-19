@@ -1,14 +1,24 @@
+/* ================= GLOBAL ================= */
+
 body{
   margin:0;
   font-family:sans-serif;
   background:#0b0b0f;
   color:#fff;
+  overflow-x:hidden;
 }
 
-/* HERO */
+html{
+  scroll-behavior:smooth;
+}
+
+/* ================= HERO ================= */
+
 .hero{
-  height:400px;
-  background:url("../images/hero.jpg") center/cover;
+  height:420px;
+  background:
+    radial-gradient(circle at top, rgba(255,215,0,0.25), transparent),
+    url("../images/hero.jpg") center/cover;
   position:relative;
 }
 
@@ -22,46 +32,72 @@ body{
   position:absolute;
   bottom:40px;
   left:20px;
+  z-index:2;
 }
 
 .hero h1{
-  font-size:28px;
+  font-size:32px;
+  margin:0;
 }
 
 .hero p{
   color:#ccc;
+  margin-top:5px;
 }
 
+/* BUTTONS */
+
 .hero-buttons{
-  margin-top:10px;
+  margin-top:15px;
 }
 
 .hero-buttons button{
   margin-right:10px;
-  padding:10px;
-  border-radius:10px;
+  padding:10px 14px;
+  border-radius:12px;
   border:none;
   background:#1a1a1f;
   color:#fff;
+  cursor:pointer;
+  transition:0.3s ease;
 }
 
-/* TABS */
+.hero-buttons button:hover{
+  background:#ffd700;
+  color:#000;
+  transform:scale(1.05);
+}
+
+/* ================= TABS ================= */
+
 .tabs{
   display:flex;
   gap:20px;
   padding:15px;
   border-bottom:1px solid #222;
+  background:#0b0b0f;
+  position:sticky;
+  top:0;
+  z-index:10;
 }
 
 .tabs span{
   color:#aaa;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.tabs span:hover{
+  color:#fff;
 }
 
 .tabs .active{
   color:#ffd700;
+  font-weight:600;
 }
 
-/* FEATURED */
+/* ================= FEATURED ================= */
+
 .featured{
   padding:15px;
 }
@@ -69,68 +105,191 @@ body{
 .featured-card{
   display:flex;
   background:#111;
-  border-radius:15px;
+  border-radius:18px;
   overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,0.6);
+  transition:0.3s;
+}
+
+.featured-card:hover{
+  transform:scale(1.01);
 }
 
 .featured-card img{
   width:50%;
+  object-fit:cover;
 }
 
 .featured-text{
-  padding:15px;
+  padding:20px;
 }
 
-/* ICONIC */
+.featured-text h2{
+  margin:0;
+}
+
+.featured-text p{
+  color:#aaa;
+  margin-top:8px;
+}
+
+/* ================= ICONIC ================= */
+
 .iconic{
   padding:15px;
 }
 
 .card-row{
   display:flex;
-  gap:10px;
+  gap:12px;
   overflow-x:auto;
+  padding-bottom:5px;
 }
+
+.card-row::-webkit-scrollbar{
+  display:none;
+}
+
+/* ================= WINNER CARD ================= */
 
 .winner-card{
-  min-width:150px;
+  min-width:160px;
   background:#111;
-  border-radius:12px;
+  border-radius:14px;
   overflow:hidden;
+  transition:0.3s ease;
+  cursor:pointer;
+  position:relative;
 }
 
+/* IMAGE */
 .winner-card img{
   width:100%;
+  height:220px;
+  object-fit:cover;
+  transition:0.3s;
 }
 
+/* INFO */
 .card-info{
   padding:10px;
 }
 
-/* TRENDING */
+.card-info h3{
+  margin:0;
+  font-size:14px;
+}
+
+.card-info p{
+  margin:5px 0;
+  font-size:13px;
+  color:#ddd;
+}
+
+.card-info small{
+  color:#888;
+}
+
+/* RATINGS */
+.ratings{
+  margin-top:5px;
+  font-size:12px;
+  color:#ffd700;
+}
+
+/* HOVER EFFECT */
+.winner-card:hover{
+  transform:translateY(-6px) scale(1.04);
+  box-shadow:0 12px 30px rgba(255,215,0,0.2);
+}
+
+.winner-card:hover img{
+  transform:scale(1.08);
+}
+
+/* CLICK EFFECT */
+.winner-card:active{
+  transform:scale(0.96);
+}
+
+/* ================= TRENDING ================= */
+
 .trending{
   padding:15px;
 }
 
 .trend-card{
   min-width:180px;
+  transition:0.3s;
+  cursor:pointer;
 }
 
 .trend-card img{
   width:100%;
-  border-radius:12px;
+  height:260px;
+  object-fit:cover;
+  border-radius:14px;
+  transition:0.3s;
 }
 
+.trend-card p{
+  margin-top:6px;
+  font-size:13px;
+}
 
+/* HOVER */
+.trend-card:hover{
+  transform:translateY(-5px) scale(1.04);
+}
+
+.trend-card:hover img{
+  transform:scale(1.08);
+}
+
+/* ================= ANIMATION ================= */
 
 .winner-card,
 .trend-card{
   opacity:0;
   transform:translateY(20px);
-  transition:0.4s;
+  transition:0.5s ease;
 }
 
 .show{
   opacity:1;
   transform:translateY(0);
 }
+
+/* ================= LOADER ================= */
+
+body.loading::before{
+  content:"Loading...";
+  position:fixed;
+  inset:0;
+  background:#0b0b0f;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
+  font-size:18px;
+  color:#ffd700;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:768px){
+
+  .hero{
+    height:350px;
+  }
+
+  .featured-card{
+    flex-direction:column;
+  }
+
+  .featured-card img{
+    width:100%;
+    height:200px;
+  }
+
+    }
