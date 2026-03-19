@@ -1,0 +1,10 @@
+[
+ {"category":"Best Picture","name":"The Artist","type":"movie"},
+ {"category":"Best Director","name":"Michel Hazanavicius","type":"person"},
+ {"category":"Best Actor","name":"Jean Dujardin","type":"person"},
+ {"category":"Best Actress","name":"Meryl Streep","type":"person"},
+ {"category":"Best Supporting Actor","name":"Christopher Plummer","type":"person"},
+ {"category":"Best Supporting Actress","name":"Octavia Spencer","type":"person"},
+ {"category":"Best Animated Feature","name":"Rango","type":"movie"},
+ {"category":"Best International Feature","name":"A Separation","type":"movie"}
+]
