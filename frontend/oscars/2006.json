@@ -1,0 +1,10 @@
+[
+ {"category":"Best Picture","name":"The Departed","type":"movie"},
+ {"category":"Best Director","name":"Martin Scorsese","type":"person"},
+ {"category":"Best Actor","name":"Forest Whitaker","type":"person"},
+ {"category":"Best Actress","name":"Helen Mirren","type":"person"},
+ {"category":"Best Supporting Actor","name":"Alan Arkin","type":"person"},
+ {"category":"Best Supporting Actress","name":"Jennifer Hudson","type":"person"},
+ {"category":"Best Animated Feature","name":"Happy Feet","type":"movie"},
+ {"category":"Best International Feature","name":"The Lives of Others","type":"movie"}
+]
