@@ -1,6 +1,6 @@
 /* ================= CONFIG ================= */
 
-const API_KEY = "YOUR_TMDB_API_KEY"; // 🔥 यहाँ अपनी key डालो
+const API_KEY = "45fe7a9c4583e4374d3981bb55c39222"; // ✅ अपनी key
 const IMG_URL = "https://image.tmdb.org/t/p/w500";
 
 /* ================= NAVIGATION ================= */
@@ -9,15 +9,13 @@ function goToYear(year){
     window.location.href = `oscars-${year}.html`;
 }
 
-/* ================= SCROLL ================= */
-
 function scrollToYears(){
     document.querySelector(".iconic")?.scrollIntoView({
         behavior: "smooth"
     });
 }
 
-/* ================= RANDOM YEAR ================= */
+/* ================= YEAR ================= */
 
 let lastYear = null;
 
@@ -41,7 +39,7 @@ function hideLoader(){
     document.body.classList.remove("loading");
 }
 
-/* ================= YEAR SELECTOR ================= */
+/* ================= YEAR SELECT ================= */
 
 function initYearSelector(){
 
@@ -58,7 +56,6 @@ function initYearSelector(){
     select.addEventListener("change", ()=>{
         loadOscarsByYear(select.value);
     });
-
 }
 
 /* ================= TMDB FETCH ================= */
@@ -110,7 +107,6 @@ async function loadOscarsByYear(year){
     showLoader();
 
     try{
-
         const res = await fetch(`oscars/${year}.json`);
         const data = await res.json();
 
@@ -119,7 +115,7 @@ async function loadOscarsByYear(year){
         await renderWinners(data);
 
     }catch(err){
-        console.error("Error:", err);
+        console.log(err);
 
         document.getElementById("winnersContainer").innerHTML =
         `<p style="color:#aaa;">Failed to load data</p>`;
@@ -148,7 +144,7 @@ function updateFeatured(year){
     if(desc) desc.innerText = `Explore ${year} Academy Awards winners & highlights`;
 }
 
-/* ================= RENDER WINNERS ================= */
+/* ================= WINNERS ================= */
 
 async function renderWinners(data){
 
@@ -188,22 +184,57 @@ async function renderWinners(data){
         }, index * 80);
 
     });
-
 }
 
-/* ================= TRENDING ================= */
+/* ================= NOMINEES ================= */
 
-async function loadTrending(){
+async function loadNominees(){
 
-    const container = document.getElementById("trendingContainer");
+    const container = document.getElementById("nomineesContainer");
     if(!container) return;
 
     container.innerHTML = "";
 
     try{
-
         const res = await fetch(
-            `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&sort_by=vote_average.desc&vote_count.gte=5000`
+        `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&sort_by=popularity.desc`
+        );
+
+        const data = await res.json();
+
+        data.results.slice(0,10).forEach(movie=>{
+
+            const card = document.createElement("div");
+            card.className = "winner-card";
+
+            card.innerHTML = `
+                <img src="${movie.poster_path ? IMG_URL + movie.poster_path : 'images/placeholder.jpg'}">
+                <div class="card-info">
+                    <p>${movie.title}</p>
+                </div>
+            `;
+
+            container.appendChild(card);
+            observer.observe(card);
+        });
+
+    }catch(err){
+        console.log(err);
+    }
+}
+
+/* ================= HIGHLIGHTS ================= */
+
+async function loadHighlights(){
+
+    const container = document.getElementById("highlightsContainer");
+    if(!container) return;
+
+    container.innerHTML = "";
+
+    try{
+        const res = await fetch(
+        `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}`
         );
 
         const data = await res.json();
@@ -220,11 +251,45 @@ async function loadTrending(){
 
             container.appendChild(card);
             observer.observe(card);
-
         });
 
     }catch(err){
-        console.log("Trending Error:", err);
+        console.log(err);
+    }
+}
+
+/* ================= TRENDING ================= */
+
+async function loadTrending(){
+
+    const container = document.getElementById("trendingContainer");
+    if(!container) return;
+
+    container.innerHTML = "";
+
+    try{
+        const res = await fetch(
+        `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&sort_by=vote_average.desc&vote_count.gte=5000`
+        );
+
+        const data = await res.json();
+
+        data.results.slice(0,10).forEach(movie=>{
+
+            const card = document.createElement("div");
+            card.className = "trend-card";
+
+            card.innerHTML = `
+                <img src="${movie.poster_path ? IMG_URL + movie.poster_path : 'images/placeholder.jpg'}">
+                <p>${movie.title}</p>
+            `;
+
+            container.appendChild(card);
+            observer.observe(card);
+        });
+
+    }catch(err){
+        console.log(err);
     }
 }
 
@@ -258,28 +323,27 @@ function closePopup(){
 
 /* ================= TABS ================= */
 
-document.querySelectorAll(".tabs span").forEach(tab=>{
+function initTabs(){
 
-    tab.addEventListener("click",()=>{
+    document.querySelectorAll(".tabs span").forEach(tab=>{
 
-        document.querySelectorAll(".tabs span")
-        .forEach(t=>t.classList.remove("active"));
+        tab.addEventListener("click",()=>{
 
-        tab.classList.add("active");
+            document.querySelectorAll(".tabs span")
+            .forEach(t=>t.classList.remove("active"));
 
-        const text = tab.innerText.toLowerCase();
+            tab.classList.add("active");
 
-        if(text.includes("winners")){
-            loadOscars();
-        }
+            const text = tab.innerText.toLowerCase();
 
-        if(text.includes("trending")){
-            loadTrending();
-        }
+            if(text.includes("winners")) loadOscars();
+            if(text.includes("trending")) loadTrending();
+            if(text.includes("nominees")) loadNominees();
+            if(text.includes("highlights")) loadHighlights();
 
+        });
     });
-
-});
+}
 
 /* ================= AUTO SCROLL ================= */
 
@@ -302,7 +366,13 @@ const observer = new IntersectionObserver(entries=>{
 /* ================= INIT ================= */
 
 document.addEventListener("DOMContentLoaded", ()=>{
-    initYearSelector();   // 🔥 year dropdown
-    loadOscars();         // winners
-    loadTrending();       // trending
+
+    initYearSelector();
+    initTabs();
+
+    loadOscars();
+    loadTrending();
+    loadNominees();
+    loadHighlights();
+
 });
