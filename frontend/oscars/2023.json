@@ -1,0 +1,10 @@
+[
+ {"category":"Best Picture","name":"Oppenheimer","type":"movie"},
+ {"category":"Best Director","name":"Christopher Nolan","type":"person"},
+ {"category":"Best Actor","name":"Cillian Murphy","type":"person"},
+ {"category":"Best Actress","name":"Emma Stone","type":"person"},
+ {"category":"Best Supporting Actor","name":"Robert Downey Jr.","type":"person"},
+ {"category":"Best Supporting Actress","name":"Da'Vine Joy Randolph","type":"person"},
+ {"category":"Best Animated Feature","name":"The Boy and the Heron","type":"movie"},
+ {"category":"Best International Feature","name":"The Zone of Interest","type":"movie"}
+]
