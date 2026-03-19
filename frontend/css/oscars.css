@@ -112,7 +112,7 @@ body{
   content:"";
   position:absolute;
   inset:0;
-  background:radial-gradient(circle at center, rgba(212,175,55,0.3), transparent);
+  background:radial-gradient(circle at left, rgba(212,175,55,0.5), transparent 60%);
 }
 
 /* HERO CONTENT */
