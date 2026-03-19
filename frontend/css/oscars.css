@@ -274,3 +274,63 @@ body{
   }
 
   }
+
+
+@media(max-width:768px){
+
+  .hero{
+    margin:10px;
+    padding:30px 15px;
+  }
+
+  .hero h1{
+    font-size:26px;
+  }
+
+  .hero-buttons{
+    flex-direction:column;
+  }
+
+  .hero-buttons button{
+    width:100%;
+  }
+
+  .tabs{
+    gap:15px;
+    overflow-x:auto;
+  }
+
+  .card-row{
+    padding:10px;
+  }
+
+  .winner-card{
+    min-width:160px;
+  }
+
+  }
+
+
+.trend-card{
+  min-width:160px;
+  background:#fff;
+  border-radius:15px;
+  overflow:hidden;
+  box-shadow:0 5px 20px rgba(0,0,0,0.08);
+  transition:0.3s;
+}
+
+.trend-card img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+}
+
+.trend-card p{
+  padding:10px;
+  font-weight:600;
+}
+
+.trend-card:hover{
+  transform:translateY(-5px);
+}
