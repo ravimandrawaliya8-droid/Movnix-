@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Oscars Universe - Movnix</title>
 
+<!-- SEO -->
+<meta name="description" content="Explore Oscars winners, nominees & iconic moments from 2000 to 2026.">
+<meta name="theme-color" content="#0b0b0f">
+
+<!-- CSS -->
 <link rel="stylesheet" href="css/oscars.css">
 
+<!-- Preload Hero Image (faster load) -->
+<link rel="preload" as="image" href="images/hero.jpg">
+
 </head>
+
 <body>
 
 <!-- ================= HERO ================= -->
@@ -16,13 +27,13 @@
   <div class="hero-overlay"></div>
 
   <div class="hero-content">
-    <h1>🏆 The Oscars Universe</h1>
-    <p>Explore every Academy Awards year, winners & moments</p>
+    <h1 id="heroTitle">🏆 The Oscars Universe</h1>
+    <p id="heroDesc">Explore every Academy Awards year, winners & moments</p>
 
     <div class="hero-buttons">
       <button onclick="goToYear(2026)">🔥 Latest Oscars (2026)</button>
       <button onclick="scrollToYears()">📂 Browse All Years</button>
-      <button>⭐ Top Rated Winners</button>
+      <button id="topRatedBtn">⭐ Top Rated Winners</button>
     </div>
   </div>
 
@@ -42,12 +53,12 @@
   <div class="featured-card">
 
     <div class="featured-text">
-      <h2>🏆 The 2026 Oscars</h2>
-      <p>Explore winners, nominees & highlights</p>
-      <button onclick="goToYear(2026)">Explore Winners →</button>
+      <h2 id="featuredTitle">🏆 The 2026 Oscars</h2>
+      <p id="featuredDesc">Explore winners, nominees & highlights</p>
+      <button id="exploreBtn">Explore Winners →</button>
     </div>
 
-    <img src="images/oscar-group.jpg">
+    <img src="images/oscar-group.jpg" alt="Oscars Ceremony">
 
   </div>
 
@@ -58,36 +69,12 @@
 
   <h2>Iconic Oscar Winners</h2>
 
-  <div class="card-row">
-
-    <div class="winner-card">
-      <img src="images/actor.jpg">
-      <div class="card-info">
-        <h3>🏆 Best Actor</h3>
-        <p>Ke Huy Quan</p>
-        <span>⭐ 8.1 🔵 9.0</span>
-      </div>
-    </div>
-
-    <div class="winner-card">
-      <img src="images/actress.jpg">
-      <div class="card-info">
-        <h3>🏆 Best Actress</h3>
-        <p>Tang Wei</p>
-        <span>⭐ 7.9 🔵 9.2</span>
-      </div>
-    </div>
-
-    <div class="winner-card">
-      <img src="images/movie.jpg">
-      <div class="card-info">
-        <h3>🏆 Best Picture</h3>
-        <p>Oppenheimer</p>
-        <span>⭐ 8.5 🔵 9.1</span>
-      </div>
-    </div>
-
+  <!-- Loader -->
+  <div id="loader" style="display:none; text-align:center; padding:20px;">
+    <p>Loading winners...</p>
   </div>
+
+  <div class="card-row" id="winnersContainer"></div>
 
 </section>
 
@@ -96,28 +83,19 @@
 
   <h2>🔥 Trending Oscar Movies</h2>
 
-  <div class="card-row">
-
-    <div class="trend-card">
-      <img src="images/trend1.jpg">
-      <p>Dune: Part II</p>
-    </div>
-
-    <div class="trend-card">
-      <img src="images/trend2.jpg">
-      <p>Saltburn</p>
-    </div>
-
-    <div class="trend-card">
-      <img src="images/trend3.jpg">
-      <p>The Holdovers</p>
-    </div>
-
-  </div>
+  <div class="card-row" id="trendingContainer"></div>
 
 </section>
 
-<script src="js/oscars.js"></script>
+<!-- ================= NO JS ================= -->
+<noscript>
+  <p style="padding:20px;color:red;">
+    JavaScript is disabled. Please enable it to view Oscars data.
+  </p>
+</noscript>
+
+<!-- ================= SCRIPT ================= -->
+<script src="js/oscars.js" defer></script>
 
 </body>
   </html>
