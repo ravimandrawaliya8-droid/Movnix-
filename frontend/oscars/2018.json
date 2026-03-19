@@ -1,0 +1,10 @@
+[
+ {"category":"Best Picture","name":"Green Book","type":"movie"},
+ {"category":"Best Director","name":"Alfonso Cuarón","type":"person"},
+ {"category":"Best Actor","name":"Rami Malek","type":"person"},
+ {"category":"Best Actress","name":"Olivia Colman","type":"person"},
+ {"category":"Best Supporting Actor","name":"Mahershala Ali","type":"person"},
+ {"category":"Best Supporting Actress","name":"Regina King","type":"person"},
+ {"category":"Best Animated Feature","name":"Spider-Man: Into the Spider-Verse","type":"movie"},
+ {"category":"Best International Feature","name":"Roma","type":"movie"}
+]
