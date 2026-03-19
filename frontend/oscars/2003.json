@@ -1,0 +1,10 @@
+[
+ {"category":"Best Picture","name":"The Lord of the Rings: The Return of the King","type":"movie"},
+ {"category":"Best Director","name":"Peter Jackson","type":"person"},
+ {"category":"Best Actor","name":"Sean Penn","type":"person"},
+ {"category":"Best Actress","name":"Charlize Theron","type":"person"},
+ {"category":"Best Supporting Actor","name":"Tim Robbins","type":"person"},
+ {"category":"Best Supporting Actress","name":"Renée Zellweger","type":"person"},
+ {"category":"Best Animated Feature","name":"Finding Nemo","type":"movie"},
+ {"category":"Best International Feature","name":"The Barbarian Invasions","type":"movie"}
+]
