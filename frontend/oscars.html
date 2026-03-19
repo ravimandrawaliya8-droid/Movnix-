@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oscars Universe - Movnix</title>
+
+<link rel="stylesheet" href="css/oscars.css">
+
+</head>
+<body>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">
+    <h1>🏆 The Oscars Universe</h1>
+    <p>Explore every Academy Awards year, winners & moments</p>
+
+    <div class="hero-buttons">
+      <button onclick="goToYear(2026)">🔥 Latest Oscars (2026)</button>
+      <button onclick="scrollToYears()">📂 Browse All Years</button>
+      <button>⭐ Top Rated Winners</button>
+    </div>
+  </div>
+
+</section>
+
+<!-- ================= NAV ================= -->
+<div class="tabs">
+  <span class="active">🏆 Winners</span>
+  <span>🎭 Nominees</span>
+  <span>🎥 Highlights</span>
+  <span>🔥 Trending</span>
+</div>
+
+<!-- ================= FEATURED ================= -->
+<section class="featured">
+
+  <div class="featured-card">
+
+    <div class="featured-text">
+      <h2>🏆 The 2026 Oscars</h2>
+      <p>Explore winners, nominees & highlights</p>
+      <button onclick="goToYear(2026)">Explore Winners →</button>
+    </div>
+
+    <img src="images/oscar-group.jpg">
+
+  </div>
+
+</section>
+
+<!-- ================= ICONIC ================= -->
+<section class="iconic">
+
+  <h2>Iconic Oscar Winners</h2>
+
+  <div class="card-row">
+
+    <div class="winner-card">
+      <img src="images/actor.jpg">
+      <div class="card-info">
+        <h3>🏆 Best Actor</h3>
+        <p>Ke Huy Quan</p>
+        <span>⭐ 8.1 🔵 9.0</span>
+      </div>
+    </div>
+
+    <div class="winner-card">
+      <img src="images/actress.jpg">
+      <div class="card-info">
+        <h3>🏆 Best Actress</h3>
+        <p>Tang Wei</p>
+        <span>⭐ 7.9 🔵 9.2</span>
+      </div>
+    </div>
+
+    <div class="winner-card">
+      <img src="images/movie.jpg">
+      <div class="card-info">
+        <h3>🏆 Best Picture</h3>
+        <p>Oppenheimer</p>
+        <span>⭐ 8.5 🔵 9.1</span>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ================= TRENDING ================= -->
+<section class="trending">
+
+  <h2>🔥 Trending Oscar Movies</h2>
+
+  <div class="card-row">
+
+    <div class="trend-card">
+      <img src="images/trend1.jpg">
+      <p>Dune: Part II</p>
+    </div>
+
+    <div class="trend-card">
+      <img src="images/trend2.jpg">
+      <p>Saltburn</p>
+    </div>
+
+    <div class="trend-card">
+      <img src="images/trend3.jpg">
+      <p>The Holdovers</p>
+    </div>
+
+  </div>
+
+</section>
+
+<script src="js/oscars.js"></script>
+
+</body>
+  </html>
