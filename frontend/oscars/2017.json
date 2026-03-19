@@ -1,0 +1,10 @@
+[
+ {"category":"Best Picture","name":"The Shape of Water","type":"movie"},
+ {"category":"Best Director","name":"Guillermo del Toro","type":"person"},
+ {"category":"Best Actor","name":"Gary Oldman","type":"person"},
+ {"category":"Best Actress","name":"Frances McDormand","type":"person"},
+ {"category":"Best Supporting Actor","name":"Sam Rockwell","type":"person"},
+ {"category":"Best Supporting Actress","name":"Allison Janney","type":"person"},
+ {"category":"Best Animated Feature","name":"Coco","type":"movie"},
+ {"category":"Best International Feature","name":"A Fantastic Woman","type":"movie"}
+]
