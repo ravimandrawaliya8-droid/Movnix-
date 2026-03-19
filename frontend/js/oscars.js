@@ -202,6 +202,40 @@ async function renderWinners(data){
 
 }
 
+
+/* ================= load trending ================= */
+async function loadTrending(){
+
+    const container = document.getElementById("trendingContainer");
+    if(!container) return;
+
+    container.innerHTML = "";
+
+    try{
+
+        const res = await fetch(`https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}`);
+        const data = await res.json();
+
+        data.results.slice(0,10).forEach(movie=>{
+
+            const card = document.createElement("div");
+            card.className = "trend-card";
+
+            card.innerHTML = `
+                <img src="${movie.poster_path ? IMG_URL + movie.poster_path : 'images/placeholder.jpg'}">
+                <p>${movie.title}</p>
+            `;
+
+            container.appendChild(card);
+            observer.observe(card);
+
+        });
+
+    }catch(err){
+        console.log("Trending Error:", err);
+    }
+                }
+
 /* ================= CARD CLICK ================= */
 
 function attachCardClicks(){
