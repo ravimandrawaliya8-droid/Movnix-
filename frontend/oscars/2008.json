@@ -1,0 +1,10 @@
+[
+ {"category":"Best Picture","name":"No Country for Old Men","type":"movie"},
+ {"category":"Best Director","name":"Joel & Ethan Coen","type":"person"},
+ {"category":"Best Actor","name":"Daniel Day-Lewis","type":"person"},
+ {"category":"Best Actress","name":"Marion Cotillard","type":"person"},
+ {"category":"Best Supporting Actor","name":"Javier Bardem","type":"person"},
+ {"category":"Best Supporting Actress","name":"Tilda Swinton","type":"person"},
+ {"category":"Best Animated Feature","name":"Ratatouille","type":"movie"},
+ {"category":"Best International Feature","name":"The Counterfeiters","type":"movie"}
+]
