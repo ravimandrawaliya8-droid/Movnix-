@@ -1,3 +1,8 @@
+/* ================= CONFIG ================= */
+
+const API_KEY = "YOUR_TMDB_API_KEY_HERE"; // 🔥 यहाँ अपनी key डालो
+const IMG_URL = "https://image.tmdb.org/t/p/w500";
+
 /* ================= NAVIGATION ================= */
 
 function goToYear(year){
@@ -47,6 +52,48 @@ function hideLoader(){
     document.body.classList.remove("loading");
 }
 
+/* ================= TMDB FETCH ================= */
+
+async function fetchFromTMDB(name, type){
+
+    try{
+
+        let url = "";
+
+        if(type === "movie"){
+            url = `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(name)}`;
+        }else{
+            url = `https://api.themoviedb.org/3/search/person?api_key=${API_KEY}&query=${encodeURIComponent(name)}`;
+        }
+
+        const res = await fetch(url);
+        const data = await res.json();
+
+        if(data.results && data.results.length > 0){
+
+            const item = data.results[0];
+
+            return {
+                image: (item.poster_path || item.profile_path)
+                    ? IMG_URL + (item.poster_path || item.profile_path)
+                    : "images/placeholder.jpg",
+
+                rating: item.vote_average
+                    ? item.vote_average.toFixed(1)
+                    : "N/A"
+            };
+        }
+
+    }catch(err){
+        console.log("TMDB Error:", err);
+    }
+
+    return {
+        image: "images/placeholder.jpg",
+        rating: "N/A"
+    };
+}
+
 /* ================= LOAD DATA ================= */
 
 async function loadOscars(){
@@ -60,44 +107,36 @@ async function loadOscars(){
         const res = await fetch(`oscars/${year}.json`);
         const data = await res.json();
 
-        updateHero(year, data);
+        updateHero(year);
         updateFeatured(year);
-        renderWinners(data);
+        await renderWinners(data);
         attachCardClicks();
 
     }catch(err){
         console.error("Error loading Oscars:", err);
 
-        document.querySelector(".iconic .card-row").innerHTML =
-        `<p style="color:#aaa;">⚠️ Failed to load data</p>`;
+        const container = document.getElementById("winnersContainer");
+        if(container){
+            container.innerHTML = `<p style="color:#aaa;">⚠️ Failed to load data</p>`;
+        }
     }
 
     hideLoader();
 }
 
-/* ================= HERO UPDATE ================= */
+/* ================= HERO ================= */
 
-function updateHero(year, data){
+function updateHero(year){
 
-    const heroTitle = document.querySelector(".hero h1");
-    const heroDesc = document.querySelector(".hero p");
-    const hero = document.querySelector(".hero");
+    const heroTitle = document.getElementById("heroTitle");
+    const heroDesc = document.getElementById("heroDesc");
 
     if(heroTitle){
-        heroTitle.innerText = `🏆 The Oscars Universe`;
+        heroTitle.innerText = "🏆 The Oscars Universe";
     }
 
     if(heroDesc){
-        heroDesc.innerText =
-        `Explore Oscars ${year} winners & iconic moments`;
-    }
-
-    // premium gradient glow
-    if(hero){
-        hero.style.background = `
-        radial-gradient(circle at top, rgba(255,215,0,0.25), transparent),
-        linear-gradient(to bottom, rgba(0,0,0,0.7), #0b0b0f),
-        url(images/hero.jpg) center/cover`;
+        heroDesc.innerText = `Explore Oscars ${year} winners & iconic moments`;
     }
 
 }
@@ -106,40 +145,42 @@ function updateHero(year, data){
 
 function updateFeatured(year){
 
-    const title = document.querySelector(".featured-text h2");
-    const desc = document.querySelector(".featured-text p");
+    const title = document.getElementById("featuredTitle");
+    const desc = document.getElementById("featuredDesc");
 
     if(title){
         title.innerText = `🏆 The ${year} Oscars`;
     }
 
     if(desc){
-        desc.innerText =
-        `Explore ${year} Academy Awards winners & highlights`;
+        desc.innerText = `Explore ${year} Academy Awards winners & highlights`;
     }
 
 }
 
-/* ================= WINNERS ================= */
+/* ================= RENDER WINNERS ================= */
 
-function renderWinners(data){
+async function renderWinners(data){
 
-    const container = document.querySelector(".iconic .card-row");
+    const container = document.getElementById("winnersContainer");
     if(!container) return;
 
     container.innerHTML = "";
 
+    // 🔥 parallel fetch (fast loading)
+    const results = await Promise.all(
+        data.map(item => fetchFromTMDB(item.name, item.type))
+    );
+
     data.forEach((item, index)=>{
+
+        const tmdb = results[index];
 
         const card = document.createElement("div");
         card.className = "winner-card";
 
-        const imdb = (Math.random()*3 + 7).toFixed(1);
-        const user = (Math.random()*5 + 5).toFixed(1);
-
         card.innerHTML = `
-            <img src="images/placeholder.jpg"
-                 onerror="this.src='images/placeholder.jpg'">
+            <img src="${tmdb.image}" onerror="this.src='images/placeholder.jpg'">
 
             <div class="card-info">
                 <h3>🏆 ${item.category}</h3>
@@ -147,13 +188,11 @@ function renderWinners(data){
                 <small>${item.type === "movie" ? "Movie" : "Artist"}</small>
 
                 <div class="ratings">
-                    ⭐ ${imdb}
-                    🔵 ${user}
+                    ⭐ ${tmdb.rating}
                 </div>
             </div>
         `;
 
-        // smooth stagger animation
         setTimeout(()=>{
             container.appendChild(card);
             observer.observe(card);
@@ -188,11 +227,6 @@ const observer = new IntersectionObserver((entries)=>{
         }
     });
 });
-
-/* ================= AUTO REFRESH (OPTIONAL PREMIUM) ================= */
-
-// हर 20 sec में नया data (optional feel)
-// setInterval(loadOscars, 20000);
 
 /* ================= INIT ================= */
 
