@@ -2,39 +2,41 @@
 
 body{
   margin:0;
-  font-family: 'Poppins', sans-serif;
-  background:#f5f6f8;
+  font-family:'Poppins', sans-serif;
+  background:#f3f4f6;
   color:#111;
 }
 
 /* ================= NAVBAR ================= */
 
 .navbar{
-  position:fixed;
+  position:sticky;
   top:0;
-  left:0;
-  width:100%;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:15px 40px;
-  background:rgba(255,255,255,0.8);
-  backdrop-filter:blur(12px);
-  box-shadow:0 4px 20px rgba(0,0,0,0.05);
+  padding:15px 30px;
+  background:#ffffffcc;
+  backdrop-filter:blur(10px);
+  border-radius:20px;
+  margin:15px;
+  box-shadow:0 5px 25px rgba(0,0,0,0.08);
   z-index:1000;
 }
 
 .logo{
-  font-weight:700;
-  font-size:20px;
   display:flex;
   align-items:center;
-  gap:8px;
-  color:#111;
+  gap:10px;
+  font-weight:700;
+  font-size:20px;
 }
 
-.logo span{
-  color:#d4af37;
+.logo-icon{
+  width:35px;
+  height:35px;
+  background:#d4af37;
+  border-radius:10px;
 }
 
 /* NAV LINKS */
@@ -42,111 +44,54 @@ body{
 .nav-links{
   display:flex;
   gap:30px;
-  align-items:center;
+  color:#555;
 }
 
-.nav-links a{
-  text-decoration:none;
-  color:#333;
-  font-weight:500;
-  position:relative;
+.nav-links span{
+  cursor:pointer;
 }
 
-.nav-links a::after{
-  content:"";
-  position:absolute;
-  left:0;
-  bottom:-5px;
-  width:0;
-  height:2px;
-  background:#d4af37;
-  transition:0.3s;
-}
-
-.nav-links a:hover::after{
-  width:100%;
-}
-
-/* LOGIN BUTTON */
+/* LOGIN */
 
 .login-btn{
-  background:linear-gradient(135deg,#d4af37,#f1c40f);
+  background:#d4af37;
+  color:#fff;
   border:none;
   padding:10px 20px;
   border-radius:10px;
-  color:#fff;
   font-weight:600;
   cursor:pointer;
-  box-shadow:0 4px 15px rgba(212,175,55,0.4);
-  transition:0.3s;
-}
-
-.login-btn:hover{
-  transform:translateY(-2px);
 }
 
 /* ================= HERO ================= */
 
 .hero{
-  margin-top:80px;
-  height:500px;
-  border-radius:20px;
-  overflow:hidden;
-  position:relative;
-  background:url("../images/oscar-bg.jpg") center/cover no-repeat;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-/* GOLD GLOW OVERLAY */
-
-.hero::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(to bottom, rgba(255,255,255,0.6), rgba(0,0,0,0.6));
-}
-
-.hero::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:radial-gradient(circle at left, rgba(212,175,55,0.5), transparent 60%);
-}
-
-/* HERO CONTENT */
-
-.hero-content{
-  position:relative;
+  margin:15px;
+  padding:60px 20px;
+  border-radius:25px;
   text-align:center;
-  max-width:700px;
-  padding:20px;
+  background:linear-gradient(135deg,#f5e6c8,#e8ecf3);
+  box-shadow:0 10px 40px rgba(0,0,0,0.08);
 }
 
 .hero h1{
-  font-size:48px;
+  font-size:42px;
   font-weight:700;
-  color:#2c2c2c;
   margin-bottom:10px;
 }
 
-.hero h1 span{
-  color:#d4af37;
-}
-
 .hero p{
-  color:#555;
+  color:#666;
   font-size:18px;
-  margin-bottom:25px;
+  margin-bottom:30px;
 }
 
 /* BUTTONS */
 
 .hero-buttons{
   display:flex;
-  gap:15px;
   justify-content:center;
+  gap:15px;
   flex-wrap:wrap;
 }
 
@@ -159,23 +104,24 @@ body{
   transition:0.3s;
 }
 
-/* PRIMARY BUTTON */
+/* PRIMARY */
 
-.hero-buttons .primary{
-  background:linear-gradient(135deg,#d4af37,#f1c40f);
+.hero-buttons button:nth-child(1){
+  background:#d4af37;
   color:#fff;
-  box-shadow:0 4px 20px rgba(212,175,55,0.4);
+  box-shadow:0 5px 20px rgba(212,175,55,0.4);
 }
 
-/* SECONDARY BUTTON */
+/* SECONDARY */
 
-.hero-buttons .secondary{
+.hero-buttons button:nth-child(2),
+.hero-buttons button:nth-child(3){
   background:#fff;
-  color:#333;
-  box-shadow:0 4px 10px rgba(0,0,0,0.08);
+  color:#444;
+  box-shadow:0 5px 15px rgba(0,0,0,0.08);
 }
 
-/* BUTTON HOVER */
+/* HOVER */
 
 .hero-buttons button:hover{
   transform:translateY(-3px);
@@ -186,21 +132,45 @@ body{
 .tabs{
   display:flex;
   justify-content:center;
-  gap:30px;
-  margin:25px 0;
+  gap:40px;
+  margin:20px 0;
 }
 
 .tabs span{
   padding:10px 20px;
-  border-radius:10px;
-  cursor:pointer;
+  border-radius:12px;
   color:#666;
+  cursor:pointer;
   transition:0.3s;
 }
 
 .tabs .active{
   background:#d4af37;
   color:#fff;
+  box-shadow:0 5px 15px rgba(212,175,55,0.4);
+}
+
+/* ================= FEATURED ================= */
+
+.featured{
+  padding:20px;
+}
+
+.featured h2{
+  font-size:24px;
+}
+
+.featured p{
+  color:#666;
+}
+
+.featured button{
+  margin-top:10px;
+  padding:10px 18px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  background:#fff;
+  cursor:pointer;
 }
 
 /* ================= CARDS ================= */
@@ -213,26 +183,26 @@ body{
 }
 
 .winner-card{
-  min-width:200px;
-  background:#fff;
-  border-radius:15px;
+  min-width:220px;
+  border-radius:20px;
   overflow:hidden;
-  box-shadow:0 5px 20px rgba(0,0,0,0.08);
+  background:#fff;
+  box-shadow:0 10px 30px rgba(0,0,0,0.1);
   transition:0.3s;
 }
 
 .winner-card:hover{
-  transform:translateY(-8px);
+  transform:translateY(-10px);
 }
 
 .winner-card img{
   width:100%;
-  height:250px;
+  height:300px;
   object-fit:cover;
 }
 
 .card-info{
-  padding:12px;
+  padding:15px;
 }
 
 .card-info h3{
@@ -241,12 +211,21 @@ body{
 }
 
 .card-info p{
+  font-size:18px;
   font-weight:600;
 }
 
 .ratings{
-  font-size:14px;
+  margin-top:5px;
   color:#777;
+}
+
+/* ================= SECTION TITLE ================= */
+
+.iconic h2{
+  padding:0 20px;
+  font-size:26px;
+  margin-top:10px;
 }
 
 /* ================= SCROLLBAR ================= */
@@ -278,16 +257,20 @@ body{
 
 @media(max-width:768px){
 
-  .hero{
-    height:400px;
+  .hero h1{
+    font-size:28px;
   }
 
-  .hero h1{
-    font-size:32px;
+  .hero{
+    padding:40px 15px;
+  }
+
+  .navbar{
+    padding:10px 15px;
   }
 
   .nav-links{
     display:none;
   }
 
-}
+  }
