@@ -8,8 +8,8 @@ let endpoint="/movie/popular";
 let title="Movies";
 
 if(type==="oscars"){
-endpoint="/movie/top_rated";
-title="Oscar Worthy Movies";
+    window.location.href = "oscars.html";
+    throw new Error("Redirecting to Oscars page");
 }
 
 if(type==="golden"){
