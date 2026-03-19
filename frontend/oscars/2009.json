@@ -1,0 +1,10 @@
+[
+ {"category":"Best Picture","name":"The Hurt Locker","type":"movie"},
+ {"category":"Best Director","name":"Kathryn Bigelow","type":"person"},
+ {"category":"Best Actor","name":"Jeff Bridges","type":"person"},
+ {"category":"Best Actress","name":"Sandra Bullock","type":"person"},
+ {"category":"Best Supporting Actor","name":"Christoph Waltz","type":"person"},
+ {"category":"Best Supporting Actress","name":"Mo'Nique","type":"person"},
+ {"category":"Best Animated Feature","name":"Up","type":"movie"},
+ {"category":"Best International Feature","name":"The Secret in Their Eyes","type":"movie"}
+]
