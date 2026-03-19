@@ -1,0 +1,10 @@
+[
+ {"category":"Best Picture","name":"A Beautiful Mind","type":"movie"},
+ {"category":"Best Director","name":"Ron Howard","type":"person"},
+ {"category":"Best Actor","name":"Denzel Washington","type":"person"},
+ {"category":"Best Actress","name":"Halle Berry","type":"person"},
+ {"category":"Best Supporting Actor","name":"Jim Broadbent","type":"person"},
+ {"category":"Best Supporting Actress","name":"Jennifer Connelly","type":"person"},
+ {"category":"Best Animated Feature","name":"Shrek","type":"movie"},
+ {"category":"Best International Feature","name":"No Man's Land","type":"movie"}
+]
