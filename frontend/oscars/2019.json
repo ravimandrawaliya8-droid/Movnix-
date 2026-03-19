@@ -1,0 +1,10 @@
+[
+ {"category":"Best Picture","name":"Parasite","type":"movie"},
+ {"category":"Best Director","name":"Bong Joon-ho","type":"person"},
+ {"category":"Best Actor","name":"Joaquin Phoenix","type":"person"},
+ {"category":"Best Actress","name":"Renée Zellweger","type":"person"},
+ {"category":"Best Supporting Actor","name":"Brad Pitt","type":"person"},
+ {"category":"Best Supporting Actress","name":"Laura Dern","type":"person"},
+ {"category":"Best Animated Feature","name":"Toy Story 4","type":"movie"},
+ {"category":"Best International Feature","name":"Parasite","type":"movie"}
+]
