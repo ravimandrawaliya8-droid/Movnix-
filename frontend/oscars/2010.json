@@ -1,0 +1,10 @@
+[
+ {"category":"Best Picture","name":"The King's Speech","type":"movie"},
+ {"category":"Best Director","name":"Tom Hooper","type":"person"},
+ {"category":"Best Actor","name":"Colin Firth","type":"person"},
+ {"category":"Best Actress","name":"Natalie Portman","type":"person"},
+ {"category":"Best Supporting Actor","name":"Christian Bale","type":"person"},
+ {"category":"Best Supporting Actress","name":"Melissa Leo","type":"person"},
+ {"category":"Best Animated Feature","name":"Toy Story 3","type":"movie"},
+ {"category":"Best International Feature","name":"In a Better World","type":"movie"}
+]
