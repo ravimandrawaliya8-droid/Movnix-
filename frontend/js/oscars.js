@@ -264,4 +264,7 @@ const observer = new IntersectionObserver((entries)=>{
 
 /* ================= INIT ================= */
 
-document.addEventListener("DOMContentLoaded", loadOscars);
+document.addEventListener("DOMContentLoaded", ()=>{
+    loadOscars();
+    loadTrending(); // 🔥 IMPORTANT
+});
