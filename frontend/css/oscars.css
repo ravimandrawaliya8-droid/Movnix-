@@ -1,0 +1,122 @@
+body{
+  margin:0;
+  font-family:sans-serif;
+  background:#0b0b0f;
+  color:#fff;
+}
+
+/* HERO */
+.hero{
+  height:400px;
+  background:url("../images/hero.jpg") center/cover;
+  position:relative;
+}
+
+.hero-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to bottom,rgba(0,0,0,0.7),#0b0b0f);
+}
+
+.hero-content{
+  position:absolute;
+  bottom:40px;
+  left:20px;
+}
+
+.hero h1{
+  font-size:28px;
+}
+
+.hero p{
+  color:#ccc;
+}
+
+.hero-buttons{
+  margin-top:10px;
+}
+
+.hero-buttons button{
+  margin-right:10px;
+  padding:10px;
+  border-radius:10px;
+  border:none;
+  background:#1a1a1f;
+  color:#fff;
+}
+
+/* TABS */
+.tabs{
+  display:flex;
+  gap:20px;
+  padding:15px;
+  border-bottom:1px solid #222;
+}
+
+.tabs span{
+  color:#aaa;
+}
+
+.tabs .active{
+  color:#ffd700;
+}
+
+/* FEATURED */
+.featured{
+  padding:15px;
+}
+
+.featured-card{
+  display:flex;
+  background:#111;
+  border-radius:15px;
+  overflow:hidden;
+}
+
+.featured-card img{
+  width:50%;
+}
+
+.featured-text{
+  padding:15px;
+}
+
+/* ICONIC */
+.iconic{
+  padding:15px;
+}
+
+.card-row{
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+}
+
+.winner-card{
+  min-width:150px;
+  background:#111;
+  border-radius:12px;
+  overflow:hidden;
+}
+
+.winner-card img{
+  width:100%;
+}
+
+.card-info{
+  padding:10px;
+}
+
+/* TRENDING */
+.trending{
+  padding:15px;
+}
+
+.trend-card{
+  min-width:180px;
+}
+
+.trend-card img{
+  width:100%;
+  border-radius:12px;
+}
