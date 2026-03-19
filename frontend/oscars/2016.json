@@ -1,0 +1,10 @@
+[
+ {"category":"Best Picture","name":"Moonlight","type":"movie"},
+ {"category":"Best Director","name":"Damien Chazelle","type":"person"},
+ {"category":"Best Actor","name":"Casey Affleck","type":"person"},
+ {"category":"Best Actress","name":"Emma Stone","type":"person"},
+ {"category":"Best Supporting Actor","name":"Mahershala Ali","type":"person"},
+ {"category":"Best Supporting Actress","name":"Viola Davis","type":"person"},
+ {"category":"Best Animated Feature","name":"Zootopia","type":"movie"},
+ {"category":"Best International Feature","name":"The Salesman","type":"movie"}
+]
