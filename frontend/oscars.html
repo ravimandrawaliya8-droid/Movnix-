@@ -135,24 +135,38 @@
 
 <script src="js/oscars.js" defer></script>
 
-<!-- ================= OSCAR DRAWER ================= -->
+<!-- ================= ULTRA DRAWER ================= -->
 <div id="oscarDrawer" class="drawer">
 
-  <div class="drawer-content">
+  <!-- BACKDROP -->
+  <div id="drawerBackdrop" class="drawer-backdrop"></div>
 
-    <button class="close-btn" onclick="closeDrawer()">✕</button>
+  <div class="drawer-panel">
 
-    <img id="drawerImg">
+    <!-- HEADER -->
+    <div class="drawer-header">
 
-    <h2 id="drawerTitle"></h2>
+      <button class="close-btn" onclick="closeDrawer()">✕</button>
 
-    <p id="drawerDesc"></p>
+      <h2 id="drawerTitle"></h2>
+      <p id="drawerDesc"></p>
 
-    <div id="drawerList"></div>
+      <button id="trailerBtn">▶ Watch Trailer</button>
+
+    </div>
+
+    <!-- GALLERY -->
+    <div id="drawerGallery" class="drawer-gallery"></div>
+
+    <!-- WINNERS -->
+    <div class="drawer-section">
+      <h3>🏆 Winners</h3>
+      <div id="drawerList"></div>
+    </div>
 
   </div>
 
-</div>
+  </div>
 
 </body>
   </html>
