@@ -290,25 +290,46 @@ async function loadTrending(){
 async function openDrawer(year){
 
     const drawer = document.getElementById("oscarDrawer");
-
     drawer.classList.add("active");
 
-    // JSON load
     const res = await fetch(`oscars/${year}.json`);
     const data = await res.json();
 
-    // Title
+    // 🎬 TITLE
     document.getElementById("drawerTitle").innerText =
         `${year} Academy Awards`;
 
     document.getElementById("drawerDesc").innerText =
-        `Full winners & details from ${year}`;
+        `${year} Oscars celebrated the best films, actors, and cinematic achievements. Explore winners, highlights, and iconic moments.`;
 
-    // Image
+    // 🎥 BACKDROP IMAGE
     const img = await getYearImage(data, year);
-    document.getElementById("drawerImg").src = img;
+    document.getElementById("drawerBackdrop").style.backgroundImage =
+        `url(${img})`;
 
-    // List
+    // 🎬 TRAILER BUTTON (YOUR PAGE)
+    document.getElementById("trailerBtn").onclick = ()=>{
+        window.location.href = `trailer.html?year=${year}`;
+    };
+
+    // 🖼️ GALLERY
+    const gallery = document.getElementById("drawerGallery");
+    gallery.innerHTML = "";
+
+    for(let i=0;i<6;i++){
+
+        const item = data[i];
+        if(!item) continue;
+
+        const tmdb = await fetchFromTMDB(item.name, item.type);
+
+        const imgEl = document.createElement("img");
+        imgEl.src = tmdb.image;
+
+        gallery.appendChild(imgEl);
+    }
+
+    // 🏆 WINNERS LIST
     const list = document.getElementById("drawerList");
     list.innerHTML = "";
 
@@ -324,10 +345,6 @@ async function openDrawer(year){
 
         list.appendChild(div);
     });
-}
-
-function closeDrawer(){
-    document.getElementById("oscarDrawer").classList.remove("active");
 }
 
 /* ================= INIT ================= */
