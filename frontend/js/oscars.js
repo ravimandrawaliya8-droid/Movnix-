@@ -173,7 +173,7 @@ function createCard({year, type, title, desc, image}){
         </div>
     `;
 
-    card.onclick = ()=> goToYear(year);
+    card.onclick = ()=> openDrawer(year);
 
     container.appendChild(card);
 }
@@ -282,6 +282,52 @@ async function loadTrending(){
 
         container.appendChild(card);
     });
+}
+
+
+/* ================= DRAWER ================= */
+
+async function openDrawer(year){
+
+    const drawer = document.getElementById("oscarDrawer");
+
+    drawer.classList.add("active");
+
+    // JSON load
+    const res = await fetch(`oscars/${year}.json`);
+    const data = await res.json();
+
+    // Title
+    document.getElementById("drawerTitle").innerText =
+        `${year} Academy Awards`;
+
+    document.getElementById("drawerDesc").innerText =
+        `Full winners & details from ${year}`;
+
+    // Image
+    const img = await getYearImage(data, year);
+    document.getElementById("drawerImg").src = img;
+
+    // List
+    const list = document.getElementById("drawerList");
+    list.innerHTML = "";
+
+    data.forEach(item=>{
+
+        const div = document.createElement("div");
+        div.className = "drawer-item";
+
+        div.innerHTML = `
+            <h4>${item.category}</h4>
+            <p>${item.name}</p>
+        `;
+
+        list.appendChild(div);
+    });
+}
+
+function closeDrawer(){
+    document.getElementById("oscarDrawer").classList.remove("active");
 }
 
 /* ================= INIT ================= */
