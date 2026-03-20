@@ -271,3 +271,70 @@ body{
   color:#888;
   font-size:12px;
     }
+
+/* ================= DRAWER ================= */
+
+.drawer{
+  position:fixed;
+  top:0;
+  left:-100%;
+  width:100%;
+  height:100%;
+  background:#000;
+  z-index:2000;
+  transition:0.4s;
+  overflow-y:auto;
+}
+
+.drawer.active{
+  left:0;
+}
+
+/* CONTENT */
+.drawer-content{
+  padding:20px;
+}
+
+/* CLOSE */
+.close-btn{
+  background:none;
+  border:none;
+  color:#fff;
+  font-size:20px;
+  margin-bottom:10px;
+}
+
+/* IMAGE */
+#drawerImg{
+  width:100%;
+  border-radius:12px;
+  margin-bottom:15px;
+}
+
+/* TITLE */
+#drawerTitle{
+  font-size:20px;
+  margin-bottom:10px;
+}
+
+/* DESC */
+#drawerDesc{
+  color:#bbb;
+  margin-bottom:15px;
+}
+
+/* LIST */
+.drawer-item{
+  padding:10px 0;
+  border-bottom:1px solid #222;
+}
+
+.drawer-item h4{
+  font-size:14px;
+  color:#f5c518;
+}
+
+.drawer-item p{
+  font-size:13px;
+  color:#ccc;
+}
