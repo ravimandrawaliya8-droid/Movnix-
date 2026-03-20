@@ -1,336 +1,273 @@
-/* ================= GLOBAL ================= */
+/* ================= RESET ================= */
 
 *{
+  margin:0;
+  padding:0;
   box-sizing:border-box;
+  font-family: Arial, sans-serif;
 }
 
 body{
-  margin:0;
-  font-family:'Poppins', sans-serif;
-  background:#f3f4f6;
-  color:#111;
-  overflow-x:hidden; /* 🔥 overflow fix */
+  background:#0b0b0f;
+  color:#fff;
 }
 
 /* ================= NAVBAR ================= */
 
 .navbar{
-  position:sticky;
-  top:0;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:12px 20px;
-  background:#ffffffcc;
-  backdrop-filter:blur(10px);
-  border-radius:15px;
-  margin:10px;
-  box-shadow:0 5px 20px rgba(0,0,0,0.08);
+  padding:10px 12px;
+  background:#0b0b0f;
+  position:sticky;
+  top:0;
   z-index:1000;
-  flex-wrap:wrap; /* 🔥 mobile fix */
-  gap:10px;
+  border-bottom:1px solid #1c1c1c;
 }
 
 .logo{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  font-weight:700;
+  font-weight:bold;
   font-size:18px;
 }
 
-.logo-icon{
-  width:30px;
-  height:30px;
-  background:#d4af37;
-  border-radius:8px;
-}
-
-/* NAV LINKS */
-
 .nav-links{
-  display:flex;
-  gap:20px;
-  color:#555;
-  flex-wrap:wrap;
+  display:none;
 }
 
-.nav-links span{
-  cursor:pointer;
-  font-size:14px;
+.navbar input{
+  flex:1;
+  margin:0 10px;
+  padding:8px;
+  border-radius:8px;
+  border:none;
+  background:#1a1a1f;
+  color:#fff;
 }
-
-/* SEARCH */
-
-#searchInput{
-  padding:8px 12px;
-  border-radius:10px;
-  border:1px solid #ddd;
-  outline:none;
-  width:150px;
-}
-
-/* LOGIN */
 
 .login-btn{
-  background:#d4af37;
-  color:#fff;
+  background:#f5c518;
   border:none;
-  padding:8px 15px;
-  border-radius:8px;
-  font-weight:600;
-  cursor:pointer;
+  padding:6px 10px;
+  border-radius:6px;
+  font-weight:bold;
 }
 
 /* ================= HERO ================= */
 
 .hero{
-  margin:10px;
-  padding:40px 15px;
-  border-radius:20px;
+  position:relative;
+  padding:40px 16px;
   text-align:center;
-  background:linear-gradient(135deg,#f5e6c8,#e8ecf3);
-  box-shadow:0 10px 30px rgba(0,0,0,0.08);
 }
 
 .hero h1{
-  font-size:32px;
+  font-size:24px;
   margin-bottom:10px;
 }
 
 .hero p{
-  font-size:15px;
-  color:#666;
-  margin-bottom:20px;
+  font-size:14px;
+  color:#bbb;
+  margin-bottom:15px;
 }
 
-/* YEAR SELECT */
-
-#yearSelect{
-  padding:10px;
-  border-radius:10px;
-  border:1px solid #ccc;
-  margin-bottom:20px;
-}
-
-/* BUTTONS */
-
-.hero-buttons{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  flex-wrap:wrap;
+.hero select{
+  padding:8px;
+  border-radius:8px;
+  border:none;
+  margin-bottom:10px;
 }
 
 .hero-buttons button{
-  padding:10px 15px;
-  border-radius:10px;
+  margin:5px;
+  padding:8px 12px;
   border:none;
-  font-weight:600;
-  cursor:pointer;
-  white-space:nowrap; /* 🔥 button break fix */
-}
-
-/* PRIMARY */
-
-.hero-buttons button:nth-child(1){
-  background:#d4af37;
-  color:#fff;
-}
-
-/* SECONDARY */
-
-.hero-buttons button:nth-child(2),
-.hero-buttons button:nth-child(3){
-  background:#fff;
-  color:#444;
+  border-radius:8px;
+  background:#f5c518;
+  color:#000;
+  font-weight:bold;
 }
 
 /* ================= TABS ================= */
 
 .tabs{
   display:flex;
-  gap:10px;
-  padding:10px;
-  overflow-x:auto;
+  justify-content:space-around;
+  border-bottom:1px solid #222;
 }
 
 .tabs span{
-  padding:8px 12px;
-  border-radius:10px;
-  background:#fff;
-  color:#666;
-  cursor:pointer;
-  white-space:nowrap;
+  padding:10px;
+  font-size:14px;
+  color:#aaa;
 }
 
 .tabs .active{
-  background:#d4af37;
   color:#fff;
+  border-bottom:2px solid #f5c518;
 }
 
 /* ================= FEATURED ================= */
 
 .featured{
-  padding:15px;
+  padding:16px;
 }
 
 .featured-card{
-  display:flex;
-  flex-wrap:wrap;
-  gap:15px;
-  background:#fff;
-  border-radius:15px;
+  background:#111;
+  border-radius:16px;
   overflow:hidden;
-  padding:15px;
-}
-
-.featured-text{
-  flex:1;
-  min-width:200px;
 }
 
 .featured-card img{
   width:100%;
-  max-width:250px;
-  border-radius:10px;
-}
-
-/* ================= CARDS ================= */
-
-.card-row{
-  display:flex;
-  gap:15px;
-  overflow-x:auto;
-  padding:15px;
-}
-
-.winner-card,
-.trend-card{
-  min-width:160px;
-  background:#fff;
-  border-radius:15px;
-  overflow:hidden;
-  box-shadow:0 5px 20px rgba(0,0,0,0.08);
-  transition:0.3s;
-}
-
-.winner-card:hover,
-.trend-card:hover{
-  transform:translateY(-5px);
-}
-
-.winner-card img,
-.trend-card img{
-  width:100%;
-  height:220px;
+  height:180px;
   object-fit:cover;
 }
 
-.card-info{
-  padding:10px;
+.featured-text{
+  padding:14px;
 }
 
-.card-info h3{
-  font-size:13px;
-  color:#d4af37;
+.featured-text h2{
+  margin-bottom:6px;
 }
 
-.card-info p{
-  font-size:15px;
+.featured-text p{
+  font-size:14px;
+  color:#bbb;
+  margin-bottom:10px;
+}
+
+.featured-text button{
+  background:#f5c518;
+  border:none;
+  padding:8px 12px;
+  border-radius:8px;
+  font-weight:bold;
+}
+
+/* ================= IMDB LIST ================= */
+
+.imdb-list{
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  padding:16px;
+}
+
+/* ================= CARD ================= */
+
+.imdb-card{
+  background:#111;
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 4px 20px rgba(0,0,0,0.5);
+  transition:0.3s;
+}
+
+.imdb-card:hover{
+  transform:scale(1.02);
+}
+
+/* IMAGE */
+.imdb-img-wrap{
+  position:relative;
+}
+
+.imdb-card img{
+  width:100%;
+  height:200px;
+  object-fit:cover;
+}
+
+/* YEAR BADGE */
+.year-badge{
+  position:absolute;
+  top:10px;
+  left:10px;
+  background:#f5c518;
+  color:#000;
+  padding:4px 8px;
+  border-radius:6px;
+  font-size:12px;
+  font-weight:bold;
+}
+
+/* CONTENT */
+.imdb-content{
+  padding:14px;
+}
+
+.imdb-label{
+  font-size:12px;
+  color:#aaa;
+  margin-bottom:6px;
+}
+
+.imdb-title{
+  font-size:18px;
   font-weight:600;
+  margin-bottom:6px;
 }
 
-.ratings{
-  font-size:13px;
-  color:#777;
+.imdb-desc{
+  font-size:14px;
+  color:#bbb;
+  margin-bottom:10px;
 }
 
-/* ================= SECTION ================= */
-
-section h2{
-  padding:0 15px;
-  font-size:20px;
-  margin-top:10px;
+.imdb-link{
+  font-size:14px;
+  color:#3ea6ff;
 }
 
-/* ================= POPUP ================= */
+/* ================= TRENDING ================= */
 
-.popup{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.6);
-  display:none;
-  justify-content:center;
-  align-items:center;
-  z-index:2000;
+.trending{
+  padding:16px;
 }
 
-.popup-box{
-  background:#fff;
-  padding:20px;
-  border-radius:15px;
-  text-align:center;
-  width:90%;
-  max-width:300px;
+.card-row{
+  display:flex;
+  overflow-x:auto;
+  gap:10px;
 }
 
-.popup-box img{
+.trend-card{
+  min-width:120px;
+}
+
+.trend-card img{
   width:100%;
   border-radius:10px;
 }
 
-/* ================= SCROLLBAR ================= */
-
-.card-row::-webkit-scrollbar{
-  height:5px;
+.trend-card p{
+  font-size:12px;
+  margin-top:5px;
 }
 
-.card-row::-webkit-scrollbar-thumb{
-  background:#d4af37;
-  border-radius:10px;
+/* ================= SEARCH ================= */
+
+.search-results{
+  padding:16px;
 }
 
-/* ================= ANIMATION ================= */
+/* ================= LOADER ================= */
 
-.winner-card,
-.trend-card{
-  opacity:0;
-  transform:translateY(20px);
-  transition:0.4s;
+.loader{
+  text-align:center;
+  padding:20px;
+  color:#aaa;
 }
 
-.show{
-  opacity:1;
-  transform:translateY(0);
-}
+/* ================= FOOTER ================= */
 
-/* ================= MOBILE ================= */
-
-@media(max-width:768px){
-
-  .nav-links{
-    display:none;
-  }
-
-  #searchInput{
-    width:100%;
-  }
-
-  .hero h1{
-    font-size:24px;
-  }
-
-  .hero-buttons{
-    flex-direction:column;
-  }
-
-  .hero-buttons button{
-    width:100%;
-  }
-
-  .featured-card{
-    flex-direction:column;
-  }
-
-}
+.footer{
+  text-align:center;
+  padding:20px;
+  color:#888;
+  font-size:12px;
+    }
