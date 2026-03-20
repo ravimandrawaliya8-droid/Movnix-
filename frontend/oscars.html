@@ -31,7 +31,7 @@
   </div>
 
   <!-- 🔥 SEARCH -->
-  <input type="text" id="searchInput" placeholder="Search movies...">
+  <input type="text" id="searchInput" placeholder="Search Oscars, movies, people...">
 
   <div class="nav-actions">
     <button class="login-btn">Login</button>
@@ -46,15 +46,16 @@
 
   <div class="hero-content">
     <h1 id="heroTitle">The Oscars Universe</h1>
-    <p id="heroDesc">Explore every Academy Awards year, winners & iconic moments</p>
+    <p id="heroDesc">
+      Explore every Academy Awards year, winners & iconic moments
+    </p>
 
-    <!-- 🔥 YEAR SELECT -->
+    <!-- YEAR SELECT -->
     <select id="yearSelect"></select>
 
     <div class="hero-buttons">
       <button onclick="goToYear(2026)">Latest Oscars</button>
       <button onclick="scrollToYears()">Browse All Years</button>
-      <button id="topRatedBtn">Top Rated Winners</button>
     </div>
   </div>
 
@@ -63,7 +64,6 @@
 <!-- ================= TABS ================= -->
 <div class="tabs">
   <span class="active">Winners</span>
-  <span>Nominees</span>
   <span>Highlights</span>
   <span>Trending</span>
 </div>
@@ -75,8 +75,10 @@
 
     <div class="featured-text">
       <h2 id="featuredTitle">The 2026 Oscars</h2>
-      <p id="featuredDesc">Explore winners, nominees & highlights</p>
-      <button id="exploreBtn">Explore Winners →</button>
+      <p id="featuredDesc">
+        Explore winners, nominees & highlights
+      </p>
+      <button onclick="goToYear(2026)">Explore Winners →</button>
     </div>
 
     <img src="images/oscar-group.jpg" alt="Oscars Ceremony">
@@ -85,32 +87,16 @@
 
 </section>
 
-<!-- ================= WINNERS ================= -->
+<!-- ================= MAIN OSCARS LIST (🔥 IMPORTANT) ================= -->
 <section class="iconic">
 
-  <h2>Oscar Winners</h2>
+  <h2>Oscars Timeline</h2>
 
+  <!-- Loader -->
   <div id="loader" class="loader">Loading...</div>
 
-  <div class="card-row" id="winnersContainer"></div>
-
-</section>
-
-<!-- ================= NOMINEES ================= -->
-<section class="nominees">
-
-  <h2>Top Nominees</h2>
-
-  <div class="card-row" id="nomineesContainer"></div>
-
-</section>
-
-<!-- ================= HIGHLIGHTS ================= -->
-<section class="highlights">
-
-  <h2>Memorable Moments</h2>
-
-  <div class="card-row" id="highlightsContainer"></div>
+  <!-- IMDb Style Vertical Cards -->
+  <div id="winnersContainer" class="imdb-list"></div>
 
 </section>
 
@@ -123,10 +109,13 @@
 
 </section>
 
-<!-- ================= SEARCH RESULT ================= -->
+<!-- ================= SEARCH RESULTS ================= -->
 <section class="search-results" id="searchResults" style="display:none;">
+
   <h2>Search Results</h2>
-  <div class="card-row" id="searchContainer"></div>
+
+  <div id="searchContainer" class="imdb-list"></div>
+
 </section>
 
 <!-- ================= POPUP ================= -->
@@ -147,4 +136,4 @@
 <script src="js/oscars.js" defer></script>
 
 </body>
-    </html>
+  </html>
