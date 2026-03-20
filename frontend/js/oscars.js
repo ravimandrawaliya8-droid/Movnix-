@@ -2,6 +2,7 @@
 
 const API_KEY = "45fe7a9c4583e4374d3981bb55c39222";
 const IMG_URL = "https://image.tmdb.org/t/p/w500";
+const BACKDROP_URL = "https://image.tmdb.org/t/p/w780";
 
 /* ================= GLOBAL ================= */
 
@@ -63,9 +64,13 @@ async function fetchFromTMDB(name, type){
             const item = data.results[0];
 
             return {
-                image: item.poster_path || item.profile_path
+                // 🔥 BACKDROP PRIORITY (better look)
+                image: item.backdrop_path
+                    ? BACKDROP_URL + item.backdrop_path
+                    : item.poster_path || item.profile_path
                     ? IMG_URL + (item.poster_path || item.profile_path)
                     : "images/placeholder.jpg",
+
                 rating: item.vote_average || "N/A"
             };
         }
@@ -89,13 +94,11 @@ async function loadAllOscars(){
     const years = [];
     for(let y = 2026; y >= 2000; y--) years.push(y);
 
-    // 🚀 Parallel fetch (FAST)
     const results = await Promise.all(
         years.map(async year=>{
             try{
                 const res = await fetch(`oscars/${year}.json`);
                 const data = await res.json();
-
                 return { year, data };
             }catch{
                 return null;
@@ -109,26 +112,16 @@ async function loadAllOscars(){
 
         const {year, data} = item;
 
-        // store for search
         allOscarsData.push({year, data});
 
-        const image = await getYearImage(data);
+        const image = await getYearImage(data, year);
 
-        // 🎬 Winners Card
+        // ✅ ONLY ONE CARD PER YEAR
         createCard({
             year,
-            type: "List",
+            type: "Winners",
             title: `${year} Academy Award Winners`,
-            desc: `Full winners list of ${year} Oscars`,
-            image
-        });
-
-        // 📸 Highlights Card
-        createCard({
-            year,
-            type: "Photos",
-            title: `${year} Oscars Highlights`,
-            desc: `Best moments & highlights from ${year}`,
+            desc: `Explore full winners & highlights from ${year}`,
             image
         });
     }
@@ -137,13 +130,22 @@ async function loadAllOscars(){
     hideLoader();
 }
 
-/* ================= IMAGE ================= */
+/* ================= SMART IMAGE ================= */
 
-async function getYearImage(data){
+async function getYearImage(data, year){
+
     if(!data?.length) return "images/placeholder.jpg";
 
-    const random = data[Math.floor(Math.random()*data.length)];
-    const tmdb = await fetchFromTMDB(random.name, random.type);
+    // 🎯 Priority categories
+    const priority = ["Best Picture", "Best Actor", "Best Actress"];
+
+    let item = data.find(d => priority.includes(d.category));
+
+    if(!item){
+        item = data[Math.floor(Math.random()*data.length)];
+    }
+
+    const tmdb = await fetchFromTMDB(item.name, item.type);
 
     return tmdb.image;
 }
@@ -252,9 +254,6 @@ function initTabs(){
 
             if(text.includes("winners")) loadAllOscars();
             if(text.includes("trending")) loadTrending();
-            if(text.includes("nominees")) loadNominees();
-            if(text.includes("highlights")) loadHighlights();
-
         });
     });
 }
@@ -293,6 +292,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
     initTabs();
     initSearch();
 
-    loadAllOscars(); // 🔥 main system
+    loadAllOscars();
 
 });
