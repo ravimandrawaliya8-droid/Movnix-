@@ -1216,152 +1216,87 @@ loadOTT("prime");
 });
 
 
-
-/* ============================= */
-/* 🎬 POPULAR INTERESTS - FINAL */
-/* ============================= */
-
-const API_KEY = "45fe7a9c4583e4374d3981bb55c39222";
-const BASE = "https://api.themoviedb.org/3";
-
-/* ---------------- FETCH MOVIES ---------------- */
-
-async function getMovies(endpoint){
-
-    try{
-        const url = endpoint.includes("?")
-        ? `${BASE}${endpoint}&api_key=${API_KEY}`
-        : `${BASE}${endpoint}?api_key=${API_KEY}`;
-
-        const res = await fetch(url);
-        const data = await res.json();
-
-        return data.results || [];
-    }catch(err){
-        console.log("Fetch error:", err);
-        return [];
-    }
-
-}
-
-
-/* ---------------- CREATE CARD ---------------- */
-
-function createMovieCard(movie){
-
-    const poster = movie.poster_path
-    ? "https://image.tmdb.org/t/p/w342" + movie.poster_path
-    : "https://via.placeholder.com/300x450?text=No+Poster";
-
-    const rating = movie.vote_average
-    ? movie.vote_average.toFixed(1)
-    : "N/A";
-
-    const year = movie.release_date
-    ? movie.release_date.split("-")[0]
-    : "";
-
-    const card = document.createElement("div");
-    card.className = "imdb-card";
-
-    card.innerHTML = `
-        <div class="imdb-poster">
-            <img src="${poster}" alt="${movie.title}">
-        </div>
-
-        <div class="imdb-info">
-            <h4>${movie.title}</h4>
-            <div class="meta">
-                ${year} • ⭐ ${rating}
-            </div>
-        </div>
-    `;
-
-    return card;
-}
-
-
-/* ---------------- LOAD ROW ---------------- */
-
-async function loadRow(title, endpoint, container){
-
-    const wrapper = document.createElement("div");
-    wrapper.className = "imdb-section";
-
-    wrapper.innerHTML = `
-        <h2 class="section-title">${title}</h2>
-        <div class="imdb-row"></div>
-    `;
-
-    container.appendChild(wrapper);
-
-    const row = wrapper.querySelector(".imdb-row");
-
-    /* Skeleton Loader */
-    row.innerHTML = `<div style="color:#888;padding:10px;">Loading...</div>`;
-
-    const movies = await getMovies(endpoint);
-
-    row.innerHTML = "";
-
-    movies.slice(0,20).forEach(movie=>{
-        row.appendChild(createMovieCard(movie));
-    });
-
-}
-
-
-/* ---------------- MAIN FUNCTION ---------------- */
+/* ---------------- POPULAR INTERESTS (SINGLE ROW) ---------------- */
 
 async function loadPopularInterests(){
 
     const container = document.getElementById("popularInterests");
     if(!container) return;
 
-    container.innerHTML = "";
+    /* 🔥 SINGLE ROW STRUCTURE */
+    container.innerHTML = `
+        <h2 class="section-title">🔥 Popular Interests</h2>
+        <div class="imdb-row" id="popularRow"></div>
+    `;
 
+    const row = document.getElementById("popularRow");
+
+    /* Skeleton */
+    row.innerHTML = `<div style="color:#888;padding:10px;">Loading...</div>`;
+
+    /* 🎯 ALL CATEGORIES (same as tera system) */
     const sections = [
 
         /* 🔥 CORE */
-        ["🔥 Trending Now","/trending/movie/week"],
-        ["⭐ Top Rated Movies","/movie/top_rated"],
-        ["🎬 Popular in India","/discover/movie?with_origin_country=IN&sort_by=popularity.desc"],
+        "/trending/movie/week",
+        "/movie/top_rated",
+        "/discover/movie?with_origin_country=IN&sort_by=popularity.desc",
 
         /* 🇮🇳 INDIA */
-        ["🎥 Bollywood Hits","/discover/movie?with_original_language=hi&sort_by=popularity.desc"],
-        ["🔥 South Indian Hits","/discover/movie?with_original_language=ta|te|ml|kn&sort_by=popularity.desc"],
-        ["🎭 Hindi Dubbed","/discover/movie?with_original_language=en&sort_by=popularity.desc"],
+        "/discover/movie?with_original_language=hi&sort_by=popularity.desc",
+        "/discover/movie?with_original_language=ta|te|ml|kn&sort_by=popularity.desc",
+        "/discover/movie?with_original_language=en&sort_by=popularity.desc",
 
         /* 🎬 GENRES */
-        ["💥 Action","/discover/movie?with_genres=28&sort_by=popularity.desc"],
-        ["😂 Comedy","/discover/movie?with_genres=35&sort_by=popularity.desc"],
-        ["❤️ Romance","/discover/movie?with_genres=10749&sort_by=popularity.desc"],
-        ["😱 Horror","/discover/movie?with_genres=27&sort_by=popularity.desc"],
-        ["🧠 Thriller","/discover/movie?with_genres=53&sort_by=popularity.desc"],
-        ["🚀 Sci-Fi","/discover/movie?with_genres=878&sort_by=popularity.desc"],
-        ["👨‍👩‍👧 Family","/discover/movie?with_genres=10751&sort_by=popularity.desc"],
-        ["🎞️ Drama","/discover/movie?with_genres=18&sort_by=popularity.desc"],
+        "/discover/movie?with_genres=28&sort_by=popularity.desc",
+        "/discover/movie?with_genres=35&sort_by=popularity.desc",
+        "/discover/movie?with_genres=10749&sort_by=popularity.desc",
+        "/discover/movie?with_genres=27&sort_by=popularity.desc",
+        "/discover/movie?with_genres=53&sort_by=popularity.desc",
+        "/discover/movie?with_genres=878&sort_by=popularity.desc",
+        "/discover/movie?with_genres=10751&sort_by=popularity.desc",
+        "/discover/movie?with_genres=18&sort_by=popularity.desc",
 
         /* 🌍 HOLLYWOOD */
-        ["🌍 Hollywood Blockbusters","/discover/movie?with_original_language=en&vote_count.gte=500&sort_by=popularity.desc"],
-        ["🔥 Superhero","/discover/movie?with_keywords=180547|9715&sort_by=popularity.desc"],
+        "/discover/movie?with_original_language=en&vote_count.gte=500&sort_by=popularity.desc",
+        "/discover/movie?with_keywords=180547|9715&sort_by=popularity.desc",
 
         /* 🧠 SMART */
-        ["🏆 Fan Favourite","/discover/movie?vote_count.gte=2000&sort_by=vote_average.desc"],
-        ["📅 Latest 2024+","/discover/movie?primary_release_date.gte=2024-01-01&sort_by=popularity.desc"],
-        ["💎 Hidden Gems","/discover/movie?vote_average.gte=7&vote_count.gte=200&sort_by=vote_count.asc"],
-        ["🎯 Must Watch","/discover/movie?vote_average.gte=7.5&vote_count.gte=1000"]
-
+        "/discover/movie?vote_count.gte=2000&sort_by=vote_average.desc",
+        "/discover/movie?primary_release_date.gte=2024-01-01&sort_by=popularity.desc",
+        "/discover/movie?vote_average.gte=7&vote_count.gte=200&sort_by=vote_count.asc",
+        "/discover/movie?vote_average.gte=7.5&vote_count.gte=1000"
     ];
 
-    /* 🚀 PARALLEL LOAD (FAST) */
-    await Promise.all(
-        sections.map(([title,endpoint]) =>
-            loadRow(title, endpoint, container)
-        )
-    );
+    try{
+
+        /* 🚀 FETCH ALL PARALLEL */
+        const results = await Promise.all(
+            sections.map(endpoint => getMovies(endpoint))
+        );
+
+        /* 🔥 MERGE */
+        let allMovies = results.flat();
+
+        /* ❌ REMOVE DUPLICATES */
+        const uniqueMovies = Array.from(
+            new Map(allMovies.map(m => [m.id, m])).values()
+        );
+
+        /* 🎬 RENDER */
+        row.innerHTML = "";
+
+        uniqueMovies.slice(0,80).forEach(movie=>{
+            row.appendChild(createMovieCard(movie));
+        });
+
+    }catch(err){
+        row.innerHTML = "Failed to load 😔";
+        console.log(err);
+    }
 
 }
+
 
 
 
