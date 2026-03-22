@@ -1199,7 +1199,7 @@ tabs.forEach(btn=>{
 
 btn.addEventListener("click",()=>{
 
-tabs.forEach(b=>b.classList.remove("active"));
+tabs. forEach(b=>b.classList.remove("active"));
 btn.classList.add("active");
 
 const type = btn.dataset.tab || "prime";
@@ -1217,118 +1217,151 @@ loadOTT("prime");
 
 
 
+/* ============================= */
+/* 🎬 POPULAR INTERESTS - FINAL */
+/* ============================= */
 
-/* =====================================================
-   POPULAR INTERESTS (FINAL - INDIA + 2010-2020)
-===================================================== */
+const API_KEY = "45fe7a9c4583e4374d3981bb55c39222";
+const BASE = "https://api.themoviedb.org/3";
+
+/* ---------------- FETCH MOVIES ---------------- */
+
+async function getMovies(endpoint){
+
+    try{
+        const url = endpoint.includes("?")
+        ? `${BASE}${endpoint}&api_key=${API_KEY}`
+        : `${BASE}${endpoint}?api_key=${API_KEY}`;
+
+        const res = await fetch(url);
+        const data = await res.json();
+
+        return data.results || [];
+    }catch(err){
+        console.log("Fetch error:", err);
+        return [];
+    }
+
+}
 
 
-/* ==== CATEGORIES ==== */
-const interestCategories = [
+/* ---------------- CREATE CARD ---------------- */
 
-{title:"Horror", genre:"27"},
-{title:"Comedy", genre:"35"},
-{title:"Action", genre:"28"},
-{title:"Crime & Mystery", genre:"80,9648"},
-{title:"Love Stories", genre:"10749"},
-{title:"Family Movies", genre:"10751"},
-{title:"Thrillers", genre:"53"},
-{title:"South Blockbusters", genre:"28"},
-{title:"Drama", genre:"18"},
-{title:"Historical & Patriotic", genre:"36"},
-{title:"Romantic Comedy", genre:"35,10749"},
-{title:"Adventure", genre:"12"},
-{title:"Sci-Fi", genre:"878"},
-{title:"Feel Good Movies", genre:"35,18"},
-{title:"Hidden Gems", genre:"18"},
-{title:"Mass Entertainers", genre:"28,35"}
+function createMovieCard(movie){
 
-];
+    const poster = movie.poster_path
+    ? "https://image.tmdb.org/t/p/w342" + movie.poster_path
+    : "https://via.placeholder.com/300x450?text=No+Poster";
 
-/* ==== MAIN FUNCTION ==== */
+    const rating = movie.vote_average
+    ? movie.vote_average.toFixed(1)
+    : "N/A";
+
+    const year = movie.release_date
+    ? movie.release_date.split("-")[0]
+    : "";
+
+    const card = document.createElement("div");
+    card.className = "imdb-card";
+
+    card.innerHTML = `
+        <div class="imdb-poster">
+            <img src="${poster}" alt="${movie.title}">
+        </div>
+
+        <div class="imdb-info">
+            <h4>${movie.title}</h4>
+            <div class="meta">
+                ${year} • ⭐ ${rating}
+            </div>
+        </div>
+    `;
+
+    return card;
+}
+
+
+/* ---------------- LOAD ROW ---------------- */
+
+async function loadRow(title, endpoint, container){
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "imdb-section";
+
+    wrapper.innerHTML = `
+        <h2 class="section-title">${title}</h2>
+        <div class="imdb-row"></div>
+    `;
+
+    container.appendChild(wrapper);
+
+    const row = wrapper.querySelector(".imdb-row");
+
+    /* Skeleton Loader */
+    row.innerHTML = `<div style="color:#888;padding:10px;">Loading...</div>`;
+
+    const movies = await getMovies(endpoint);
+
+    row.innerHTML = "";
+
+    movies.slice(0,20).forEach(movie=>{
+        row.appendChild(createMovieCard(movie));
+    });
+
+}
+
+
+/* ---------------- MAIN FUNCTION ---------------- */
+
 async function loadPopularInterests(){
 
-const container = document.getElementById("popularInterests");
-if(!container) return;
+    const container = document.getElementById("popularInterests");
+    if(!container) return;
 
-container.innerHTML = "";
+    container.innerHTML = "";
 
-for(const cat of interestCategories){
+    const sections = [
 
-try{
+        /* 🔥 CORE */
+        ["🔥 Trending Now","/trending/movie/week"],
+        ["⭐ Top Rated Movies","/movie/top_rated"],
+        ["🎬 Popular in India","/discover/movie?with_origin_country=IN&sort_by=popularity.desc"],
 
-/* ==== FETCH INDIA MOVIES (2010–2020) ==== */
-const res = await fetch(
-`${BASE}/discover/movie?api_key=${API_KEY}
-&with_origin_country=IN
-&with_original_language=hi
-&with_genres=${cat.genre}
-&primary_release_date.gte=2010-01-01
-&primary_release_date.lte=2020-12-31
-&sort_by=popularity.desc`
-);
+        /* 🇮🇳 INDIA */
+        ["🎥 Bollywood Hits","/discover/movie?with_original_language=hi&sort_by=popularity.desc"],
+        ["🔥 South Indian Hits","/discover/movie?with_original_language=ta|te|ml|kn&sort_by=popularity.desc"],
+        ["🎭 Hindi Dubbed","/discover/movie?with_original_language=en&sort_by=popularity.desc"],
 
-const data = await res.json();
+        /* 🎬 GENRES */
+        ["💥 Action","/discover/movie?with_genres=28&sort_by=popularity.desc"],
+        ["😂 Comedy","/discover/movie?with_genres=35&sort_by=popularity.desc"],
+        ["❤️ Romance","/discover/movie?with_genres=10749&sort_by=popularity.desc"],
+        ["😱 Horror","/discover/movie?with_genres=27&sort_by=popularity.desc"],
+        ["🧠 Thriller","/discover/movie?with_genres=53&sort_by=popularity.desc"],
+        ["🚀 Sci-Fi","/discover/movie?with_genres=878&sort_by=popularity.desc"],
+        ["👨‍👩‍👧 Family","/discover/movie?with_genres=10751&sort_by=popularity.desc"],
+        ["🎞️ Drama","/discover/movie?with_genres=18&sort_by=popularity.desc"],
 
-if(!data.results || data.results.length === 0) continue;
+        /* 🌍 HOLLYWOOD */
+        ["🌍 Hollywood Blockbusters","/discover/movie?with_original_language=en&vote_count.gte=500&sort_by=popularity.desc"],
+        ["🔥 Superhero","/discover/movie?with_keywords=180547|9715&sort_by=popularity.desc"],
 
-/* ==== RANDOM POSTER COUNT (1-3) ==== */
-const count = Math.floor(Math.random()*3) + 1;
+        /* 🧠 SMART */
+        ["🏆 Fan Favourite","/discover/movie?vote_count.gte=2000&sort_by=vote_average.desc"],
+        ["📅 Latest 2024+","/discover/movie?primary_release_date.gte=2024-01-01&sort_by=popularity.desc"],
+        ["💎 Hidden Gems","/discover/movie?vote_average.gte=7&vote_count.gte=200&sort_by=vote_count.asc"],
+        ["🎯 Must Watch","/discover/movie?vote_average.gte=7.5&vote_count.gte=1000"]
 
-/* ==== PICK MOVIES ==== */
-const movies = data.results.slice(0, count);
+    ];
 
-/* ==== CREATE CARD ==== */
-const card = document.createElement("div");
-card.className = "interest-card";
-
-/* ==== POSTERS HTML ==== */
-let postersHTML = `<div class="interest-posters count-${count}">`;
-
-movies.forEach(m => {
-
-const poster = m.poster_path
-? "https://image.tmdb.org/t/p/w342" + m.poster_path
-: "https://via.placeholder.com/300x450?text=No+Image";
-
-postersHTML += `<img src="${poster}" loading="lazy">`;
-
-});
-
-postersHTML += `</div>`;
-
-/* ==== FINAL CARD HTML ==== */
-card.innerHTML = `
-
-${postersHTML}
-
-<div class="interest-info">
-
-<div class="interest-title">
-${cat.title}
-</div>
-
-<a href="interest.html?genre=${cat.genre}" class="see-list">
-See list
-</a>
-
-</div>
-
-`;
-
-/* ==== APPEND ==== */
-container.appendChild(card);
-
-}catch(err){
-console.log("Interest error:", err);
-}
+    /* 🚀 PARALLEL LOAD (FAST) */
+    await Promise.all(
+        sections.map(([title,endpoint]) =>
+            loadRow(title, endpoint, container)
+        )
+    );
 
 }
-
-}
-
-/* ==== AUTO LOAD ==== */
-document.addEventListener("DOMContentLoaded", loadPopularInterests);
 
 
 
