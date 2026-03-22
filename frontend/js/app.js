@@ -1237,36 +1237,36 @@ async function loadPopularInterests(){
     /* 🎯 ALL CATEGORIES (same as tera system) */
     const sections = [
 
-        /* 🔥 CORE */
-        "/trending/movie/week",
-        "/movie/top_rated",
-        "/discover/movie?with_origin_country=IN&sort_by=popularity.desc",
+    /* 🇮🇳 INDIA FIRST */
+    "/discover/movie?with_original_language=hi&sort_by=popularity.desc",
+    "/discover/movie?with_original_language=ta|te|ml|kn&sort_by=popularity.desc",
 
-        /* 🇮🇳 INDIA */
-        "/discover/movie?with_original_language=hi&sort_by=popularity.desc",
-        "/discover/movie?with_original_language=ta|te|ml|kn&sort_by=popularity.desc",
-        "/discover/movie?with_original_language=en&sort_by=popularity.desc",
+    /* 🎞️ DRAMA */
+    "/discover/movie?with_genres=18&sort_by=popularity.desc",
 
-        /* 🎬 GENRES */
-        "/discover/movie?with_genres=28&sort_by=popularity.desc",
-        "/discover/movie?with_genres=35&sort_by=popularity.desc",
-        "/discover/movie?with_genres=10749&sort_by=popularity.desc",
-        "/discover/movie?with_genres=27&sort_by=popularity.desc",
-        "/discover/movie?with_genres=53&sort_by=popularity.desc",
-        "/discover/movie?with_genres=878&sort_by=popularity.desc",
-        "/discover/movie?with_genres=10751&sort_by=popularity.desc",
-        "/discover/movie?with_genres=18&sort_by=popularity.desc",
+    /* 📺 TV (IMPORTANT FIX) */
+    "/discover/tv?sort_by=popularity.desc",
 
-        /* 🌍 HOLLYWOOD */
-        "/discover/movie?with_original_language=en&vote_count.gte=500&sort_by=popularity.desc",
-        "/discover/movie?with_keywords=180547|9715&sort_by=popularity.desc",
+    /* 🔥 THEN REST */
+    "/trending/movie/week",
+    "/movie/top_rated",
 
-        /* 🧠 SMART */
-        "/discover/movie?vote_count.gte=2000&sort_by=vote_average.desc",
-        "/discover/movie?primary_release_date.gte=2024-01-01&sort_by=popularity.desc",
-        "/discover/movie?vote_average.gte=7&vote_count.gte=200&sort_by=vote_count.asc",
-        "/discover/movie?vote_average.gte=7.5&vote_count.gte=1000"
-    ];
+    "/discover/movie?with_genres=28&sort_by=popularity.desc",
+    "/discover/movie?with_genres=35&sort_by=popularity.desc",
+    "/discover/movie?with_genres=10749&sort_by=popularity.desc",
+    "/discover/movie?with_genres=27&sort_by=popularity.desc",
+    "/discover/movie?with_genres=53&sort_by=popularity.desc",
+    "/discover/movie?with_genres=878&sort_by=popularity.desc",
+    "/discover/movie?with_genres=10751&sort_by=popularity.desc",
+
+    "/discover/movie?with_original_language=en&vote_count.gte=500&sort_by=popularity.desc",
+    "/discover/movie?with_keywords=180547|9715&sort_by=popularity.desc",
+
+    "/discover/movie?vote_count.gte=2000&sort_by=vote_average.desc",
+    "/discover/movie?primary_release_date.gte=2024-01-01&sort_by=popularity.desc",
+    "/discover/movie?vote_average.gte=7&vote_count.gte=200&sort_by=vote_count.asc",
+    "/discover/movie?vote_average.gte=7.5&vote_count.gte=1000"
+];
 
     try{
 
