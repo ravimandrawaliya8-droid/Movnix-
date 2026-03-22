@@ -2306,10 +2306,10 @@ font-size:18px;
 
 /* 🔥 Section Title */
 .section-title{
-  font-size: 22px;
-  font-weight: 600;
-  color: #ffffff;
-  margin-bottom: 16px;
+  font-size: 26px;
+  font-weight: 700;
+  color: #f5c518;
+  margin-bottom: 18px;
   letter-spacing: 0.3px;
 }
 
@@ -2320,7 +2320,7 @@ font-size:18px;
 
 .imdb-row{
   display: flex;
-  gap: 14px;
+  gap: 10px;
   overflow-x: auto;
   overflow-y: hidden;
   scroll-behavior: smooth;
@@ -2348,7 +2348,7 @@ font-size:18px;
 
 .imdb-card{
   flex: 0 0 auto;
-  width: 160px;
+  width: 175px;
   cursor: pointer;
   transition: transform 0.25s ease;
 }
@@ -2482,8 +2482,21 @@ font-size:18px;
   }
 
   }
- 
 
+
+/* ============================= */
+/* 🔥 EDGE CUT EFFECT */
+/* ============================= */
+
+#popularInterests{
+  padding-left: 24px;
+  overflow: hidden; /* 👈 IMPORTANT */
+}
+
+/* Left side thoda cut effect */
+.imdb-row{
+  padding-left: 2px;
+}
 
 
 /* ============================= */
