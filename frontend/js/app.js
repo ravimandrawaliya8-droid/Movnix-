@@ -1216,83 +1216,152 @@ loadOTT("prime");
 });
 
 
-/* ---------------- POPULAR INTERESTS (SINGLE ROW) ---------------- */
+/* ============================= */
+/* 🎬 POPULAR INTERESTS - FINAL */
+/* ============================= */
+
+/* ---------------- FETCH ---------------- */
+
+async function getMovies(endpoint){
+
+    try{
+        const url = endpoint.includes("?")
+        ? `${BASE}${endpoint}&api_key=${API_KEY}`
+        : `${BASE}${endpoint}?api_key=${API_KEY}`;
+
+        const res = await fetch(url);
+        const data = await res.json();
+
+        return data.results || [];
+    }catch(err){
+        console.log("Fetch error:", err);
+        return [];
+    }
+
+}
+
+
+/* ---------------- SHUFFLE ---------------- */
+
+function shuffleArray(array){
+    for(let i = array.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+
+/* ---------------- CARD ---------------- */
+
+function createMovieCard(movie){
+
+    const poster = movie.poster_path
+    ? "https://image.tmdb.org/t/p/w342" + movie.poster_path
+    : "https://via.placeholder.com/300x450?text=No+Poster";
+
+    const rating = movie.vote_average
+    ? movie.vote_average.toFixed(1)
+    : "N/A";
+
+    const year = movie.release_date
+    ? movie.release_date.split("-")[0]
+    : (movie.first_air_date ? movie.first_air_date.split("-")[0] : "");
+
+    /* 🔥 FIX FOR TV + MOVIES */
+    const title = movie.title || movie.name || "No Title";
+
+    const card = document.createElement("div");
+    card.className = "imdb-card";
+
+    card.innerHTML = `
+        <div class="imdb-poster">
+            <img src="${poster}" alt="${title}">
+        </div>
+
+        <div class="imdb-info">
+            <h4>${title}</h4>
+            <div class="meta">${year} • ⭐ ${rating}</div>
+        </div>
+    `;
+
+    return card;
+}
+
+
+/* ---------------- MAIN FUNCTION ---------------- */
 
 async function loadPopularInterests(){
 
-    const container = document.getElementById("popularInterests");
-    if(!container) return;
-
-    /* 🔥 SINGLE ROW STRUCTURE */
-    container.innerHTML = `
-        <h2 class="section-title">🔥 Popular Interests</h2>
-        <div class="imdb-row" id="popularRow"></div>
-    `;
-
     const row = document.getElementById("popularRow");
+    if(!row) return;
 
-    /* Skeleton */
     row.innerHTML = `<div style="color:#888;padding:10px;">Loading...</div>`;
 
-    /* 🎯 ALL CATEGORIES (same as tera system) */
     const sections = [
 
-    /* 🇮🇳 INDIA FIRST */
-    "/discover/movie?with_original_language=hi&sort_by=popularity.desc",
-    "/discover/movie?with_original_language=ta|te|ml|kn&sort_by=popularity.desc",
+        /* 🇮🇳 INDIA */
+        "/discover/movie?with_original_language=hi&sort_by=popularity.desc",
+        "/discover/movie?with_original_language=ta|te|ml|kn&sort_by=popularity.desc",
 
-    /* 🎞️ DRAMA */
-    "/discover/movie?with_genres=18&sort_by=popularity.desc",
+        /* 🎞️ DRAMA */
+        "/discover/movie?with_genres=18&sort_by=popularity.desc",
 
-    /* 📺 TV (IMPORTANT FIX) */
-    "/discover/tv?sort_by=popularity.desc",
+        /* 🎌 ANIME */
+        "/discover/tv?with_genres=16&with_original_language=ja&sort_by=popularity.desc",
 
-    /* 🔥 THEN REST */
-    "/trending/movie/week",
-    "/movie/top_rated",
+        /* 📺 TV */
+        "/discover/tv?sort_by=popularity.desc",
 
-    "/discover/movie?with_genres=28&sort_by=popularity.desc",
-    "/discover/movie?with_genres=35&sort_by=popularity.desc",
-    "/discover/movie?with_genres=10749&sort_by=popularity.desc",
-    "/discover/movie?with_genres=27&sort_by=popularity.desc",
-    "/discover/movie?with_genres=53&sort_by=popularity.desc",
-    "/discover/movie?with_genres=878&sort_by=popularity.desc",
-    "/discover/movie?with_genres=10751&sort_by=popularity.desc",
+        /* 🔥 CORE */
+        "/trending/movie/week",
+        "/movie/top_rated",
 
-    "/discover/movie?with_original_language=en&vote_count.gte=500&sort_by=popularity.desc",
-    "/discover/movie?with_keywords=180547|9715&sort_by=popularity.desc",
+        /* 🎬 GENRES */
+        "/discover/movie?with_genres=28&sort_by=popularity.desc",
+        "/discover/movie?with_genres=35&sort_by=popularity.desc",
+        "/discover/movie?with_genres=10749&sort_by=popularity.desc",
+        "/discover/movie?with_genres=27&sort_by=popularity.desc",
+        "/discover/movie?with_genres=53&sort_by=popularity.desc",
+        "/discover/movie?with_genres=878&sort_by=popularity.desc",
+        "/discover/movie?with_genres=10751&sort_by=popularity.desc",
 
-    "/discover/movie?vote_count.gte=2000&sort_by=vote_average.desc",
-    "/discover/movie?primary_release_date.gte=2024-01-01&sort_by=popularity.desc",
-    "/discover/movie?vote_average.gte=7&vote_count.gte=200&sort_by=vote_count.asc",
-    "/discover/movie?vote_average.gte=7.5&vote_count.gte=1000"
-];
+        /* 🌍 HOLLYWOOD */
+        "/discover/movie?with_original_language=en&vote_count.gte=500&sort_by=popularity.desc",
+
+        /* 🧠 SMART */
+        "/discover/movie?vote_count.gte=2000&sort_by=vote_average.desc",
+        "/discover/movie?primary_release_date.gte=2024-01-01&sort_by=popularity.desc",
+        "/discover/movie?vote_average.gte=7&vote_count.gte=200&sort_by=vote_count.asc"
+    ];
 
     try{
 
-        /* 🚀 FETCH ALL PARALLEL */
+        /* 🚀 FETCH ALL DATA */
         const results = await Promise.all(
             sections.map(endpoint => getMovies(endpoint))
         );
 
-        /* 🔥 MERGE */
+        /* 🔥 MERGE ALL */
         let allMovies = results.flat();
 
         /* ❌ REMOVE DUPLICATES */
-        const uniqueMovies = Array.from(
+        let uniqueMovies = Array.from(
             new Map(allMovies.map(m => [m.id, m])).values()
         );
+
+        /* 🎲 RANDOM MIX */
+        shuffleArray(uniqueMovies);
 
         /* 🎬 RENDER */
         row.innerHTML = "";
 
-        uniqueMovies.slice(0,80).forEach(movie=>{
+        uniqueMovies.slice(0, 80).forEach(movie=>{
             row.appendChild(createMovieCard(movie));
         });
 
     }catch(err){
-        row.innerHTML = "Failed to load 😔";
         console.log(err);
+        row.innerHTML = "Failed to load 😔";
     }
 
 }
