@@ -1716,7 +1716,7 @@ registerSection("popularInterests", loadPopularInterests);
 
 registerSection("theatreReleases", loadTheatre);
 
-registerSection("boxOfficeSection", loadBoxOfficeSection);
+registerSection("boxOfficeSection", () => loadBoxOffice("india"));
 
 
 /* ---------------- INIT ---------------- */
