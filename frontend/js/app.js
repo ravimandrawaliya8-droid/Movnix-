@@ -1368,73 +1368,124 @@ async function loadPopularInterests(){
 
 
 /* ============================= */
-/* 🎬 THEATRE RELEASES */
+/* 🎬 THEATRE RELEASES SECTION */
 /* ============================= */
 
 async function loadTheatre(){
 
-  const row = document.getElementById("theatreRow");
-  if(!row) return;
+  const container = document.getElementById("theatreRow");
+  if(!container) return;
 
-  row.innerHTML = "Loading...";
+  /* 🔄 SKELETON LOADER */
+  container.innerHTML = `
+    ${Array(6).fill(`
+      <div class="theatre-card skeleton"></div>
+    `).join("")}
+  `;
 
   try{
 
-    const res = await fetch(`${BASE}/movie/now_playing?api_key=${API_KEY}`);
-    const data = await res.json();
+    /* 🎬 NOW PLAYING MOVIES */
+    const movies = await getMovies("/movie/now_playing");
 
-    if(!data.results){
-      row.innerHTML = "No data";
-      return;
-    }
+    /* 🧹 CLEAR SKELETON */
+    container.innerHTML = "";
 
-    row.innerHTML = "";
+    movies.slice(0,20).forEach(movie=>{
 
-    data.results.slice(0,12).forEach(movie=>{
-
+      /* 🎞 POSTER */
       const poster = movie.poster_path
-      ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-      : "https://via.placeholder.com/300x450?text=No+Image";
+        ? "https://image.tmdb.org/t/p/w500" + movie.poster_path
+        : "https://via.placeholder.com/500x750?text=No+Poster";
 
+      /* ⭐ RATING */
       const rating = movie.vote_average
-      ? movie.vote_average.toFixed(1)
-      : "N/A";
+        ? movie.vote_average.toFixed(1)
+        : "0";
 
+      /* 📅 RELEASE DATE */
+      const date = movie.release_date || "Coming Soon";
+
+      /* 🔥 POPULARITY SCORE */
+      const trend = Math.round(movie.popularity);
+
+      /* 🎬 CARD */
       const card = document.createElement("div");
       card.className = "theatre-card";
 
       card.innerHTML = `
-        <img src="${poster}" alt="${movie.title}">
 
-        <div class="theatre-info">
+        <div class="theatre-poster">
 
-          <div class="rating">⭐ ${rating}</div>
+          <img src="${poster}" alt="${movie.title}">
 
-          <div class="movie-title">
-            ${movie.title}
-          </div>
+          <div class="theatre-overlay">
 
-          <div class="showtime-btn">
-            🎟 Showtimes
-          </div>
+            <a href="trailer.html?id=${movie.id}" class="play-btn">
+              ▶
+            </a>
 
-          <div class="trailer">
-            ▶ Trailer
           </div>
 
         </div>
+
+        <div class="theatre-info">
+
+          <h4>${movie.title}</h4>
+
+          <div class="theatre-meta">
+
+            <span>⭐ ${rating}</span>
+            <span>📅 ${date}</span>
+
+          </div>
+
+          <div class="theatre-trend">
+            🔥 ${trend}
+          </div>
+
+          <div class="theatre-actions">
+
+            <a href="watchlist.html?id=${movie.id}" class="btn-small">
+              + Watchlist
+            </a>
+
+            <a href="movie.html?id=${movie.id}" class="btn-small">
+              Details
+            </a>
+
+          </div>
+
+        </div>
+
       `;
 
-      row.appendChild(card);
+      /* 🖱 HOVER EFFECT */
+      card.addEventListener("mouseenter", ()=>{
+        card.classList.add("active");
+      });
+
+      card.addEventListener("mouseleave", ()=>{
+        card.classList.remove("active");
+      });
+
+      container.appendChild(card);
 
     });
 
   }catch(err){
-    console.log("Theatre Error:", err);
-    row.innerHTML = "Failed to load";
+
+    console.error("Theatre load error:", err);
+
+    container.innerHTML = `
+      <div style="color:#aaa;padding:20px;">
+        Failed to load movies 😢
+      </div>
+    `;
+
   }
 
-    }
+}
 
 /* ---------------- MOVIE CARD SYSTEM ---------------- */
 
