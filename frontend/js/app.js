@@ -36,6 +36,38 @@ async function loadSection(endpoint, containerId){
 
 }
 
+/* ---------------- QUICK BUTTON SYSTEM ---------------- */
+
+function loadQuickButtons(){
+
+  const actions = {
+
+    trending: () => window.location.href = "trending.html",
+    top: () => window.location.href = "toprated.html",
+    genre: () => window.location.href = "genres.html",
+    new: () => window.location.href = "new.html",
+    must: () => window.location.href = "list.html",
+    list: () => window.location.href = "watchlist.html",
+    trailer: () => window.location.href = "trailers.html",
+
+    boxoffice: () => window.location.href = "boxoffice.html",
+    theatre: () => window.location.href = "theatre.html",
+    popular: () => window.location.href = "popular.html"
+
+  };
+
+  Object.keys(actions).forEach(cls => {
+
+    const btn = document.querySelector(`.${cls}`);
+
+    if(btn){
+      btn.addEventListener("click", actions[cls]);
+    }
+
+  });
+
+}
+
 /* -------- CELEBRITY POOL -------- */
 
 const maleCelebs = [
@@ -1577,6 +1609,8 @@ checkSections();
 
 
 /* ---------------- REGISTER ALL SECTIONS ---------------- */
+
+registerSection("quickButtons", loadQuickButtons);
 
 registerSection("trailers", loadTrailers);
 
