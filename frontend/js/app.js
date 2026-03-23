@@ -1385,13 +1385,16 @@ async function loadTheatre(){
 
   try{
 
-    /* 🎬 NOW PLAYING MOVIES */
+    /* 🎬 FETCH NOW PLAYING */
     const movies = await getMovies("/movie/now_playing");
 
-    /* 🧹 CLEAR SKELETON */
+    /* 🧹 CLEAR */
     container.innerHTML = "";
 
-    movies.slice(0,20).forEach(movie=>{
+    /* 🎯 LIMIT */
+    const list = movies.slice(0,20);
+
+    list.forEach(movie=>{
 
       /* 🎞 POSTER */
       const poster = movie.poster_path
@@ -1403,13 +1406,13 @@ async function loadTheatre(){
         ? movie.vote_average.toFixed(1)
         : "0";
 
-      /* 📅 RELEASE DATE */
+      /* 📅 DATE */
       const date = movie.release_date || "Coming Soon";
 
-      /* 🔥 POPULARITY SCORE */
+      /* 🔥 TREND */
       const trend = Math.round(movie.popularity);
 
-      /* 🎬 CARD */
+      /* 🎬 CARD HTML */
       const card = document.createElement("div");
       card.className = "theatre-card";
 
@@ -1420,11 +1423,7 @@ async function loadTheatre(){
           <img src="${poster}" alt="${movie.title}">
 
           <div class="theatre-overlay">
-
-            <a href="trailer.html?id=${movie.id}" class="play-btn">
-              ▶
-            </a>
-
+            <a href="trailer.html?id=${movie.id}" class="play-btn">▶</a>
           </div>
 
         </div>
@@ -1434,10 +1433,8 @@ async function loadTheatre(){
           <h4>${movie.title}</h4>
 
           <div class="theatre-meta">
-
             <span>⭐ ${rating}</span>
             <span>📅 ${date}</span>
-
           </div>
 
           <div class="theatre-trend">
