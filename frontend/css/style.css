@@ -2566,151 +2566,207 @@ font-size:18px;
 }
 
 
-/* ============================= */
-/* OTT SECTION */
-/* ============================= */
+/* ================= STREAMING SECTION ================= */
 
-.ott-section{
-margin-top:20px;
+.streaming-section{
+  background:#0f0f0f;
+  padding:20px 16px;
 }
 
-/* HEADER */
+/* ---------- HEADER ---------- */
 
-.ott-title{
-color:#f5c518;
-font-size:22px;
-font-weight:700;
+.stream-header{
+  margin-bottom:14px;
 }
 
-.ott-setting{
-color:#5799ef;
-font-size:14px;
-margin-top:5px;
+.stream-title{
+  font-size:24px;
+  font-weight:700;
+  color:#f5c518;
+  margin-bottom:6px;
 }
 
-/* TABS */
-
-.ott-tabs{
-display:flex;
-gap:16px;
-margin:15px 0;
-overflow-x:auto;
+.stream-preference{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:14px;
+  color:#6fa8ff;
 }
 
-.ott-tab{
-font-size:14px;      /* पहले छोटा था */
-font-weight:600;
-color:#ffffff;       /* full bright */
-opacity:0.85;
+.stream-preference .gear{
+  font-size:16px;
 }
 
-.ott-tab.active{
-opacity:1;
-color:#fff;
-border-bottom:2px solid #fff;
+/* ---------- TABS ---------- */
+
+.stream-tabs{
+  display:flex;
+  gap:24px;
+  overflow-x:auto;
+  padding:12px 0 8px;
+  margin-bottom:4px;
+
+  /* smooth scroll */
+  scroll-behavior:smooth;
 }
 
-/* ROW */
-
-.ott-row{
-display:flex;
-gap:14px;
-overflow-x:auto;
+/* hide scrollbar */
+.stream-tabs::-webkit-scrollbar{
+  display:none;
 }
 
-/* CARD */
-
-.ott-card{
-width:150px;
-background:#1a1a1a;
-border-radius:12px;
-overflow:hidden;
-flex-shrink:0;
+.stream-tab{
+  background:none;
+  border:none;
+  outline:none;
+  color:#aaa;
+  font-size:14px;
+  font-weight:600;
+  cursor:pointer;
+  white-space:nowrap;
+  padding-bottom:6px;
+  transition:0.2s;
 }
 
-/* POSTER */
-
-.ott-poster{
-position:relative;
-overflow:hidden;
-border-radius:10px;
+.stream-tab.active{
+  color:#fff;
+  border-bottom:2px solid #4da3ff;
 }
 
-.ott-poster img{
-width:100%;
-border-radius:12px 12px 0 0;
+.stream-tab:hover{
+  color:#ddd;
 }
 
-/* WATCHLIST ICON */
+/* ---------- SUB TEXT ---------- */
 
-.watchlist-icon{
-position:absolute;
-top:8px;
-left:8px;
-
-background:rgba(0,0,0,0.6);
-backdrop-filter: blur(6px);
-
-color:#fff;
-font-size:16px;
-
-width:28px;
-height:28px;
-
-display:flex;
-align-items:center;
-justify-content:center;
-
-border-radius:50%;
-cursor:pointer;
-
-transition:0.3s;
+.stream-sub{
+  color:#9c9c9c;
+  font-size:14px;
+  margin-bottom:14px;
 }
 
-.watchlist-icon:hover{
-background:#fff;
-color:#000;
+/* ---------- ROW ---------- */
+
+.stream-row{
+  display:flex;
+  gap:14px;
+  overflow-x:auto;
+  padding-bottom:6px;
+
+  scroll-behavior:smooth;
 }
 
-/* INFO */
-
-.ott-info{
-padding:10px;
+/* hide scrollbar */
+.stream-row::-webkit-scrollbar{
+  display:none;
 }
 
-.ott-rating{
-color:#f5c518;
-font-size:13px;
-margin-bottom:4px;
+/* ---------- CARD ---------- */
+
+.stream-card{
+  min-width:160px;
+  max-width:160px;
+  background:#1a1a1a;
+  border-radius:12px;
+  overflow:hidden;
+  flex-shrink:0;
+  transition:0.25s ease;
 }
 
-.ott-title-text{
-font-size:14px;
-color:#fff;
-margin-bottom:8px;
+.stream-card:hover{
+  transform:translateY(-5px);
 }
 
-/* BUTTON */
+/* ---------- POSTER ---------- */
 
-.watch-btn{
-display:block;
-background:#2a2a2a;
-color:#5799ef;
-text-align:center;
-padding:6px;
-border-radius:20px;
-text-decoration:none;
-margin-bottom:6px;
-font-size:13px;
+.stream-poster{
+  position:relative;
 }
 
-.trailer-btn{
-background:#2a2a2a;   /* पहले red था */
-color:#fff;
-border-radius:6px;
-padding:6px 10px;
-font-size:13px;
+.stream-poster img{
+  width:100%;
+  height:220px;
+  object-fit:cover;
+  display:block;
+}
+
+/* + ICON */
+
+.stream-plus{
+  position:absolute;
+  top:8px;
+  left:8px;
+  background:rgba(0,0,0,0.75);
+  color:#fff;
+  font-size:14px;
+  padding:4px 7px;
+  border-radius:5px;
+  cursor:pointer;
+}
+
+/* ---------- INFO ---------- */
+
+.stream-info{
+  padding:10px;
+}
+
+/* rating */
+
+.stream-rating{
+  color:#f5c518;
+  font-size:14px;
+  margin-bottom:5px;
+}
+
+/* title */
+
+.stream-title-text{
+  color:#fff;
+  font-size:14px;
+  margin-bottom:10px;
+  line-height:1.25;
+
+  /* limit lines */
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+
+/* ---------- BUTTON ---------- */
+
+.stream-btn{
+  display:block;
+  text-align:center;
+  background:#222;
+  color:#4da3ff;
+  font-size:13px;
+  padding:7px;
+  border-radius:20px;
+  margin-bottom:6px;
+  text-decoration:none;
+  transition:0.2s;
+}
+
+.stream-btn:hover{
+  background:#2a2a2a;
+}
+
+/* ---------- TRAILER ---------- */
+
+.stream-trailer{
+  text-align:center;
+  font-size:13px;
+  color:#ccc;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.stream-trailer:hover{
+  color:#fff;
   }
+
 
 
 /* ============================= */
