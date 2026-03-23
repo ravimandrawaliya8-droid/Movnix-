@@ -227,6 +227,110 @@ padding:5px 14px;
 
 }
 
+/* ============================= */
+/* QUICK BUTTONS CONTAINER */
+/* ============================= */
+
+.quick-buttons{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 15px 15px 5px;
+  margin-top: 10px;
+}
+
+/* ============================= */
+/* BASE BUTTON STYLE */
+/* ============================= */
+
+.q-btn{
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+  text-decoration: none;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255,255,255,0.1);
+
+  box-shadow:
+    inset 0 0 10px rgba(255,255,255,0.05),
+    0 0 12px rgba(0,0,0,0.4);
+
+  transition: all 0.25s ease;
+}
+
+/* HOVER EFFECT */
+.q-btn:hover{
+  transform: translateY(-2px) scale(1.05);
+  box-shadow:
+    0 0 15px rgba(255,255,255,0.2),
+    0 0 30px rgba(255,255,255,0.15);
+}
+
+/* ============================= */
+/* INDIVIDUAL COLORS */
+/* ============================= */
+
+/* 🔥 Trending */
+.trending{
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+}
+
+/* ⭐ Top Rated */
+.toprated{
+  background: linear-gradient(135deg, #f7971e, #ffd200);
+  color: #111;
+}
+
+/* 🎬 Genres */
+.genres{
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+}
+
+/* 🆕 New Releases */
+.new{
+  background: linear-gradient(135deg, #00f260, #0575e6);
+}
+
+/* ⭐ Must Watch (USP) */
+.mustwatch{
+  background: linear-gradient(135deg, #8e2de2, #4a00e0);
+}
+
+/* ❤️ My List */
+.mylist{
+  background: linear-gradient(135deg, #ff0844, #ffb199);
+}
+
+/* 🎥 Trailers */
+.trailers{
+  background: linear-gradient(135deg, #434343, #000000);
+}
+
+/* 🎟 In Theatre */
+.theatre{
+  background: linear-gradient(135deg, #ff9966, #ff5e62);
+}
+
+/* 💰 Box Office */
+.boxoffice{
+  background: linear-gradient(135deg, #56ab2f, #a8e063);
+  color: #111;
+}
+
+/* 🌍 OTT / Streaming */
+.ott{
+  background: linear-gradient(135deg, #2193b0, #6dd5ed);
+}
+
 /* ================= HERO ================= */
 
 #hero{
