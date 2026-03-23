@@ -1367,7 +1367,74 @@ async function loadPopularInterests(){
 }
 
 
+/* ============================= */
+/* 🎬 THEATRE RELEASES */
+/* ============================= */
 
+async function loadTheatre(){
+
+  const row = document.getElementById("theatreRow");
+  if(!row) return;
+
+  row.innerHTML = "Loading...";
+
+  try{
+
+    const res = await fetch(`${BASE}/movie/now_playing?api_key=${API_KEY}`);
+    const data = await res.json();
+
+    if(!data.results){
+      row.innerHTML = "No data";
+      return;
+    }
+
+    row.innerHTML = "";
+
+    data.results.slice(0,12).forEach(movie=>{
+
+      const poster = movie.poster_path
+      ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+      : "https://via.placeholder.com/300x450?text=No+Image";
+
+      const rating = movie.vote_average
+      ? movie.vote_average.toFixed(1)
+      : "N/A";
+
+      const card = document.createElement("div");
+      card.className = "theatre-card";
+
+      card.innerHTML = `
+        <img src="${poster}" alt="${movie.title}">
+
+        <div class="theatre-info">
+
+          <div class="rating">⭐ ${rating}</div>
+
+          <div class="movie-title">
+            ${movie.title}
+          </div>
+
+          <div class="showtime-btn">
+            🎟 Showtimes
+          </div>
+
+          <div class="trailer">
+            ▶ Trailer
+          </div>
+
+        </div>
+      `;
+
+      row.appendChild(card);
+
+    });
+
+  }catch(err){
+    console.log("Theatre Error:", err);
+    row.innerHTML = "Failed to load";
+  }
+
+    }
 
 /* ---------------- MOVIE CARD SYSTEM ---------------- */
 
@@ -1478,6 +1545,8 @@ registerSection("fanFavourites", loadFanFavourites);
 registerSection("ottMovies", loadOTT);
 
 registerSection("popularInterests", loadPopularInterests);
+
+registerSection("theatreReleases", loadTheatre);
 
 /* ---------------- INIT ---------------- */
 
