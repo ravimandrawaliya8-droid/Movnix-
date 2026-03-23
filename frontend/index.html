@@ -421,39 +421,51 @@ Popular Indian Celebrities
 <!-- Watch on OTT -->
 <!-- ============================= -->
 
-<section class="section ott-section">
+<section class="streaming-section" id="streamingSection">
 
   <!-- HEADER -->
-  <div class="ott-head">
+  <div class="stream-header">
 
-    <h2 class="ott-title" id="ottHeading">Included with Prime</h2>
+    <h2 class="stream-title">Explore what’s streaming</h2>
 
-    <div class="ott-setting">
-      ⚙️ Set your preferred services
+    <div class="stream-preference">
+      <span class="gear">⚙</span>
+      <span>Set your preferred services</span>
     </div>
 
   </div>
 
+  <!-- OTT TABS -->
+  <div class="stream-tabs">
 
-  <!-- PLATFORM TABS -->
-  <div class="ott-tabs">
+    <button class="stream-tab active" data-tab="prime">PRIME VIDEO</button>
 
-    <button class="ott-tab active" data-tab="prime">Prime</button>
-    <button class="ott-tab" data-tab="netflix">Netflix</button>
-    <button class="ott-tab" data-tab="hotstar">Hotstar</button>
-    <button class="ott-tab" data-tab="apple">Apple TV+</button>
+    <button class="stream-tab" data-tab="netflix">NETFLIX</button>
 
-    <button class="ott-tab" data-tab="zee5">ZEE5</button>
-    <button class="ott-tab" data-tab="sony">SonyLIV</button>
-    <button class="ott-tab" data-tab="mx">MX Player</button>
-    <button class="ott-tab" data-tab="jio">JioCinema</button>
-    <button class="ott-tab" data-tab="youtube">YouTube Movies</button>
+    <button class="stream-tab" data-tab="hotstar">JIOHOTSTAR</button>
+
+    <button class="stream-tab" data-tab="apple">APPLE TV</button>
+
+    <button class="stream-tab" data-tab="sony">SONY LIV</button>
+
+    <button class="stream-tab" data-tab="zee">ZEE5</button>
+
+    <button class="stream-tab" data-tab="mx">MX PLAYER</button>
 
   </div>
 
+  <!-- SUB TEXT -->
+  <div class="stream-sub">
+    with subscription
+  </div>
 
-  <!-- MOVIES ROW -->
-  <div class="movie-row ott-row" id="ottMovies"></div>
+  <!-- MOVIE CARDS (JS WILL FILL) -->
+  <div class="stream-row" id="streamRow">
+
+    <!-- Loading skeleton (optional) -->
+    <div style="color:#888;font-size:14px;">Loading content...</div>
+
+  </div>
 
 </section>
 
