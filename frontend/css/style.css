@@ -231,89 +231,66 @@ padding:5px 14px;
 /* QUICK BUTTONS (HERO STYLE) */
 /* ============================= */
 
-.quick-buttons{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  padding: 15px;
+.quick-buttons {
+  padding: 10px;
+  overflow-x: auto;
 }
 
-/* BASE BUTTON */
-.q-btn{
-  padding: 8px 14px;
-  border-radius: 10px;
+.btn-row {
+  display: flex;
+  gap: 10px;
+}
 
-  font-size: 13px;
-  font-weight: 500;
+.qbtn {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: none;
   color: #fff;
-  text-decoration: none;
+  font-size: 14px;
+  white-space: nowrap;
+  cursor: pointer;
 
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-
-  /* 🔥 HERO GLASS STYLE */
-  background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-
+  background: rgba(255,255,255,0.08);
   border: 1px solid rgba(255,255,255,0.15);
 
-  box-shadow: 
-    0 4px 20px rgba(0,0,0,0.6),
-    inset 0 0 10px rgba(255,255,255,0.05);
-
-  transition: all 0.25s ease;
+  transition: 0.3s;
 }
 
-/* HOVER */
-.q-btn:hover{
-  background: rgba(255,255,255,0.15);
-  transform: translateY(-2px);
+/* 🔥 Individual Colors */
+
+.trending {
+  background: linear-gradient(135deg,#ff4d4d,#ff9900);
 }
 
-/* ============================= */
-/* COLOR ACCENTS (SUBTLE, NOT LOUD) */
-/* ============================= */
-
-.trending{
-  border-color: rgba(255, 80, 80, 0.5);
+.top {
+  background: linear-gradient(135deg,#4facfe,#00f2fe);
 }
 
-.toprated{
-  border-color: rgba(255, 200, 80, 0.5);
+.genre {
+  background: linear-gradient(135deg,#a18cd1,#fbc2eb);
 }
 
-.genres{
-  border-color: rgba(80, 160, 255, 0.5);
+.new {
+  background: linear-gradient(135deg,#fddb92,#d1fdff);
 }
 
-.new{
-  border-color: rgba(80, 255, 180, 0.5);
+.must {
+  background: linear-gradient(135deg,#00c9a7,#92fe9d);
 }
 
-.mustwatch{
-  border-color: rgba(160, 100, 255, 0.5);
+.list {
+  background: linear-gradient(135deg,#ff758c,#ff7eb3);
 }
 
-.mylist{
-  border-color: rgba(255, 100, 150, 0.5);
+.trailer {
+  background: linear-gradient(135deg,#667eea,#764ba2);
 }
 
-.trailers{
-  border-color: rgba(200, 200, 200, 0.4);
-}
-
-.theatre{
-  border-color: rgba(255, 150, 80, 0.5);
-}
-
-.boxoffice{
-  border-color: rgba(100, 255, 120, 0.5);
-}
-
-.ott{
-  border-color: rgba(100, 200, 255, 0.5);
+/* Hover Effect */
+.qbtn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px rgba(255,255,255,0.4);
 }
 
 
