@@ -1460,6 +1460,148 @@ async function loadTheatre(){
 
 }
 
+
+/* ================= BOX OFFICE SECTION ================= */
+
+async function loadBoxOffice(type = "india"){
+
+const container = document.getElementById("boxOfficeList");
+if(!container) return;
+
+container.innerHTML = "Loading...";
+
+/* DIFFERENT DATA BASED ON TAB */
+let endpoint = "";
+
+if(type === "india"){
+  endpoint = "/discover/movie?with_origin_country=IN&sort_by=popularity.desc";
+}
+else if(type === "world"){
+  endpoint = "/trending/movie/week";
+}
+else{
+  endpoint = "/movie/now_playing";
+}
+
+try{
+
+const data = await getMovies(endpoint);
+
+/* TAKE TOP 7 */
+let movies = data.slice(0,7);
+
+container.innerHTML = "";
+
+/* RENDER ROWS */
+movies.forEach((movie,index)=>{
+
+const title = movie.title || movie.name || "No Title";
+
+/* FAKE BUT REALISTIC EARNINGS */
+const weekend = Math.floor(Math.random()*70)+10; // $10M - $80M
+const total = weekend + Math.floor(Math.random()*100)+20;
+
+const row = document.createElement("div");
+row.className = "box-row";
+
+row.innerHTML = `
+
+<div class="box-rank">${index+1}</div>
+
+<div class="box-add" data-id="${movie.id}">+</div>
+
+<div class="box-info">
+
+  <div class="box-title" data-id="${movie.id}">
+    ${title}
+  </div>
+
+  <div class="box-earnings">
+    $${weekend}M · Total $${total}M
+  </div>
+
+</div>
+
+<div class="box-ticket" data-id="${movie.id}">
+🎟
+</div>
+
+`;
+
+container.appendChild(row);
+
+});
+
+/* EVENTS INIT */
+initBoxOfficeEvents();
+
+}catch(err){
+container.innerHTML = "Failed to load";
+console.error(err);
+}
+
+}
+
+
+/* ================= EVENTS ================= */
+
+function initBoxOfficeEvents(){
+
+/* MOVIE CLICK */
+document.querySelectorAll(".box-title").forEach(el=>{
+el.onclick = ()=>{
+const id = el.dataset.id;
+window.location.href = `movie.html?id=${id}`;
+};
+});
+
+/* TICKET BUTTON */
+document.querySelectorAll(".box-ticket").forEach(el=>{
+el.onclick = ()=>{
+const id = el.dataset.id;
+window.location.href = `movie.html?id=${id}`;
+};
+});
+
+/* WATCHLIST (+) */
+document.querySelectorAll(".box-add").forEach(btn=>{
+btn.onclick = ()=>{
+
+btn.innerText = "✓";
+btn.style.background = "#4da3ff";
+
+/* future localStorage use kar sakte */
+};
+});
+
+}
+
+
+/* ================= TABS ================= */
+
+function initBoxOfficeTabs(){
+
+const tabs = document.querySelectorAll(".box-tab");
+
+tabs.forEach(tab=>{
+
+tab.onclick = ()=>{
+
+tabs.forEach(t=>t.classList.remove("active"));
+tab.classList.add("active");
+
+const type = tab.dataset.tab;
+
+loadBoxOffice(type);
+
+};
+
+});
+
+}
+
+
+
 /* ---------------- MOVIE CARD SYSTEM ---------------- */
 
 function createMovieCard(movie){
@@ -1573,6 +1715,9 @@ registerSection("streamingSection", loadStreaming);
 registerSection("popularInterests", loadPopularInterests);
 
 registerSection("theatreReleases", loadTheatre);
+
+registerSection("boxOfficeSection", loadBoxOfficeSection);
+
 
 /* ---------------- INIT ---------------- */
 
