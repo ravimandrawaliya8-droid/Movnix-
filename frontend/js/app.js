@@ -1066,186 +1066,130 @@ container.innerHTML += card;
 
 
 
-/* ============================= */
-/* OTT SECTION (FIXED + SAFE) */
-/* ============================= */
+/* ================= STREAMING SECTION ================= */
 
-async function loadOTT(type="prime"){
+/* MAIN LOAD FUNCTION */
+async function loadStreaming(){
 
-const container = document.getElementById("ottMovies");
-const heading = document.getElementById("ottHeading");
-
+const container = document.getElementById("streamRow");
 if(!container) return;
 
-/* LOADER */
+container.innerHTML = "Loading...";
 
-container.innerHTML = `<div style="color:#aaa;padding:20px;">Loading...</div>`;
+/* MIXED DATA SOURCES */
+const endpoints = [
 
-let url = "";
+"/trending/movie/week",
+"/discover/movie?with_origin_country=IN&sort_by=popularity.desc",
+"/discover/tv?sort_by=popularity.desc",
+"/discover/movie?with_genres=18",
+"/discover/movie?with_genres=28",
+"/discover/tv?with_genres=16"
 
-/* ============================= */
-/* PLATFORM + HEADING */
-/* ============================= */
-
-if(type==="prime"){
-url="/discover/movie?sort_by=popularity.desc&page=1";
-if(heading) heading.innerText = "Included with Prime";
-}
-
-else if(type==="netflix"){
-url="/trending/movie/week";
-if(heading) heading.innerText = "Trending on Netflix";
-}
-
-else if(type==="hotstar"){
-url="/discover/movie?with_origin_country=IN&sort_by=popularity.desc";
-if(heading) heading.innerText = "Popular in India";
-}
-
-else if(type==="apple"){
-url="/discover/movie?sort_by=vote_average.desc&vote_count.gte=500";
-if(heading) heading.innerText = "Top Rated Picks";
-}
-
-else if(type==="zee5"){
-url="/discover/movie?with_origin_country=IN&sort_by=popularity.desc";
-if(heading) heading.innerText = "ZEE5 Picks";
-}
-
-else if(type==="sony"){
-url="/discover/movie?sort_by=popularity.desc";
-if(heading) heading.innerText = "SonyLIV Trending";
-}
-
-else if(type==="mx"){
-url="/discover/movie?sort_by=popularity.desc";
-if(heading) heading.innerText = "MX Player Free Picks";
-}
-
-else if(type==="jio"){
-url="/trending/movie/week";
-if(heading) heading.innerText = "JioCinema Trending";
-}
-
-else if(type==="youtube"){
-url="/discover/movie?sort_by=popularity.desc";
-if(heading) heading.innerText = "YouTube Movies";
-}
-
-/* DEFAULT FALLBACK */
-
-if(!url){
-url="/discover/movie?sort_by=popularity.desc";
-if(heading) heading.innerText = "Popular Movies";
-}
-
-/* ============================= */
-/* FETCH */
-/* ============================= */
+];
 
 try{
 
-const movies = await getMovies(url);
+const results = await Promise.all(
+  endpoints.map(e => getMovies(e))
+);
+
+let all = results.flat();
+
+/* REMOVE DUPLICATES */
+const uniqueMap = new Map();
+all.forEach(item=>{
+  if(!uniqueMap.has(item.id)){
+    uniqueMap.set(item.id, item);
+  }
+});
+
+all = [...uniqueMap.values()];
+
+/* RANDOM MIX */
+all.sort(()=>Math.random() - 0.5);
+
+/* FIX TOTAL = 20 */
+all = all.slice(0,20);
 
 container.innerHTML = "";
 
-/* EMPTY DATA */
-
-if(!movies || movies.length === 0){
-container.innerHTML = `<div style="color:#aaa;padding:20px;">No movies found</div>`;
-return;
-}
-
-/* ============================= */
-/* RENDER */
-/* ============================= */
-
-let html = "";
-
-movies.slice(0,15).forEach(movie=>{
+/* CREATE CARDS */
+all.forEach(movie=>{
 
 const poster = movie.poster_path
 ? "https://image.tmdb.org/t/p/w500"+movie.poster_path
-: "https://via.placeholder.com/500x750?text=No+Image";
+: "https://via.placeholder.com/500x750";
+
+const title = movie.title || movie.name || "No Title";
 
 const rating = movie.vote_average
 ? movie.vote_average.toFixed(1)
 : "0";
 
-html += `
+const card = document.createElement("div");
+card.className = "stream-card";
 
-<div class="ott-card">
+card.innerHTML = `
 
-<div class="ott-poster">
-<img src="${poster}" alt="${movie.title}">
-<div class="watchlist-icon">+</div>
+<div class="stream-poster">
+  <img src="${poster}">
+  <div class="stream-plus">+</div>
 </div>
 
-<div class="ott-info">
+<div class="stream-info">
 
-<div class="ott-rating">⭐ ${rating}</div>
+  <div class="stream-rating">⭐ ${rating}</div>
 
-<div class="ott-title-text">
-${movie.title}
-</div>
+  <div class="stream-title-text">${title}</div>
 
-<a href="watch.html?id=${movie.id}" class="watch-btn">
-Watch now
-</a>
+  <a href="watch.html?id=${movie.id}" class="stream-btn">
+    Watch now ↗
+  </a>
 
-<a href="trailer.html?id=${movie.id}" class="trailer-btn">
-▶ Trailer
-</a>
-
-</div>
+  <div class="stream-trailer">▶ Trailer</div>
 
 </div>
 
 `;
 
+container.appendChild(card);
+
 });
 
-/* ONE TIME INSERT (FAST) */
-container.innerHTML = html;
+/* INIT TABS AFTER LOAD */
+initStreamingTabs();
 
-}catch(error){
-
-console.error("OTT Error:", error);
-
-container.innerHTML = `<div style="color:red;padding:20px;">Failed to load</div>`;
-
+}catch(err){
+container.innerHTML = "Failed to load";
+console.error(err);
 }
 
 }
 
 
-/* ============================= */
-/* TAB SWITCH SYSTEM (SAFE) */
-/* ============================= */
+/* ================= TAB SYSTEM ================= */
 
-document.addEventListener("DOMContentLoaded",()=>{
+function initStreamingTabs(){
 
-const tabs = document.querySelectorAll(".ott-tab");
+const tabs = document.querySelectorAll(".stream-tab");
 
-tabs.forEach(btn=>{
+tabs.forEach(tab=>{
 
-btn.addEventListener("click",()=>{
+tab.onclick = ()=>{
 
-tabs. forEach(b=>b.classList.remove("active"));
-btn.classList.add("active");
+tabs.forEach(t=>t.classList.remove("active"));
+tab.classList.add("active");
 
-const type = btn.dataset.tab || "prime";
+/* FUTURE: OTT FILTER ADD KAR SAKTE */
+loadStreaming();
 
-loadOTT(type);
-
-});
+};
 
 });
 
-/* DEFAULT LOAD */
-loadOTT("prime");
+}
 
-});
 
 
 /* ============================= */
@@ -1624,7 +1568,7 @@ registerSection("trendingList", loadTrending);
 
 registerSection("fanFavourites", loadFanFavourites);
 
-registerSection("ottMovies", loadOTT);
+registerSection("streamingSection", loadStreaming);
 
 registerSection("popularInterests", loadPopularInterests);
 
