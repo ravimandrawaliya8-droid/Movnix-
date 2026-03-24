@@ -1343,33 +1343,40 @@ async function loadPopularInterests(){
 }
 
 
-/* ================= IN THEATERS ================= */
+/* ================= THEATRE SECTION ================= */
 
-async function loadInTheaters(type = "trending"){
+async function loadTheatre(type = "trending"){
 
 const container = document.getElementById("theatreList");
 if(!container) return;
 
 container.innerHTML = "Loading...";
 
-/* ENDPOINT SELECT */
-let endpoint = "";
-
-if(type === "trending"){
-  endpoint = "/movie/now_playing";
-}
-else if(type === "fast"){
-  endpoint = "/discover/movie?sort_by=popularity.desc";
-}
-else{
-  endpoint = "/discover/movie?sort_by=vote_average.desc&vote_count.gte=500";
-}
+/* 👉 DIFFERENT REAL LOGIC PER TAB */
+let endpoint = "/movie/now_playing?region=IN";
 
 try{
 
-const data = await getMovies(endpoint);
+let data = await getMovies(endpoint);
 
-/* 👉 15 CARDS */
+/* 👉 SMART SORTING (IMAGE LIKE FEEL) */
+
+if(type === "fast"){
+  // Fast filling → high popularity
+  data = data.sort((a,b)=> b.popularity - a.popularity);
+}
+else if(type === "top"){
+  // Top rated → high rating
+  data = data
+    .filter(m => m.vote_count > 200)
+    .sort((a,b)=> b.vote_average - a.vote_average);
+}
+else{
+  // Trending → mix (default)
+  data = data.sort((a,b)=> b.popularity - a.popularity);
+}
+
+/* 👉 LIMIT 15 */
 const movies = data.slice(0,15);
 
 container.innerHTML = "";
@@ -1379,28 +1386,37 @@ const row = document.createElement("div");
 row.className = "theatre-row";
 
 /* LOOP */
-movies.forEach((movie,index)=>{
+movies.forEach(movie=>{
 
 const title = movie.title || "No Title";
 
 /* POSTER */
 const poster = movie.poster_path
 ? "https://image.tmdb.org/t/p/w500" + movie.poster_path
-: "https://via.placeholder.com/500x750?text=No+Image";
+: "";
 
 /* RATING */
 const rating = movie.vote_average
 ? movie.vote_average.toFixed(1)
 : "0";
 
-/* TAG */
-let tag = "🔥 High Demand";
-if(movie.vote_average > 7.5) tag = "⭐ Top Rated";
-if(movie.popularity > 150) tag = "🔥 Trending";
+/* 🎯 ADVANCED TAG SYSTEM (IMAGE MATCH) */
 
-/* TIME */
-const timeLeft = Math.floor(Math.random()*3)+1;
-const minutes = Math.floor(Math.random()*59);
+let tag = "🔥 High Demand";
+
+/* GENRE BASED TAGS */
+if(movie.genre_ids?.includes(18)) tag = "💔 Emotional Drama";
+if(movie.genre_ids?.includes(35)) tag = "😂 Comedy Hit";
+if(movie.genre_ids?.includes(28)) tag = "💥 Action Blast";
+if(movie.genre_ids?.includes(10751)) tag = "👨‍👩‍👧 Family Hit";
+
+/* PRIORITY OVERRIDE */
+if(movie.vote_average >= 8) tag = "⭐ Top Rated";
+if(movie.popularity >= 250) tag = "🔥 Fast Filling";
+
+/* TIME (SMART FEEL) */
+const hours = Math.floor(Math.random()*3)+1;
+const mins = Math.floor(Math.random()*59);
 
 /* CARD */
 const card = document.createElement("div");
@@ -1410,37 +1426,39 @@ card.innerHTML = `
 
 <div class="poster-box">
 
-<img src="${poster}" alt="${title}" loading="lazy">
+  <img src="${poster}" alt="${title}" loading="lazy">
 
-<div class="add-btn">+</div>
+  <div class="add-btn">+</div>
 
-<div class="poster-overlay">
+  <div class="poster-overlay">
 
-<div class="rating">⭐ ${rating}</div>
+    <div class="rating">⭐ ${rating}</div>
 
-<div class="tag">${tag}</div>
+    <div class="tag">${tag}</div>
 
-<h3 class="movie-title">${title}</h3>
+    <h3 class="movie-title">${title}</h3>
 
-<div class="actions">
+    <div class="actions">
 
-<button class="book-btn" data-id="${movie.id}">
-🎟 Book
-</button>
+      <button class="book-btn" data-id="${movie.id}">
+        🎟 Book Tickets
+      </button>
 
-<button class="trailer-btn" data-id="${movie.id}">
-▶ Trailer
-</button>
+      <button class="trailer-btn" data-id="${movie.id}">
+        ▶ Trailer
+      </button>
 
-<button class="watchlist-btn">➕</button>
+    </div>
 
-</div>
+    <div class="now-playing">
+      🟢 Now Playing • ${hours}h ${mins}m left
+    </div>
 
-<div class="now-playing">
-🟢 Now Playing • ${timeLeft}h ${minutes}m left
-</div>
+    <button class="view-btn" data-id="${movie.id}">
+      View
+    </button>
 
-</div>
+  </div>
 
 </div>
 
@@ -1481,10 +1499,15 @@ window.location.href = `trailer.html?id=${btn.dataset.id}`;
 };
 });
 
-document.querySelectorAll(".watchlist-btn").forEach(btn=>{
+document.querySelectorAll(".view-btn").forEach(btn=>{
 btn.onclick = ()=>{
-btn.innerText = "✓";
-btn.style.background = "#4da3ff";
+window.location.href = `movie.html?id=${btn.dataset.id}`;
+};
+});
+
+document.querySelectorAll(".add-btn").forEach(btn=>{
+btn.onclick = ()=>{
+btn.innerText = btn.innerText === "+" ? "✓" : "+";
 };
 });
 
@@ -1504,23 +1527,13 @@ tab.onclick = ()=>{
 tabs.forEach(t=>t.classList.remove("active"));
 tab.classList.add("active");
 
-loadInTheaters(tab.dataset.tab);
+loadTheatre(tab.dataset.tab);
 
 };
 
 });
 
-}
-
-
-/* ================= WRAPPER (LAZY SYSTEM KE LIYE) ================= */
-
-function loadTheatre(){
-
-loadInTheaters("trending");
-initTheatreTabs();
-
-}
+        }
 
 
 /* ================= GLOBAL STATE ================= */
