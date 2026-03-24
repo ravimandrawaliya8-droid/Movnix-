@@ -1613,7 +1613,7 @@ isAnimating = false;
 
 function createMovieList(movies){
 
-const list = document.createElement("div");
+const fragment = document.createDocumentFragment(); // 🔥 FIX
 
 movies.forEach((movie,index)=>{
 
@@ -1644,12 +1644,11 @@ row.innerHTML = `
 </div>
 `;
 
-list.appendChild(row);
+fragment.appendChild(row);
 
 });
 
-return list;
-
+return fragment; // 🔥 IMPORTANT
 }
 
 
