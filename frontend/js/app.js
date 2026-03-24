@@ -1464,6 +1464,7 @@ async function loadTheatre(){
 /* ================= GLOBAL STATE ================= */
 
 let currentBoxOfficeType = "india";
+let previousBoxOfficeType = "india";
 
 
 /* ================= BOX OFFICE LOAD ================= */
@@ -1473,13 +1474,12 @@ async function loadBoxOffice(type = "india"){
 const container = document.getElementById("boxOfficeList");
 if(!container) return;
 
-/* SAVE CURRENT TYPE */
+/* SAVE STATES */
+previousBoxOfficeType = currentBoxOfficeType;
 currentBoxOfficeType = type;
 
-/* LOADING UI (BETTER UX) */
-container.innerHTML = `
-  <div class="box-loading">Loading box office...</div>
-`;
+/* LOADING (SKELETON - NO BLANK SCREEN) */
+container.innerHTML = getSkeletonRows();
 
 /* DIFFERENT DATA BASED ON TAB */
 let endpoint = "";
@@ -1497,18 +1497,30 @@ else{
 try{
 
 const data = await getMovies(endpoint);
-
-/* SAFE CHECK */
 const movies = data?.slice(0,7) || [];
 
-container.innerHTML = "";
+/* CREATE NEW WRAPPER */
+const newList = document.createElement("div");
+newList.className = "box-inner";
+
+/* DIRECTION DETECT */
+let direction = "right";
+
+if(previousBoxOfficeType === "world" && type === "india"){
+  direction = "left";
+}
+
+/* START POSITION */
+newList.style.transform = direction === "right"
+  ? "translateX(100%)"
+  : "translateX(-100%)";
 
 /* RENDER ROWS */
 movies.forEach((movie,index)=>{
 
 const title = movie.title || movie.name || "No Title";
 
-/* FAKE BUT SMOOTH EARNINGS */
+/* FAKE EARNINGS */
 const weekend = Math.floor(Math.random()*70)+10;
 const total = weekend + Math.floor(Math.random()*100)+20;
 
@@ -1539,8 +1551,18 @@ row.innerHTML = `
 
 `;
 
-container.appendChild(row);
+newList.appendChild(row);
 
+});
+
+/* REPLACE OLD CONTENT */
+container.innerHTML = "";
+container.appendChild(newList);
+
+/* ANIMATE IN */
+requestAnimationFrame(()=>{
+newList.style.transition = "transform 0.4s ease";
+newList.style.transform = "translateX(0)";
 });
 
 /* INIT EVENTS */
@@ -1558,7 +1580,6 @@ console.error(err);
 
 function initBoxOfficeEvents(){
 
-/* MOVIE CLICK */
 document.querySelectorAll(".box-title").forEach(el=>{
 el.onclick = ()=>{
 const id = el.dataset.id;
@@ -1566,7 +1587,6 @@ window.location.href = `movie.html?id=${id}`;
 };
 });
 
-/* TICKET BUTTON */
 document.querySelectorAll(".box-ticket").forEach(el=>{
 el.onclick = ()=>{
 const id = el.dataset.id;
@@ -1574,21 +1594,17 @@ window.location.href = `movie.html?id=${id}`;
 };
 });
 
-/* WATCHLIST (+) */
 document.querySelectorAll(".box-add").forEach(btn=>{
 btn.onclick = ()=>{
-
 btn.innerText = "✓";
 btn.style.background = "#4da3ff";
-
-/* future localStorage add kar sakte */
 };
 });
 
 }
 
 
-/* ================= TABS (FIXED - BEST METHOD) ================= */
+/* ================= TABS (BEST SYSTEM) ================= */
 
 document.addEventListener("click", (e)=>{
 
@@ -1598,14 +1614,11 @@ if(tab){
 
 const tabs = document.querySelectorAll(".box-tab");
 
-/* ACTIVE SWITCH */
 tabs.forEach(t=>t.classList.remove("active"));
 tab.classList.add("active");
 
-/* GET TYPE */
 const type = tab.dataset.tab;
 
-/* LOAD DATA */
 loadBoxOffice(type);
 
 }
@@ -1626,7 +1639,7 @@ window.location.href = `boxoffice.html?type=${currentBoxOfficeType}`;
 });
 
 
-/* ================= OPTIONAL: SKELETON LOADER ================= */
+/* ================= SKELETON LOADER ================= */
 
 function getSkeletonRows(){
 
@@ -1648,7 +1661,7 @@ skeleton += `
 
 return skeleton;
 
-                           }
+    }
 
 
 /* ---------------- MOVIE CARD SYSTEM ---------------- */
