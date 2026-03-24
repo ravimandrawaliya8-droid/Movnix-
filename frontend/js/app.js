@@ -1461,14 +1461,25 @@ async function loadTheatre(){
 }
 
 
-/* ================= BOX OFFICE SECTION ================= */
+/* ================= GLOBAL STATE ================= */
+
+let currentBoxOfficeType = "india";
+
+
+/* ================= BOX OFFICE LOAD ================= */
 
 async function loadBoxOffice(type = "india"){
 
 const container = document.getElementById("boxOfficeList");
 if(!container) return;
 
-container.innerHTML = "Loading...";
+/* SAVE CURRENT TYPE */
+currentBoxOfficeType = type;
+
+/* LOADING UI (BETTER UX) */
+container.innerHTML = `
+  <div class="box-loading">Loading box office...</div>
+`;
 
 /* DIFFERENT DATA BASED ON TAB */
 let endpoint = "";
@@ -1487,8 +1498,8 @@ try{
 
 const data = await getMovies(endpoint);
 
-/* TAKE TOP 7 */
-let movies = data.slice(0,7);
+/* SAFE CHECK */
+const movies = data?.slice(0,7) || [];
 
 container.innerHTML = "";
 
@@ -1497,8 +1508,8 @@ movies.forEach((movie,index)=>{
 
 const title = movie.title || movie.name || "No Title";
 
-/* FAKE BUT REALISTIC EARNINGS */
-const weekend = Math.floor(Math.random()*70)+10; // $10M - $80M
+/* FAKE BUT SMOOTH EARNINGS */
+const weekend = Math.floor(Math.random()*70)+10;
 const total = weekend + Math.floor(Math.random()*100)+20;
 
 const row = document.createElement("div");
@@ -1532,11 +1543,11 @@ container.appendChild(row);
 
 });
 
-/* EVENTS INIT */
+/* INIT EVENTS */
 initBoxOfficeEvents();
 
 }catch(err){
-container.innerHTML = "Failed to load";
+container.innerHTML = `<div class="box-error">Failed to load</div>`;
 console.error(err);
 }
 
@@ -1570,36 +1581,74 @@ btn.onclick = ()=>{
 btn.innerText = "✓";
 btn.style.background = "#4da3ff";
 
-/* future localStorage use kar sakte */
+/* future localStorage add kar sakte */
 };
 });
 
 }
 
 
-/* ================= TABS ================= */
+/* ================= TABS (FIXED - BEST METHOD) ================= */
 
-function initBoxOfficeTabs(){
+document.addEventListener("click", (e)=>{
+
+const tab = e.target.closest(".box-tab");
+
+if(tab){
 
 const tabs = document.querySelectorAll(".box-tab");
 
-tabs.forEach(tab=>{
-
-tab.onclick = ()=>{
-
+/* ACTIVE SWITCH */
 tabs.forEach(t=>t.classList.remove("active"));
 tab.classList.add("active");
 
+/* GET TYPE */
 const type = tab.dataset.tab;
 
+/* LOAD DATA */
 loadBoxOffice(type);
-
-};
-
-});
 
 }
 
+});
+
+
+/* ================= SEE FULL RANKINGS ================= */
+
+document.addEventListener("click", (e)=>{
+
+const btn = e.target.closest(".box-more");
+
+if(btn){
+window.location.href = `boxoffice.html?type=${currentBoxOfficeType}`;
+}
+
+});
+
+
+/* ================= OPTIONAL: SKELETON LOADER ================= */
+
+function getSkeletonRows(){
+
+let skeleton = "";
+
+for(let i=0;i<5;i++){
+skeleton += `
+  <div class="box-row skeleton">
+    <div class="box-rank"></div>
+    <div class="box-add"></div>
+    <div class="box-info">
+      <div class="box-title"></div>
+      <div class="box-earnings"></div>
+    </div>
+    <div class="box-ticket"></div>
+  </div>
+`;
+}
+
+return skeleton;
+
+                           }
 
 
 /* ---------------- MOVIE CARD SYSTEM ---------------- */
