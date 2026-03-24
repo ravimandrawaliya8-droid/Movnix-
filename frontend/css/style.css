@@ -3073,3 +3073,13 @@ font-size:18px;
   }
 
 }
+
+
+.box-list {
+  overflow: hidden;
+  position: relative;
+}
+
+.box-inner {
+  width: 100%;
+}
