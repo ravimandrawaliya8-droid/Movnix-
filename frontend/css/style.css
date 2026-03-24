@@ -2868,6 +2868,7 @@ font-size:18px;
 /* ================= BOX OFFICE SECTION ================= */
 
 .box-office{
+  min-height: 100vh;
   padding: 20px 14px;
   background: #0f1115;
   color: #fff;
@@ -2945,6 +2946,7 @@ font-size:18px;
 /* ROW */
 
 .box-row{
+  min-height: 70px;
   display: flex;
   align-items: center;
   gap: 12px;
