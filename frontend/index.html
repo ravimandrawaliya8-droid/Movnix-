@@ -495,48 +495,55 @@ Popular Indian Celebrities
 </section>
 
 
-<!-- ============================= -->
-<!-- 🎬 NOW SHOWING WORLDWIDE -->
-<!-- ============================= -->
+<!-- ================= IN THEATERS SECTION ================= -->
 
-<section class="theatre-section" data-section="theatreReleases">
+<section id="theatreReleases" class="theatre-section">
 
-  <!-- 🔶 MAIN TITLE -->
-  <div class="main-title">
-    Now Showing Worldwide
-  </div>
+  <!-- HEADER -->
+  <div class="theatre-header">
 
-  <!-- 🔸 SUB HEADER -->
-  <div class="theatre-head">
-
-    <div class="theatre-left">
-
-      <!-- Yellow line -->
+    <div class="theatre-heading">
       <span class="theatre-line"></span>
-
-      <!-- Section title -->
-      <h2 class="theatre-title">
-        Theatre Releases
-        <span class="arrow">›</span>
-      </h2>
-
+      <h2>🎬 In Theaters Near You</h2>
     </div>
 
-    <!-- Sub text -->
-    <div class="theatre-sub">
-      Showtimes near you
-    </div>
+    <p class="theatre-subtitle">
+      Catch the biggest films on big screen
+    </p>
 
   </div>
 
-  <!-- 🎬 MOVIE ROW -->
-  <div class="theatre-row" id="theatreRow">
 
-    <!-- Loading Skeleton (optional but recommended) -->
-    <div class="theatre-card skeleton"></div>
-    <div class="theatre-card skeleton"></div>
-    <div class="theatre-card skeleton"></div>
-    <div class="theatre-card skeleton"></div>
+  <!-- TABS -->
+  <div class="theatre-tabs">
+
+    <button class="theatre-tab active" data-tab="trending">
+      🔥 Trending
+    </button>
+
+    <button class="theatre-tab" data-tab="fast">
+      🎟 Fast Filling
+    </button>
+
+    <button class="theatre-tab" data-tab="top">
+      ⭐ Top Rated
+    </button>
+
+  </div>
+
+
+  <!-- MOVIE LIST -->
+  <div id="theatreList" class="theatre-list">
+    <!-- JS WILL INJECT CARDS HERE -->
+  </div>
+
+
+  <!-- FOOTER -->
+  <div class="theatre-footer">
+
+    <button class="theatre-more">
+      See all in theaters →
+    </button>
 
   </div>
 
