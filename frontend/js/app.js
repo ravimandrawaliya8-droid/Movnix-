@@ -1374,7 +1374,7 @@ const movies = data.slice(0,15);
 
 container.innerHTML = "";
 
-/* CREATE ROW WRAPPER */
+/* ROW */
 const row = document.createElement("div");
 row.className = "theatre-row";
 
@@ -1393,17 +1393,16 @@ const rating = movie.vote_average
 ? movie.vote_average.toFixed(1)
 : "0";
 
-/* TAG SYSTEM */
+/* TAG */
 let tag = "🔥 High Demand";
-
 if(movie.vote_average > 7.5) tag = "⭐ Top Rated";
 if(movie.popularity > 150) tag = "🔥 Trending";
 
-/* RANDOM TIME LEFT */
+/* TIME */
 const timeLeft = Math.floor(Math.random()*3)+1;
 const minutes = Math.floor(Math.random()*59);
 
-/* CREATE CARD */
+/* CARD */
 const card = document.createElement("div");
 card.className = "theatre-card";
 
@@ -1451,7 +1450,6 @@ row.appendChild(card);
 
 });
 
-/* APPEND */
 container.appendChild(row);
 
 /* EVENTS */
@@ -1471,23 +1469,18 @@ console.error(err);
 
 function initTheatreEvents(){
 
-/* BOOK */
 document.querySelectorAll(".book-btn").forEach(btn=>{
 btn.onclick = ()=>{
-const id = btn.dataset.id;
-window.location.href = `booking.html?id=${id}`;
+window.location.href = `booking.html?id=${btn.dataset.id}`;
 };
 });
 
-/* TRAILER */
 document.querySelectorAll(".trailer-btn").forEach(btn=>{
 btn.onclick = ()=>{
-const id = btn.dataset.id;
-window.location.href = `trailer.html?id=${id}`;
+window.location.href = `trailer.html?id=${btn.dataset.id}`;
 };
 });
 
-/* WATCHLIST */
 document.querySelectorAll(".watchlist-btn").forEach(btn=>{
 btn.onclick = ()=>{
 btn.innerText = "✓";
@@ -1511,9 +1504,7 @@ tab.onclick = ()=>{
 tabs.forEach(t=>t.classList.remove("active"));
 tab.classList.add("active");
 
-const type = tab.dataset.tab;
-
-loadInTheaters(type);
+loadInTheaters(tab.dataset.tab);
 
 };
 
@@ -1522,14 +1513,15 @@ loadInTheaters(type);
 }
 
 
-/* ================= INIT ================= */
+/* ================= WRAPPER (LAZY SYSTEM KE LIYE) ================= */
 
-document.addEventListener("DOMContentLoaded", ()=>{
+function loadTheatre(){
 
 loadInTheaters("trending");
 initTheatreTabs();
 
-});
+}
+
 
 /* ================= GLOBAL STATE ================= */
 
