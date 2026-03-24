@@ -1343,123 +1343,193 @@ async function loadPopularInterests(){
 }
 
 
-/* ============================= */
-/* 🎬 THEATRE RELEASES SECTION */
-/* ============================= */
+/* ================= IN THEATERS ================= */
 
-async function loadTheatre(){
+async function loadInTheaters(type = "trending"){
 
-  const container = document.getElementById("theatreRow");
-  if(!container) return;
+const container = document.getElementById("theatreList");
+if(!container) return;
 
-  /* 🔄 SKELETON LOADER */
-  container.innerHTML = `
-    ${Array(6).fill(`
-      <div class="theatre-card skeleton"></div>
-    `).join("")}
-  `;
+container.innerHTML = "Loading...";
 
-  try{
+/* ENDPOINT SELECT */
+let endpoint = "";
 
-    /* 🎬 FETCH NOW PLAYING */
-    const movies = await getMovies("/movie/now_playing");
+if(type === "trending"){
+  endpoint = "/movie/now_playing";
+}
+else if(type === "fast"){
+  endpoint = "/discover/movie?sort_by=popularity.desc";
+}
+else{
+  endpoint = "/discover/movie?sort_by=vote_average.desc&vote_count.gte=500";
+}
 
-    /* 🧹 CLEAR */
-    container.innerHTML = "";
+try{
 
-    /* 🎯 LIMIT */
-    const list = movies.slice(0,20);
+const data = await getMovies(endpoint);
 
-    list.forEach(movie=>{
+/* 👉 15 CARDS */
+const movies = data.slice(0,15);
 
-      /* 🎞 POSTER */
-      const poster = movie.poster_path
-        ? "https://image.tmdb.org/t/p/w500" + movie.poster_path
-        : "https://via.placeholder.com/500x750?text=No+Poster";
+container.innerHTML = "";
 
-      /* ⭐ RATING */
-      const rating = movie.vote_average
-        ? movie.vote_average.toFixed(1)
-        : "0";
+/* CREATE ROW WRAPPER */
+const row = document.createElement("div");
+row.className = "theatre-row";
 
-      /* 📅 DATE */
-      const date = movie.release_date || "Coming Soon";
+/* LOOP */
+movies.forEach((movie,index)=>{
 
-      /* 🔥 TREND */
-      const trend = Math.round(movie.popularity);
+const title = movie.title || "No Title";
 
-      /* 🎬 CARD HTML */
-      const card = document.createElement("div");
-      card.className = "theatre-card";
+/* POSTER */
+const poster = movie.poster_path
+? "https://image.tmdb.org/t/p/w500" + movie.poster_path
+: "https://via.placeholder.com/500x750?text=No+Image";
 
-      card.innerHTML = `
+/* RATING */
+const rating = movie.vote_average
+? movie.vote_average.toFixed(1)
+: "0";
 
-        <div class="theatre-poster">
+/* TAG SYSTEM */
+let tag = "🔥 High Demand";
 
-          <img src="${poster}" alt="${movie.title}">
+if(movie.vote_average > 7.5) tag = "⭐ Top Rated";
+if(movie.popularity > 150) tag = "🔥 Trending";
 
-          <div class="theatre-overlay">
-            <a href="trailer.html?id=${movie.id}" class="play-btn">▶</a>
-          </div>
+/* RANDOM TIME LEFT */
+const timeLeft = Math.floor(Math.random()*3)+1;
+const minutes = Math.floor(Math.random()*59);
 
-        </div>
+/* CREATE CARD */
+const card = document.createElement("div");
+card.className = "theatre-card";
 
-        <div class="theatre-info">
+card.innerHTML = `
 
-          <h4>${movie.title}</h4>
+<div class="poster-box">
 
-          <div class="theatre-meta">
-            <span>⭐ ${rating}</span>
-            <span>📅 ${date}</span>
-          </div>
+<img src="${poster}" alt="${title}" loading="lazy">
 
-          <div class="theatre-trend">
-            🔥 ${trend}
-          </div>
+<div class="add-btn">+</div>
 
-          <div class="theatre-actions">
+<div class="poster-overlay">
 
-            <a href="watchlist.html?id=${movie.id}" class="btn-small">
-              + Watchlist
-            </a>
+<div class="rating">⭐ ${rating}</div>
 
-            <a href="movie.html?id=${movie.id}" class="btn-small">
-              Details
-            </a>
+<div class="tag">${tag}</div>
 
-          </div>
+<h3 class="movie-title">${title}</h3>
 
-        </div>
+<div class="actions">
 
-      `;
+<button class="book-btn" data-id="${movie.id}">
+🎟 Book
+</button>
 
-      /* 🖱 HOVER EFFECT */
-      card.addEventListener("mouseenter", ()=>{
-        card.classList.add("active");
-      });
+<button class="trailer-btn" data-id="${movie.id}">
+▶ Trailer
+</button>
 
-      card.addEventListener("mouseleave", ()=>{
-        card.classList.remove("active");
-      });
+<button class="watchlist-btn">➕</button>
 
-      container.appendChild(card);
+</div>
 
-    });
+<div class="now-playing">
+🟢 Now Playing • ${timeLeft}h ${minutes}m left
+</div>
 
-  }catch(err){
+</div>
 
-    console.error("Theatre load error:", err);
+</div>
 
-    container.innerHTML = `
-      <div style="color:#aaa;padding:20px;">
-        Failed to load movies 😢
-      </div>
-    `;
+`;
 
-  }
+row.appendChild(card);
+
+});
+
+/* APPEND */
+container.appendChild(row);
+
+/* EVENTS */
+initTheatreEvents();
+
+}catch(err){
+
+container.innerHTML = "Failed to load";
+console.error(err);
 
 }
 
+}
+
+
+/* ================= EVENTS ================= */
+
+function initTheatreEvents(){
+
+/* BOOK */
+document.querySelectorAll(".book-btn").forEach(btn=>{
+btn.onclick = ()=>{
+const id = btn.dataset.id;
+window.location.href = `booking.html?id=${id}`;
+};
+});
+
+/* TRAILER */
+document.querySelectorAll(".trailer-btn").forEach(btn=>{
+btn.onclick = ()=>{
+const id = btn.dataset.id;
+window.location.href = `trailer.html?id=${id}`;
+};
+});
+
+/* WATCHLIST */
+document.querySelectorAll(".watchlist-btn").forEach(btn=>{
+btn.onclick = ()=>{
+btn.innerText = "✓";
+btn.style.background = "#4da3ff";
+};
+});
+
+}
+
+
+/* ================= TABS ================= */
+
+function initTheatreTabs(){
+
+const tabs = document.querySelectorAll(".theatre-tab");
+
+tabs.forEach(tab=>{
+
+tab.onclick = ()=>{
+
+tabs.forEach(t=>t.classList.remove("active"));
+tab.classList.add("active");
+
+const type = tab.dataset.tab;
+
+loadInTheaters(type);
+
+};
+
+});
+
+}
+
+
+/* ================= INIT ================= */
+
+document.addEventListener("DOMContentLoaded", ()=>{
+
+loadInTheaters("trending");
+initTheatreTabs();
+
+});
 
 /* ================= GLOBAL STATE ================= */
 
