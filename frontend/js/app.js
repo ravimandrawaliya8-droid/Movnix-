@@ -1749,16 +1749,50 @@ return skeleton;
 
 function createMovieList(movies){
 
-const fragment = document.createDocumentFragment(); // 🔥 FIX
+const fragment = document.createDocumentFragment();
 
 movies.forEach((movie,index)=>{
 
 const title = movie.title || movie.name || "No Title";
 
+/* RANDOM BOX OFFICE DATA */
 const weekend = Math.floor(Math.random()*70)+10;
 const total = weekend + Math.floor(Math.random()*100)+20;
 
-const row = document.createElement("
+/* POSTER */
+const poster = movie.poster_path
+? "https://image.tmdb.org/t/p/w200" + movie.poster_path
+: "https://via.placeholder.com/200x300?text=No+Image";
+
+/* CREATE ROW */
+const row = document.createElement("div");
+row.className = "box-row";
+
+row.innerHTML = `
+
+<div class="box-rank">#${index+1}</div>
+
+<div class="box-movie">
+
+<img src="${poster}" alt="${title}">
+
+<div class="box-info">
+<h4>${title}</h4>
+<p>Weekend: $${weekend}M</p>
+<p>Total: $${total}M</p>
+</div>
+
+</div>
+
+`;
+
+fragment.appendChild(row);
+
+});
+
+return fragment;
+
+}
 
 
 
