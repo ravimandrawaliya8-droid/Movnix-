@@ -1470,7 +1470,7 @@ let isAnimating = false;
 /* ================= INITIAL LOAD ================= */
 
 document.addEventListener("DOMContentLoaded", () => {
-  loadBoxOffice("india", true); // first load without animation
+  loadBoxOffice("india", true);
 });
 
 
@@ -1487,7 +1487,6 @@ if(type === currentBoxOfficeType && !firstLoad) return;
 /* PREVENT SPAM CLICK */
 if(isAnimating && !firstLoad) return;
 
-/* SET STATE */
 const prevType = currentBoxOfficeType;
 currentBoxOfficeType = type;
 
@@ -1506,7 +1505,7 @@ else{
 }
 
 
-/* ================= FIRST LOAD (NO ANIMATION) ================= */
+/* ================= FIRST LOAD ================= */
 
 if(firstLoad){
 
@@ -1517,9 +1516,7 @@ const data = await getMovies(endpoint);
 const movies = data?.slice(0,7) || [];
 
 container.innerHTML = "";
-
-const list = createMovieList(movies);
-container.appendChild(list);
+container.appendChild(createMovieList(movies));
 
 initBoxOfficeEvents();
 
@@ -1531,16 +1528,20 @@ return;
 }
 
 
-/* ================= ANIMATION LOAD ================= */
+/* ================= ANIMATION ================= */
 
 isAnimating = true;
 
+/* 🔥 HEIGHT LOCK (SCROLL FIX) */
+const containerHeight = container.offsetHeight;
+container.style.height = containerHeight + "px";
+
 const oldContent = container.innerHTML;
 
-/* DIRECTION SMART */
+/* DIRECTION */
 let direction = "right";
-
 const order = ["india","world","opening"];
+
 if(order.indexOf(type) < order.indexOf(prevType)){
   direction = "left";
 }
@@ -1570,13 +1571,11 @@ try{
 const data = await getMovies(endpoint);
 const movies = data?.slice(0,7) || [];
 
-const realList = createMovieList(movies);
-
-/* REPLACE SKELETON */
+/* 🔥 DIRECT ROWS (NO EXTRA WRAPPER) */
 newSlide.innerHTML = "";
-newSlide.appendChild(realList);
+newSlide.appendChild(createMovieList(movies));
 
-/* ANIMATION */
+/* ANIMATE */
 requestAnimationFrame(()=>{
 
 wrapper.style.transition = "transform 0.45s ease";
@@ -1591,9 +1590,13 @@ wrapper.style.transform = direction === "right"
 setTimeout(()=>{
 
 container.innerHTML = "";
-container.appendChild(realList);
+container.appendChild(createMovieList(movies));
 
 initBoxOfficeEvents();
+
+/* 🔥 HEIGHT UNLOCK */
+container.style.height = "auto";
+
 isAnimating = false;
 
 }, 450);
@@ -1602,6 +1605,8 @@ isAnimating = false;
 
 container.innerHTML = `<div class="box-error">Failed to load</div>`;
 console.error(err);
+
+container.style.height = "auto";
 isAnimating = false;
 
 }
@@ -1613,7 +1618,7 @@ isAnimating = false;
 
 function createMovieList(movies){
 
-const fragment = document.createDocumentFragment(); // 🔥 FIX
+const fragment = document.createDocumentFragment();
 
 movies.forEach((movie,index)=>{
 
@@ -1648,7 +1653,8 @@ fragment.appendChild(row);
 
 });
 
-return fragment; // 🔥 IMPORTANT
+return fragment;
+
 }
 
 
@@ -1736,6 +1742,23 @@ skeleton += `
 return skeleton;
 
 }
+
+
+
+/* ================= CREATE MOVIE LIST ================= */
+
+function createMovieList(movies){
+
+const fragment = document.createDocumentFragment(); // 🔥 FIX
+
+movies.forEach((movie,index)=>{
+
+const title = movie.title || movie.name || "No Title";
+
+const weekend = Math.floor(Math.random()*70)+10;
+const total = weekend + Math.floor(Math.random()*100)+20;
+
+const row = document.createElement("
 
 
 
