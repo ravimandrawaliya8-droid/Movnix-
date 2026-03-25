@@ -1899,9 +1899,9 @@ return Object.values(unique);
 
 /* ================= LAZY LOAD FUNCTION ================= */
 
-function initLazyImages(){
+function initLazyImages(container){
 
-const images = document.querySelectorAll(".lazy-img");
+const images = container.querySelectorAll(".lazy-img");
 
 const observer = new IntersectionObserver((entries, obs)=>{
 entries.forEach(entry => {
@@ -1920,7 +1920,6 @@ obs.unobserve(img);
 images.forEach(img => observer.observe(img));
 
 }
-
 
 /* ================= LOAD SECTION ================= */
 
@@ -2070,7 +2069,7 @@ if(row.children.length >= 25) break;
 container.appendChild(row);
 
 /* ✅ LAZY LOAD INIT */
-initLazyImages();
+initLazyImages(container);
 
 }catch(err){
 container.innerHTML = "Failed to load";
