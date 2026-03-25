@@ -2137,7 +2137,155 @@ btn.innerText = active ? "Notified ✓" : "Remind Me";
 
 });
 
+/* =====================================================
+📰 TOP NEWS SECTION (FINAL REAL SYSTEM)
+Uses: GNews API (India + Global)
+===================================================== */
 
+const NEWS_KEY = "d1d3a3da2bb2e737fbb7053536e1398a";
+
+/* ================= STATE ================= */
+
+let currentCountry = "in";
+
+/* ================= FETCH ================= */
+
+async function fetchNews(country = "in"){
+
+  try{
+
+    const res = await fetch(
+      `https://gnews.io/api/v4/top-headlines?category=entertainment&lang=en&country=${country}&apikey=${NEWS_KEY}`
+    );
+
+    const data = await res.json();
+    return data.articles || [];
+
+  }catch(e){
+    console.error("News Error:", e);
+    return [];
+  }
+
+}
+
+/* ================= LOAD SECTION ================= */
+
+async function loadNewsSection(){
+
+  const section = document.getElementById("newsSection");
+  if(!section) return;
+
+  const hero = section.querySelector(".news-hero");
+  const list = section.querySelector(".news-list");
+
+  list.innerHTML = "Loading...";
+
+  try{
+
+    const articles = await fetchNews(currentCountry);
+
+    if(!articles.length){
+      list.innerHTML = "No news found";
+      return;
+    }
+
+    /* ⭐ HERO */
+    const top = articles[0];
+
+    hero.innerHTML = `
+      <img src="${top.image || ''}" class="lazy-img" data-src="${top.image || ''}">
+      <div class="overlay"></div>
+
+      <div class="hero-content">
+        <span class="tag">⭐ TOP STORY</span>
+
+        <h3>${top.title}</h3>
+
+        <p>${top.description || ''}</p>
+
+        <div class="hero-footer">
+          <span>🗞 ${top.source.name}</span>
+          <button class="read-btn" data-url="${top.url}">Read More →</button>
+        </div>
+      </div>
+    `;
+
+    /* 📃 LIST */
+    list.innerHTML = "";
+
+    articles.slice(1,8).forEach(news => {
+
+      const card = document.createElement("div");
+      card.className = "news-card";
+
+      card.innerHTML = `
+        <img class="lazy-img" data-src="${news.image || ''}">
+
+        <div>
+          <h4>${news.title}</h4>
+          <p>${news.source.name}</p>
+        </div>
+
+        <span class="arrow">→</span>
+      `;
+
+      card.dataset.url = news.url;
+
+      list.appendChild(card);
+
+    });
+
+    /* ✅ INIT IMAGE LAZY */
+    initLazyImages(section);
+
+  }catch(err){
+    console.error(err);
+    list.innerHTML = "Failed to load news";
+  }
+
+}
+
+/* ================= EVENTS ================= */
+
+document.addEventListener("click", function(e){
+
+  /* ▶ OPEN NEWS */
+  if(e.target.closest(".news-card")){
+    const url = e.target.closest(".news-card").dataset.url;
+    window.open(url, "_blank");
+  }
+
+  if(e.target.closest(".read-btn")){
+    const url = e.target.closest(".read-btn").dataset.url;
+    window.open(url, "_blank");
+  }
+
+  /* 🎯 PILLS */
+  if(e.target.closest(".news-pills button")){
+
+    const btn = e.target.closest("button");
+
+    document.querySelectorAll(".news-pills button")
+      .forEach(b => b.classList.remove("active"));
+
+    btn.classList.add("active");
+
+    const text = btn.innerText.toLowerCase();
+
+    if(text.includes("india")){
+      currentCountry = "in";
+    }
+    else if(text.includes("global")){
+      currentCountry = "us";
+    }
+    else{
+      currentCountry = "in";
+    }
+
+    loadNewsSection();
+  }
+
+});
 
 /* ---------------- MOVIE CARD SYSTEM ---------------- */
 
@@ -2256,6 +2404,8 @@ registerSection("theatreReleases", loadTheatre);
 registerSection("boxOfficeSection", () => loadBoxOffice("india"));
 
 registerSection("upcomingTheatres", loadUpcomingSection);
+
+registerSection("newsSection", loadNewsSection);
 
 /* ---------------- INIT ---------------- */
 
