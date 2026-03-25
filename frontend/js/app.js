@@ -1819,6 +1819,160 @@ return skeleton;
 }
 
 
+/* ================= UPCOMING THEATRES ================= */
+
+async function loadUpcoming(){
+
+const container = document.getElementById("upcomingList");
+if(!container) return;
+
+container.innerHTML = "Loading...";
+
+try{
+
+/* 👉 UPCOMING MOVIES (REAL) */
+const movies = await getMovies("/movie/upcoming?region=IN");
+
+/* LIMIT */
+const list = movies.slice(0,10);
+
+container.innerHTML = "";
+
+/* ROW */
+const row = document.createElement("div");
+row.className = "upcoming-row";
+
+/* LOOP */
+for(const movie of list){
+
+/* 👉 GET TRAILER */
+let trailerKey = "";
+let duration = "1:30";
+
+try{
+const res = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=${API_KEY}`);
+const data = await res.json();
+
+const trailer = data.results.find(
+v => v.type === "Trailer" && v.site === "YouTube"
+);
+
+if(trailer){
+  trailerKey = trailer.key;
+}
+
+}catch(e){}
+
+/* 👉 THUMBNAIL */
+const thumb = trailerKey
+? `https://img.youtube.com/vi/${trailerKey}/hqdefault.jpg`
+: (movie.backdrop_path
+   ? "https://image.tmdb.org/t/p/w500" + movie.backdrop_path
+   : "");
+
+/* 👉 DATE FORMAT */
+const dateObj = new Date(movie.release_date);
+const date = dateObj.toLocaleDateString("en-US",{
+  month:"short",
+  day:"2-digit",
+  year:"numeric"
+}).toUpperCase();
+
+/* 👉 GENRES */
+const genreMap = {
+28:"Action",12:"Adventure",16:"Animation",35:"Comedy",
+18:"Drama",10751:"Family",14:"Fantasy",27:"Horror",
+10749:"Romance",878:"Sci-Fi"
+};
+
+const genres = movie.genre_ids
+.slice(0,3)
+.map(id => genreMap[id] || "")
+.join(" • ");
+
+/* 👉 FAKE HYPE (UI FEEL) */
+const likes = Math.floor(Math.random()*90)+10 + "K";
+const interest = Math.floor(Math.random()*150)+50 + "K";
+
+/* 👉 CARD */
+const card = document.createElement("div");
+card.className = "upcoming-card";
+
+card.innerHTML = `
+
+<div class="thumb-box">
+
+  <img src="${thumb}" alt="${movie.title}">
+
+  <div class="play-btn" data-key="${trailerKey}">
+    ▶
+  </div>
+
+  <div class="duration">${duration}</div>
+
+</div>
+
+<div class="upcoming-info">
+
+  <div class="date">📅 ${date}</div>
+
+  <div class="title-row">
+    <h3>${movie.title}</h3>
+    <div class="add-btn">+</div>
+  </div>
+
+  <p class="genres">${genres}</p>
+
+  <div class="stats">
+    <span>👍 ${likes}</span>
+    <span>❤️ ${interest} interested</span>
+  </div>
+
+</div>
+
+`;
+
+row.appendChild(card);
+
+}
+
+container.appendChild(row);
+
+/* EVENTS */
+initUpcomingEvents();
+
+}catch(err){
+
+container.innerHTML = "Failed to load";
+console.error(err);
+
+}
+
+}
+
+
+/* ================= EVENTS ================= */
+
+function initUpcomingEvents(){
+
+/* ▶ PLAY TRAILER */
+document.querySelectorAll(".play-btn").forEach(btn=>{
+btn.onclick = ()=>{
+const key = btn.dataset.key;
+if(!key) return;
+
+window.open(`https://www.youtube.com/watch?v=${key}`,"_blank");
+};
+});
+
+/* ➕ WATCHLIST */
+document.querySelectorAll(".add-btn").forEach(btn=>{
+btn.onclick = ()=>{
+btn.innerText = btn.innerText === "+" ? "✓" : "+";
+};
+});
+
+}
 
 
 /* ---------------- MOVIE CARD SYSTEM ---------------- */
@@ -1937,6 +2091,7 @@ registerSection("theatreReleases", loadTheatre);
 
 registerSection("boxOfficeSection", () => loadBoxOffice("india"));
 
+registerSection("upcomingTheatres", loadUpcoming);
 
 /* ---------------- INIT ---------------- */
 
