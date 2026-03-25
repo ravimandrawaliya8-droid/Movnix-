@@ -2255,7 +2255,7 @@ registerSection("theatreReleases", loadTheatre);
 
 registerSection("boxOfficeSection", () => loadBoxOffice("india"));
 
-registerSection("upcomingTheatres", loadUpcoming);
+registerSection("upcomingTheatres", loadUpcomingSection);
 
 /* ---------------- INIT ---------------- */
 
