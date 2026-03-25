@@ -1819,9 +1819,68 @@ return skeleton;
 }
 
 
-/* ================= UPCOMING THEATRES ================= */
+/* =====================================================
+   🎬 UPCOMING IN THEATRES SECTION (FULL REAL SYSTEM)
+   Uses: Existing TMDB API_KEY (already defined in your project)
+===================================================== */
 
-async function loadUpcoming(){
+
+/* ================= HELPERS ================= */
+
+function formatNumber(num){
+if(!num) return "—";
+if(num >= 1000000) return (num/1000000).toFixed(1)+"M";
+if(num >= 1000) return (num/1000).toFixed(1)+"K";
+return num;
+}
+
+
+/* ================= LOCAL STORAGE ================= */
+
+function getStorage(key){
+return JSON.parse(localStorage.getItem(key)) || {};
+}
+
+function setStorage(key, value){
+localStorage.setItem(key, JSON.stringify(value));
+}
+
+function toggleLike(id){
+let data = getStorage("likes");
+data[id] = !data[id];
+setStorage("likes", data);
+return data[id];
+}
+
+function toggleSave(id){
+let data = getStorage("saved");
+data[id] = !data[id];
+setStorage("saved", data);
+return data[id];
+}
+
+function toggleNotify(id){
+let data = getStorage("notify");
+data[id] = !data[id];
+setStorage("notify", data);
+return data[id];
+}
+
+
+/* ================= FETCH UPCOMING ================= */
+
+async function getUpcomingMovies(){
+const res = await fetch(
+`https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US`
+);
+const data = await res.json();
+return data.results;
+}
+
+
+/* ================= LOAD SECTION ================= */
+
+async function loadUpcomingSection(){
 
 const container = document.getElementById("upcomingList");
 if(!container) return;
@@ -1830,55 +1889,48 @@ container.innerHTML = "Loading...";
 
 try{
 
-/* 👉 UPCOMING MOVIES (REAL) */
-const movies = await getMovies("/movie/upcoming?region=IN");
-
-/* LIMIT */
-const list = movies.slice(0,10);
+const movies = await getUpcomingMovies();
+const list = movies.slice(0, 10);
 
 container.innerHTML = "";
-
-/* ROW */
 const row = document.createElement("div");
 row.className = "upcoming-row";
 
-/* LOOP */
+/* LOOP MOVIES */
 for(const movie of list){
 
-/* 👉 GET TRAILER */
+/* ---------- GET TRAILER ---------- */
 let trailerKey = "";
-let duration = "1:30";
 
 try{
-const res = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=${API_KEY}`);
+const res = await fetch(
+`https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=${API_KEY}`
+);
 const data = await res.json();
 
 const trailer = data.results.find(
 v => v.type === "Trailer" && v.site === "YouTube"
 );
 
-if(trailer){
-  trailerKey = trailer.key;
-}
+if(trailer) trailerKey = trailer.key;
 
 }catch(e){}
 
-/* 👉 THUMBNAIL */
+/* ---------- IMAGE ---------- */
 const thumb = trailerKey
 ? `https://img.youtube.com/vi/${trailerKey}/hqdefault.jpg`
 : (movie.backdrop_path
-   ? "https://image.tmdb.org/t/p/w500" + movie.backdrop_path
-   : "");
+? "https://image.tmdb.org/t/p/w500"+movie.backdrop_path
+: "");
 
-/* 👉 DATE FORMAT */
-const dateObj = new Date(movie.release_date);
-const date = dateObj.toLocaleDateString("en-US",{
-  month:"short",
-  day:"2-digit",
-  year:"numeric"
+/* ---------- DATE ---------- */
+const date = new Date(movie.release_date).toLocaleDateString("en-US",{
+month:"short",
+day:"2-digit",
+year:"numeric"
 }).toUpperCase();
 
-/* 👉 GENRES */
+/* ---------- GENRES ---------- */
 const genreMap = {
 28:"Action",12:"Adventure",16:"Animation",35:"Comedy",
 18:"Drama",10751:"Family",14:"Fantasy",27:"Horror",
@@ -1890,11 +1942,17 @@ const genres = movie.genre_ids
 .map(id => genreMap[id] || "")
 .join(" • ");
 
-/* 👉 FAKE HYPE (UI FEEL) */
-const likes = Math.floor(Math.random()*90)+10 + "K";
-const interest = Math.floor(Math.random()*150)+50 + "K";
+/* ---------- RATING ---------- */
+const rating = movie.vote_average
+? `${movie.vote_average.toFixed(1)} (${formatNumber(movie.vote_count)} votes)`
+: "—";
 
-/* 👉 CARD */
+/* ---------- USER STATE ---------- */
+const liked = getStorage("likes")[movie.id];
+const saved = getStorage("saved")[movie.id];
+const notified = getStorage("notify")[movie.id];
+
+/* ---------- CARD ---------- */
 const card = document.createElement("div");
 card.className = "upcoming-card";
 
@@ -1902,13 +1960,13 @@ card.innerHTML = `
 
 <div class="thumb-box">
 
-  <img src="${thumb}" alt="${movie.title}">
+  <img src="${thumb}" alt="${movie.title}" loading="lazy">
 
-  <div class="play-btn" data-key="${trailerKey}">
+  <div class="play-btn" data-id="${movie.id}">
     ▶
   </div>
 
-  <div class="duration">${duration}</div>
+  <div class="duration">▶ Trailer</div>
 
 </div>
 
@@ -1918,14 +1976,25 @@ card.innerHTML = `
 
   <div class="title-row">
     <h3>${movie.title}</h3>
-    <div class="add-btn">+</div>
+    <div class="add-btn ${saved ? "active":""}" data-id="${movie.id}">
+      ${saved ? "✓" : "+"}
+    </div>
   </div>
 
   <p class="genres">${genres}</p>
 
+  <div class="rating">⭐ ${rating}</div>
+
   <div class="stats">
-    <span>👍 ${likes}</span>
-    <span>❤️ ${interest} interested</span>
+
+    <span class="like-btn ${liked ? "active":""}" data-id="${movie.id}">
+      ❤️
+    </span>
+
+    <span class="save-btn ${saved ? "active":""}" data-id="${movie.id}">
+      🔖
+    </span>
+
   </div>
 
 </div>
@@ -1938,14 +2007,9 @@ row.appendChild(card);
 
 container.appendChild(row);
 
-/* EVENTS */
-initUpcomingEvents();
-
 }catch(err){
-
 container.innerHTML = "Failed to load";
 console.error(err);
-
 }
 
 }
@@ -1953,26 +2017,42 @@ console.error(err);
 
 /* ================= EVENTS ================= */
 
-function initUpcomingEvents(){
+document.addEventListener("click", function(e){
 
-/* ▶ PLAY TRAILER */
-document.querySelectorAll(".play-btn").forEach(btn=>{
-btn.onclick = ()=>{
-const key = btn.dataset.key;
-if(!key) return;
-
-window.open(`https://www.youtube.com/watch?v=${key}`,"_blank");
-};
-});
-
-/* ➕ WATCHLIST */
-document.querySelectorAll(".add-btn").forEach(btn=>{
-btn.onclick = ()=>{
-btn.innerText = btn.innerText === "+" ? "✓" : "+";
-};
-});
-
+if(e.target.closest(".play-btn")){
+const id = e.target.closest(".play-btn").dataset.id;
+window.location.href = `trailer.html?id=${id}`;
 }
+
+if(e.target.closest(".like-btn")){
+const btn = e.target.closest(".like-btn");
+const id = btn.dataset.id;
+
+const liked = toggleLike(id);
+btn.classList.toggle("active", liked);
+}
+
+if(e.target.closest(".save-btn") || e.target.closest(".add-btn")){
+const btn = e.target.closest(".save-btn") || e.target.closest(".add-btn");
+const id = btn.dataset.id;
+
+const saved = toggleSave(id);
+
+btn.classList.toggle("active", saved);
+btn.innerText = saved ? "✓" : "+";
+}
+
+if(e.target.closest(".remind-btn")){
+const btn = e.target.closest(".remind-btn");
+const id = btn.dataset.id;
+
+const active = toggleNotify(id);
+btn.innerText = active ? "Notified ✓" : "Remind Me";
+}
+
+});
+
+/* ❌ NO INIT HERE (LAZY LOAD HANDLE KAREGA) */
 
 
 /* ---------------- MOVIE CARD SYSTEM ---------------- */
