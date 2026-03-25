@@ -591,45 +591,11 @@ Popular Indian Celebrities
   <!-- HEADER -->
   <div class="upcoming-header">
     <h2>🎬 Upcoming in Theatres</h2>
-    <p>Trailers for upcoming releases</p>
+    <p>Watch trailers of upcoming releases</p>
   </div>
 
-  <!-- CARDS -->
-  <div class="upcoming-row" id="upcomingList">
-
-    <!-- CARD -->
-    <div class="upcoming-card">
-
-      <!-- THUMBNAIL -->
-      <div class="thumb-box">
-        <img src="https://image.tmdb.org/t/p/w500/your-image.jpg">
-
-        <div class="play-btn">▶</div>
-        <div class="duration">2:26</div>
-      </div>
-
-      <!-- INFO -->
-      <div class="upcoming-info">
-
-        <div class="date">📅 NOV 07, 2025</div>
-
-        <div class="title-row">
-          <h3>Interstellar</h3>
-          <div class="add-btn">+</div>
-        </div>
-
-        <p class="genres">Sci-Fi • Adventure • Drama</p>
-
-        <div class="stats">
-          <span>👍 98K</span>
-          <span>❤️ 145K interested</span>
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
+  <!-- MOVIES CONTAINER (JS WILL LOAD HERE) -->
+  <div class="upcoming-row" id="upcomingList"></div>
 
   <!-- MOST ANTICIPATED -->
   <div class="anticipated">
@@ -645,17 +611,17 @@ Popular Indian Celebrities
 
       <div class="why-card">
         ▶ Real Trailers
-        <p>Official teasers & trailers</p>
+        <p>Official teasers & trailers directly from TMDB</p>
       </div>
 
       <div class="why-card">
         📅 Release Dates
-        <p>Exact theatrical dates</p>
+        <p>Exact theatrical release dates worldwide</p>
       </div>
 
       <div class="why-card">
         ❤️ Save & Track
-        <p>Add to watchlist</p>
+        <p>Add movies to your watchlist & track interest</p>
       </div>
 
     </div>
@@ -664,14 +630,20 @@ Popular Indian Celebrities
 
   <!-- REMIND BLOCK -->
   <div class="remind-box">
+
     <div>
       <h4>🔔 Get Notified!</h4>
       <p>We’ll remind you before release</p>
     </div>
-    <button>Remind Me</button>
+
+    <!-- ✅ JS CONNECTED BUTTON -->
+    <button class="remind-btn" data-id="global">
+      Remind Me
+    </button>
+
   </div>
 
-</section>
+        </section>
 <script src="js/app.js"></script>
 </body>
   </html>
