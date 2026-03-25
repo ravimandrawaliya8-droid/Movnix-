@@ -1917,7 +1917,20 @@ obs.unobserve(img);
 });
 },{ rootMargin: "100px" });
 
-images.forEach(img => observer.observe(img));
+images.forEach(img => {
+
+/* ✅ OBSERVE */
+observer.observe(img);
+
+/* ✅ 🔥 FORCE LOAD IF ALREADY IN VIEW */
+const rect = img.getBoundingClientRect();
+
+if(rect.top < window.innerHeight){
+img.src = img.dataset.src;
+observer.unobserve(img);
+}
+
+});
 
 }
 
