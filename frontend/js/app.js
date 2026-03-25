@@ -1919,9 +1919,11 @@ if(trailer) trailerKey = trailer.key;
 /* ---------- IMAGE ---------- */
 const thumb = trailerKey
 ? `https://img.youtube.com/vi/${trailerKey}/hqdefault.jpg`
-: (movie.backdrop_path
-? "https://image.tmdb.org/t/p/w500"+movie.backdrop_path
-: "");
+: movie.backdrop_path
+? "https://image.tmdb.org/t/p/w500" + movie.backdrop_path
+: movie.poster_path
+? "https://image.tmdb.org/t/p/w500" + movie.poster_path
+: "https://via.placeholder.com/500x280?text=No+Image";
 
 /* ---------- DATE ---------- */
 const date = new Date(movie.release_date).toLocaleDateString("en-US",{
