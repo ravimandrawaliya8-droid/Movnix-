@@ -2137,9 +2137,11 @@ btn.innerText = active ? "Notified ✓" : "Remind Me";
 
 });
 
+document.addEventListener("DOMContentLoaded", () => {
 
-/* ❗ CALL THIS WHEN SECTION VISIBLE */
-loadUpcomingSection();
+initLazyImages(document);
+
+});
 
 
 
