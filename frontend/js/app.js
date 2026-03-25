@@ -1897,6 +1897,31 @@ return Object.values(unique);
 }
 
 
+/* ================= LAZY LOAD FUNCTION ================= */
+
+function initLazyImages(){
+
+const images = document.querySelectorAll(".lazy-img");
+
+const observer = new IntersectionObserver((entries, obs)=>{
+entries.forEach(entry => {
+
+if(entry.isIntersecting){
+const img = entry.target;
+
+img.src = img.dataset.src;
+
+obs.unobserve(img);
+}
+
+});
+},{ rootMargin: "100px" });
+
+images.forEach(img => observer.observe(img));
+
+}
+
+
 /* ================= LOAD SECTION ================= */
 
 async function loadUpcomingSection(){
@@ -1991,7 +2016,7 @@ card.innerHTML = `
 
 <div class="thumb-box">
 
-<img src="${thumb}" loading="lazy">
+<img data-src="${thumb}" class="lazy-img">
 
 <div class="play-btn" data-id="${movie.id}">▶</div>
 
@@ -2043,6 +2068,9 @@ if(row.children.length >= 25) break;
 }
 
 container.appendChild(row);
+
+/* ✅ LAZY LOAD INIT */
+initLazyImages();
 
 }catch(err){
 container.innerHTML = "Failed to load";
@@ -2096,6 +2124,10 @@ btn.innerText = active ? "Notified ✓" : "Remind Me";
 }
 
 });
+
+
+/* ❗ CALL THIS WHEN SECTION VISIBLE */
+loadUpcomingSection();
 
 
 
