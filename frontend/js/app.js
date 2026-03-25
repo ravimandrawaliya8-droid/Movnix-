@@ -2137,12 +2137,6 @@ btn.innerText = active ? "Notified ✓" : "Remind Me";
 
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-
-initLazyImages(document);
-
-});
-
 
 
 /* ---------------- MOVIE CARD SYSTEM ---------------- */
