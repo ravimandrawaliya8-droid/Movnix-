@@ -2138,53 +2138,51 @@ btn.innerText = active ? "Notified ✓" : "Remind Me";
 });
 
 /* =====================================================
-📰 TOP NEWS SECTION (FINAL REAL SYSTEM)
-Uses: GNews API (India + Global)
+📰 TOP NEWS SECTION (ULTIMATE FINAL SYSTEM)
 ===================================================== */
 
 const NEWS_KEY = "d1d3a3da2bb2e737fbb7053536e1398a";
 
-/* ================= STATE ================= */
-
 let currentCountry = "in";
+let currentQuery = "movie OR bollywood OR hollywood";
 
 /* ================= FETCH ================= */
 
-async function fetchNews(country = "in"){
+async function fetchNews(country = "in", query = currentQuery) {
+  try {
 
-  try{
+    const url = `https://gnews.io/api/v4/search?q=${encodeURIComponent(query)}&lang=en&country=${country}&max=10&apikey=${NEWS_KEY}`;
 
-    const res = await fetch(
-      `https://gnews.io/api/v4/top-headlines?category=entertainment&lang=en&country=${country}&apikey=${NEWS_KEY}`
-    );
-
+    const res = await fetch(url);
     const data = await res.json();
+
+    console.log("NEWS DATA:", data);
+
     return data.articles || [];
 
-  }catch(e){
+  } catch (e) {
     console.error("News Error:", e);
     return [];
   }
-
 }
 
 /* ================= LOAD SECTION ================= */
 
-async function loadNewsSection(){
+async function loadNewsSection() {
 
   const section = document.getElementById("newsSection");
-  if(!section) return;
+  if (!section) return;
 
   const hero = section.querySelector(".news-hero");
   const list = section.querySelector(".news-list");
 
   list.innerHTML = "Loading...";
 
-  try{
+  try {
 
-    const articles = await fetchNews(currentCountry);
+    const articles = await fetchNews(currentCountry, currentQuery);
 
-    if(!articles.length){
+    if (!articles.length) {
       list.innerHTML = "No news found";
       return;
     }
@@ -2193,7 +2191,12 @@ async function loadNewsSection(){
     const top = articles[0];
 
     hero.innerHTML = `
-      <img src="${top.image || ''}" class="lazy-img" data-src="${top.image || ''}">
+      <img 
+        class="lazy-img"
+        src="https://via.placeholder.com/800x500?text=Loading"
+        data-src="${top.image || 'https://via.placeholder.com/800x500?text=No+Image'}"
+      >
+
       <div class="overlay"></div>
 
       <div class="hero-content">
@@ -2205,7 +2208,9 @@ async function loadNewsSection(){
 
         <div class="hero-footer">
           <span>🗞 ${top.source.name}</span>
-          <button class="read-btn" data-url="${top.url}">Read More →</button>
+          <button class="read-btn" data-url="${top.url}">
+            Read More →
+          </button>
         </div>
       </div>
     `;
@@ -2213,13 +2218,17 @@ async function loadNewsSection(){
     /* 📃 LIST */
     list.innerHTML = "";
 
-    articles.slice(1,8).forEach(news => {
+    articles.slice(1, 8).forEach(news => {
 
       const card = document.createElement("div");
       card.className = "news-card";
 
       card.innerHTML = `
-        <img class="lazy-img" data-src="${news.image || ''}">
+        <img 
+          class="lazy-img"
+          src="https://via.placeholder.com/100?text=..."
+          data-src="${news.image || 'https://via.placeholder.com/100?text=No'}"
+        >
 
         <div>
           <h4>${news.title}</h4>
@@ -2235,33 +2244,39 @@ async function loadNewsSection(){
 
     });
 
-    /* ✅ INIT IMAGE LAZY */
-    initLazyImages(section);
+    /* ================= FORCE IMAGE LOAD ================= */
 
-  }catch(err){
+    section.querySelectorAll(".lazy-img").forEach(img => {
+      if (img.dataset.src) {
+        img.src = img.dataset.src;
+      }
+    });
+
+  } catch (err) {
     console.error(err);
     list.innerHTML = "Failed to load news";
   }
-
 }
 
 /* ================= EVENTS ================= */
 
-document.addEventListener("click", function(e){
+document.addEventListener("click", function (e) {
 
-  /* ▶ OPEN NEWS */
-  if(e.target.closest(".news-card")){
+  /* ================= OPEN NEWS ================= */
+
+  if (e.target.closest(".news-card")) {
     const url = e.target.closest(".news-card").dataset.url;
     window.open(url, "_blank");
   }
 
-  if(e.target.closest(".read-btn")){
+  if (e.target.closest(".read-btn")) {
     const url = e.target.closest(".read-btn").dataset.url;
     window.open(url, "_blank");
   }
 
-  /* 🎯 PILLS */
-  if(e.target.closest(".news-pills button")){
+  /* ================= PILLS (ALL WORKING) ================= */
+
+  if (e.target.closest(".news-pills button")) {
 
     const btn = e.target.closest("button");
 
@@ -2272,15 +2287,31 @@ document.addEventListener("click", function(e){
 
     const text = btn.innerText.toLowerCase();
 
-    if(text.includes("india")){
+    /* 🔥 CATEGORY CONTROL */
+
+    if (text.includes("movies")) {
+      currentQuery = "movie OR film OR box office OR release";
+    }
+    else if (text.includes("celebs")) {
+      currentQuery = "celebrity OR actor OR actress OR bollywood OR hollywood";
+    }
+    else if (text.includes("tv")) {
+      currentQuery = "tv show OR web series OR netflix OR ott";
+    }
+    else if (text.includes("top")) {
+      currentQuery = "movie OR bollywood OR hollywood OR trending";
+    }
+
+    /* 🌍 COUNTRY CONTROL */
+
+    if (text.includes("india")) {
       currentCountry = "in";
     }
-    else if(text.includes("global")){
+    else if (text.includes("global")) {
       currentCountry = "us";
     }
-    else{
-      currentCountry = "in";
-    }
+
+    /* 🔄 RELOAD */
 
     loadNewsSection();
   }
