@@ -68,6 +68,57 @@ function loadQuickButtons(){
 
 }
 
+/* =========================
+   MOVNIX HEADER MENU SCRIPT
+========================= */
+
+// Elements select karo
+const menu = document.getElementById("menu");
+const overlay = document.getElementById("overlay");
+const menuBtn = document.querySelector(".menu-btn");
+
+// OPEN MENU
+function openMenu() {
+  menu.classList.add("active");
+  overlay.classList.add("active");
+
+  // body scroll disable (premium feel)
+  document.body.style.overflow = "hidden";
+}
+
+// CLOSE MENU
+function closeMenu() {
+  menu.classList.remove("active");
+  overlay.classList.remove("active");
+
+  // body scroll enable
+  document.body.style.overflow = "auto";
+}
+
+// MENU BUTTON CLICK
+menuBtn.addEventListener("click", openMenu);
+
+// OVERLAY CLICK → CLOSE
+overlay.addEventListener("click", closeMenu);
+
+// ESC KEY → CLOSE (PRO FEATURE)
+document.addEventListener("keydown", function(e){
+  if(e.key === "Escape"){
+    closeMenu();
+  }
+});
+
+// OPTIONAL: CLICK OUTSIDE (extra safety)
+document.addEventListener("click", function(e){
+  if(
+    menu.classList.contains("active") &&
+    !menu.contains(e.target) &&
+    !menuBtn.contains(e.target)
+  ){
+    closeMenu();
+  }
+});
+
 /* -------- CELEBRITY POOL -------- */
 
 const maleCelebs = [
