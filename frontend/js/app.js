@@ -2361,137 +2361,153 @@ document.addEventListener("click", function (e) {
 });
 
 /* ===================================================== */
-/* 🔥 MOVNIX HOME PAGE - FINAL END SECTION (JS LOGIC)     */
-/* 🎯 Handles: Trending Cards + Buttons + Subscribe Flow */
+/* 🔥 MOVNIX FINAL SECTION - FULL JS (CINEMATIC UI)       */
 /* ===================================================== */
 
-const IMG_PATH = "https://image.tmdb.org/t/p/w500";
+/* ===============================
+   🚀 INIT
+================================ */
+document.addEventListener("DOMContentLoaded", () => {
+  initButtons();
+  initSubscribe();
+  initScrollAnimations();
+  initPosterEffects();
+});
 
 /* ===============================
-   🎬 FETCH TRENDING MOVIES
+   🎬 HERO BUTTONS
 ================================ */
-async function getTrendingMovies() {
-  try {
-    const res = await fetch(`${BASE}/trending/movie/week?api_key=${API_KEY}`);
-    const data = await res.json();
+function initButtons() {
 
-    if (!data.results) throw new Error("No data");
+  const exploreBtn = document.querySelector(".primary");
+  const trendingBtn = document.querySelector(".secondary");
 
-    renderTrending(data.results.slice(0, 10));
-  } catch (err) {
-    console.error("Trending Error:", err);
-  }
-}
-
-/* ===============================
-   🎨 RENDER TRENDING CARDS
-================================ */
-function renderTrending(movies) {
-  const container = document.querySelector(".last-cards");
-
-  if (!container) return;
-  container.innerHTML = "";
-
-  movies.forEach((movie, index) => {
-    const title = movie.title || movie.name;
-
-    const poster = movie.poster_path
-      ? IMG_PATH + movie.poster_path
-      : "https://via.placeholder.com/300x450?text=No+Image";
-
-    const rating = movie.vote_average
-      ? movie.vote_average.toFixed(1)
-      : "N/A";
-
-    const year = movie.release_date
-      ? movie.release_date.split("-")[0]
-      : "N/A";
-
-    const card = document.createElement("div");
-    card.classList.add("last-card");
-
-    card.innerHTML = `
-      <div class="rank">#${index + 1}</div>
-
-      <div class="poster-wrap">
-        <img loading="lazy" src="${poster}" alt="${title}" />
-      </div>
-
-      <div class="card-info">
-        <h4>${title}</h4>
-
-        <div class="meta">
-          <span>${year}</span>
-          <span>⭐ ${rating}</span>
-        </div>
-
-        <button class="watch-btn" data-id="${movie.id}">
-          ▶ Watch Now
-        </button>
-      </div>
-    `;
-
-    container.appendChild(card);
-  });
-
-  attachEvents();
-}
-
-/* ===============================
-   ▶ BUTTON EVENTS (ALL WORKING)
-================================ */
-function attachEvents() {
-
-  // 🎬 Watch Button
-  document.querySelectorAll(".watch-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const id = btn.getAttribute("data-id");
-      window.location.href = `movie.html?id=${id}`;
-    });
-  });
-
-  // 🔍 Explore Button
-  const exploreBtn = document.querySelector(".explore-btn");
+  // 🎥 Explore Movies
   if (exploreBtn) {
     exploreBtn.addEventListener("click", () => {
       window.location.href = "movies.html";
     });
   }
 
-  // 🔥 Scroll to Trending
-  const trendingBtn = document.querySelector(".trending-btn");
+  // 🔥 Scroll to next section
   if (trendingBtn) {
     trendingBtn.addEventListener("click", () => {
-      document.querySelector(".last-section")?.scrollIntoView({
+      document.querySelector(".subscribe-box")?.scrollIntoView({
         behavior: "smooth"
       });
-    });
-  }
-
-  // 📩 Subscribe Button
-  const subBtn = document.querySelector(".subscribe-btn");
-  const emailInput = document.querySelector(".email-input");
-
-  if (subBtn && emailInput) {
-    subBtn.addEventListener("click", () => {
-      const email = emailInput.value.trim();
-
-      if (!email || !email.includes("@")) {
-        alert("Enter valid email bro 😅");
-        return;
-      }
-
-      alert("Subscribed Successfully 🚀");
-      emailInput.value = "";
     });
   }
 }
 
 /* ===============================
-   🚀 INIT (AUTO LOAD)
+   📩 SUBSCRIBE SYSTEM
 ================================ */
-document.addEventListener("DOMContentLoaded", () => {
-  getTrendingMovies();
+function initSubscribe() {
+
+  const input = document.querySelector(".subscribe-input input");
+  const btn = document.querySelector(".subscribe-input button");
+
+  if (!input || !btn) return;
+
+  btn.addEventListener("click", handleSubscribe);
+
+  input.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") handleSubscribe();
+  });
+
+  function handleSubscribe() {
+    const email = input.value.trim();
+
+    if (!email || !email.includes("@")) {
+      showToast("❌ Enter valid email");
+      return;
+    }
+
+    // 👉 Future: API connect here
+    showToast("🚀 Subscribed Successfully!");
+    input.value = "";
+  }
+}
+
+/* ===============================
+   🍞 TOAST NOTIFICATION
+================================ */
+function showToast(message) {
+
+  const toast = document.createElement("div");
+  toast.className = "movnix-toast";
+  toast.innerText = message;
+
+  document.body.appendChild(toast);
+
+  setTimeout(() => {
+    toast.classList.add("show");
+  }, 100);
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+    setTimeout(() => toast.remove(), 300);
+  }, 2500);
+}
+
+/* ===============================
+   ✨ SCROLL ANIMATION
+================================ */
+function initScrollAnimations() {
+
+  const elements = document.querySelectorAll(
+    ".movnix-left, .movnix-posters, .subscribe-box, .movnix-footer"
+  );
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("fade-in");
+      }
+    });
+  }, { threshold: 0.2 });
+
+  elements.forEach(el => observer.observe(el));
+}
+
+/* ===============================
+   🎞 POSTER HOVER EFFECT
+================================ */
+function initPosterEffects() {
+
+  const posters = document.querySelectorAll(".movnix-posters img");
+
+  posters.forEach((poster, index) => {
+
+    poster.addEventListener("mousemove", (e) => {
+
+      const rect = poster.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const rotateY = ((x / rect.width) - 0.5) * 20;
+      const rotateX = ((y / rect.height) - 0.5) * -20;
+
+      poster.style.transform = `
+        perspective(1000px)
+        rotateX(${rotateX}deg)
+        rotateY(${rotateY}deg)
+        scale(1.1)
+      `;
+    });
+
+    poster.addEventListener("mouseleave", () => {
+      poster.style.transform = "scale(1)";
+    });
+
+  });
+}
+
+/* ===============================
+   🌟 PAGE LOAD FADE
+================================ */
+window.addEventListener("load", () => {
+  document.body.classList.add("loaded");
 });
 
 
