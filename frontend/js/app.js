@@ -2137,14 +2137,16 @@ btn.innerText = active ? "Notified ✓" : "Remind Me";
 
 });
 
- /* =====================================================
-📰 TOP NEWS SECTION (FINAL PRO VERSION)
+/* =====================================================
+📰 TOP NEWS SECTION (FINAL PRO CLEAN)
 ===================================================== */
 
 const NEWS_KEY = "d1d3a3da2bb2e737fbb7053536e1398a";
 
 let currentCountry = "in";
 let currentQuery = "general";
+
+let isLoadingNews = false;
 
 /* ================= FETCH ================= */
 
@@ -2154,7 +2156,6 @@ async function fetchNews(country = "in", query = "general") {
     let url;
 
     if (query === "general") {
-      // 🔥 country removed for stability
       url = `https://gnews.io/api/v4/top-headlines?lang=en&max=10&apikey=${NEWS_KEY}`;
     } else {
       url = `https://gnews.io/api/v4/search?q=${encodeURIComponent(query)}&lang=en&max=10&apikey=${NEWS_KEY}`;
@@ -2198,29 +2199,39 @@ function filterEntertainment(articles) {
 
 async function loadNewsSection() {
 
+  if (isLoadingNews) return;
+  isLoadingNews = true;
+
   const section = document.getElementById("newsSection");
-  if (!section) return;
+  if (!section) {
+    isLoadingNews = false;
+    return;
+  }
 
   const hero = section.querySelector(".news-hero");
   const list = section.querySelector(".news-list");
+
+  if (!hero || !list) {
+    isLoadingNews = false;
+    return;
+  }
 
   list.innerHTML = "Loading...";
 
   try {
 
     let rawArticles = await fetchNews(currentCountry, currentQuery);
-
     let articles = filterEntertainment(rawArticles);
 
-    // 🔁 fallback to raw
+    // fallback to raw
     if (!articles.length) articles = rawArticles;
 
-    // 🔥 HARD FALLBACK (never blank)
+    // final fallback (never blank)
     if (!articles.length) {
       articles = [
         {
           title: "Latest Movie Updates",
-          description: "Demo fallback news working",
+          description: "Demo fallback news",
           image: "https://via.placeholder.com/800x500",
           source: { name: "Movnix" },
           url: "#"
@@ -2240,7 +2251,7 @@ async function loadNewsSection() {
     hero.innerHTML = `
       <img 
         src="${top.image || 'https://via.placeholder.com/800x500'}"
-        onerror="this.src='https://via.placeholder.com/800x500'"
+        onerror="this.onerror=null;this.src='https://via.placeholder.com/800x500'"
       >
 
       <div class="overlay"></div>
@@ -2270,7 +2281,7 @@ async function loadNewsSection() {
       card.innerHTML = `
         <img 
           src="${news.image || 'https://via.placeholder.com/100'}"
-          onerror="this.src='https://via.placeholder.com/100'"
+          onerror="this.onerror=null;this.src='https://via.placeholder.com/100'"
         >
 
         <div>
@@ -2291,6 +2302,8 @@ async function loadNewsSection() {
     console.error(err);
     list.innerHTML = "Failed to load news";
   }
+
+  isLoadingNews = false;
 }
 
 /* ================= EVENTS ================= */
@@ -2299,12 +2312,12 @@ document.addEventListener("click", function (e) {
 
   if (e.target.closest(".news-card")) {
     const url = e.target.closest(".news-card").dataset.url;
-    window.open(url, "_blank");
+    if (url) window.open(url, "_blank");
   }
 
   if (e.target.closest(".read-btn")) {
     const url = e.target.closest(".read-btn").dataset.url;
-    window.open(url, "_blank");
+    if (url) window.open(url, "_blank");
   }
 
   if (e.target.closest(".news-pills button")) {
@@ -2333,7 +2346,7 @@ document.addEventListener("click", function (e) {
       currentQuery = "general";
     }
 
-    /* COUNTRY (optional now) */
+    /* COUNTRY */
 
     if (text.includes("india")) {
       currentCountry = "in";
@@ -2347,9 +2360,6 @@ document.addEventListener("click", function (e) {
 
 });
 
-/* ================= AUTO LOAD ================= */
-
-document.addEventListener("DOMContentLoaded", loadNewsSection);
 
 /* ---------------- MOVIE CARD SYSTEM ---------------- */
 
