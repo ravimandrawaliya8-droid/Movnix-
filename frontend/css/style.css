@@ -3570,8 +3570,14 @@ font-size:18px;
 }
 
 
-/* ===== MOVNIX FINAL UI ===== */
+/* ===== MOVNIX FINAL UI (FIXED VERSION) ===== */
 
+/* GLOBAL FIX */
+body {
+  overflow-x: hidden;
+}
+
+/* MAIN SECTION */
 .movnix-final {
   padding: 80px 20px;
   background: radial-gradient(circle at top, #1a0b2e, #0b0b15 60%);
@@ -3579,15 +3585,26 @@ font-size:18px;
   font-family: 'Poppins', sans-serif;
 }
 
-/* CONTAINER */
+/* CONTAINER (FIXED CENTER ALIGNMENT) */
 .movnix-container {
+  max-width: 1200px;
+  margin: auto;
+  width: 100%;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 40px;
+
+  padding: 0 10px;
 }
 
 /* LEFT */
+.movnix-left {
+  flex: 1;
+  min-width: 280px;
+}
+
 .movnix-left h1 {
   font-size: 42px;
   margin-bottom: 10px;
@@ -3619,32 +3636,44 @@ font-size:18px;
 .secondary {
   background: transparent;
   border: 1px solid #555;
+  color: #fff;
 }
 
-/* POSTERS */
+/* POSTERS (FIXED) */
 .movnix-posters {
+  flex: 1;
+  min-width: 280px;
+
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 15px;
+
+  flex-wrap: wrap; /* IMPORTANT FIX */
 }
 
 .movnix-posters img {
-  width: 140px;
+  width: 130px;
+  max-width: 100%;
   border-radius: 15px;
   transition: 0.4s;
   box-shadow: 0 0 25px rgba(255, 45, 117, 0.4);
 }
 
+/* CENTER IMAGE SAFE SCALE */
 .movnix-posters .center {
-  transform: scale(1.2);
+  transform: scale(1.15);
 }
 
 /* SUBSCRIBE */
 .subscribe-box {
-  margin-top: 60px;
+  max-width: 900px;
+  margin: 60px auto 0;
+
   padding: 30px;
   text-align: center;
   border-radius: 20px;
+
   background: rgba(255,255,255,0.05);
   backdrop-filter: blur(20px);
 }
@@ -3656,6 +3685,7 @@ font-size:18px;
 .subscribe-input input {
   padding: 10px;
   width: 250px;
+  max-width: 90%;
   border-radius: 20px;
   border: none;
 }
@@ -3666,18 +3696,24 @@ font-size:18px;
   border-radius: 20px;
   background: #ff2d75;
   border: none;
+  color: #fff;
 }
 
 /* FOOTER */
 .movnix-footer {
-  margin-top: 60px;
+  max-width: 1200px;
+  margin: 60px auto 0;
+
   display: flex;
   justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap; /* FIX */
 }
 
 .footer-links {
   display: flex;
   gap: 40px;
+  flex-wrap: wrap;
 }
 
 .footer-links a {
@@ -3689,6 +3725,7 @@ font-size:18px;
 
 /* MOBILE */
 @media(max-width:768px){
+
   .movnix-container {
     flex-direction: column;
     text-align: center;
@@ -3700,10 +3737,14 @@ font-size:18px;
 
   .movnix-footer {
     flex-direction: column;
+    text-align: center;
     gap: 20px;
   }
-}
 
+  .footer-links {
+    justify-content: center;
+  }
+}
 
 /* TOAST */
 .movnix-toast {
@@ -3738,4 +3779,4 @@ font-size:18px;
   opacity: 0;
   transform: translateY(40px);
   transition: 0.8s ease;
-}
+  }
