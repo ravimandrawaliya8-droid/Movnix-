@@ -2138,25 +2138,38 @@ btn.innerText = active ? "Notified ✓" : "Remind Me";
 });
 
 /* =====================================================
-📰 TOP NEWS SECTION (ULTIMATE FINAL SYSTEM)
+📰 TOP NEWS SECTION (FINAL STABLE SYSTEM)
 ===================================================== */
 
 const NEWS_KEY = "d1d3a3da2bb2e737fbb7053536e1398a";
 
 let currentCountry = "in";
-let currentQuery = "movie OR bollywood OR hollywood";
+let currentQuery = "general";
 
 /* ================= FETCH ================= */
 
-async function fetchNews(country = "in", query = currentQuery) {
+async function fetchNews(country = "in", query = "general") {
   try {
 
-    const url = `https://gnews.io/api/v4/search?q=${encodeURIComponent(query)}&lang=en&country=${country}&max=10&apikey=${NEWS_KEY}`;
+    let url;
+
+    // 🔥 CATEGORY BASED API
+    if (query === "general") {
+      url = `https://gnews.io/api/v4/top-headlines?lang=en&country=${country}&max=10&apikey=${NEWS_KEY}`;
+    } else {
+      url = `https://gnews.io/api/v4/search?q=${encodeURIComponent(query)}&lang=en&country=${country}&max=10&apikey=${NEWS_KEY}`;
+    }
 
     const res = await fetch(url);
     const data = await res.json();
 
     console.log("NEWS DATA:", data);
+
+    // ❌ API ERROR HANDLE
+    if (data.errors) {
+      console.error("API ERROR:", data.errors);
+      return [];
+    }
 
     return data.articles || [];
 
@@ -2182,7 +2195,11 @@ async function loadNewsSection() {
 
     const articles = await fetchNews(currentCountry, currentQuery);
 
+    // ❌ EMPTY STATE FIX
     if (!articles.length) {
+      hero.innerHTML = `
+        <img src="https://via.placeholder.com/800x500?text=No+News">
+      `;
       list.innerHTML = "No news found";
       return;
     }
@@ -2207,7 +2224,7 @@ async function loadNewsSection() {
         <p>${top.description || ''}</p>
 
         <div class="hero-footer">
-          <span>🗞 ${top.source.name}</span>
+          <span>🗞 ${top.source?.name || 'News'}</span>
           <button class="read-btn" data-url="${top.url}">
             Read More →
           </button>
@@ -2232,7 +2249,7 @@ async function loadNewsSection() {
 
         <div>
           <h4>${news.title}</h4>
-          <p>${news.source.name}</p>
+          <p>${news.source?.name || 'News'}</p>
         </div>
 
         <span class="arrow">→</span>
@@ -2262,8 +2279,7 @@ async function loadNewsSection() {
 
 document.addEventListener("click", function (e) {
 
-  /* ================= OPEN NEWS ================= */
-
+  /* OPEN NEWS */
   if (e.target.closest(".news-card")) {
     const url = e.target.closest(".news-card").dataset.url;
     window.open(url, "_blank");
@@ -2274,8 +2290,7 @@ document.addEventListener("click", function (e) {
     window.open(url, "_blank");
   }
 
-  /* ================= PILLS (ALL WORKING) ================= */
-
+  /* PILLS */
   if (e.target.closest(".news-pills button")) {
 
     const btn = e.target.closest("button");
@@ -2287,22 +2302,22 @@ document.addEventListener("click", function (e) {
 
     const text = btn.innerText.toLowerCase();
 
-    /* 🔥 CATEGORY CONTROL */
+    /* 🔥 CATEGORY */
 
     if (text.includes("movies")) {
-      currentQuery = "movie OR film OR box office OR release";
+      currentQuery = "movie OR film OR box office";
     }
     else if (text.includes("celebs")) {
-      currentQuery = "celebrity OR actor OR actress OR bollywood OR hollywood";
+      currentQuery = "celebrity OR actor OR actress";
     }
     else if (text.includes("tv")) {
-      currentQuery = "tv show OR web series OR netflix OR ott";
+      currentQuery = "tv show OR web series OR netflix";
     }
     else if (text.includes("top")) {
-      currentQuery = "movie OR bollywood OR hollywood OR trending";
+      currentQuery = "general";
     }
 
-    /* 🌍 COUNTRY CONTROL */
+    /* 🌍 COUNTRY */
 
     if (text.includes("india")) {
       currentCountry = "in";
@@ -2311,12 +2326,17 @@ document.addEventListener("click", function (e) {
       currentCountry = "us";
     }
 
-    /* 🔄 RELOAD */
-
     loadNewsSection();
   }
 
 });
+
+/* ================= AUTO LOAD ================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadNewsSection();
+});
+
 
 /* ---------------- MOVIE CARD SYSTEM ---------------- */
 
