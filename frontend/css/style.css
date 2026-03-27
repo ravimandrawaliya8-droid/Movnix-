@@ -3570,310 +3570,136 @@ font-size:18px;
 }
 
 
-/* ===================================================== */
-/* 🔥 MOVNIX HOME PAGE - FINAL END SECTION (CSS DESIGN)   */
-/* ===================================================== */
+/* ===== MOVNIX FINAL UI ===== */
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+.movnix-final {
+  padding: 80px 20px;
+  background: radial-gradient(circle at top, #1a0b2e, #0b0b15 60%);
+  color: #fff;
   font-family: 'Poppins', sans-serif;
 }
 
-body {
-  background: #0b0b0f;
-  color: #fff;
-}
-
-/* ================= HERO ================= */
-.hero {
+/* CONTAINER */
+.movnix-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 80px 8%;
-  background: radial-gradient(circle at top, #1a1a2e, #0b0b0f);
   gap: 40px;
-  flex-wrap: wrap;
 }
 
-.hero-left {
-  max-width: 500px;
-}
-
-.hero-left h1 {
-  font-size: 48px;
-  font-weight: 700;
-  line-height: 1.2;
-}
-
-.hero-left span {
-  color: #ffcc00;
-}
-
-.hero-left p {
-  margin: 20px 0;
-  color: #aaa;
-}
-
-.hero-buttons button {
-  padding: 12px 20px;
-  margin-right: 10px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: 0.3s;
-}
-
-.explore-btn {
-  background: #ffcc00;
-  color: #000;
-}
-
-.trending-btn {
-  background: #1f1f2e;
-  color: #fff;
-}
-
-.hero-buttons button:hover {
-  transform: scale(1.05);
-  opacity: 0.9;
-}
-
-/* HERO RIGHT IMAGES */
-.hero-right {
-  display: flex;
-  gap: 15px;
-}
-
-.hero-right img {
-  width: 120px;
-  border-radius: 12px;
-  transition: 0.3s;
-}
-
-.hero-right img:hover {
-  transform: scale(1.1);
-}
-
-/* ================= TRENDING ================= */
-.last-section {
-  padding: 60px 8%;
-}
-
-.last-section h2 {
-  font-size: 28px;
+/* LEFT */
+.movnix-left h1 {
+  font-size: 42px;
   margin-bottom: 10px;
 }
 
-.sub-text {
-  color: #aaa;
-  margin-bottom: 30px;
+.movnix-left span {
+  color: #ff2d75;
 }
 
-.last-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 20px;
-}
-
-/* CARD */
-.last-card {
-  background: #141420;
-  border-radius: 12px;
-  overflow: hidden;
-  position: relative;
-  transition: 0.3s;
-}
-
-.last-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 0 20px rgba(255, 204, 0, 0.3);
-}
-
-/* RANK */
-.rank {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  background: #ffcc00;
-  color: #000;
-  font-size: 12px;
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-weight: bold;
-}
-
-/* POSTER */
-.poster-wrap img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-}
-
-/* INFO */
-.card-info {
-  padding: 10px;
-}
-
-.card-info h4 {
-  font-size: 14px;
-  margin-bottom: 6px;
-}
-
-.meta {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  color: #aaa;
-  margin-bottom: 10px;
-}
-
-/* BUTTON */
-.watch-btn {
-  width: 100%;
-  padding: 8px;
-  border: none;
-  background: #ffcc00;
-  color: #000;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.watch-btn:hover {
-  background: #ffd633;
-}
-
-/* ================= SUBSCRIBE ================= */
-.subscribe {
-  padding: 60px 8%;
-  text-align: center;
-  background: linear-gradient(180deg, #0b0b0f, #111);
-}
-
-.subscribe h2 {
-  font-size: 26px;
-  margin-bottom: 10px;
-}
-
-.subscribe p {
+.movnix-left p {
   color: #aaa;
   margin-bottom: 20px;
 }
 
-.subscribe-box {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.email-input {
-  padding: 12px;
-  border-radius: 8px;
+/* BUTTONS */
+.btn {
+  padding: 12px 20px;
+  border-radius: 30px;
   border: none;
-  width: 250px;
-}
-
-.subscribe-btn {
-  padding: 12px 18px;
-  border: none;
-  background: #ffcc00;
-  color: #000;
-  border-radius: 8px;
   cursor: pointer;
-  transition: 0.3s;
+  margin-right: 10px;
 }
 
-.subscribe-btn:hover {
-  transform: scale(1.05);
+.primary {
+  background: linear-gradient(135deg, #ff2d75, #ff7a18);
+  box-shadow: 0 0 20px rgba(255, 45, 117, 0.6);
 }
 
-.note {
-  display: block;
-  margin-top: 10px;
-  font-size: 12px;
-  color: #666;
+.secondary {
+  background: transparent;
+  border: 1px solid #555;
 }
 
-/* ================= FOOTER ================= */
-.footer {
-  background: #0a0a0f;
-  padding: 40px 8%;
+/* POSTERS */
+.movnix-posters {
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
-.footer-top {
+.movnix-posters img {
+  width: 140px;
+  border-radius: 15px;
+  transition: 0.4s;
+  box-shadow: 0 0 25px rgba(255, 45, 117, 0.4);
+}
+
+.movnix-posters .center {
+  transform: scale(1.2);
+}
+
+/* SUBSCRIBE */
+.subscribe-box {
+  margin-top: 60px;
+  padding: 30px;
+  text-align: center;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(20px);
+}
+
+.subscribe-input {
+  margin-top: 15px;
+}
+
+.subscribe-input input {
+  padding: 10px;
+  width: 250px;
+  border-radius: 20px;
+  border: none;
+}
+
+.subscribe-input button {
+  padding: 10px 20px;
+  margin-left: 10px;
+  border-radius: 20px;
+  background: #ff2d75;
+  border: none;
+}
+
+/* FOOTER */
+.movnix-footer {
+  margin-top: 60px;
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 40px;
-}
-
-.footer-brand h2 {
-  color: #ffcc00;
-}
-
-.footer-brand p {
-  color: #aaa;
-  margin-top: 10px;
 }
 
 .footer-links {
   display: flex;
-  gap: 50px;
-}
-
-.footer-links h4 {
-  margin-bottom: 10px;
+  gap: 40px;
 }
 
 .footer-links a {
   display: block;
   color: #aaa;
-  font-size: 14px;
-  margin-bottom: 6px;
+  margin-top: 5px;
   text-decoration: none;
 }
 
-.footer-links a:hover {
-  color: #fff;
-}
-
-.footer-bottom {
-  margin-top: 30px;
-  text-align: center;
-  color: #666;
-  font-size: 13px;
-}
-
-/* ================= RESPONSIVE ================= */
-@media (max-width: 768px) {
-
-  .hero {
+/* MOBILE */
+@media(max-width:768px){
+  .movnix-container {
     flex-direction: column;
     text-align: center;
   }
 
-  .hero-right {
+  .movnix-posters {
     justify-content: center;
   }
 
-  .hero-left h1 {
-    font-size: 32px;
-  }
-
-  .last-cards {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .footer-top {
-    flex-direction: column;
-  }
-
-  .footer-links {
+  .movnix-footer {
     flex-direction: column;
     gap: 20px;
   }
-    }
+}
