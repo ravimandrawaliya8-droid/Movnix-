@@ -2360,6 +2360,140 @@ document.addEventListener("click", function (e) {
 
 });
 
+/* ===================================================== */
+/* 🔥 MOVNIX HOME PAGE - FINAL END SECTION (JS LOGIC)     */
+/* 🎯 Handles: Trending Cards + Buttons + Subscribe Flow */
+/* ===================================================== */
+
+const IMG_PATH = "https://image.tmdb.org/t/p/w500";
+
+/* ===============================
+   🎬 FETCH TRENDING MOVIES
+================================ */
+async function getTrendingMovies() {
+  try {
+    const res = await fetch(`${BASE}/trending/movie/week?api_key=${API_KEY}`);
+    const data = await res.json();
+
+    if (!data.results) throw new Error("No data");
+
+    renderTrending(data.results.slice(0, 10));
+  } catch (err) {
+    console.error("Trending Error:", err);
+  }
+}
+
+/* ===============================
+   🎨 RENDER TRENDING CARDS
+================================ */
+function renderTrending(movies) {
+  const container = document.querySelector(".last-cards");
+
+  if (!container) return;
+  container.innerHTML = "";
+
+  movies.forEach((movie, index) => {
+    const title = movie.title || movie.name;
+
+    const poster = movie.poster_path
+      ? IMG_PATH + movie.poster_path
+      : "https://via.placeholder.com/300x450?text=No+Image";
+
+    const rating = movie.vote_average
+      ? movie.vote_average.toFixed(1)
+      : "N/A";
+
+    const year = movie.release_date
+      ? movie.release_date.split("-")[0]
+      : "N/A";
+
+    const card = document.createElement("div");
+    card.classList.add("last-card");
+
+    card.innerHTML = `
+      <div class="rank">#${index + 1}</div>
+
+      <div class="poster-wrap">
+        <img loading="lazy" src="${poster}" alt="${title}" />
+      </div>
+
+      <div class="card-info">
+        <h4>${title}</h4>
+
+        <div class="meta">
+          <span>${year}</span>
+          <span>⭐ ${rating}</span>
+        </div>
+
+        <button class="watch-btn" data-id="${movie.id}">
+          ▶ Watch Now
+        </button>
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
+
+  attachEvents();
+}
+
+/* ===============================
+   ▶ BUTTON EVENTS (ALL WORKING)
+================================ */
+function attachEvents() {
+
+  // 🎬 Watch Button
+  document.querySelectorAll(".watch-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.getAttribute("data-id");
+      window.location.href = `movie.html?id=${id}`;
+    });
+  });
+
+  // 🔍 Explore Button
+  const exploreBtn = document.querySelector(".explore-btn");
+  if (exploreBtn) {
+    exploreBtn.addEventListener("click", () => {
+      window.location.href = "movies.html";
+    });
+  }
+
+  // 🔥 Scroll to Trending
+  const trendingBtn = document.querySelector(".trending-btn");
+  if (trendingBtn) {
+    trendingBtn.addEventListener("click", () => {
+      document.querySelector(".last-section")?.scrollIntoView({
+        behavior: "smooth"
+      });
+    });
+  }
+
+  // 📩 Subscribe Button
+  const subBtn = document.querySelector(".subscribe-btn");
+  const emailInput = document.querySelector(".email-input");
+
+  if (subBtn && emailInput) {
+    subBtn.addEventListener("click", () => {
+      const email = emailInput.value.trim();
+
+      if (!email || !email.includes("@")) {
+        alert("Enter valid email bro 😅");
+        return;
+      }
+
+      alert("Subscribed Successfully 🚀");
+      emailInput.value = "";
+    });
+  }
+}
+
+/* ===============================
+   🚀 INIT (AUTO LOAD)
+================================ */
+document.addEventListener("DOMContentLoaded", () => {
+  getTrendingMovies();
+});
+
 
 /* ---------------- MOVIE CARD SYSTEM ---------------- */
 
