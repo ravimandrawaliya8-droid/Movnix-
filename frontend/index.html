@@ -14,18 +14,49 @@
 
 <body>
 
-<!-- HEADER -->
+<!-- HEADER SECTION START -->
+<section class="header">
 
-<header class="header">
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    
+    <div class="left">
+      <div class="menu-btn" onclick="openMenu()">☰</div>
+      <div class="logo">Mov<span>nix</span></div>
+    </div>
 
-<div class="logo">Movnix</div>
+    <div class="right">
+      <div class="icon">🔍</div>
+      <div class="icon">❤️</div>
+      <div class="icon">👤</div>
+    </div>
 
-<div class="icons">
-<a href="search.html">🔍</a>
-<a href="profile.html">👤</a>
+  </div>
+
+  <!-- NAV -->
+  <div class="nav">
+    <a href="#" class="active">Home</a>
+    <a href="#">Movies</a>
+    <a href="#">Series</a>
+  </div>
+
+</section>
+
+<!-- SIDE MENU -->
+<div class="side-menu" id="menu">
+  <h2>Categories</h2>
+  <a href="#">Trending</a>
+  <a href="#">Top Rated</a>
+  <a href="#">Action</a>
+  <a href="#">Comedy</a>
+  <a href="#">Drama</a>
+  <a href="#">Horror</a>
+  <a href="#">TV shows</a>
+  <a href="#">Movies</a>
 </div>
 
-</header>
+<!-- OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
 
 
 <!-- WATCHLIST BANNER -->
