@@ -2138,7 +2138,7 @@ btn.innerText = active ? "Notified ✓" : "Remind Me";
 });
 
 /* =====================================================
-📰 TOP NEWS SECTION (FINAL STABLE SYSTEM)
+📰 TOP NEWS SECTION (FINAL FIXED + STABLE)
 ===================================================== */
 
 const NEWS_KEY = "d1d3a3da2bb2e737fbb7053536e1398a";
@@ -2153,7 +2153,6 @@ async function fetchNews(country = "in", query = "general") {
 
     let url;
 
-    // 🔥 CATEGORY BASED API
     if (query === "general") {
       url = `https://gnews.io/api/v4/top-headlines?lang=en&country=${country}&max=10&apikey=${NEWS_KEY}`;
     } else {
@@ -2165,7 +2164,6 @@ async function fetchNews(country = "in", query = "general") {
 
     console.log("NEWS DATA:", data);
 
-    // ❌ API ERROR HANDLE
     if (data.errors) {
       console.error("API ERROR:", data.errors);
       return [];
@@ -2193,13 +2191,29 @@ async function loadNewsSection() {
 
   try {
 
-    const articles = await fetchNews(currentCountry, currentQuery);
+    let rawArticles = await fetchNews(currentCountry, currentQuery);
 
-    // ❌ EMPTY STATE FIX
+    /* 🔥 SMART FILTER (ENTERTAINMENT PRIORITY) */
+    let articles = rawArticles.filter(a => {
+      const text = (a.title + (a.description || "")).toLowerCase();
+      return text.includes("movie") ||
+             text.includes("film") ||
+             text.includes("actor") ||
+             text.includes("bollywood") ||
+             text.includes("hollywood") ||
+             text.includes("celebrity") ||
+             text.includes("netflix") ||
+             text.includes("series");
+    });
+
+    /* 🔁 FALLBACK */
     if (!articles.length) {
-      hero.innerHTML = `
-        <img src="https://via.placeholder.com/800x500?text=No+News">
-      `;
+      articles = rawArticles;
+    }
+
+    /* ❌ EMPTY STATE */
+    if (!articles.length) {
+      hero.innerHTML = `<img src="https://via.placeholder.com/800x500?text=No+News">`;
       list.innerHTML = "No news found";
       return;
     }
@@ -2209,9 +2223,9 @@ async function loadNewsSection() {
 
     hero.innerHTML = `
       <img 
-        class="lazy-img"
-        src="https://via.placeholder.com/800x500?text=Loading"
-        data-src="${top.image || 'https://via.placeholder.com/800x500?text=No+Image'}"
+        class="news-img"
+        src="${top.image || 'https://via.placeholder.com/800x500?text=No+Image'}"
+        onerror="this.src='https://via.placeholder.com/800x500?text=No+Image'"
       >
 
       <div class="overlay"></div>
@@ -2242,9 +2256,9 @@ async function loadNewsSection() {
 
       card.innerHTML = `
         <img 
-          class="lazy-img"
-          src="https://via.placeholder.com/100?text=..."
-          data-src="${news.image || 'https://via.placeholder.com/100?text=No'}"
+          class="news-img"
+          src="${news.image || 'https://via.placeholder.com/100?text=No+Image'}"
+          onerror="this.src='https://via.placeholder.com/100?text=No+Image'"
         >
 
         <div>
@@ -2261,14 +2275,6 @@ async function loadNewsSection() {
 
     });
 
-    /* ================= FORCE IMAGE LOAD ================= */
-
-    section.querySelectorAll(".lazy-img").forEach(img => {
-      if (img.dataset.src) {
-        img.src = img.dataset.src;
-      }
-    });
-
   } catch (err) {
     console.error(err);
     list.innerHTML = "Failed to load news";
@@ -2279,7 +2285,6 @@ async function loadNewsSection() {
 
 document.addEventListener("click", function (e) {
 
-  /* OPEN NEWS */
   if (e.target.closest(".news-card")) {
     const url = e.target.closest(".news-card").dataset.url;
     window.open(url, "_blank");
@@ -2290,7 +2295,6 @@ document.addEventListener("click", function (e) {
     window.open(url, "_blank");
   }
 
-  /* PILLS */
   if (e.target.closest(".news-pills button")) {
 
     const btn = e.target.closest("button");
@@ -2302,7 +2306,7 @@ document.addEventListener("click", function (e) {
 
     const text = btn.innerText.toLowerCase();
 
-    /* 🔥 CATEGORY */
+    /* CATEGORY */
 
     if (text.includes("movies")) {
       currentQuery = "movie OR film OR box office";
@@ -2317,7 +2321,7 @@ document.addEventListener("click", function (e) {
       currentQuery = "general";
     }
 
-    /* 🌍 COUNTRY */
+    /* COUNTRY */
 
     if (text.includes("india")) {
       currentCountry = "in";
