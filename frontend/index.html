@@ -21,14 +21,24 @@
   <div class="top-bar">
     
     <div class="left">
-      <div class="menu-btn" onclick="openMenu()">☰</div>
+      <div class="menu-btn" id="menuBtn">☰</div>
       <div class="logo">Mov<span>nix</span></div>
     </div>
 
     <div class="right">
-      <div class="icon">🔍</div>
-      <div class="icon">❤️</div>
-      <div class="icon">👤</div>
+
+      <!-- SEARCH -->
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search movies...">
+        <span onclick="searchMovie()">🔍</span>
+      </div>
+
+      <!-- AUTH BUTTONS -->
+      <div class="auth">
+        <button class="login">Login</button>
+        <button class="signup">Sign Up</button>
+      </div>
+
     </div>
 
   </div>
