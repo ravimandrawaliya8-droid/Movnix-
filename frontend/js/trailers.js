@@ -5,11 +5,21 @@ const BASE_URL = "https://api.themoviedb.org/3";
 const IMG = "https://image.tmdb.org/t/p/w500";
 const BACKDROP = "https://image.tmdb.org/t/p/original";
 
+/* ================= URL BUILDER ================= */
+
+function buildURL(endpoint) {
+  if (endpoint.includes("?")) {
+    return `${BASE_URL}${endpoint}&api_key=${API_KEY}`;
+  } else {
+    return `${BASE_URL}${endpoint}?api_key=${API_KEY}`;
+  }
+}
+
 /* ================= FETCH ================= */
 
 async function fetchData(endpoint) {
   try {
-    const res = await fetch(`${BASE_URL}${endpoint}?api_key=${API_KEY}`);
+    const res = await fetch(buildURL(endpoint));
     const data = await res.json();
     return data;
   } catch (err) {
@@ -22,24 +32,30 @@ async function fetchData(endpoint) {
 async function loadHeroTrailer() {
   try {
     const data = await fetchData("/trending/movie/week");
+
+    if (!data || !data.results) return;
+
+    // backdrop wali movie lo
     const movie = data.results.find(m => m.backdrop_path);
 
     if (!movie) return;
 
     const hero = document.querySelector(".hero");
 
-    // Background
     hero.style.backgroundImage = `
       linear-gradient(to top, rgba(0,0,0,0.85), transparent),
       url(${BACKDROP + movie.backdrop_path})
     `;
 
     // Text
-    document.querySelector(".hero-title").innerText = movie.title;
-    document.querySelector(".hero-desc").innerText = movie.overview;
+    document.querySelector(".hero-title").innerText = movie.title || movie.name;
+    document.querySelector(".hero-desc").innerText = movie.overview || "No description available";
 
-    // Video
+    // Trailer fetch
     const vid = await fetchData(`/movie/${movie.id}/videos`);
+
+    if (!vid || !vid.results) return;
+
     const trailer = vid.results.find(v => v.type === "Trailer");
 
     if (trailer) {
@@ -49,7 +65,7 @@ async function loadHeroTrailer() {
       iframe.className = "hero-video";
 
       const box = document.querySelector(".hero-video-box");
-      box.innerHTML = ""; // clear old
+      box.innerHTML = ""; // reset
       box.appendChild(iframe);
     }
 
@@ -64,7 +80,7 @@ function createCard(movie) {
 
   const poster = movie.poster_path
     ? IMG + movie.poster_path
-    : "https://via.placeholder.com/500x750?text=No+Image";
+    : "https://via.placeholder.com/300x450?text=No+Image";
 
   return `
     <div class="movie-card" data-id="${movie.id}">
@@ -72,8 +88,8 @@ function createCard(movie) {
       <div class="card-info">
         <h4>${movie.title || movie.name}</h4>
         <p>
-          ${(movie.release_date || movie.first_air_date || "2024").slice(0,4)} 
-          • ⭐ ${movie.vote_average?.toFixed(1) || "N/A"}
+          ${(movie.release_date || movie.first_air_date || "2024").slice(0,4)}
+          • ⭐ ${movie.vote_average ? movie.vote_average.toFixed(1) : "N/A"}
         </p>
       </div>
     </div>
@@ -89,8 +105,10 @@ async function renderSection(endpoint, containerClass) {
 
   const container = document.querySelector(containerClass);
 
+  if (!container) return;
+
   container.innerHTML = data.results
-    .filter(movie => movie.poster_path) // ❗ clean UI
+    .filter(m => m.poster_path) // clean UI
     .slice(0, 12)
     .map(createCard)
     .join("");
@@ -116,7 +134,7 @@ function initSearch() {
   const input = document.querySelector("#searchInput");
   const container = document.querySelector(".search-results");
 
-  if (!input) return;
+  if (!input || !container) return;
 
   input.addEventListener("input", async (e) => {
 
@@ -127,9 +145,9 @@ function initSearch() {
       return;
     }
 
-    const data = await fetchData(`/search/movie&query=${query}`);
+    const data = await fetchData(`/search/movie?query=${query}`);
 
-    if (!data.results) return;
+    if (!data || !data.results) return;
 
     container.innerHTML = data.results
       .filter(m => m.poster_path)
@@ -153,11 +171,14 @@ function initFilters() {
 
     if (!genre) return;
 
-    const data = await fetchData(`/discover/movie&with_genres=${genre}`);
+    const data = await fetchData(`/discover/movie?with_genres=${genre}`);
+
+    if (!data || !data.results) return;
 
     document.querySelector(".trending-container").innerHTML =
       data.results
         .filter(m => m.poster_path)
+        .slice(0, 12)
         .map(createCard)
         .join("");
   });
