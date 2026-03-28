@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Movnix - Trailers</title>
 
-  <!-- Google Font (IMPORTANT for UI) -->
+  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
   <!-- CSS -->
@@ -14,9 +14,9 @@
 
 <body>
 
-  <!-- ================= HERO SECTION ================= -->
+  <!-- ================= HERO ================= -->
 
-  <section class="hero">
+  <section id="hero" class="hero">
 
     <!-- NAVBAR -->
     <header class="navbar">
@@ -32,13 +32,12 @@
       <button class="nav-btn">Get Updates</button>
     </header>
 
-
     <!-- HERO CONTENT -->
     <div class="hero-content">
 
       <!-- LEFT -->
       <div class="hero-text">
-        <h1 class="hero-title">Loading...</h1>
+        <h1 class="hero-title">Discover Movies</h1>
         <p class="hero-desc">
           Discover latest movie trailers and stay updated with trending films.
         </p>
@@ -51,25 +50,24 @@
 
     </div>
 
-
     <!-- FILTER BAR -->
     <div class="hero-filters">
 
       <select id="languageFilter">
-        <option>All Languages</option>
-        <option>Hindi</option>
-        <option>English</option>
+        <option value="">All Languages</option>
+        <option value="hi">Hindi</option>
+        <option value="en">English</option>
       </select>
 
       <select id="yearFilter">
-        <option>All Years</option>
-        <option>2024</option>
-        <option>2023</option>
+        <option value="">All Years</option>
+        <option value="2024">2024</option>
+        <option value="2023">2023</option>
       </select>
 
       <select id="sortFilter">
-        <option>Trending</option>
-        <option>Top Rated</option>
+        <option value="trending">Trending</option>
+        <option value="top_rated">Top Rated</option>
       </select>
 
       <select id="genreFilter">
@@ -91,35 +89,43 @@
 
   </section>
 
-
   <!-- ================= CONTENT ================= -->
 
   <main class="content">
 
+    <!-- TRENDING -->
     <section class="section">
-      <h2>Trending Trailers</h2>
-      <div class="movie-row trending-container"></div>
+      <h2>Trending Movies</h2>
+      <div id="trending" class="movie-row"></div>
     </section>
 
+    <!-- LATEST -->
     <section class="section">
-      <h2>Latest Trailers</h2>
-      <div class="movie-row latest-container"></div>
+      <h2>Latest Movies</h2>
+      <div id="latest" class="movie-row"></div>
     </section>
 
+    <!-- TOP RATED -->
     <section class="section">
-      <h2>Top Rated</h2>
-      <div class="movie-row toprated-container"></div>
+      <h2>Top Rated Movies</h2>
+      <div id="toprated" class="movie-row"></div>
     </section>
 
+    <!-- TRAILERS -->
+    <section class="section">
+      <h2>Popular Trailers</h2>
+      <div id="trailers" class="movie-row"></div>
+    </section>
+
+    <!-- SEARCH -->
     <section class="section">
       <h2>Search Results</h2>
-      <div class="movie-row search-results"></div>
+      <div id="search" class="movie-row"></div>
     </section>
 
   </main>
 
-
-  <!-- JS (IMPORTANT: defer lagao) -->
+  <!-- JS -->
   <script src="trailers.js" defer></script>
 
 </body>
