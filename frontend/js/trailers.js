@@ -1,200 +1,120 @@
-/* ================= CONFIG ================= */
-
 const API_KEY = "45fe7a9c4583e4374d3981bb55c39222";
 const BASE_URL = "https://api.themoviedb.org/3";
 const IMG = "https://image.tmdb.org/t/p/w500";
-const BACKDROP = "https://image.tmdb.org/t/p/original";
 
-/* ================= URL BUILDER ================= */
+// ===== ELEMENT =====
+const container = document.getElementById("movies-container");
 
-function buildURL(endpoint) {
-  if (endpoint.includes("?")) {
-    return `${BASE_URL}${endpoint}&api_key=${API_KEY}`;
-  } else {
-    return `${BASE_URL}${endpoint}?api_key=${API_KEY}`;
-  }
-}
-
-/* ================= FETCH ================= */
-
-async function fetchData(endpoint) {
+// ===== FETCH MOVIES =====
+async function fetchMovies() {
   try {
-    const res = await fetch(buildURL(endpoint));
+    const res = await fetch(
+      `${BASE_URL}/trending/movie/week?api_key=${API_KEY}`
+    );
     const data = await res.json();
-    return data;
+
+    console.log("DATA:", data);
+
+    displayMovies(data.results);
   } catch (err) {
-    console.error("Fetch Error:", err);
+    console.error("ERROR:", err);
   }
 }
 
-/* ================= HERO ================= */
+// ===== DISPLAY MOVIES =====
+function displayMovies(movies) {
+  container.innerHTML = "";
 
-async function loadHeroTrailer() {
-  try {
-    const data = await fetchData("/trending/movie/week");
+  movies.forEach((movie) => {
+    const poster = movie.poster_path
+      ? IMG + movie.poster_path
+      : "https://via.placeholder.com/300x450?text=No+Image";
 
-    if (!data || !data.results) return;
+    const title = movie.title || movie.name;
+    const rating = movie.vote_average
+      ? movie.vote_average.toFixed(1)
+      : "N/A";
 
-    // backdrop wali movie lo
-    const movie = data.results.find(m => m.backdrop_path);
+    const card = document.createElement("div");
+    card.classList.add("movie-card");
 
-    if (!movie) return;
+    card.innerHTML = `
+      <div class="poster">
+        <img src="${poster}" alt="${title}" />
+        <div class="overlay">
+          <button class="play-btn" data-id="${movie.id}">▶ Play</button>
+        </div>
+      </div>
 
-    const hero = document.querySelector(".hero");
+      <div class="info">
+        <h3>${title}</h3>
+        <p>⭐ ${rating}</p>
 
-    hero.style.backgroundImage = `
-      linear-gradient(to top, rgba(0,0,0,0.85), transparent),
-      url(${BACKDROP + movie.backdrop_path})
+        <div class="buttons">
+          <button class="details-btn" data-id="${movie.id}">
+            Details
+          </button>
+        </div>
+      </div>
     `;
 
-    // Text
-    document.querySelector(".hero-title").innerText = movie.title || movie.name;
-    document.querySelector(".hero-desc").innerText = movie.overview || "No description available";
-
-    // Trailer fetch
-    const vid = await fetchData(`/movie/${movie.id}/videos`);
-
-    if (!vid || !vid.results) return;
-
-    const trailer = vid.results.find(v => v.type === "Trailer");
-
-    if (trailer) {
-      const iframe = document.createElement("iframe");
-      iframe.src = `https://www.youtube.com/embed/${trailer.key}?autoplay=1&mute=1&controls=0&loop=1`;
-      iframe.allow = "autoplay; encrypted-media";
-      iframe.className = "hero-video";
-
-      const box = document.querySelector(".hero-video-box");
-      box.innerHTML = ""; // reset
-      box.appendChild(iframe);
-    }
-
-  } catch (e) {
-    console.log("Hero Error:", e);
-  }
-}
-
-/* ================= CARD ================= */
-
-function createCard(movie) {
-
-  const poster = movie.poster_path
-    ? IMG + movie.poster_path
-    : "https://via.placeholder.com/300x450?text=No+Image";
-
-  return `
-    <div class="movie-card" data-id="${movie.id}">
-      <img src="${poster}" loading="lazy"/>
-      <div class="card-info">
-        <h4>${movie.title || movie.name}</h4>
-        <p>
-          ${(movie.release_date || movie.first_air_date || "2024").slice(0,4)}
-          • ⭐ ${movie.vote_average ? movie.vote_average.toFixed(1) : "N/A"}
-        </p>
-      </div>
-    </div>
-  `;
-}
-
-/* ================= RENDER ================= */
-
-async function renderSection(endpoint, containerClass) {
-  const data = await fetchData(endpoint);
-
-  if (!data || !data.results) return;
-
-  const container = document.querySelector(containerClass);
-
-  if (!container) return;
-
-  container.innerHTML = data.results
-    .filter(m => m.poster_path) // clean UI
-    .slice(0, 12)
-    .map(createCard)
-    .join("");
-
-  enableSlider(container);
-}
-
-/* ================= SLIDER ================= */
-
-function enableSlider(container) {
-
-  container.addEventListener("wheel", (e) => {
-    e.preventDefault();
-    container.scrollLeft += e.deltaY;
+    container.appendChild(card);
   });
 
+  addEvents();
 }
 
-/* ================= SEARCH ================= */
+// ===== EVENTS =====
+function addEvents() {
+  // PLAY TRAILER
+  document.querySelectorAll(".play-btn").forEach((btn) => {
+    btn.addEventListener("click", async (e) => {
+      const id = e.target.dataset.id;
 
-function initSearch() {
+      const res = await fetch(
+        `${BASE_URL}/movie/${id}/videos?api_key=${API_KEY}`
+      );
+      const data = await res.json();
 
-  const input = document.querySelector("#searchInput");
-  const container = document.querySelector(".search-results");
+      if (data.results.length > 0) {
+        const trailer = data.results.find(
+          (vid) => vid.type === "Trailer"
+        );
 
-  if (!input || !container) return;
+        if (trailer) {
+          window.open(
+            `https://www.youtube.com/watch?v=${trailer.key}`,
+            "_blank"
+          );
+        } else {
+          alert("Trailer not available 😢");
+        }
+      } else {
+        alert("No video found 😢");
+      }
+    });
+  });
 
-  input.addEventListener("input", async (e) => {
+  // DETAILS
+  document.querySelectorAll(".details-btn").forEach((btn) => {
+    btn.addEventListener("click", async (e) => {
+      const id = e.target.dataset.id;
 
-    const query = e.target.value.trim();
+      const res = await fetch(
+        `${BASE_URL}/movie/${id}?api_key=${API_KEY}`
+      );
+      const movie = await res.json();
 
-    if (query.length < 2) {
-      container.innerHTML = "";
-      return;
-    }
+      alert(`
+Title: ${movie.title}
+Rating: ${movie.vote_average}
+Release: ${movie.release_date}
 
-    const data = await fetchData(`/search/movie?query=${query}`);
-
-    if (!data || !data.results) return;
-
-    container.innerHTML = data.results
-      .filter(m => m.poster_path)
-      .slice(0, 10)
-      .map(createCard)
-      .join("");
+${movie.overview}
+      `);
+    });
   });
 }
 
-/* ================= FILTER ================= */
-
-function initFilters() {
-
-  const genreSelect = document.querySelector("#genreFilter");
-
-  if (!genreSelect) return;
-
-  genreSelect.addEventListener("change", async () => {
-
-    const genre = genreSelect.value;
-
-    if (!genre) return;
-
-    const data = await fetchData(`/discover/movie?with_genres=${genre}`);
-
-    if (!data || !data.results) return;
-
-    document.querySelector(".trending-container").innerHTML =
-      data.results
-        .filter(m => m.poster_path)
-        .slice(0, 12)
-        .map(createCard)
-        .join("");
-  });
-}
-
-/* ================= INIT ================= */
-
-window.addEventListener("DOMContentLoaded", () => {
-
-  loadHeroTrailer();
-
-  renderSection("/trending/movie/week", ".trending-container");
-  renderSection("/movie/now_playing", ".latest-container");
-  renderSection("/movie/top_rated", ".toprated-container");
-
-  initSearch();
-  initFilters();
-
-});
+// ===== INIT =====
+fetchMovies();
