@@ -1393,46 +1393,68 @@ async function loadPopularInterests(){
 
 }
 
+/* ================= THEATRE SECTION PRO ================= */
 
-/* ================= THEATRE SECTION ================= */
+const theatres = ["PVR Cinemas", "INOX", "Cinépolis", "Miraj Cinemas", "Moviemax"];
+const formats = ["2D", "3D", "IMAX"];
 
-async function loadTheatre(type = "trending"){
+const getRandom = (arr) => arr[Math.floor(Math.random()*arr.length)];
+
+const getDistance = () => (Math.random()*5 + 1).toFixed(1);
+
+const getTime = () => {
+  const times = ["10:30 AM","1:15 PM","4:15 PM","7:30 PM","10:45 PM"];
+  return getRandom(times);
+};
+
+const getSeats = () => {
+  const n = Math.floor(Math.random()*60);
+
+  if(n < 15){
+    return {text:`Only ${n} seats left`, class:"low"};
+  } 
+  else if(n < 35){
+    return {text:"Filling Fast", class:"mid"};
+  }
+  else{
+    return {text:"Available", class:"high"};
+  }
+};
+
+const getBookings = () => Math.floor(Math.random()*40)+10;
+
+
+/* ================= MAIN ================= */
+
+async function loadTheatre(type="trending"){
 
 const container = document.getElementById("theatreList");
 if(!container) return;
 
 container.innerHTML = "Loading...";
 
-/* 👉 DIFFERENT REAL LOGIC PER TAB */
 let endpoint = "/movie/now_playing?region=IN";
 
 try{
 
 let data = await getMovies(endpoint);
 
-/* 👉 SMART SORTING (IMAGE LIKE FEEL) */
-
+/* SORTING */
 if(type === "fast"){
-  // Fast filling → high popularity
   data = data.sort((a,b)=> b.popularity - a.popularity);
 }
 else if(type === "top"){
-  // Top rated → high rating
-  data = data
-    .filter(m => m.vote_count > 200)
-    .sort((a,b)=> b.vote_average - a.vote_average);
+  data = data.filter(m=>m.vote_count>200)
+             .sort((a,b)=> b.vote_average - a.vote_average);
 }
 else{
-  // Trending → mix (default)
   data = data.sort((a,b)=> b.popularity - a.popularity);
 }
 
-/* 👉 LIMIT 15 */
-const movies = data.slice(0,15);
+const movies = data.slice(0,20);
 
 container.innerHTML = "";
 
-/* ROW */
 const row = document.createElement("div");
 row.className = "theatre-row";
 
@@ -1441,31 +1463,26 @@ movies.forEach(movie=>{
 
 const title = movie.title || "No Title";
 
-/* POSTER */
 const poster = movie.poster_path
 ? "https://image.tmdb.org/t/p/w500" + movie.poster_path
 : "";
 
-/* RATING */
-const rating = movie.vote_average
-? movie.vote_average.toFixed(1)
-: "0";
+const rating = movie.vote_average?.toFixed(1) || "0";
 
-/* 🎯 ADVANCED TAG SYSTEM (IMAGE MATCH) */
+/* 🎯 TAG SYSTEM */
+let tag = "🔥 Fast Filling";
 
-let tag = "🔥 High Demand";
-
-/* GENRE BASED TAGS */
-if(movie.genre_ids?.includes(18)) tag = "💔 Emotional Drama";
-if(movie.genre_ids?.includes(35)) tag = "😂 Comedy Hit";
-if(movie.genre_ids?.includes(28)) tag = "💥 Action Blast";
-if(movie.genre_ids?.includes(10751)) tag = "👨‍👩‍👧 Family Hit";
-
-/* PRIORITY OVERRIDE */
 if(movie.vote_average >= 8) tag = "⭐ Top Rated";
-if(movie.popularity >= 250) tag = "🔥 Fast Filling";
+if(movie.popularity >= 300) tag = "🔥 Fast Filling";
 
-/* TIME (SMART FEEL) */
+/* 🎭 FAKE REAL DATA */
+const theatre = getRandom(theatres);
+const distance = getDistance();
+const time = getTime();
+const format = getRandom(formats);
+const seats = getSeats();
+const bookings = getBookings();
+
 const hours = Math.floor(Math.random()*3)+1;
 const mins = Math.floor(Math.random()*59);
 
@@ -1477,39 +1494,46 @@ card.innerHTML = `
 
 <div class="poster-box">
 
-  <img src="${poster}" alt="${title}" loading="lazy">
+<img src="${poster}" alt="${title}">
 
-  <div class="add-btn">+</div>
+<div class="add-btn">+</div>
 
-  <div class="poster-overlay">
+<div class="poster-overlay">
 
-    <div class="rating">⭐ ${rating}</div>
+  <div class="top-row">
+    <span class="rating">⭐ ${rating}</span>
+    <span class="tag">${tag}</span>
+  </div>
 
-    <div class="tag">${tag}</div>
+  <h3 class="movie-title">${title}</h3>
 
-    <h3 class="movie-title">${title}</h3>
+  <p class="theatre">🎟 ${theatre} • ${distance} km</p>
+  <p class="time">⏰ ${time} • Today</p>
 
-    <div class="actions">
+  <div class="badges">
+    <span class="seat ${seats.class}">${seats.text}</span>
+    <span class="format">${format}</span>
+  </div>
 
-      <button class="book-btn" data-id="${movie.id}">
-        🎟 Book Tickets
-      </button>
+  <p class="booking">👥 Booked ${bookings} times in last hour</p>
 
-      <button class="trailer-btn" data-id="${movie.id}">
-        ▶ Trailer
-      </button>
+  <div class="divider"></div>
 
-    </div>
+  <div class="now-playing">
+    🟢 Now Playing • ${hours}h ${mins}m left
+  </div>
 
-    <div class="now-playing">
-      🟢 Now Playing • ${hours}h ${mins}m left
-    </div>
-
-    <button class="view-btn" data-id="${movie.id}">
-      View
+  <div class="actions">
+    <button class="book-btn" data-id="${movie.id}">
+      🎟 Book Tickets
     </button>
 
+    <button class="info-btn" data-id="${movie.id}">
+      ℹ View Info
+    </button>
   </div>
+
+</div>
 
 </div>
 
@@ -1521,14 +1545,11 @@ row.appendChild(card);
 
 container.appendChild(row);
 
-/* EVENTS */
 initTheatreEvents();
 
 }catch(err){
-
 container.innerHTML = "Failed to load";
 console.error(err);
-
 }
 
 }
@@ -1544,13 +1565,7 @@ window.location.href = `booking.html?id=${btn.dataset.id}`;
 };
 });
 
-document.querySelectorAll(".trailer-btn").forEach(btn=>{
-btn.onclick = ()=>{
-window.location.href = `trailer.html?id=${btn.dataset.id}`;
-};
-});
-
-document.querySelectorAll(".view-btn").forEach(btn=>{
+document.querySelectorAll(".info-btn").forEach(btn=>{
 btn.onclick = ()=>{
 window.location.href = `movie.html?id=${btn.dataset.id}`;
 };
@@ -1558,6 +1573,7 @@ window.location.href = `movie.html?id=${btn.dataset.id}`;
 
 document.querySelectorAll(".add-btn").forEach(btn=>{
 btn.onclick = ()=>{
+btn.classList.toggle("active");
 btn.innerText = btn.innerText === "+" ? "✓" : "+";
 };
 });
@@ -1584,7 +1600,7 @@ loadTheatre(tab.dataset.tab);
 
 });
 
-        }
+}
 
 
 /* ================= GLOBAL STATE ================= */
