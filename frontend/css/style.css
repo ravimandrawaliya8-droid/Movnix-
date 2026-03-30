@@ -2881,26 +2881,39 @@ font-size:18px;
 /* ================= theater SECTION ================= */
 
 .theatre-section{
-  padding:16px;
+  padding:12px 10px;   /* 🔥 pehle uneven tha */
 }
 
 /* TITLE AREA */
 .theatre-header{
-  padding:0 4px;   /* 🔥 equal spacing */
+  padding:0 4px;
+  text-align:left;
 }
 
+/* TITLE ROW */
 .title-row{
   display:flex;
   align-items:center;
   gap:6px;
 }
 
+/* 🎯 MAIN TITLE */
 .title-text{
+  font-size:18px;
+  font-weight:700;
+  color:#f5c518;   /* 🔥 IMDb yellow */
+}
+
+/* ICON */
+.title-icon{
   font-size:18px;
 }
 
+/* SUBTITLE */
 .subtitle{
-  margin-left:2px;
+  font-size:12px;
+  color:#aaa;
+  margin-top:2px;
 }
 
 
@@ -2918,17 +2931,24 @@ font-size:18px;
 /* TABS */
 .theatre-tabs{
   display:flex;
-  gap:10px;
-  margin:14px 0;
+  gap:8px;
+  margin:10px 0 12px;
 }
 
 .theatre-tab{
-  padding:10px 16px;
-  border-radius:22px;
+  padding:6px 12px;   /* 🔥 compact */
+  border-radius:18px;
+  font-size:12px;
   background:rgba(255,255,255,0.06);
-  color:#ddd;
-  font-size:13px;
+  color:#ccc;
   border:none;
+  display:flex;
+  align-items:center;
+  gap:4px;
+}
+
+.theatre-tab span{
+  font-size:12px;
 }
 
 .theatre-tab.active{
