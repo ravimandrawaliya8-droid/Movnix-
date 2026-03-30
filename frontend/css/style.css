@@ -3169,13 +3169,18 @@ font-size:18px;
   margin:14px 12px;
   padding:12px;
   border-radius:16px;
-
-  background:#111;
+  background:linear-gradient(
+    to bottom,
+    #1f1f1f,
+    #262626
+  );
 }
+
+
 
 .other-theatres p{
   font-size:13px;
-  color:#aaa;
+  color:#bbb;
   margin-bottom:10px;
 }
 
@@ -3194,6 +3199,22 @@ font-size:18px;
 
 .chip.active{
   background:#2b8cff;
+}
+
+
+.other-theatres button{
+  background:#2a2a2a;   /* 🔥 thoda darker than bg */
+  color:#ddd;
+  border:none;
+  padding:8px 14px;
+  border-radius:20px;
+  font-size:12px;
+}
+
+/* ACTIVE */
+.other-theatres button.active{
+  background:#1e90ff;
+  color:#fff;
 }
 
 
