@@ -2881,39 +2881,40 @@ font-size:18px;
 /* ================= theater SECTION ================= */
 
 .theatre-section{
-  padding:12px 10px;   /* 🔥 pehle uneven tha */
+  padding:14px 0; /* 🔥 pehle uneven tha */
+  background:#0a0a0a;
 }
 
 /* TITLE AREA */
 .theatre-header{
-  padding:0 4px;
-  text-align:left;
+  padding:0 12px;   /* 🔥 left breathing space */
 }
 
-/* TITLE ROW */
 .title-row{
   display:flex;
   align-items:center;
-  gap:6px;
+  gap:10px;
+  margin-bottom:4px;
 }
 
-/* 🎯 MAIN TITLE */
+/* 🎯 MAIN TITLE FIX */
 .title-text{
-  font-size:18px;
+  font-size:22px;     /* 🔥 bigger */
   font-weight:700;
-  color:#f5c518;   /* 🔥 IMDb yellow */
+  color:#f5c518;
+  letter-spacing:0.3px;
 }
 
 /* ICON */
 .title-icon{
-  font-size:18px;
+  font-size:20px;
 }
 
 /* SUBTITLE */
 .subtitle{
-  font-size:12px;
+  font-size:13px;
   color:#aaa;
-  margin-top:2px;
+  margin-left:30px;   /* 🔥 thoda align under title */
 }
 
 
@@ -2964,6 +2965,9 @@ font-size:18px;
   gap:12px;
   overflow-x:auto;
   padding-bottom:6px;
+  background:#111;
+  padding:10px 12px;
+  border-radius:14px;
 }
 
 .theatre-row::-webkit-scrollbar{
@@ -2978,9 +2982,18 @@ font-size:18px;
   border-radius:16px;
   overflow:hidden;
   position:relative;
-  background:#111;
+  background:#1a1a1a;
   box-shadow:0 8px 20px rgba(0,0,0,0.6);
 }
+
+.theatre-card{
+  box-shadow:0 4px 20px rgba(0,0,0,0.6);
+}
+
+.theatre-row::-webkit-scrollbar{
+  display:none;
+}
+
 
 /* POSTER */
 .poster-box{
@@ -3153,11 +3166,11 @@ font-size:18px;
 /* ================= BOTTOM THEATRES ================= */
 
 .other-theatres{
-  margin-top:14px;
-  padding:14px;
+  margin:14px 12px;
+  padding:12px;
   border-radius:16px;
 
-  background:rgba(255,255,255,0.04);
+  background:#111;
 }
 
 .other-theatres p{
