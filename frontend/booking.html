@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Movnix Home</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Movnix</title>
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 <!-- HEADER -->
 <header class="header">
-  <div class="logo">Movnix</div>
-  <div class="header-actions">
+  <div class="location">
+    <h2>It All Starts Here!</h2>
+    <p>Mumbai: Western ›</p>
+  </div>
+
+  <div class="header-right">
     <button class="app-btn">Use App</button>
     <span class="search">🔍</span>
   </div>
@@ -19,36 +24,35 @@
 
 <!-- CATEGORY -->
 <section class="categories">
-  <div class="cat">🎬<span>Movies</span></div>
+  <div class="cat active">🎬<span>Movies</span></div>
   <div class="cat">🏏<span>IPL 2026</span></div>
   <div class="cat">🎵<span>Music</span></div>
   <div class="cat">🏃<span>Sports</span></div>
   <div class="cat">🎭<span>Play</span></div>
 </section>
 
-<!-- BANNER -->
+<!-- MAIN BANNER -->
 <section class="banner">
-  <img src="banner.jpg" alt="">
+  <img src="https://via.placeholder.com/600x250" />
 </section>
 
 <!-- OFFER -->
 <section class="offer">
-  <div class="offer-content">
-    <p>Unlock ₹500 off on LIVE gigs</p>
-    <button>Apply Now</button>
+  <div>
+    <h4>Unlock ₹500 off</h4>
+    <p>on LIVE gigs</p>
   </div>
+  <button>Apply Now</button>
 </section>
 
 <!-- MOVIES -->
 <section class="movies">
   <div class="title">
     <h2>Recommended Movies</h2>
-    <span>See All</span>
+    <span>See All ›</span>
   </div>
 
-  <div class="movie-list" id="movieList">
-    <!-- JS se aayega -->
-  </div>
+  <div class="movie-list" id="movieList"></div>
 </section>
 
 <!-- BOTTOM NAV -->
@@ -61,4 +65,4 @@
 
 <script src="app.js"></script>
 </body>
-  </html>
+</html>
