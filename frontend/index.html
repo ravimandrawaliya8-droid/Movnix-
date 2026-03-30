@@ -543,35 +543,53 @@ Popular Indian Celebrities
   <!-- HEADER -->
   <div class="theatre-header">
 
-    <h2>🎬 In Theaters Near You</h2>
-    <p>Catch the biggest films on big screen</p>
+    <div class="title-row">
+      <span class="title-icon">🎬</span>
+      <h2 class="title-text">In Theaters Near You</h2>
+    </div>
+
+    <p class="subtitle">Catch the biggest films on big screen</p>
 
     <!-- TABS -->
     <div class="theatre-tabs">
 
       <button class="theatre-tab active" data-tab="trending">
-        🔥 Trending
+        🔥 <span>Trending</span>
       </button>
 
       <button class="theatre-tab" data-tab="fast">
-        🎟 Fast Filling
+        🎟 <span>Fast Filling</span>
       </button>
 
       <button class="theatre-tab" data-tab="top">
-        ⭐ Top Rated
+        ⭐ <span>Top Rated</span>
       </button>
 
     </div>
 
   </div>
 
-
   <!-- MOVIE LIST -->
-  <div id="theatreList" class="theatre-container">
-    <!-- JS WILL LOAD CARDS HERE -->
+  <div id="theatreList" class="theatre-row"></div>
+
+  <!-- BOTTOM THEATRES -->
+  <div class="other-theatres">
+
+    <p class="other-text">
+      Also showing in <strong>8</strong> other theatres nearby:
+    </p>
+
+    <div class="theatre-chips">
+      <span class="chip active">PVR</span>
+      <span class="chip">INOX</span>
+      <span class="chip">Cinépolis</span>
+      <span class="chip">Miraj Cinemas</span>
+      <span class="chip">Moviemax</span>
+    </div>
+
   </div>
 
-</section>
+  </section>
 
 <!-- ================= BOX OFFICE SECTION ================= -->
 
