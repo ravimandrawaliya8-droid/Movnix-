@@ -2886,8 +2886,23 @@ font-size:18px;
 
 /* TITLE AREA */
 .theatre-header{
-  margin-bottom:14px;
+  padding:0 4px;   /* 🔥 equal spacing */
 }
+
+.title-row{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.title-text{
+  font-size:18px;
+}
+
+.subtitle{
+  margin-left:2px;
+}
+
 
 .theatre-header h2{
   font-size:20px;
@@ -2926,7 +2941,7 @@ font-size:18px;
 
 .theatre-row{
   display:flex;
-  gap:14px;
+  gap:12px;
   overflow-x:auto;
   padding-bottom:6px;
 }
@@ -2938,9 +2953,9 @@ font-size:18px;
 /* ================= CARD ================= */
 
 .theatre-card{
-  min-width:280px;
-  height:420px;
-  border-radius:18px;
+  min-width:220px;
+  height:360px;
+  border-radius:16px;
   overflow:hidden;
   position:relative;
   background:#111;
@@ -2984,11 +2999,11 @@ font-size:18px;
   bottom:0;
   left:0;
   width:100%;
-  padding:16px;
+  padding:12px;
 
   display:flex;
   flex-direction:column;
-  gap:6px;
+  gap:4px;
 
   background:linear-gradient(
     to top,
@@ -3021,7 +3036,7 @@ font-size:18px;
 
 /* TITLE */
 .movie-title{
-  font-size:17px;
+  font-size:14px;
   font-weight:700;
   margin-top:4px;
 }
@@ -3029,7 +3044,7 @@ font-size:18px;
 /* INFO */
 .theatre,
 .time{
-  font-size:13px;
+  font-size:11px;
   color:#c9c9c9;
 }
 
@@ -3094,10 +3109,10 @@ font-size:18px;
 
 .book-btn{
   flex:1;
-  padding:11px;
-  border-radius:12px;
+  padding:8px;
+  border-radius:10px;
   border:none;
-  font-size:13px;
+  font-size:12px;
   font-weight:600;
 
   background:linear-gradient(135deg,#2b8cff,#0066ff);
@@ -3106,10 +3121,10 @@ font-size:18px;
 
 .info-btn{
   flex:1;
-  padding:11px;
-  border-radius:12px;
+  padding:8px;
+  border-radius:10px;
   border:none;
-  font-size:13px;
+  font-size:12px;
 
   background:rgba(255,255,255,0.08);
   color:#fff;
