@@ -1393,7 +1393,9 @@ async function loadPopularInterests(){
 
 }
 
-/* ================= THEATRE SECTION PRO ================= */
+
+
+/* ================= THEATRE SECTION FINAL ================= */
 
 const theatres = ["PVR Cinemas", "INOX", "Cinépolis", "Miraj Cinemas", "Moviemax"];
 const formats = ["2D", "3D", "IMAX"];
@@ -1431,7 +1433,8 @@ async function loadTheatre(type="trending"){
 const container = document.getElementById("theatreList");
 if(!container) return;
 
-container.innerHTML = "Loading...";
+/* LOADING UI */
+container.innerHTML = `<p style="color:#aaa;padding:20px">Loading movies...</p>`;
 
 let endpoint = "/movie/now_playing?region=IN";
 
@@ -1444,38 +1447,38 @@ if(type === "fast"){
   data = data.sort((a,b)=> b.popularity - a.popularity);
 }
 else if(type === "top"){
-  data = data.filter(m=>m.vote_count>200)
-             .sort((a,b)=> b.vote_average - a.vote_average);
+  data = data
+    .filter(m=>m.vote_count > 200)
+    .sort((a,b)=> b.vote_average - a.vote_average);
 }
 else{
   data = data.sort((a,b)=> b.popularity - a.popularity);
 }
 
+/* LIMIT */
 const movies = data.slice(0,20);
 
 container.innerHTML = "";
-
-const row = document.createElement("div");
-row.className = "theatre-row";
 
 /* LOOP */
 movies.forEach(movie=>{
 
 const title = movie.title || "No Title";
 
+/* POSTER */
 const poster = movie.poster_path
 ? "https://image.tmdb.org/t/p/w500" + movie.poster_path
-: "";
+: "https://via.placeholder.com/500x750?text=No+Image";
 
+/* RATING */
 const rating = movie.vote_average?.toFixed(1) || "0";
 
-/* 🎯 TAG SYSTEM */
-let tag = "🔥 Fast Filling";
+/* 🎯 TAG (TAB BASED) */
+let tag = "🔥 Trending";
+if(type === "top") tag = "⭐ Top Rated";
+if(type === "fast") tag = "🎟 Fast Filling";
 
-if(movie.vote_average >= 8) tag = "⭐ Top Rated";
-if(movie.popularity >= 300) tag = "🔥 Fast Filling";
-
-/* 🎭 FAKE REAL DATA */
+/* 🎭 REAL + FAKE DATA */
 const theatre = getRandom(theatres);
 const distance = getDistance();
 const time = getTime();
@@ -1484,7 +1487,7 @@ const seats = getSeats();
 const bookings = getBookings();
 
 const hours = Math.floor(Math.random()*3)+1;
-const mins = Math.floor(Math.random()*59);
+const mins = Math.floor(Math.random()*50)+10;
 
 /* CARD */
 const card = document.createElement("div");
@@ -1494,62 +1497,64 @@ card.innerHTML = `
 
 <div class="poster-box">
 
-<img src="${poster}" alt="${title}">
+  <img src="${poster}" alt="${title}" loading="lazy">
 
-<div class="add-btn">+</div>
+  <div class="add-btn">+</div>
 
-<div class="poster-overlay">
+  <div class="poster-overlay">
 
-  <div class="top-row">
-    <span class="rating">⭐ ${rating}</span>
-    <span class="tag">${tag}</span>
+    <div class="top-row">
+      <span class="rating">⭐ ${rating}</span>
+      <span class="tag">${tag}</span>
+    </div>
+
+    <h3 class="movie-title">${title}</h3>
+
+    <p class="theatre">📍 ${theatre} • ${distance} km</p>
+    <p class="time">🕒 ${time} • Today</p>
+
+    <div class="badges">
+      <span class="seat ${seats.class}">${seats.text}</span>
+      <span class="format">${format}</span>
+    </div>
+
+    <p class="booking">👥 Booked ${bookings} times in last hour</p>
+
+    <div class="divider"></div>
+
+    <p class="now-playing">
+      🟢 Now Playing • ${hours}h ${mins}m left
+    </p>
+
+    <div class="actions">
+      <button class="book-btn" data-id="${movie.id}">
+        🎟 Book Tickets
+      </button>
+
+      <button class="info-btn" data-id="${movie.id}">
+        ℹ View Info
+      </button>
+    </div>
+
   </div>
-
-  <h3 class="movie-title">${title}</h3>
-
-  <p class="theatre">🎟 ${theatre} • ${distance} km</p>
-  <p class="time">⏰ ${time} • Today</p>
-
-  <div class="badges">
-    <span class="seat ${seats.class}">${seats.text}</span>
-    <span class="format">${format}</span>
-  </div>
-
-  <p class="booking">👥 Booked ${bookings} times in last hour</p>
-
-  <div class="divider"></div>
-
-  <div class="now-playing">
-    🟢 Now Playing • ${hours}h ${mins}m left
-  </div>
-
-  <div class="actions">
-    <button class="book-btn" data-id="${movie.id}">
-      🎟 Book Tickets
-    </button>
-
-    <button class="info-btn" data-id="${movie.id}">
-      ℹ View Info
-    </button>
-  </div>
-
-</div>
 
 </div>
 
 `;
 
-row.appendChild(card);
+/* ✅ DIRECT APPEND (NO EXTRA ROW) */
+container.appendChild(card);
 
 });
 
-container.appendChild(row);
-
+/* EVENTS INIT */
 initTheatreEvents();
 
 }catch(err){
-container.innerHTML = "Failed to load";
+
+container.innerHTML = `<p style="color:red;padding:20px">Failed to load</p>`;
 console.error(err);
+
 }
 
 }
@@ -1601,6 +1606,8 @@ loadTheatre(tab.dataset.tab);
 });
 
 }
+
+
 
 
 /* ================= GLOBAL STATE ================= */
