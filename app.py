@@ -4,6 +4,22 @@ from flask import Flask, request, jsonify
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
+# =====================
+# MONGODB SETUP
+# =====================
+
+from pymongo import MongoClient
+from datetime import datetime
+
+MONGO_URI = os.getenv("MONGO_URI")
+
+client = MongoClient(MONGO_URI)
+db = client["movnix"]
+
+theatres_col = db["theatres"]
+shows_col = db["shows"]
+seats_col = db["seats"]
+bookings_col = db["bookings"]
 TOKEN = os.getenv("TELEGRAM_TOKEN")
 TMDB_API = os.getenv("TMDB_API")
 WEBSITE = os.getenv("WEBSITE_URL")
@@ -34,6 +50,61 @@ def search_movie(query):
         return None
 
     return r["results"][0]
+
+
+# =====================
+# BOOKING HELPERS
+# =====================
+
+def create_seats(show_id):
+
+    rows = ["A", "B", "C", "D", "E"]
+
+    seats = []
+
+    for r in rows:
+        for i in range(1, 11):
+            seats.append({
+                "showId": show_id,
+                "seatNumber": f"{r}{i}",
+                "status": "available"
+            })
+
+    seats_col.insert_many(seats)
+
+
+def generate_shows(theatre_id):
+
+    times = ["10:00 AM", "2:00 PM", "6:00 PM", "10:00 PM"]
+
+    movies = tmdb("/trending/movie/week").get("results", [])[:4]
+
+    shows = []
+
+    for i, time in enumerate(times):
+
+        if i >= len(movies):
+            break
+
+        movie = movies[i]
+
+        show = {
+            "theatreId": theatre_id,
+            "movieId": movie["id"],
+            "movieName": movie["title"],
+            "time": time,
+            "date": str(datetime.now().date())
+        }
+
+        inserted = shows_col.insert_one(show)
+
+        create_seats(str(inserted.inserted_id))
+
+        show["_id"] = str(inserted.inserted_id)
+
+        shows.append(show)
+
+    return shows
 
 
 # =====================
@@ -90,6 +161,93 @@ def celebs():
     data = tmdb("/person/popular")
 
     return jsonify(data)
+
+@app.route("/add-theatre", methods=["POST"])
+def add_theatre():
+
+    data = request.json
+
+    theatre = {
+        "name": data.get("name"),
+        "city": data.get("city"),
+        "location": data.get("location", ""),
+        "screens": data.get("screens", 1),
+        "createdAt": datetime.now()
+    }
+
+    result = theatres_col.insert_one(theatre)
+
+    return jsonify({
+        "message": "Theatre added",
+        "theatreId": str(result.inserted_id)
+    })
+
+@app.route("/theatres")
+def get_theatres():
+
+    city = request.args.get("city")
+
+    if not city:
+        return jsonify({"error": "City required"}), 400
+
+    theatres = list(theatres_col.find({"city": city}, {"_id": 0}))
+
+    return jsonify(theatres)
+
+@app.route("/shows")
+def get_shows():
+
+    theatre_id = request.args.get("theatreId")
+
+    shows = list(shows_col.find({"theatreId": theatre_id}, {"_id": 0}))
+
+    if not shows:
+        shows = generate_shows(theatre_id)
+
+    return jsonify(shows)
+
+
+@app.route("/seats")
+def get_seats():
+
+    show_id = request.args.get("showId")
+
+    seats = list(seats_col.find({"showId": show_id}, {"_id": 0}))
+
+    return jsonify(seats)
+
+@app.route("/book", methods=["POST"])
+def book_seats():
+
+    data = request.json
+    show_id = data.get("showId")
+    selected_seats = data.get("seats")
+
+    for seat in selected_seats:
+
+        existing = seats_col.find_one({
+            "showId": show_id,
+            "seatNumber": seat,
+            "status": "booked"
+        })
+
+        if existing:
+            return jsonify({"error": f"{seat} already booked"}), 400
+
+    for seat in selected_seats:
+
+        seats_col.update_one(
+            {"showId": show_id, "seatNumber": seat},
+            {"$set": {"status": "booked"}}
+        )
+
+    bookings_col.insert_one({
+        "showId": show_id,
+        "seats": selected_seats,
+        "createdAt": datetime.now()
+    })
+
+    return jsonify({"message": "Booking successful"})
 
 
 # =====================
