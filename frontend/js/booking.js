@@ -22,20 +22,31 @@ async function loadMovie(){
     : "https://via.placeholder.com/500x750?text=No+Poster";
 
     document.getElementById("movieBox").innerHTML = `
-        <img src="${poster}">
-        <h2>${movie.title}</h2>
-        <p>${movie.overview || "No description available"}</p>
+        <div class="movie-hero">
+            <img class="movie-poster" src="${poster}">
+            <div class="movie-info">
+                <h2>${movie.title}</h2>
+                <p class="movie-meta">${movie.release_date || ""}</p>
+                <p>${movie.overview || "No description available"}</p>
+            </div>
+        </div>
     `;
 }
 
-/* ---------------- GOOGLE LOAD ---------------- */
+/* ---------------- GOOGLE LOAD (FIXED) ---------------- */
 
 function loadGoogleScript() {
   return new Promise((resolve) => {
-    if (window.google) return resolve();
+
+    if (window.google && window.google.maps) return resolve();
+
+    const existing = document.querySelector("script[data-google]");
+    if(existing) return resolve();
 
     const script = document.createElement("script");
     script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_API}&libraries=places`;
+    script.setAttribute("data-google","true");
+
     script.onload = resolve;
     document.head.appendChild(script);
   });
@@ -86,18 +97,26 @@ function generateShowtimes() {
   });
 }
 
+/* ---------------- FIXED DISTANCE ---------------- */
+
 function getDistance(lat1, lng1, lat2, lng2) {
   const R = 6371;
-  const dLat = ((lat2-lat1)*Math.PI)/180;
-  const dLng = ((lng2-lng1)*Math.PI)/180;
 
-  const a = Math.sin(dLat/2)**2 +
-    Math.cos(lat1)*Math.cos(lat2)*Math.sin(dLng/2)**2;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLng = (lng2 - lng1) * Math.PI / 180;
+
+  const a =
+    Math.sin(dLat/2)**2 +
+    Math.cos(lat1 * Math.PI/180) *
+    Math.cos(lat2 * Math.PI/180) *
+    Math.sin(dLng/2)**2;
 
   return (R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))).toFixed(1);
 }
 
-function createTheatreCard(theatre, userLoc){
+/* ---------------- THEATRE CARD (FIXED UI) ---------------- */
+
+function createTheatreCard(theatre, userLoc, index){
   const times = generateShowtimes();
 
   const distance = getDistance(
@@ -112,34 +131,57 @@ function createTheatreCard(theatre, userLoc){
   `).join("");
 
   return `
-  <div class="theatre-card">
-    <h3>${theatre.name}</h3>
-    <p>${distance} km away</p>
+  <div class="theatre-card ${index === 0 ? "active" : ""}">
+    
+    <div class="theatre-header">
+      <div class="logo">🎬</div>
+      <div>
+        <h3>${theatre.name}</h3>
+        <p>${distance} km away</p>
+      </div>
+    </div>
+
     <div class="showtimes">${timesHTML}</div>
+
   </div>`;
 }
 
+/* ---------------- RENDER ---------------- */
+
 function renderTheatres(theatres, userLoc){
   const container = document.getElementById("theatreContainer");
-  container.innerHTML = theatres.map(t=>createTheatreCard(t,userLoc)).join("");
+
+  container.innerHTML = theatres
+    .map((t,i)=>createTheatreCard(t,userLoc,i))
+    .join("");
 
   document.querySelectorAll(".time-btn").forEach(btn=>{
     btn.onclick = ()=>{
-      document.querySelectorAll(".time-btn").forEach(b=>b.classList.remove("active"));
+      document.querySelectorAll(".time-btn")
+        .forEach(b=>b.classList.remove("active"));
+
       btn.classList.add("active");
     };
   });
 }
 
-/* ---------------- LOAD THEATRE SECTION ---------------- */
+/* ---------------- LOAD THEATRE (SAFE) ---------------- */
 
 async function loadTheatreSection(){
-  await loadGoogleScript();
+  try{
+    await loadGoogleScript();
 
-  const userLoc = await getUserLocation();
-  const theatres = await getNearbyTheatres(userLoc.lat, userLoc.lng);
+    const userLoc = await getUserLocation();
+    const theatres = await getNearbyTheatres(userLoc.lat, userLoc.lng);
 
-  renderTheatres(theatres, userLoc);
+    renderTheatres(theatres, userLoc);
+
+  } catch(err){
+    document.getElementById("theatreContainer").innerHTML =
+      "<p style='color:red'>Unable to load theatres 😢</p>";
+
+    console.error("THEATRE ERROR:", err);
+  }
 }
 
 /* ---------------- SEATS ---------------- */
@@ -202,7 +244,7 @@ function bookNow(){
 }
 
 /* =====================================================
-   🚀 LAZY LOAD SYSTEM (MAIN MAGIC)
+   🚀 LAZY LOAD SYSTEM (UNCHANGED)
 ===================================================== */
 
 const observer = new IntersectionObserver((entries)=>{
@@ -220,7 +262,7 @@ const observer = new IntersectionObserver((entries)=>{
   });
 },{ threshold: 0.3 });
 
-/* ---------------- REGISTER SECTIONS ---------------- */
+/* ---------------- INIT ---------------- */
 
 window.addEventListener("DOMContentLoaded", ()=>{
 
