@@ -1,8 +1,8 @@
-/* ===== BOOKING PAGE ===== */
+/* ===== PAGE BASE ===== */
 
 .booking-page{
-  margin-top:90px; /* header space */
-  padding:15px;
+  margin-top: 90px;
+  padding: 15px;
 }
 
 /* ===== MOVIE HERO ===== */
@@ -10,7 +10,6 @@
 .movie-hero{
   display:flex;
   gap:15px;
-  align-items:flex-start;
   margin-bottom:20px;
 }
 
@@ -32,254 +31,158 @@
   margin-bottom:8px;
 }
 
-.badges{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-}
+/* ===== SECTION TITLE ===== */
 
-.badge{
-  font-size:11px;
-  padding:4px 8px;
-  border-radius:6px;
-  background:#1c2333;
-}
-
-/* ===== THEATRE SECTION ===== */
-
-.theatre-section{
-  margin-top:10px;
-}
-
-.section-title{
+.booking-container h2{
+  font-size:18px;
+  margin-bottom:12px;
   display:flex;
   align-items:center;
   gap:10px;
-  margin-bottom:12px;
 }
 
-.step{
+.booking-container h2::before{
+  content:"1";
   width:28px;
   height:28px;
-  background:#1976d2;
+  background:#2563eb;
   border-radius:50%;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:14px;
+  color:white;
+  font-size:13px;
 }
 
-.theatre-slider{
+/* ===== THEATRE CONTAINER ===== */
+
+.theatre-container{
   display:flex;
   gap:12px;
   overflow-x:auto;
+  padding:10px 5px 15px;
+  scroll-snap-type:x mandatory;
 }
 
-.theatre-slider::-webkit-scrollbar{
+.theatre-container::-webkit-scrollbar{
   display:none;
 }
 
-/* CARD */
+/* ===== THEATRE CARD ===== */
 
 .theatre-card{
-  min-width:260px;
-  background:#111827;
-  padding:12px;
-  border-radius:14px;
-  border:1px solid transparent;
+  min-width:85%;
+  max-width:320px;
+  flex-shrink:0;
+
+  background:rgba(20,20,30,0.6);
+  border-radius:16px;
+  padding:15px;
+
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.08);
+
+  transition:0.3s;
+  scroll-snap-align:start;
 }
+
+/* ACTIVE CARD */
 
 .theatre-card.active{
-  border:1px solid #1976d2;
-  box-shadow:0 0 10px rgba(25,118,210,0.5);
+  border:1px solid #3b82f6;
+  box-shadow:0 0 20px rgba(59,130,246,0.6);
 }
 
-.theatre-card h3{
-  font-size:14px;
-}
+/* HOVER */
 
-.theatre-card p{
-  font-size:12px;
-  color:#aaa;
-}
-
-
-
-/* ===== THEATRE SECTION ===== */
-
-.theatre-container{
-  display: flex;
-  gap: 20px;
-  overflow-x: auto;
-  padding: 10px 5px 20px;
-  scroll-snap-type: x mandatory;
-}
-
-/* SCROLL HIDE */
-.theatre-container::-webkit-scrollbar{
-  display: none;
-}
-
-/* ===== CARD ===== */
-
-.theatre-card{
-  min-width: 280px;
-  background: rgba(20,20,30,0.6);
-  border-radius: 16px;
-  padding: 16px;
-  backdrop-filter: blur(15px);
-  border: 1px solid rgba(255,255,255,0.08);
-  transition: 0.3s;
-  scroll-snap-align: start;
-  position: relative;
-}
-
-/* ACTIVE CARD (FIRST ONE DEFAULT) */
-.theatre-card.active{
-  border: 1px solid #3b82f6;
-  box-shadow: 0 0 20px rgba(59,130,246,0.6);
-}
-
-/* HOVER EFFECT */
 .theatre-card:hover{
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+  transform:translateY(-4px);
 }
 
 /* ===== HEADER ===== */
 
 .theatre-header{
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  margin-bottom: 15px;
+  display:flex;
+  gap:10px;
+  align-items:center;
+  margin-bottom:12px;
 }
 
 .logo{
-  width: 45px;
-  height: 45px;
-  background: #111;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
+  width:40px;
+  height:40px;
+  background:#111;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:16px;
 }
 
+/* TEXT */
+
 .theatre-header h3{
-  font-size: 16px;
-  margin: 0;
+  font-size:14px;
+  margin:0;
 }
 
 .theatre-header p{
-  font-size: 13px;
-  color: #aaa;
-  margin: 2px 0 0;
+  font-size:12px;
+  color:#aaa;
+  margin:2px 0 0;
 }
 
 /* ===== SHOWTIMES ===== */
 
 .showtimes{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
 }
 
 /* TIME BUTTON */
 
 .time-btn{
-  padding: 8px 12px;
-  background: #1f2937;
-  border: none;
-  border-radius: 8px;
-  color: #ccc;
-  font-size: 13px;
-  cursor: pointer;
-  transition: 0.25s;
+  padding:7px 10px;
+  background:#1f2937;
+  border:none;
+  border-radius:8px;
+  color:#ccc;
+  font-size:12px;
+  cursor:pointer;
+  transition:0.25s;
 }
 
 /* HOVER */
+
 .time-btn:hover{
-  background: #374151;
-  color: white;
+  background:#374151;
+  color:#fff;
 }
 
 /* ACTIVE TIME */
+
 .time-btn.active{
-  background: #3b82f6;
-  color: white;
-  box-shadow: 0 0 10px rgba(59,130,246,0.7);
+  background:#3b82f6;
+  color:#fff;
+  box-shadow:0 0 10px rgba(59,130,246,0.7);
 }
-
-/* ===== SECTION TITLE ===== */
-
-.booking-container h2{
-  font-size: 20px;
-  margin-bottom: 15px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-/* NUMBER CIRCLE */
-
-.booking-container h2::before{
-  content: "1";
-  width: 30px;
-  height: 30px;
-  background: #2563eb;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 14px;
-}
-
-/* ===== MOBILE OPTIMIZATION ===== */
-
-@media(max-width: 768px){
-
-  .theatre-card{
-    min-width: 85%;
-  }
-
-  .time-btn{
-    flex: 1 1 30%;
-    text-align: center;
-  }
-
-  }
 
 /* ===== SEAT SECTION ===== */
 
-.seat-section{
-  margin-top:25px;
-}
-
-.seat-grid{
+.seat-container{
   margin-top:15px;
   display:grid;
-  grid-template-columns:repeat(10,1fr);
-  gap:6px;
+  grid-template-columns:repeat(8,1fr);
+  gap:8px;
 }
-
-/* SCREEN TEXT */
-
-.screen{
-  text-align:center;
-  font-size:12px;
-  margin:10px 0;
-  opacity:0.6;
-}
-
-/* SEATS */
 
 .seat{
   width:100%;
   aspect-ratio:1/1;
   background:#1c2333;
   border-radius:6px;
+  cursor:pointer;
 }
 
 .seat.selected{
@@ -290,37 +193,40 @@
   background:#e53935;
 }
 
-/* ===== SUMMARY ===== */
+/* ===== TOTAL + BUTTON ===== */
 
-.booking-summary{
-  position:fixed;
-  bottom:0;
-  left:0;
+.total-box{
+  margin-top:15px;
+  font-size:16px;
+}
+
+.book-btn{
   width:100%;
-  background:#0b0f17;
-  border-top:1px solid rgba(255,255,255,0.1);
+  margin-top:10px;
   padding:12px;
-}
-
-.summary-top{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:10px;
-}
-
-.total{
-  font-size:18px;
-  color:#00e676;
-  font-weight:700;
-}
-
-.pay-btn{
-  width:100%;
-  padding:12px;
-  background:#1976d2;
+  background:#3b82f6;
   border:none;
   border-radius:10px;
   color:#fff;
-  font-size:15px;
-  font-weight:600;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+/* ===== MOBILE PERFECT ===== */
+
+@media(max-width:768px){
+
+  .movie-hero{
+    flex-direction:row;
+  }
+
+  .theatre-card{
+    min-width:90%;
+  }
+
+  .time-btn{
+    flex:1 1 30%;
+    text-align:center;
+  }
+
   }
