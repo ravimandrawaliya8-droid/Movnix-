@@ -10,71 +10,11 @@
 
 <link rel="stylesheet" href="css/style.css">
 
-<style>
-
-/* ===== BOOKING PAGE ===== */
-
-.booking-container{
-  padding: 20px;
-  max-width: 1000px;
-  margin: auto;
-}
-
-.movie-box{
-  text-align: center;
-}
-
-.movie-box img{
-  width: 200px;
-  border-radius: 10px;
-}
-
-.seat-container{
-  display: grid;
-  grid-template-columns: repeat(8,1fr);
-  gap: 10px;
-  margin: 30px 0;
-}
-
-.seat{
-  padding: 10px;
-  background: #222;
-  text-align: center;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.seat.selected{
-  background: #00ff88;
-  color: black;
-}
-
-.seat.booked{
-  background: red;
-  cursor: not-allowed;
-}
-
-.book-btn{
-  padding: 12px 20px;
-  background: #00ff88;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  font-weight: bold;
-}
-
-.total-box{
-  margin: 20px 0;
-  font-size: 18px;
-}
-
-</style>
-
 </head>
 
 <body>
 
-<!-- HEADER SAME -->
+<!-- HEADER -->
 <section class="header">
 
   <div class="top-bar">
@@ -102,23 +42,52 @@
 
 </section>
 
-<!-- OVERLAY + MENU -->
+<!-- MENU -->
 <div class="side-menu" id="menu"></div>
 <div class="overlay" id="overlay"></div>
 
-<!-- ================= BOOKING SECTION ================= -->
+<!-- ================= MOVIE DETAILS ================= -->
 
 <section class="booking-container">
 
   <!-- MOVIE INFO -->
-  <div id="movieBox" class="movie-box">
-    <!-- JS LOAD -->
+  <div id="movieBox" class="movie-box lazy-section" data-section="movie">
+    <p>Loading movie...</p>
   </div>
 
-  <!-- SEATS -->
+</section>
+
+<!-- ================= THEATRE + SHOWTIMES (NEW SECTION) ================= -->
+
+<section class="booking-container">
+
+  <h2>Nearby Theatres</h2>
+
+  <div 
+    id="theatreContainer" 
+    class="theatre-container lazy-section" 
+    data-section="theatres">
+
+    <p>Loading theatres...</p>
+
+  </div>
+
+</section>
+
+<!-- ================= SEAT SELECTION ================= -->
+
+<section class="booking-container">
+
   <h2>Select Seats</h2>
 
-  <div id="seatContainer" class="seat-container"></div>
+  <div 
+    id="seatContainer" 
+    class="seat-container lazy-section" 
+    data-section="seats">
+
+    <p>Loading seats...</p>
+
+  </div>
 
   <!-- TOTAL -->
   <div class="total-box">
@@ -126,13 +95,19 @@
   </div>
 
   <!-- BUTTON -->
-  <button id="bookBtn" class="book-btn">
+  <button 
+    id="bookBtn" 
+    class="book-btn lazy-section" 
+    data-section="bookingBtn">
+    
     Book Now
+
   </button>
 
 </section>
 
-<!-- FOOTER SAME STYLE -->
+<!-- ================= FOOTER ================= -->
+
 <section class="movnix-final">
 
   <div class="movnix-container">
@@ -146,8 +121,8 @@
 
 </section>
 
-<!-- JS FILE -->
+<!-- JS -->
 <script src="js/booking.js"></script>
 
 </body>
-      </html>
+</html>
