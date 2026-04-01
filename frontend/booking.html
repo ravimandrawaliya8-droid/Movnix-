@@ -14,8 +14,9 @@
 
 <body>
 
-<!-- HEADER -->
-<section class="header">
+<!-- ================= HEADER ================= -->
+
+<header class="header">
 
   <div class="top-bar">
     
@@ -40,73 +41,32 @@
 
   </div>
 
-</section>
+</header>
 
-<!-- MENU -->
+<!-- ================= MENU ================= -->
+
 <div class="side-menu" id="menu"></div>
 <div class="overlay" id="overlay"></div>
 
-<!-- ================= MOVIE DETAILS ================= -->
+<!-- ================= APP ROOT (IMPORTANT) ================= -->
 
-<section class="booking-container" id="movieSection">
+<main id="app">
 
-  <div id="movieBox" class="movie-box">
+  <!-- 🎬 MOVIE (AUTO LOAD BY JS) -->
+  <section id="movieSection" class="section">
     <p>Loading movie...</p>
-  </div>
+  </section>
 
-</section>
+  <!-- 🔽 FUTURE LAZY SECTIONS (EMPTY) -->
+  <section id="theatreSection" class="section"></section>
+  <section id="seatSection" class="section"></section>
+  <section id="paymentSection" class="section"></section>
 
-<!-- ================= THEATRE + SHOWTIMES ================= -->
+</main>
 
-<section class="booking-container" id="theatreSection">
+<!-- ================= JS ================= -->
 
-  <h2>Nearby Theatres</h2>
-
-  <div id="theatreContainer" class="theatre-container">
-    <p>Loading theatres...</p>
-  </div>
-
-</section>
-
-<!-- ================= SEAT SELECTION ================= -->
-
-<section class="booking-container" id="seatSection">
-
-  <h2>Select Seats</h2>
-
-  <div id="seatContainer" class="seat-container">
-    <p>Loading seats...</p>
-  </div>
-
-  <!-- TOTAL -->
-  <div class="total-box">
-    Total: <span id="total">₹ 0</span>
-  </div>
-
-  <!-- BUTTON -->
-  <button id="bookBtn" class="book-btn">
-    Book Now
-  </button>
-
-</section>
-
-<!-- ================= FOOTER ================= -->
-
-<section class="movnix-final">
-
-  <div class="movnix-container">
-
-    <div class="movnix-left">
-      <h1>🔥 Watch on <span>MOVNIX</span></h1>
-      <p>Your ultimate destination for movies & shows.</p>
-    </div>
-
-  </div>
-
-</section>
-
-<!-- JS -->
 <script src="js/booking.js"></script>
 
 </body>
-                       </html>
+</html>
