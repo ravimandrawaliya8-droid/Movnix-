@@ -1,0 +1,118 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body{
+  background:#0b0f17;
+  color:#fff;
+}
+
+/* SECTION */
+.theatre-section{
+  padding:15px;
+}
+
+/* HEADER */
+.section-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px;
+}
+
+.left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.step{
+  width:28px;
+  height:28px;
+  background:#1976d2;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:14px;
+}
+
+h2{
+  font-size:16px;
+}
+
+.change{
+  color:#4dabf7;
+  font-size:13px;
+}
+
+/* SLIDER */
+.theatre-slider{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.theatre-slider::-webkit-scrollbar{
+  display:none;
+}
+
+/* CARD */
+.theatre-card{
+  min-width:85%;
+  background:#141a25;
+  border-radius:14px;
+  padding:14px;
+  scroll-snap-align:start;
+  border:1px solid transparent;
+  transition:0.3s;
+}
+
+.theatre-card.active{
+  border:1px solid #1976d2;
+  box-shadow:0 0 8px rgba(25,118,210,0.4);
+}
+
+/* INFO */
+.theatre-info h3{
+  font-size:15px;
+}
+
+.theatre-info p{
+  font-size:12px;
+  color:#aaa;
+  margin-top:4px;
+}
+
+/* TIMES */
+.times{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:12px;
+}
+
+.time{
+  padding:6px 10px;
+  border-radius:8px;
+  background:#1c2333;
+  border:none;
+  color:#fff;
+  font-size:12px;
+}
+
+.time.active{
+  background:#1976d2;
+}
+
+/* DESKTOP FIX */
+@media(min-width:768px){
+  .theatre-card{
+    min-width:280px;
+  }
+  }
