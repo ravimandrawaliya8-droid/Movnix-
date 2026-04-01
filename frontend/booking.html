@@ -1,76 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Theatre Selection</title>
-  <link rel="stylesheet" href="style.css">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Book Tickets - Movnix</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+/* ===== BOOKING PAGE ===== */
+
+.booking-container{
+  padding: 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.movie-box{
+  text-align: center;
+}
+
+.movie-box img{
+  width: 200px;
+  border-radius: 10px;
+}
+
+.seat-container{
+  display: grid;
+  grid-template-columns: repeat(8,1fr);
+  gap: 10px;
+  margin: 30px 0;
+}
+
+.seat{
+  padding: 10px;
+  background: #222;
+  text-align: center;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.seat.selected{
+  background: #00ff88;
+  color: black;
+}
+
+.seat.booked{
+  background: red;
+  cursor: not-allowed;
+}
+
+.book-btn{
+  padding: 12px 20px;
+  background: #00ff88;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.total-box{
+  margin: 20px 0;
+  font-size: 18px;
+}
+
+</style>
+
 </head>
 
 <body>
 
-<section class="theatre-section">
+<!-- HEADER SAME -->
+<section class="header">
 
-  <div class="section-header">
+  <div class="top-bar">
+    
     <div class="left">
-      <span class="step">1</span>
-      <h2>Select Theatre & Show Time</h2>
-    </div>
-    <span class="change">Change Movie</span>
-  </div>
-
-  <div class="theatre-slider">
-
-    <!-- CARD -->
-    <div class="theatre-card active">
-      <div class="theatre-info">
-        <h3>PVR Cinemas - Forum Mall</h3>
-        <p>1.2 km away • IMAX 2D</p>
-      </div>
-
-      <div class="times">
-        <button class="time">10:30 AM</button>
-        <button class="time">1:15 PM</button>
-        <button class="time active">4:30 PM</button>
-        <button class="time">7:45 PM</button>
-        <button class="time">10:45 PM</button>
-      </div>
+      <div class="menu-btn" id="menuBtn">☰</div>
+      <div class="logo">Mov<span>nix</span></div>
     </div>
 
-    <!-- CARD -->
-    <div class="theatre-card">
-      <div class="theatre-info">
-        <h3>INOX - City Center</h3>
-        <p>2.1 km away • 2D, 3D</p>
+    <div class="right">
+
+      <div class="search-box">
+        <input type="text" placeholder="Search movies...">
+        <span>🔍</span>
       </div>
 
-      <div class="times">
-        <button class="time">11:00 AM</button>
-        <button class="time">2:00 PM</button>
-        <button class="time">5:00 PM</button>
-        <button class="time">8:00 PM</button>
-      </div>
-    </div>
-
-    <!-- CARD -->
-    <div class="theatre-card">
-      <div class="theatre-info">
-        <h3>Cinépolis - Orion Mall</h3>
-        <p>3.6 km away • IMAX 3D</p>
+      <div class="auth">
+        <button class="login">Login</button>
+        <button class="signup">Sign Up</button>
       </div>
 
-      <div class="times">
-        <button class="time">10:15 AM</button>
-        <button class="time">1:00 PM</button>
-        <button class="time">4:15 PM</button>
-        <button class="time">7:30 PM</button>
-      </div>
     </div>
 
   </div>
 
 </section>
 
-<script src="script.js"></script>
+<!-- OVERLAY + MENU -->
+<div class="side-menu" id="menu"></div>
+<div class="overlay" id="overlay"></div>
+
+<!-- ================= BOOKING SECTION ================= -->
+
+<section class="booking-container">
+
+  <!-- MOVIE INFO -->
+  <div id="movieBox" class="movie-box">
+    <!-- JS LOAD -->
+  </div>
+
+  <!-- SEATS -->
+  <h2>Select Seats</h2>
+
+  <div id="seatContainer" class="seat-container"></div>
+
+  <!-- TOTAL -->
+  <div class="total-box">
+    Total: <span id="total">₹ 0</span>
+  </div>
+
+  <!-- BUTTON -->
+  <button id="bookBtn" class="book-btn">
+    Book Now
+  </button>
+
+</section>
+
+<!-- FOOTER SAME STYLE -->
+<section class="movnix-final">
+
+  <div class="movnix-container">
+
+    <div class="movnix-left">
+      <h1>🔥 Watch on <span>MOVNIX</span></h1>
+      <p>Your ultimate destination for movies & shows.</p>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- JS FILE -->
+<script src="js/booking.js"></script>
+
 </body>
-</html>
+      </html>
