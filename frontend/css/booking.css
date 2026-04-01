@@ -103,26 +103,153 @@
   color:#aaa;
 }
 
-/* TIMES */
 
-.times{
-  display:flex;
-  flex-wrap:wrap;
-  gap:6px;
-  margin-top:10px;
+
+/* ===== THEATRE SECTION ===== */
+
+.theatre-container{
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding: 10px 5px 20px;
+  scroll-snap-type: x mandatory;
 }
 
-.time{
-  padding:5px 10px;
-  font-size:12px;
-  background:#1c2333;
-  border-radius:8px;
-  cursor:pointer;
+/* SCROLL HIDE */
+.theatre-container::-webkit-scrollbar{
+  display: none;
 }
 
-.time.active{
-  background:#1976d2;
+/* ===== CARD ===== */
+
+.theatre-card{
+  min-width: 280px;
+  background: rgba(20,20,30,0.6);
+  border-radius: 16px;
+  padding: 16px;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: 0.3s;
+  scroll-snap-align: start;
+  position: relative;
 }
+
+/* ACTIVE CARD (FIRST ONE DEFAULT) */
+.theatre-card.active{
+  border: 1px solid #3b82f6;
+  box-shadow: 0 0 20px rgba(59,130,246,0.6);
+}
+
+/* HOVER EFFECT */
+.theatre-card:hover{
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+/* ===== HEADER ===== */
+
+.theatre-header{
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.logo{
+  width: 45px;
+  height: 45px;
+  background: #111;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.theatre-header h3{
+  font-size: 16px;
+  margin: 0;
+}
+
+.theatre-header p{
+  font-size: 13px;
+  color: #aaa;
+  margin: 2px 0 0;
+}
+
+/* ===== SHOWTIMES ===== */
+
+.showtimes{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* TIME BUTTON */
+
+.time-btn{
+  padding: 8px 12px;
+  background: #1f2937;
+  border: none;
+  border-radius: 8px;
+  color: #ccc;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+/* HOVER */
+.time-btn:hover{
+  background: #374151;
+  color: white;
+}
+
+/* ACTIVE TIME */
+.time-btn.active{
+  background: #3b82f6;
+  color: white;
+  box-shadow: 0 0 10px rgba(59,130,246,0.7);
+}
+
+/* ===== SECTION TITLE ===== */
+
+.booking-container h2{
+  font-size: 20px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* NUMBER CIRCLE */
+
+.booking-container h2::before{
+  content: "1";
+  width: 30px;
+  height: 30px;
+  background: #2563eb;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 14px;
+}
+
+/* ===== MOBILE OPTIMIZATION ===== */
+
+@media(max-width: 768px){
+
+  .theatre-card{
+    min-width: 85%;
+  }
+
+  .time-btn{
+    flex: 1 1 30%;
+    text-align: center;
+  }
+
+  }
 
 /* ===== SEAT SECTION ===== */
 
