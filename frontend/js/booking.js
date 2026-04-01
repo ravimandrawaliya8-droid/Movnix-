@@ -37,6 +37,198 @@ async function loadMovie(){
 
 }
 
+// ==============================
+// CONFIG
+// ==============================
+const GOOGLE_API = "YOUR_GOOGLE_API_KEY";
+const THEATRE_LIMIT = 10;
+const container = document.getElementById("theatreContainer");
+
+// ==============================
+// LOAD GOOGLE SCRIPT
+// ==============================
+function loadGoogleScript() {
+  return new Promise((resolve) => {
+    if (window.google) return resolve();
+
+    const script = document.createElement("script");
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_API}&libraries=places`;
+    script.onload = resolve;
+    document.head.appendChild(script);
+  });
+}
+
+// ==============================
+// GET USER LOCATION
+// ==============================
+function getUserLocation() {
+  return new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        resolve({
+          lat: pos.coords.latitude,
+          lng: pos.coords.longitude,
+        });
+      },
+      reject
+    );
+  });
+}
+
+// ==============================
+// GET NEARBY THEATRES (REAL WORKING)
+// ==============================
+function getNearbyTheatres(lat, lng) {
+  return new Promise((resolve, reject) => {
+    const location = new google.maps.LatLng(lat, lng);
+
+    const service = new google.maps.places.PlacesService(
+      document.createElement("div")
+    );
+
+    service.nearbySearch(
+      {
+        location: location,
+        radius: 5000,
+        type: ["movie_theater"],
+      },
+      (results, status) => {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          resolve(results.slice(0, THEATRE_LIMIT));
+        } else {
+          reject(status);
+        }
+      }
+    );
+  });
+}
+
+// ==============================
+// GENERATE SHOWTIMES
+// ==============================
+function generateShowtimes() {
+  const baseTimes = [10, 13, 16, 19, 22];
+  return baseTimes.map((h) => {
+    const date = new Date();
+    date.setHours(h, Math.random() > 0.5 ? 30 : 0);
+    return date.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  });
+}
+
+// ==============================
+// DISTANCE CALCULATOR
+// ==============================
+function getDistance(lat1, lng1, lat2, lng2) {
+  const R = 6371;
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLng = ((lng2 - lng1) * Math.PI) / 180;
+
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(lat1) *
+      Math.cos(lat2) *
+      Math.sin(dLng / 2) ** 2;
+
+  return (R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))).toFixed(1);
+}
+
+// ==============================
+// CREATE THEATRE CARD (UPGRADED)
+// ==============================
+function createTheatreCard(theatre, userLoc) {
+  const showtimes = generateShowtimes();
+
+  const distance = getDistance(
+    userLoc.lat,
+    userLoc.lng,
+    theatre.geometry.location.lat(),
+    theatre.geometry.location.lng()
+  );
+
+  const formats = ["IMAX", "2D", "3D"];
+  const format = formats[Math.floor(Math.random() * formats.length)];
+
+  const timesHTML = showtimes
+    .map(
+      (t, i) => `
+      <button class="time-btn ${i === 2 ? "active" : ""}">
+        ${t}
+      </button>
+    `
+    )
+    .join("");
+
+  return `
+    <div class="theatre-card">
+      
+      <div class="theatre-header">
+        <div class="logo">🎬</div>
+        <div>
+          <h3>${theatre.name}</h3>
+          <p>${distance} km away • ${format}</p>
+        </div>
+      </div>
+
+      <div class="showtimes">
+        ${timesHTML}
+      </div>
+
+    </div>
+  `;
+}
+
+// ==============================
+// RENDER
+// ==============================
+function renderTheatres(theatres, userLoc) {
+  container.innerHTML = "";
+
+  theatres.forEach((t, i) => {
+    container.innerHTML += createTheatreCard(t, userLoc);
+  });
+
+  addInteractions();
+}
+
+// ==============================
+// INTERACTIONS (UPGRADED)
+// ==============================
+function addInteractions() {
+  document.querySelectorAll(".time-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document
+        .querySelectorAll(".time-btn")
+        .forEach((b) => b.classList.remove("active"));
+
+      btn.classList.add("active");
+    });
+  });
+}
+
+// ==============================
+// INIT
+// ==============================
+async function initBooking() {
+  try {
+    await loadGoogleScript();
+
+    const userLoc = await getUserLocation();
+    const theatres = await getNearbyTheatres(
+      userLoc.lat,
+      userLoc.lng
+    );
+
+    renderTheatres(theatres, userLoc);
+  } catch (err) {
+    console.error("Error:", err);
+  }
+}
+
+initBooking();
+
 /* ---------------- SEAT SYSTEM ---------------- */
 
 let selectedSeats = [];
