@@ -606,7 +606,7 @@ count++;
 }
 
 
-/* ---------------- TOP THIS WEEK (FINAL PRO FIXED) ---------------- */
+/* ---------------- TOP THIS WEEK (FINAL ULTRA CLEAN) ---------------- */
 
 const IMG_BASE = "https://image.tmdb.org/t/p/w780";
 const FALLBACK_POSTER = "https://via.placeholder.com/500x750?text=No+Image";
@@ -619,6 +619,7 @@ let currentRegion = "IN";
 function loadTopWeek() {
   setupCountryButtons();
   setupCountrySearch();
+  setupGlobalEvents(); // ✅ IMPORTANT
   fetchTopThisWeek(currentRegion);
 }
 
@@ -644,7 +645,6 @@ async function fetchTopThisWeek(region = "IN") {
     const data = await res.json();
 
     if (!data.results) {
-      console.error("API ERROR:", data);
       showError();
       return;
     }
@@ -659,7 +659,6 @@ async function fetchTopThisWeek(region = "IN") {
     renderMovies(movies);
 
   } catch (err) {
-    console.error("Fetch Error:", err);
     showError();
   }
 }
@@ -691,7 +690,7 @@ function handleRankChange(movies, region) {
 }
 
 // ==============================
-// RENDER UI (UPDATED)
+// RENDER UI
 // ==============================
 function renderMovies(movies) {
   const container = document.getElementById("top-week-container");
@@ -715,7 +714,7 @@ function renderMovies(movies) {
     card.className = "movie-card";
 
     card.innerHTML = `
-      <div class="card">
+      <div class="card" data-id="${movie.id}">
 
         <!-- WATCHLIST -->
         <div class="watchlist ${isSaved ? "active" : ""}" data-id="${movie.id}">
@@ -724,8 +723,8 @@ function renderMovies(movies) {
           </svg>
         </div>
 
-        <!-- POSTER CLICK FIXED -->
-        <div class="poster-click" onclick="openMovie(${movie.id})">
+        <!-- POSTER -->
+        <div class="poster-click" data-id="${movie.id}">
           <img 
             src="${poster}" 
             alt="${movie.title}" 
@@ -750,15 +749,13 @@ function renderMovies(movies) {
             </button>
           </div>
 
-          <!-- 🔥 NEW ACTION AREA -->
           <div class="extra">
 
             <span>${movie.release_date?.slice(0,4) || "N/A"}</span>
 
             <div class="actions">
 
-              <button class="info-btn"
-                onclick="openMovie(${movie.id})">
+              <button class="info-btn" data-id="${movie.id}">
                 Info
               </button>
 
@@ -766,8 +763,7 @@ function renderMovies(movies) {
                 ▶ Watch
               </button>
 
-              <button class="trailer-btn"
-                onclick="openTrailer(${movie.id})">
+              <button class="trailer-btn" data-id="${movie.id}">
                 🎬 Trailer
               </button>
 
@@ -784,19 +780,68 @@ function renderMovies(movies) {
 
     container.appendChild(card);
   });
-
-  attachEvents();
 }
 
 // ==============================
-// MOVIE PAGE OPEN FIX
+// GLOBAL EVENTS (🔥 MAIN FIX)
+// ==============================
+function setupGlobalEvents() {
+  document.addEventListener("click", (e) => {
+
+    // 🎬 POSTER CLICK
+    if (e.target.closest(".poster-click")) {
+      const id = e.target.closest(".poster-click").dataset.id;
+      openMovie(id);
+    }
+
+    // ℹ️ INFO
+    if (e.target.classList.contains("info-btn")) {
+      const id = e.target.dataset.id;
+      openMovie(id);
+    }
+
+    // 🎬 TRAILER
+    if (e.target.classList.contains("trailer-btn")) {
+      const id = e.target.dataset.id;
+      openTrailer(id);
+    }
+
+    // ⭐ RATE
+    if (e.target.classList.contains("rate-btn")) {
+      const id = e.target.dataset.id;
+
+      let rating = prompt("Rate this movie (1-10):");
+      if (!rating) return;
+
+      rating = Number(rating);
+
+      if (rating < 1 || rating > 10) {
+        alert("Enter 1-10");
+        return;
+      }
+
+      saveUserRating(id, rating);
+      fetchTopThisWeek(currentRegion);
+    }
+
+    // ❤️ WATCHLIST
+    if (e.target.closest(".watchlist")) {
+      const id = e.target.closest(".watchlist").dataset.id;
+      toggleWatchlist(id);
+    }
+
+  });
+}
+
+// ==============================
+// NAVIGATION
 // ==============================
 function openMovie(id) {
   window.location.href = `./movie.html?id=${id}`;
 }
 
 // ==============================
-// TRAILER FUNCTION
+// TRAILER
 // ==============================
 async function openTrailer(movieId) {
   try {
@@ -821,43 +866,7 @@ async function openTrailer(movieId) {
 }
 
 // ==============================
-// EVENTS
-// ==============================
-function attachEvents() {
-
-  // ⭐ RATE
-  document.querySelectorAll(".rate-btn").forEach(btn => {
-    btn.addEventListener("click", e => {
-
-      const id = e.target.dataset.id;
-      let rating = prompt("Rate this movie (1-10):");
-
-      if (!rating) return;
-
-      rating = Number(rating);
-
-      if (rating < 1 || rating > 10) {
-        alert("Enter rating between 1-10");
-        return;
-      }
-
-      saveUserRating(id, rating);
-      fetchTopThisWeek(currentRegion);
-    });
-  });
-
-  // ❤️ WATCHLIST
-  document.querySelectorAll(".watchlist").forEach(btn => {
-    btn.addEventListener("click", e => {
-      e.stopPropagation();
-      const id = e.currentTarget.dataset.id;
-      toggleWatchlist(id);
-    });
-  });
-}
-
-// ==============================
-// SAVE RATING
+// STORAGE
 // ==============================
 function saveUserRating(id, rating) {
   let ratings = JSON.parse(localStorage.getItem("userRatings")) || {};
@@ -865,9 +874,6 @@ function saveUserRating(id, rating) {
   localStorage.setItem("userRatings", JSON.stringify(ratings));
 }
 
-// ==============================
-// WATCHLIST
-// ==============================
 function toggleWatchlist(id) {
   let list = JSON.parse(localStorage.getItem("watchlist")) || [];
 
@@ -902,7 +908,7 @@ function setupCountryButtons() {
 }
 
 // ==============================
-// SEARCH FIXED
+// SEARCH
 // ==============================
 function setupCountrySearch() {
   const input = document.getElementById("countrySearchInput");
