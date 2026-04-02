@@ -605,113 +605,212 @@ count++;
 }
 
 /* ---------------- TOP THIS WEEK ---------------- */
+const BASE = "https://api.themoviedb.org/3";
 
- async function loadTopWeek(){
+// ==============================
+// STATE
+// ==============================
+let currentRegion = "IN"; // default India
 
-const container = document.getElementById("topweek");
-if(!container) return;
+// ==============================
+// FETCH DATA
+// ==============================
 
-container.innerHTML = "";
+async function fetchTopThisWeek(region = "IN") {
+  try {
+    let url;
 
-/* GET WEEKLY TRENDING */
+    if (region === "WORLD") {
+      url = `${BASE}/trending/movie/week?api_key=${API_KEY}`;
+    } else {
+      url = `${BASE}/discover/movie?api_key=${API_KEY}&region=${region}&sort_by=popularity.desc`;
+    }
 
-const trending = await getMovies("/trending/movie/week");
+    const res = await fetch(url);
+    const data = await res.json();
 
-/* YEAR FILTER (last 3 years) */
+    let movies = data.results.slice(0, 10);
 
-const currentYear = new Date().getFullYear();
-const minYear = currentYear - 3;
+    // Sort by popularity (REAL ranking)
+    movies.sort((a, b) => b.popularity - a.popularity);
 
-/* FILTER MOVIES */
+    handleRankChange(movies, region);
 
-let filtered = trending.filter(movie => {
+    renderMovies(movies);
 
-if(!movie.release_date) return false;
-
-const year = parseInt(movie.release_date.split("-")[0]);
-
-return (
-year >= minYear &&
-["hi","ta","te","ml","kn"].includes(movie.original_language)
-);
-
-});
-
-/* FALLBACK (INDIAN POPULAR MOVIES) */
-
-if(filtered.length < 10){
-
-const fallback = await getMovies(
-"/discover/movie?with_origin_country=IN&primary_release_date.gte=2023-01-01&sort_by=popularity.desc"
-);
-
-filtered = [...filtered, ...fallback];
-
+  } catch (err) {
+    console.error("Error fetching movies:", err);
+  }
 }
 
-/* REMOVE DUPLICATES */
+// ==============================
+// RANK CHANGE SYSTEM (NO DB)
+// ==============================
 
-const map = new Map();
+function handleRankChange(movies, region) {
+  const key = `lastWeek_${region}`;
+  const oldData = JSON.parse(localStorage.getItem(key));
 
-filtered.forEach(movie=>{
-if(!map.has(movie.id)){
-map.set(movie.id,movie);
+  if (oldData) {
+    movies.forEach((movie, index) => {
+      const oldIndex = oldData.findIndex(m => m.id === movie.id);
+
+      if (oldIndex === -1) {
+        movie.rankChange = "NEW";
+      } else {
+        const diff = oldIndex - index;
+        movie.rankChange = diff === 0 ? "-" : diff > 0 ? `↑ ${diff}` : `↓ ${Math.abs(diff)}`;
+      }
+    });
+  } else {
+    movies.forEach(m => m.rankChange = "NEW");
+  }
+
+  localStorage.setItem(key, JSON.stringify(movies));
 }
-});
 
-const unique = [...map.values()];
+// ==============================
+// RENDER UI
+// ==============================
 
-/* SORT BY POPULARITY */
+function renderMovies(movies) {
+  const container = document.getElementById("top-week-container");
+  container.innerHTML = "";
 
-unique.sort((a,b)=> b.popularity - a.popularity);
+  movies.forEach((movie, index) => {
 
-/* FINAL TOP 10 */
+    const card = document.createElement("div");
+    card.className = "movie-card";
 
-const top10 = unique.slice(0,10);
+    const poster = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
 
-/* RENDER */
+    card.innerHTML = `
+      <div class="card">
 
-top10.forEach((movie,index)=>{
+        <!-- WATCHLIST -->
+        <div class="watchlist" data-id="${movie.id}">＋</div>
 
-const poster = movie.poster_path
-? "https://image.tmdb.org/t/p/w500"+movie.poster_path
-: "https://via.placeholder.com/500x750?text=No+Poster";
+        <!-- POSTER -->
+        <img src="${poster}" alt="${movie.title}" />
 
-const rating = movie.vote_average
-? movie.vote_average.toFixed(1)
-: "0";
+        <!-- RANK -->
+        <div class="rank">#${index + 1}</div>
 
-const card = `
+        <!-- INFO -->
+        <div class="info">
 
-<div class="movie-card">
+          <h3>${movie.title}</h3>
 
-<div class="poster-box">
+          <div class="meta">
+            <span>⭐ ${movie.vote_average.toFixed(1)}</span>
 
-<img src="${poster}" alt="${movie.title}">
+            <!-- USER RATING BUTTON -->
+            <button class="rate-btn" data-id="${movie.id}">
+              🔵 Rate
+            </button>
+          </div>
 
-<div class="rating-badge">⭐ ${rating}</div>
+          <div class="extra">
+            <span>${movie.release_date?.slice(0,4) || "N/A"}</span>
+            <span class="rank-change">${movie.rankChange}</span>
+          </div>
 
-<div class="rank">#${index+1}</div>
+        </div>
+      </div>
+    `;
 
-</div>
+    container.appendChild(card);
+  });
 
-<div class="movie-info">
-
-<h4>${movie.title}</h4>
-
-<div class="genre">Top This Week</div>
-
-</div>
-
-</div>
-
-`;
-
-container.innerHTML += card;
-
-});
-
+  attachEvents();
 }
+
+// ==============================
+// EVENTS
+// ==============================
+
+function attachEvents() {
+
+  // USER RATING CLICK
+  document.querySelectorAll(".rate-btn").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      const id = e.target.dataset.id;
+
+      const rating = prompt("Rate this movie (1-10):");
+
+      if (!rating) return;
+
+      saveUserRating(id, rating);
+    });
+  });
+
+  // WATCHLIST
+  document.querySelectorAll(".watchlist").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      const id = e.target.dataset.id;
+
+      toggleWatchlist(id, btn);
+    });
+  });
+}
+
+// ==============================
+// USER RATING SYSTEM (LOCAL)
+// ==============================
+
+function saveUserRating(id, rating) {
+  let ratings = JSON.parse(localStorage.getItem("userRatings")) || {};
+
+  ratings[id] = rating;
+
+  localStorage.setItem("userRatings", JSON.stringify(ratings));
+
+  alert("Rating saved!");
+}
+
+// ==============================
+// WATCHLIST SYSTEM
+// ==============================
+
+function toggleWatchlist(id, btn) {
+  let list = JSON.parse(localStorage.getItem("watchlist")) || [];
+
+  if (list.includes(id)) {
+    list = list.filter(item => item !== id);
+    btn.innerText = "＋";
+  } else {
+    list.push(id);
+    btn.innerText = "✔";
+  }
+
+  localStorage.setItem("watchlist", JSON.stringify(list));
+}
+
+// ==============================
+// COUNTRY BUTTONS
+// ==============================
+
+function setupCountryButtons() {
+  document.querySelectorAll(".country-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const region = btn.dataset.region;
+
+      currentRegion = region;
+
+      fetchTopThisWeek(region);
+
+      document.querySelectorAll(".country-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+    });
+  });
+}
+
+// ==============================
+// INIT
+// ==============================
+
+setupCountryButtons();
+fetchTopThisWeek(currentRegion);
 
 
 /* ---------------- CELEBRITIES ---------------- */
@@ -2682,8 +2781,6 @@ checkSections();
 registerSection("quickButtons", loadQuickButtons);
 
 registerSection("trailers", loadTrailers);
-
-registerSection("topweek", loadTopWeek);
 
 registerSection("celebs", loadCelebrities);
 
