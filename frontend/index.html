@@ -225,21 +225,56 @@ Hidden Gems ›
 </section>
   
 
-<!-- TOP THIS WEEK -->
+<!-- 🔥 TOP THIS WEEK -->
 
-<section class="section">
+<section class="section" id="top-week-section">
 
-<div class="section-head">
+  <!-- HEADER -->
+  <div class="section-head">
 
-<h2>Top This Week</h2>
+    <div class="left">
+      <h2>🔥 Top This Week</h2>
+      <span class="sub">Real-time trends by region</span>
+    </div>
 
-<a href="topweek.html" class="trailer-see-btn">
-See List
-</a>
+    <!-- VIEW ALL (same line, small) -->
+    <a href="topweek.html" class="view-all-btn">View All</a>
 
-</div>
+  </div>
 
-<div class="movie-row" id="topweek"></div>
+
+  <!-- 🔍 COUNTRY SEARCH -->
+  <div class="country-search">
+
+    <input 
+      type="text" 
+      id="countrySearchInput"
+      placeholder="Search country (India, USA...)"
+      autocomplete="off"
+    />
+
+  </div>
+
+
+  <!-- 🌍 COUNTRY SCROLL BUTTONS -->
+  <div class="country-scroll" id="countryScroll">
+
+    <button class="country-btn active" data-region="WORLD">🌍 Worldwide</button>
+    <button class="country-btn" data-region="IN">🇮🇳 India</button>
+    <button class="country-btn" data-region="US">🇺🇸 USA</button>
+    <button class="country-btn" data-region="KR">🇰🇷 Korea</button>
+    <button class="country-btn" data-region="JP">🇯🇵 Japan</button>
+    <button class="country-btn" data-region="GB">🇬🇧 UK</button>
+    <button class="country-btn" data-region="FR">🇫🇷 France</button>
+    <button class="country-btn" data-region="DE">🇩🇪 Germany</button>
+    <button class="country-btn" data-region="BR">🇧🇷 Brazil</button>
+    <button class="country-btn" data-region="ES">🇪🇸 Spain</button>
+
+  </div>
+
+
+  <!-- 🎬 MOVIE CARDS -->
+  <div class="movie-row" id="top-week-container"></div>
 
 </section>
 
