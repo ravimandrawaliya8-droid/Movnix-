@@ -52,6 +52,7 @@ function loadQuickButtons(){
 
     boxoffice: () => window.location.href = "boxoffice.html",
     theatre: () => window.location.href = "theatre.html",
+    movie: () => window.location.href = "movie.html",
     popular: () => window.location.href = "popular.html"
 
   };
