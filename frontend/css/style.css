@@ -836,171 +836,258 @@ margin-bottom:16px;
 /* ========================= */
 /* TOP THIS WEEK MOVIE CARDS */
 /* ========================= */
+/* =========================
+   GLOBAL SECTION
+========================= */
 
-.movie-row{
-display:flex;
-gap:16px;
-overflow-x:auto;
-scroll-behavior:smooth;
-padding-bottom:6px;
+.section {
+  padding: 20px 15px;
+  background: #0b0f14;
+  color: #fff;
+  font-family: Arial, sans-serif;
 }
 
-.movie-row::-webkit-scrollbar{
-display:none;
+/* =========================
+   HEADER
+========================= */
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
-/* MOVIE CARD */
-
-.movie-card{
-min-width:170px; /* थोड़ा increase */
-background:#1b1b1b;
-border-radius:18px;
-overflow:hidden;
-box-shadow:0 10px 24px rgba(0,0,0,0.7);
-flex-shrink:0;
-transition:transform .25s ease, box-shadow .25s ease;
+.section-head .left h2 {
+  font-size: 20px;
+  font-weight: 600;
 }
 
-.movie-card:hover{
-transform:scale(1.05);
-box-shadow:0 12px 28px rgba(0,0,0,0.9);
+.section-head .sub {
+  display: block;
+  font-size: 12px;
+  color: #8b98a5;
+  margin-top: 2px;
+}
+
+.view-all-btn {
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: #111827;
+  border: 1px solid #1f2937;
+  color: #9ecbff;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.view-all-btn:hover {
+  background: #1f2937;
+}
+
+/* =========================
+   COUNTRY SEARCH
+========================= */
+
+.country-search {
+  margin: 10px 0;
+}
+
+.country-search input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  background: #111827;
+  color: #fff;
+  font-size: 13px;
+}
+
+/* =========================
+   COUNTRY SCROLL
+========================= */
+
+.country-scroll {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 10px 0;
+  scroll-behavior: smooth;
+}
+
+.country-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.country-btn {
+  flex: 0 0 auto;
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid #1f2937;
+  background: #111827;
+  color: #cbd5e1;
+  font-size: 12px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.country-btn:hover {
+  background: #1f2937;
+}
+
+.country-btn.active {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+}
+
+/* =========================
+   MOVIE ROW
+========================= */
+
+.movie-row {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-top: 10px;
+}
+
+.movie-row::-webkit-scrollbar {
+  display: none;
+}
+
+/* =========================
+   CARD DESIGN
+========================= */
+
+.movie-card {
+  flex: 0 0 150px;
+}
+
+.card {
+  position: relative;
+  background: #111827;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px) scale(1.02);
 }
 
 /* POSTER */
 
-.poster-box{
-position:relative;
-width:100%;
-height:220px; /* height increase */
+.card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
 }
 
-.poster-box img{
-width:100%;
-height:100%;
-object-fit:cover;
+/* WATCHLIST */
+
+.watchlist {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: rgba(0,0,0,0.7);
+  color: #fff;
+  font-size: 14px;
+  padding: 4px 6px;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
-/* RATING BADGE */
+/* RANK */
 
-.rating-badge{
-position:absolute;
-top:8px;
-left:8px;
-background:rgba(0,0,0,0.75);
-padding:4px 8px;
-border-radius:8px;
-font-size:12px;
-font-weight:600;
+.rank {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #2563eb;
+  color: #fff;
+  font-size: 11px;
+  padding: 4px 6px;
+  border-radius: 6px;
 }
 
-/* RANK BADGE */
+/* INFO */
 
-.rank{
-position:absolute;
-top:8px;
-right:8px;
-background:#f5c518;
-color:#000;
-padding:3px 7px;
-border-radius:7px;
-font-size:11px;
-font-weight:700;
+.info {
+  padding: 8px;
 }
 
-/* MOVIE INFO */
-
-.movie-info{
-padding:12px;
+.info h3 {
+  font-size: 13px;
+  margin-bottom: 6px;
+  line-height: 1.3;
 }
 
-.movie-info h4{
-font-size:14px;
-font-weight:700;
-margin-bottom:4px;
+/* META (RATING + BUTTON) */
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
 }
 
-/* GENRE */
-
-.genre{
-font-size:11px;
-color:#4ea1ff;
-margin-bottom:7px;
+.meta span {
+  color: #facc15; /* yellow rating */
 }
 
-/* POPULARITY BAR */
+/* USER RATE BUTTON */
 
-.popularity{
-height:4px;
-background:#333;
-border-radius:4px;
-overflow:hidden;
-margin-bottom:10px;
+.rate-btn {
+  font-size: 11px;
+  padding: 3px 6px;
+  border-radius: 6px;
+  border: none;
+  background: #1e3a8a;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
-.bar{
-height:100%;
-background:#f5c518;
+.rate-btn:hover {
+  background: #2563eb;
 }
 
-/* ACTION BUTTONS */
+/* EXTRA */
 
-.actions{
-display:flex;
-flex-wrap:wrap;
-gap:6px;
+.extra {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+  font-size: 11px;
+  color: #9ca3af;
 }
 
-/* RATE BUTTON */
+/* RANK CHANGE */
 
-.rate-btn{
-flex:1;
-background:#242424;
-border:none;
-color:#fff;
-padding:6px;
-border-radius:8px;
-font-size:12px;
-cursor:pointer;
+.rank-change {
+  font-weight: 500;
 }
 
-/* TRAILER BUTTON */
+/* =========================
+   HOVER EFFECT (OVERLAY)
+========================= */
 
-.trailer-btn{
-flex:1;
-background:#ff4d4f;
-color:#fff;
-text-align:center;
-padding:6px;
-border-radius:8px;
-font-size:12px;
-text-decoration:none;
-font-weight:600;
+.card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  opacity: 0;
+  transition: 0.3s;
 }
 
-.trailer-btn:hover{
-background:#ff6b6b;
-}
+.card:hover::after {
+  opacity: 1;
+  }
 
-/* WATCHLIST BUTTON */
-
-.watchlist-btn{
-width:100%;
-background:#000;
-border:1.5px solid #4ea1ff;
-color:#4ea1ff;
-padding:6px;
-border-radius:8px;
-font-size:12px;
-text-align:center;
-text-decoration:none;
-font-weight:600;
-transition:.2s;
-}
-
-.watchlist-btn:hover{
-background:#4ea1ff;
-color:#fff;
-}
 
 /* SPONSORED SPOTLIGHT */
 
