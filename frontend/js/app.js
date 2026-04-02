@@ -605,15 +605,15 @@ count++;
 }
 
 
-/* ---------------- TOP THIS WEEK (FINAL CLEAN + FIXED) ---------------- */
+/* ---------------- TOP THIS WEEK (FINAL ULTRA FIXED) ---------------- */
 
-const IMG_BASE = "https://image.tmdb.org/t/p/w500";
+const IMG_BASE = "https://image.tmdb.org/t/p/w780";
 const FALLBACK_POSTER = "https://via.placeholder.com/500x750?text=No+Image";
 
 let currentRegion = "IN";
 
 // ==============================
-// INIT (Lazy Load)
+// INIT
 // ==============================
 function loadTopWeek() {
   setupCountryButtons();
@@ -622,7 +622,7 @@ function loadTopWeek() {
 }
 
 // ==============================
-// FETCH DATA
+// FETCH DATA (FIXED COUNTRY)
 // ==============================
 async function fetchTopThisWeek(region = "IN") {
   try {
@@ -636,7 +636,7 @@ async function fetchTopThisWeek(region = "IN") {
     if (region === "WORLD") {
       url = `${BASE}/trending/movie/week?api_key=${API_KEY}`;
     } else {
-      url = `${BASE}/discover/movie?api_key=${API_KEY}&region=${region}&sort_by=popularity.desc&vote_count.gte=50`;
+      url = `${BASE}/discover/movie?api_key=${API_KEY}&with_origin_country=${region}&sort_by=popularity.desc&vote_count.gte=50`;
     }
 
     const res = await fetch(url);
@@ -652,7 +652,6 @@ async function fetchTopThisWeek(region = "IN") {
       .filter(m => m && (m.poster_path || m.backdrop_path))
       .slice(0, 10);
 
-    // 🔥 Better sorting (real feel)
     movies.sort((a, b) => b.popularity - a.popularity);
 
     handleRankChange(movies, region);
@@ -665,7 +664,7 @@ async function fetchTopThisWeek(region = "IN") {
 }
 
 // ==============================
-// RANK CHANGE SYSTEM
+// RANK CHANGE
 // ==============================
 function handleRankChange(movies, region) {
   const key = `lastWeek_${region}`;
@@ -704,16 +703,16 @@ function renderMovies(movies) {
     return;
   }
 
+  const userRatings = JSON.parse(localStorage.getItem("userRatings")) || {};
+  const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
+
   movies.forEach((movie, index) => {
 
     const poster = movie.poster_path
       ? IMG_BASE + movie.poster_path
       : FALLBACK_POSTER;
 
-    const userRatings = JSON.parse(localStorage.getItem("userRatings")) || {};
-    const userRating = userRatings[movie.id] || null;
-
-    const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
+    const userRating = userRatings[movie.id] || "";
     const isSaved = watchlist.includes(movie.id);
 
     const card = document.createElement("div");
@@ -722,16 +721,22 @@ function renderMovies(movies) {
     card.innerHTML = `
       <div class="card">
 
+        <!-- WATCHLIST (GLASS ICON) -->
         <div class="watchlist ${isSaved ? "active" : ""}" data-id="${movie.id}">
-          ${isSaved ? "✔" : "＋"}
+          <svg viewBox="0 0 24 24" class="watch-icon">
+            <path d="M6 2h12v20l-6-4-6 4z"/>
+          </svg>
         </div>
 
-        <img 
-          src="${poster}" 
-          alt="${movie.title}" 
-          loading="lazy"
-          onerror="this.src='${FALLBACK_POSTER}'"
-        />
+        <!-- POSTER CLICKABLE -->
+        <a href="movie.html?id=${movie.id}">
+          <img 
+            src="${poster}" 
+            alt="${movie.title}" 
+            loading="lazy"
+            onerror="this.src='${FALLBACK_POSTER}'"
+          />
+        </a>
 
         <div class="rank">#${index + 1}</div>
 
@@ -745,8 +750,9 @@ function renderMovies(movies) {
               ⭐ ${movie.vote_average?.toFixed(1) || "0.0"}
             </span>
 
+            <!-- ⭐ STAR RATING BUTTON -->
             <button class="rate-btn" data-id="${movie.id}">
-              🔵 ${userRating ? userRating : "Rate"}
+              ⭐ ${userRating}
             </button>
 
           </div>
@@ -768,7 +774,7 @@ function renderMovies(movies) {
 }
 
 // ==============================
-// ERROR UI
+// ERROR
 // ==============================
 function showError() {
   const container = document.getElementById("top-week-container");
@@ -786,11 +792,11 @@ function showError() {
 // ==============================
 function attachEvents() {
 
-  // ⭐ Rating
+  // ⭐ RATE
   document.querySelectorAll(".rate-btn").forEach(btn => {
     btn.addEventListener("click", e => {
-      const id = e.target.dataset.id;
 
+      const id = e.target.dataset.id;
       let rating = prompt("Rate this movie (1-10):");
 
       if (!rating) return;
@@ -803,21 +809,22 @@ function attachEvents() {
       }
 
       saveUserRating(id, rating);
-      fetchTopThisWeek(currentRegion); // 🔥 instant update
+      fetchTopThisWeek(currentRegion); // instant update
     });
   });
 
-  // ❤️ Watchlist
+  // ❤️ WATCHLIST
   document.querySelectorAll(".watchlist").forEach(btn => {
     btn.addEventListener("click", e => {
-      const id = e.target.dataset.id;
-      toggleWatchlist(id, btn);
+      e.preventDefault();
+      const id = e.currentTarget.dataset.id;
+      toggleWatchlist(id);
     });
   });
 }
 
 // ==============================
-// USER RATING SYSTEM
+// SAVE RATING
 // ==============================
 function saveUserRating(id, rating) {
   let ratings = JSON.parse(localStorage.getItem("userRatings")) || {};
@@ -828,20 +835,19 @@ function saveUserRating(id, rating) {
 // ==============================
 // WATCHLIST
 // ==============================
-function toggleWatchlist(id, btn) {
+function toggleWatchlist(id) {
   let list = JSON.parse(localStorage.getItem("watchlist")) || [];
 
   if (list.includes(id)) {
     list = list.filter(item => item !== id);
-    btn.innerText = "＋";
-    btn.classList.remove("active");
   } else {
     list.push(id);
-    btn.innerText = "✔";
-    btn.classList.add("active");
   }
 
   localStorage.setItem("watchlist", JSON.stringify(list));
+
+  // refresh UI
+  fetchTopThisWeek(currentRegion);
 }
 
 // ==============================
@@ -879,7 +885,7 @@ function setupCountrySearch() {
       btn.style.display = text.includes(value) ? "inline-flex" : "none";
     });
   });
-          }
+        }
 
 
 
