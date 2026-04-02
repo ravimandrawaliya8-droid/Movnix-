@@ -605,9 +605,11 @@ count++;
 }
 
 
-/* ---------------- TOP THIS WEEK ---------------- */
+/* ---------------- TOP THIS WEEK (FINAL FIXED) ---------------- */
 
 const BASE = "https://api.themoviedb.org/3";
+const IMG_BASE = "https://image.tmdb.org/t/p/w500";
+const FALLBACK_POSTER = "https://via.placeholder.com/500x750?text=No+Image";
 
 // ==============================
 // STATE
@@ -615,7 +617,7 @@ const BASE = "https://api.themoviedb.org/3";
 let currentRegion = "IN";
 
 // ==============================
-// MAIN LOAD FUNCTION (Lazy call hoga)
+// MAIN LOAD FUNCTION (Lazy)
 // ==============================
 function loadTopWeek() {
   setupCountryButtons();
@@ -626,7 +628,6 @@ function loadTopWeek() {
 // ==============================
 // FETCH DATA
 // ==============================
-
 async function fetchTopThisWeek(region = "IN") {
   try {
     let url;
@@ -640,7 +641,16 @@ async function fetchTopThisWeek(region = "IN") {
     const res = await fetch(url);
     const data = await res.json();
 
-    let movies = data.results.slice(0, 10);
+    if (!data.results) {
+      console.error("API ERROR:", data);
+      showError();
+      return;
+    }
+
+    // ✅ FILTER + SAFE DATA
+    let movies = data.results
+      .filter(m => m && (m.poster_path || m.backdrop_path))
+      .slice(0, 10);
 
     // REAL ranking
     movies.sort((a, b) => b.popularity - a.popularity);
@@ -649,14 +659,14 @@ async function fetchTopThisWeek(region = "IN") {
     renderMovies(movies);
 
   } catch (err) {
-    console.error("Error fetching movies:", err);
+    console.error("Fetch Error:", err);
+    showError();
   }
 }
 
 // ==============================
-// RANK CHANGE (localStorage)
+// RANK CHANGE
 // ==============================
-
 function handleRankChange(movies, region) {
   const key = `lastWeek_${region}`;
   const oldData = JSON.parse(localStorage.getItem(key));
@@ -683,47 +693,56 @@ function handleRankChange(movies, region) {
 // ==============================
 // RENDER UI
 // ==============================
-
 function renderMovies(movies) {
   const container = document.getElementById("top-week-container");
   if (!container) return;
 
   container.innerHTML = "";
 
+  if (movies.length === 0) {
+    container.innerHTML = `<p style="color:white">No data available</p>`;
+    return;
+  }
+
   movies.forEach((movie, index) => {
     const card = document.createElement("div");
     card.className = "movie-card";
 
-    const poster = `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
+    // ✅ SAFE POSTER
+    const poster = movie.poster_path
+      ? IMG_BASE + movie.poster_path
+      : movie.backdrop_path
+      ? IMG_BASE + movie.backdrop_path
+      : FALLBACK_POSTER;
 
     card.innerHTML = `
       <div class="card">
 
-        <!-- WATCHLIST -->
         <div class="watchlist" data-id="${movie.id}">＋</div>
 
-        <!-- POSTER -->
-        <img src="${poster}" alt="${movie.title}" loading="lazy" />
+        <img 
+          src="${poster}" 
+          alt="${movie.title}" 
+          loading="lazy"
+          onerror="this.src='${FALLBACK_POSTER}'"
+        />
 
-        <!-- RANK -->
         <div class="rank">#${index + 1}</div>
 
-        <!-- INFO -->
         <div class="info">
 
           <h3>${movie.title}</h3>
 
           <div class="meta">
-            <span>⭐ ${movie.vote_average.toFixed(1)}</span>
+            <span>⭐ ${movie.vote_average?.toFixed(1) || "0.0"}</span>
 
-            <!-- USER RATING -->
             <button class="rate-btn" data-id="${movie.id}">
               🔵 Rate
             </button>
           </div>
 
           <div class="extra">
-            <span>${movie.release_date?.slice(0, 4) || "N/A"}</span>
+            <span>${movie.release_date?.slice(0,4) || "N/A"}</span>
             <span class="rank-change">${movie.rankChange}</span>
           </div>
 
@@ -739,12 +758,24 @@ function renderMovies(movies) {
 }
 
 // ==============================
+// ERROR UI
+// ==============================
+function showError() {
+  const container = document.getElementById("top-week-container");
+  if (!container) return;
+
+  container.innerHTML = `
+    <p style="color:white;text-align:center;">
+      Failed to load data ⚠️
+    </p>
+  `;
+}
+
+// ==============================
 // EVENTS
 // ==============================
-
 function attachEvents() {
 
-  // USER RATING
   document.querySelectorAll(".rate-btn").forEach(btn => {
     btn.addEventListener("click", e => {
       const id = e.target.dataset.id;
@@ -754,7 +785,6 @@ function attachEvents() {
     });
   });
 
-  // WATCHLIST
   document.querySelectorAll(".watchlist").forEach(btn => {
     btn.addEventListener("click", e => {
       const id = e.target.dataset.id;
@@ -764,9 +794,8 @@ function attachEvents() {
 }
 
 // ==============================
-// USER RATING (LOCAL)
+// USER RATING
 // ==============================
-
 function saveUserRating(id, rating) {
   let ratings = JSON.parse(localStorage.getItem("userRatings")) || {};
   ratings[id] = rating;
@@ -777,7 +806,6 @@ function saveUserRating(id, rating) {
 // ==============================
 // WATCHLIST
 // ==============================
-
 function toggleWatchlist(id, btn) {
   let list = JSON.parse(localStorage.getItem("watchlist")) || [];
 
@@ -795,7 +823,6 @@ function toggleWatchlist(id, btn) {
 // ==============================
 // COUNTRY BUTTONS
 // ==============================
-
 function setupCountryButtons() {
   document.querySelectorAll(".country-btn").forEach(btn => {
     btn.addEventListener("click", () => {
@@ -816,7 +843,6 @@ function setupCountryButtons() {
 // ==============================
 // COUNTRY SEARCH
 // ==============================
-
 function setupCountrySearch() {
   const input = document.getElementById("countrySearchInput");
   if (!input) return;
@@ -829,7 +855,7 @@ function setupCountrySearch() {
       btn.style.display = text.includes(value) ? "inline-flex" : "none";
     });
   });
-        }
+                  }
 
 
 
