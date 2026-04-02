@@ -605,7 +605,7 @@ count++;
 }
 
 
-/* ---------------- TOP THIS WEEK (FINAL ULTRA FIXED) ---------------- */
+/* ---------------- TOP THIS WEEK (FINAL PRO FIXED) ---------------- */
 
 const IMG_BASE = "https://image.tmdb.org/t/p/w780";
 const FALLBACK_POSTER = "https://via.placeholder.com/500x750?text=No+Image";
@@ -622,7 +622,7 @@ function loadTopWeek() {
 }
 
 // ==============================
-// FETCH DATA (FIXED COUNTRY)
+// FETCH DATA
 // ==============================
 async function fetchTopThisWeek(region = "IN") {
   try {
@@ -690,18 +690,13 @@ function handleRankChange(movies, region) {
 }
 
 // ==============================
-// RENDER UI
+// RENDER UI (UPDATED)
 // ==============================
 function renderMovies(movies) {
   const container = document.getElementById("top-week-container");
   if (!container) return;
 
   container.innerHTML = "";
-
-  if (movies.length === 0) {
-    container.innerHTML = `<p style="color:white">No data available</p>`;
-    return;
-  }
 
   const userRatings = JSON.parse(localStorage.getItem("userRatings")) || {};
   const watchlist = JSON.parse(localStorage.getItem("watchlist")) || [];
@@ -721,22 +716,22 @@ function renderMovies(movies) {
     card.innerHTML = `
       <div class="card">
 
-        <!-- WATCHLIST (GLASS ICON) -->
+        <!-- WATCHLIST -->
         <div class="watchlist ${isSaved ? "active" : ""}" data-id="${movie.id}">
           <svg viewBox="0 0 24 24" class="watch-icon">
             <path d="M6 2h12v20l-6-4-6 4z"/>
           </svg>
         </div>
 
-        <!-- POSTER CLICKABLE -->
-        <a href="movie.html?id=${movie.id}">
+        <!-- POSTER CLICK FIXED -->
+        <div class="poster-click" onclick="openMovie(${movie.id})">
           <img 
             src="${poster}" 
             alt="${movie.title}" 
             loading="lazy"
             onerror="this.src='${FALLBACK_POSTER}'"
           />
-        </a>
+        </div>
 
         <div class="rank">#${index + 1}</div>
 
@@ -745,21 +740,40 @@ function renderMovies(movies) {
           <h3>${movie.title}</h3>
 
           <div class="meta">
-
             <span class="tmdb-rating">
               ⭐ ${movie.vote_average?.toFixed(1) || "0.0"}
             </span>
 
-            <!-- ⭐ STAR RATING BUTTON -->
             <button class="rate-btn" data-id="${movie.id}">
               ⭐ ${userRating}
             </button>
-
           </div>
 
+          <!-- 🔥 NEW ACTION AREA -->
           <div class="extra">
+
             <span>${movie.release_date?.slice(0,4) || "N/A"}</span>
+
+            <div class="actions">
+
+              <button class="info-btn"
+                onclick="openMovie(${movie.id})">
+                Info
+              </button>
+
+              <button class="watch-btn">
+                ▶ Watch
+              </button>
+
+              <button class="trailer-btn"
+                onclick="openTrailer(${movie.id})">
+                🎬 Trailer
+              </button>
+
+            </div>
+
             <span class="rank-change">${movie.rankChange}</span>
+
           </div>
 
         </div>
@@ -774,17 +788,35 @@ function renderMovies(movies) {
 }
 
 // ==============================
-// ERROR
+// MOVIE PAGE OPEN FIX
 // ==============================
-function showError() {
-  const container = document.getElementById("top-week-container");
-  if (!container) return;
+function openMovie(id) {
+  window.location.href = `./movie.html?id=${id}`;
+}
 
-  container.innerHTML = `
-    <p style="color:white;text-align:center;">
-      Failed to load data ⚠️
-    </p>
-  `;
+// ==============================
+// TRAILER FUNCTION
+// ==============================
+async function openTrailer(movieId) {
+  try {
+    const res = await fetch(
+      `${BASE}/movie/${movieId}/videos?api_key=${API_KEY}`
+    );
+
+    const data = await res.json();
+
+    const trailer = data.results.find(
+      v => v.type === "Trailer" && v.site === "YouTube"
+    );
+
+    if (trailer) {
+      window.open(`https://youtube.com/watch?v=${trailer.key}`);
+    } else {
+      alert("Trailer not available");
+    }
+  } catch {
+    alert("Error loading trailer");
+  }
 }
 
 // ==============================
@@ -809,14 +841,14 @@ function attachEvents() {
       }
 
       saveUserRating(id, rating);
-      fetchTopThisWeek(currentRegion); // instant update
+      fetchTopThisWeek(currentRegion);
     });
   });
 
   // ❤️ WATCHLIST
   document.querySelectorAll(".watchlist").forEach(btn => {
     btn.addEventListener("click", e => {
-      e.preventDefault();
+      e.stopPropagation();
       const id = e.currentTarget.dataset.id;
       toggleWatchlist(id);
     });
@@ -845,8 +877,6 @@ function toggleWatchlist(id) {
   }
 
   localStorage.setItem("watchlist", JSON.stringify(list));
-
-  // refresh UI
   fetchTopThisWeek(currentRegion);
 }
 
@@ -871,7 +901,7 @@ function setupCountryButtons() {
 }
 
 // ==============================
-// COUNTRY SEARCH
+// SEARCH FIXED
 // ==============================
 function setupCountrySearch() {
   const input = document.getElementById("countrySearchInput");
@@ -881,12 +911,30 @@ function setupCountrySearch() {
     const value = input.value.toLowerCase();
 
     document.querySelectorAll(".country-btn").forEach(btn => {
-      const text = btn.innerText.toLowerCase();
-      btn.style.display = text.includes(value) ? "inline-flex" : "none";
+      const region = btn.dataset.region.toLowerCase();
+      const label = btn.textContent.toLowerCase();
+
+      btn.style.display =
+        region.includes(value) || label.includes(value)
+          ? "inline-flex"
+          : "none";
     });
   });
-        }
+}
 
+// ==============================
+// ERROR
+// ==============================
+function showError() {
+  const container = document.getElementById("top-week-container");
+  if (!container) return;
+
+  container.innerHTML = `
+    <p style="color:white;text-align:center;">
+      Failed to load data ⚠️
+    </p>
+  `;
+          }
 
 
 /* ---------------- CELEBRITIES ---------------- */
