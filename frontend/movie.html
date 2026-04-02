@@ -1,5 +1,227 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Movnix Movie</title><link rel="stylesheet" href="css/style.css"></head><body><header class="header">
-<a href="index.html" class="logo">Movnix</a>
-</header><!-- MOVIE HERO --><section id="movie-hero"></section><!-- OVERVIEW --><section class="section"><h2>Overview</h2><p id="overview"></p></section><!-- CAST --><section class="section"><h2>Cast</h2><div id="cast" class="row"></div></section><!-- SIMILAR MOVIES --><section class="section"><h2>Similar Movies</h2><div id="similar" class="row"></div></section><script src="js/api.js"></script><script src="js/cards.js"></script><script src="js/movie.js"></script></body>
-</html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Movnix Movie</title>
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<!-- ================= HEADER (SAME AS YOUR SITE) ================= -->
+<section class="header">
+
+  <div class="top-bar">
+    <div class="left">
+      <div class="menu-btn" id="menuBtn">☰</div>
+      <div class="logo">Mov<span>nix</span></div>
+    </div>
+
+    <div class="right">
+      <div class="search-box">
+        <input type="text" placeholder="Search movies...">
+        <span>🔍</span>
+      </div>
+
+      <div class="auth">
+        <button class="login">Login</button>
+        <button class="signup">Sign Up</button>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ================= HERO SECTION ================= -->
+<section id="movie-hero">
+
+  <!-- BACKDROP -->
+  <div class="hero-backdrop">
+    <img id="heroBackdrop">
+  </div>
+
+  <!-- OVERLAY -->
+  <div class="hero-overlay"></div>
+
+  <!-- CONTENT -->
+  <div class="hero-content">
+
+    <!-- LEFT (POSTER) -->
+    <div class="hero-left">
+      <img id="heroPoster">
+    </div>
+
+    <!-- RIGHT (INFO) -->
+    <div class="hero-right">
+
+      <h1 id="heroTitle">Movie Title</h1>
+
+      <div class="hero-meta" id="heroMeta">
+        2025 • 2h 10m • UA
+      </div>
+
+      <div class="hero-rating">
+        ⭐ <span id="heroRating">0.0</span>/10
+      </div>
+
+      <div class="hero-actions">
+
+        <button id="watchlist-btn">
+          + Watchlist
+        </button>
+
+        <button id="trailer-btn">
+          ▶ Trailer
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ================= OVERVIEW ================= -->
+<section class="section" id="movie-overview">
+
+  <div class="overview-container">
+
+    <!-- POSTER SMALL -->
+    <div class="overview-poster">
+      <img id="overviewPoster">
+    </div>
+
+    <!-- DETAILS -->
+    <div class="overview-info">
+
+      <!-- GENRES -->
+      <div class="genres" id="movieGenres"></div>
+
+      <!-- DESCRIPTION -->
+      <p id="movieDescription"></p>
+
+      <!-- RATING STRIP -->
+      <div class="rating-strip">
+        ⭐ <span id="overviewRating"></span>/10
+        <button class="rate-btn">Rate</button>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ================= DETAILS ================= -->
+<section class="section" id="movie-details">
+
+  <div class="details-list">
+
+    <p><strong>Director:</strong> <span id="movieDirector"></span></p>
+
+    <p><strong>Writers:</strong> <span id="movieWriters"></span></p>
+
+    <p><strong>Stars:</strong> <span id="movieStars"></span></p>
+
+  </div>
+
+</section>
+
+<!-- ================= CAST ================= -->
+<section class="section" id="movie-cast">
+
+  <div class="section-head">
+    <h2>Top Cast</h2>
+  </div>
+
+  <div class="cast-row" id="castContainer">
+    <!-- JS will inject cast cards -->
+  </div>
+
+</section>
+
+<!-- ================= TRAILER ================= -->
+<section class="section" id="movie-trailer">
+
+  <div class="section-head">
+    <h2>Trailer</h2>
+  </div>
+
+  <div class="trailer-box" id="trailerContainer">
+    <!-- JS will load trailer -->
+  </div>
+
+</section>
+
+<!-- ================= STREAMING ================= -->
+<section class="section" id="movie-streaming">
+
+  <div class="section-head">
+    <h2>Where to Watch</h2>
+  </div>
+
+  <div class="streaming-row" id="streamingContainer">
+    <!-- JS logos -->
+  </div>
+
+</section>
+
+<!-- ================= REVIEWS ================= -->
+<section class="section" id="movie-reviews">
+
+  <div class="section-head">
+    <h2>User Reviews</h2>
+  </div>
+
+  <div class="review-grid">
+
+    <div class="review-box">
+      <h3 id="reviewCount">0</h3>
+      <p>Reviews</p>
+    </div>
+
+    <div class="review-box">
+      <h3 id="popularityScore">0</h3>
+      <p>Popularity</p>
+    </div>
+
+    <div class="review-box">
+      <h3 id="userScore">0</h3>
+      <p>Score</p>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ================= SIMILAR MOVIES ================= -->
+<section class="section" id="similar-movies">
+
+  <div class="section-head">
+    <h2>More Like This</h2>
+  </div>
+
+  <div class="movie-row" id="similarContainer">
+    <!-- JS will load movies -->
+  </div>
+
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+
+  <div class="footer-left">
+    <h2>Movnix</h2>
+    <p>Discover. Watch. Explore.</p>
+  </div>
+
+</footer>
+
+<script src="js/movie.js"></script>
+
+</body>
+  </html>
