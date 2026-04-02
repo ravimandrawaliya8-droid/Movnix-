@@ -604,13 +604,24 @@ count++;
 
 }
 
+
 /* ---------------- TOP THIS WEEK ---------------- */
+
 const BASE = "https://api.themoviedb.org/3";
 
 // ==============================
 // STATE
 // ==============================
-let currentRegion = "IN"; // default India
+let currentRegion = "IN";
+
+// ==============================
+// MAIN LOAD FUNCTION (Lazy call hoga)
+// ==============================
+function loadTopWeek() {
+  setupCountryButtons();
+  setupCountrySearch();
+  fetchTopThisWeek(currentRegion);
+}
 
 // ==============================
 // FETCH DATA
@@ -631,11 +642,10 @@ async function fetchTopThisWeek(region = "IN") {
 
     let movies = data.results.slice(0, 10);
 
-    // Sort by popularity (REAL ranking)
+    // REAL ranking
     movies.sort((a, b) => b.popularity - a.popularity);
 
     handleRankChange(movies, region);
-
     renderMovies(movies);
 
   } catch (err) {
@@ -644,7 +654,7 @@ async function fetchTopThisWeek(region = "IN") {
 }
 
 // ==============================
-// RANK CHANGE SYSTEM (NO DB)
+// RANK CHANGE (localStorage)
 // ==============================
 
 function handleRankChange(movies, region) {
@@ -659,11 +669,12 @@ function handleRankChange(movies, region) {
         movie.rankChange = "NEW";
       } else {
         const diff = oldIndex - index;
-        movie.rankChange = diff === 0 ? "-" : diff > 0 ? `↑ ${diff}` : `↓ ${Math.abs(diff)}`;
+        movie.rankChange =
+          diff === 0 ? "-" : diff > 0 ? `↑ ${diff}` : `↓ ${Math.abs(diff)}`;
       }
     });
   } else {
-    movies.forEach(m => m.rankChange = "NEW");
+    movies.forEach(m => (m.rankChange = "NEW"));
   }
 
   localStorage.setItem(key, JSON.stringify(movies));
@@ -675,10 +686,11 @@ function handleRankChange(movies, region) {
 
 function renderMovies(movies) {
   const container = document.getElementById("top-week-container");
+  if (!container) return;
+
   container.innerHTML = "";
 
   movies.forEach((movie, index) => {
-
     const card = document.createElement("div");
     card.className = "movie-card";
 
@@ -691,7 +703,7 @@ function renderMovies(movies) {
         <div class="watchlist" data-id="${movie.id}">＋</div>
 
         <!-- POSTER -->
-        <img src="${poster}" alt="${movie.title}" />
+        <img src="${poster}" alt="${movie.title}" loading="lazy" />
 
         <!-- RANK -->
         <div class="rank">#${index + 1}</div>
@@ -704,18 +716,19 @@ function renderMovies(movies) {
           <div class="meta">
             <span>⭐ ${movie.vote_average.toFixed(1)}</span>
 
-            <!-- USER RATING BUTTON -->
+            <!-- USER RATING -->
             <button class="rate-btn" data-id="${movie.id}">
               🔵 Rate
             </button>
           </div>
 
           <div class="extra">
-            <span>${movie.release_date?.slice(0,4) || "N/A"}</span>
+            <span>${movie.release_date?.slice(0, 4) || "N/A"}</span>
             <span class="rank-change">${movie.rankChange}</span>
           </div>
 
         </div>
+
       </div>
     `;
 
@@ -731,45 +744,38 @@ function renderMovies(movies) {
 
 function attachEvents() {
 
-  // USER RATING CLICK
+  // USER RATING
   document.querySelectorAll(".rate-btn").forEach(btn => {
-    btn.addEventListener("click", (e) => {
+    btn.addEventListener("click", e => {
       const id = e.target.dataset.id;
-
       const rating = prompt("Rate this movie (1-10):");
-
       if (!rating) return;
-
       saveUserRating(id, rating);
     });
   });
 
   // WATCHLIST
   document.querySelectorAll(".watchlist").forEach(btn => {
-    btn.addEventListener("click", (e) => {
+    btn.addEventListener("click", e => {
       const id = e.target.dataset.id;
-
       toggleWatchlist(id, btn);
     });
   });
 }
 
 // ==============================
-// USER RATING SYSTEM (LOCAL)
+// USER RATING (LOCAL)
 // ==============================
 
 function saveUserRating(id, rating) {
   let ratings = JSON.parse(localStorage.getItem("userRatings")) || {};
-
   ratings[id] = rating;
-
   localStorage.setItem("userRatings", JSON.stringify(ratings));
-
   alert("Rating saved!");
 }
 
 // ==============================
-// WATCHLIST SYSTEM
+// WATCHLIST
 // ==============================
 
 function toggleWatchlist(id, btn) {
@@ -799,18 +805,32 @@ function setupCountryButtons() {
 
       fetchTopThisWeek(region);
 
-      document.querySelectorAll(".country-btn").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".country-btn")
+        .forEach(b => b.classList.remove("active"));
+
       btn.classList.add("active");
     });
   });
 }
 
 // ==============================
-// INIT
+// COUNTRY SEARCH
 // ==============================
 
-setupCountryButtons();
-fetchTopThisWeek(currentRegion);
+function setupCountrySearch() {
+  const input = document.getElementById("countrySearchInput");
+  if (!input) return;
+
+  input.addEventListener("input", () => {
+    const value = input.value.toLowerCase();
+
+    document.querySelectorAll(".country-btn").forEach(btn => {
+      const text = btn.innerText.toLowerCase();
+      btn.style.display = text.includes(value) ? "inline-flex" : "none";
+    });
+  });
+        }
+
 
 
 /* ---------------- CELEBRITIES ---------------- */
@@ -2781,6 +2801,8 @@ checkSections();
 registerSection("quickButtons", loadQuickButtons);
 
 registerSection("trailers", loadTrailers);
+
+registerSection("top-week-section", loadTopWeek);
 
 registerSection("celebs", loadCelebrities);
 
