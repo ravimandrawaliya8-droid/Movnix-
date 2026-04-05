@@ -4264,9 +4264,9 @@ body {
   content:"";
   position:absolute;
   left:0;
-  top:8px;              /* 🔥 SAME FOR ALL */
+  top:6px;              /* 🔥 SAME FOR ALL */
   width:6px;
-  height:85%;
+  height:95%;
   background:#4ea1ff;
   border-radius:3px;
 }
@@ -4286,7 +4286,7 @@ body {
 
   margin-left:6px;
   position:relative;
-  top:8px;              /* 🔥 SAME FOR ALL */
+  top:6px;              /* 🔥 SAME FOR ALL */
 }
 
 /* SEE ALL ALIGN */
