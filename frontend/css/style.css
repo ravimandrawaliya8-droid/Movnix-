@@ -3563,6 +3563,13 @@ font-size:18px;
   flex: 1;
 }
 
+/* MOVIE NAME (TITLE INSIDE ROW) */
+.box-info h3{
+  font-size:14px;   /* 🔥 chhota kar diya */
+  font-weight:600;
+  margin:0;
+  color:#ffffff;
+  }
 
 /* EARNINGS */
 
