@@ -4265,8 +4265,8 @@ body {
   position:absolute;
   left:0;
   top:8px;              /* 🔥 SAME FOR ALL */
-  width:5px;
-  height:26%;
+  width:6px;
+  height:85%;
   background:#4ea1ff;
   border-radius:3px;
 }
