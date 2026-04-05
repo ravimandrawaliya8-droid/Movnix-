@@ -4264,7 +4264,7 @@ body {
   content:"";
   position:absolute;
   left:0;
-  top:2px;              /* 🔥 SAME FOR ALL */
+  top:1px;              /* 🔥 SAME FOR ALL */
   width:6px;
   height:110%;
   background:#4ea1ff;
