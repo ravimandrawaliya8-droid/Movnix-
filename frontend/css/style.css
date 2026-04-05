@@ -4265,10 +4265,10 @@ body {
   position:absolute;
   left:0;
   top:8px;              /* 🔥 SAME FOR ALL */
-  width:4px;
-  height:70%;
-  background:#2563eb;
-  border-radius:2px;
+  width:5px;
+  height:26%;
+  background:#4ea1ff;
+  border-radius:3px;
 }
 
 /* ➡️ Arrow */
