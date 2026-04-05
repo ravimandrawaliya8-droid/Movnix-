@@ -4216,3 +4216,11 @@ body {
   transform: translateY(40px);
   transition: 0.8s ease;
   }
+
+
+/* 🔥 SECTION FULL WIDTH FIX */
+.section {
+  margin-left: -16px;
+  margin-right: -16px;
+  border-radius: 0;
+}
