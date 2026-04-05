@@ -1957,7 +1957,7 @@ border-radius:3px;
 /* MOVNIX PICKS TITLE */
 
 .picks-title{
-color:#f5c518;
+color:#ffffff;
 font-size:20px;   /* 🔥 same as other sections */
 font-weight:600;
 }
@@ -1966,6 +1966,7 @@ font-weight:600;
   display:flex;
   flex-direction:column;
   justify-content:center;
+  top:8px;
   gap:2px;   /* 🔥 equal spacing title + SEO */
 }
 
