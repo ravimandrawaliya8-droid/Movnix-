@@ -864,28 +864,28 @@ margin-bottom:16px;
   content: none !important;
 }
 
-/* ✅ Perfect aligned arrow */
+/* ✅ Arrow ko thoda niche + close lao */
 .arrow {
-  margin-left: 6px;
+  margin-left: 4px;   /* pehle 6px tha → ab close */
   font-size: 18px;
   color: #9ca3af;
   position: relative;
-  top: -1px; /* thoda upar align */
+  top: 2px;           /* niche shift */
 }
 
-/* 🔵 SEO text (blue + upar shift) */
+/* ✅ SEO text adjust */
 .seo-link {
   display: inline-block;
-  font-size: 13px;
-  color: #3b82f6; /* blue */
+  font-size: 14px;          /* thoda bada */
+  color: #b0b3b8;           /* light grey (blue hata diya) */
   text-decoration: none;
-  margin-top: 2px; /* upar shift */
+  margin-top: 1px;          /* upar shift */
 }
 
-/* hover */
+/* hover subtle */
 .seo-link:hover {
-  color: #60a5fa;
-  }
+  color: #d1d5db;
+}
 
 
 /* ========================= */
