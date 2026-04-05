@@ -795,7 +795,7 @@ border-radius:20px;
 color:#fff;
   }
 
-/* FEATURED TRAILER SEE ALL BUTTON */
+/* Latest Movies TRAILER SEE ALL BUTTON */
 
 .trailer-see-btn{
 
@@ -830,6 +830,60 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 margin-bottom:16px;
+}
+
+.section-title {
+  position: relative;
+  padding-left: 12px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* Vertical blur yellow line */
+.section-title::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 4px;
+  width: 4px;
+  height: 70%;
+  background: #facc15;
+  border-radius: 2px;
+  opacity: 0.7;
+}
+
+/* Link styling */
+.section-title a {
+  text-decoration: none;
+  color: #fff;
+}
+
+/* Arrow */
+.section-title .arrow {
+  margin-left: 6px;
+  color: #aaa;
+  font-size: 18px;
+}
+
+/* SEO text */
+.seo-text {
+  font-size: 14px;
+  color: #3b82f6;
+  margin-top: 4px;
+}
+
+/* SEO clickable text */
+.seo-link {
+  display: inline-block;
+  font-size: 13px;
+  color: #9ca3af; /* blur gray */
+  text-decoration: none;
+  margin-top: 4px;
+}
+
+/* Hover effect (thoda highlight) */
+.seo-link:hover {
+  color: #d1d5db;
 }
 
 
