@@ -817,6 +817,8 @@ backdrop-filter:blur(6px);
 
 transition:0.25s;
 
+margin-top:2px;
+
 }
 
 .trailer-see-btn:hover{
@@ -828,14 +830,14 @@ background:rgba(78,161,255,0.15);
 .section-head{
 display:flex;
 justify-content:space-between;
-align-items:center;
+align-items:flex-start;
 margin-bottom:16px;
 }
 
 /* TITLE */
 .section-title {
   position: relative;
-  padding-left: 12px;
+  padding-left: 16px;
   margin: 0;
 }
 
@@ -879,7 +881,7 @@ margin-bottom:16px;
   font-size: 14px;          /* thoda bada */
   color: #b0b3b8;           /* light grey (blue hata diya) */
   text-decoration: none;
-  margin-top: 1px;          /* upar shift */
+  margin-top: -2px;          /* upar shift */
 }
 
 /* hover subtle */
@@ -887,12 +889,6 @@ margin-bottom:16px;
   color: #d1d5db;
 }
 
-/* 🔥 SECTION FULL WIDTH FIX */
-.section {
-  margin-left: -16px;
-  margin-right: -16px;
-  border-radius: 0;
-}
 
 /* ========================= */
 /* TOP THIS WEEK MOVIE CARDS */
