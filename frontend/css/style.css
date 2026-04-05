@@ -1719,7 +1719,7 @@ flex:0 0 42%;
 
 height:460px;
 
-background:#1b1b1b;
+background:#141414;
 
 border-radius:14px;
 
@@ -1936,11 +1936,13 @@ background:rgba(255,255,255,0.18);
 
 /* LEFT GROUP */
 
+/* 🔥 pura block niche shift hoga */
 .picks-left{
-display:flex;
-align-items:center;
-gap:12px;
-padding-left:16px;   /* 🔥 left se space (same trailer section jaisa) */
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding-left:16px;
+  margin-top:4px;   /* 🔥 ye add karo */
 }
 
 /* BLUE START LINE */
@@ -1961,16 +1963,17 @@ font-weight:600;
 }
 
 .picks-left div{
-display:flex;
-flex-direction:column;
-justify-content:center;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:2px;   /* 🔥 equal spacing title + SEO */
 }
 
 .picks-left .seo-link{
-font-size:14px;
-color:#b0b3b8;
-text-decoration:none;
-margin-top:2px;   /* 🔥 niche shift (chipakna fix) */
+  font-size:14px;
+  color:#b0b3b8;
+  text-decoration:none;
+  margin-top:4px;   /* 🔥 pehle 2px tha → ab aur niche */
 }
 
 .picks-left .seo-link:hover{
