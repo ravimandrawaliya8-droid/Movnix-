@@ -845,17 +845,6 @@ background:rgba(78,161,255,0.15);
   margin: 0;
 }
 
-/* 🔵 Vertical line (dark blue like "See All") */
-.section-title::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 3px;
-  width: 4px;
-  height: 75%;
-  background: #2563eb; /* dark blue */
-  border-radius: 2px;
-}
 
 /* Title link */
 .title-link {
