@@ -1939,14 +1939,15 @@ background:rgba(255,255,255,0.18);
 .picks-left{
 display:flex;
 align-items:center;
-gap:10px;
+gap:12px;
+padding-left:16px;   /* 🔥 left se space (same trailer section jaisa) */
 }
 
 /* BLUE START LINE */
 
 .picks-line{
 width:5px;
-height:20px;
+height:26px;   /* 🔥 pehle 20px tha → ab bada */
 background:#4ea1ff;
 border-radius:3px;
 }
@@ -1962,13 +1963,14 @@ font-weight:600;
 .picks-left div{
 display:flex;
 flex-direction:column;
+justify-content:center;
 }
 
 .picks-left .seo-link{
 font-size:14px;
 color:#b0b3b8;
 text-decoration:none;
-margin-top:-4px;
+margin-top:2px;   /* 🔥 niche shift (chipakna fix) */
 }
 
 .picks-left .seo-link:hover{
@@ -1994,7 +1996,6 @@ margin-left:6px;
 /* UNIVERSAL ARROW */
 
 .arrow{
-
 width:14px;
 height:14px;
 
@@ -2006,7 +2007,8 @@ transform:rotate(45deg);
 display:inline-block;
 
 margin-left:6px;
-
+position:relative;
+top:2px;   /* 🔥 title ke level pe align */
 }
 
 /* SEE LIST BUTTON */
