@@ -2004,22 +2004,6 @@ top:8px;
 
 /* UNIVERSAL ARROW */
 
-.arrow{
-width:14px;
-height:14px;
-
-border-top:3px solid #ffffff;
-border-right:3px solid #ffffff;
-
-transform:rotate(45deg);
-
-display:inline-block;
-
-margin-left:6px;
-position:relative;
-top:8px;   /* 🔥 title ke level pe align */
-}
-
 /* SEE LIST BUTTON */
 
 .picks-list-btn{
