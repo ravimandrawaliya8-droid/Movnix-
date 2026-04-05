@@ -4247,3 +4247,60 @@ body {
   margin-right: -16px;
   border-radius: 0;
 }
+
+
+
+/* ============================= */
+/* 🔥 UNIVERSAL SECTION SYSTEM */
+/* ============================= */
+
+.common-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+}
+
+/* LEFT SIDE WRAP */
+.common-head .section-title{
+  position:relative;
+  padding-left:16px;
+  margin:0;
+  font-size:20px;
+  font-weight:600;
+  color:#fff;
+}
+
+/* 🔵 Vertical Line */
+.common-head .section-title::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:8px;              /* 🔥 SAME FOR ALL */
+  width:4px;
+  height:70%;
+  background:#2563eb;
+  border-radius:2px;
+}
+
+/* ➡️ Arrow */
+.common-head .section-title::after{
+  content:"";
+  display:inline-block;
+
+  width:12px;
+  height:12px;
+
+  border-top:3px solid #fff;
+  border-right:3px solid #fff;
+
+  transform:rotate(45deg);
+
+  margin-left:6px;
+  position:relative;
+  top:8px;              /* 🔥 SAME FOR ALL */
+}
+
+/* SEE ALL ALIGN */
+.common-head .see-all-btn{
+  margin-top:8px;       /* 🔥 SAME LEVEL */
+}
