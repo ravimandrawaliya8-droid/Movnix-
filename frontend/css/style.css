@@ -832,59 +832,60 @@ align-items:center;
 margin-bottom:16px;
 }
 
+/* TITLE */
 .section-title {
   position: relative;
   padding-left: 12px;
-  font-size: 20px;
-  font-weight: 600;
+  margin: 0;
 }
 
-/* Vertical blur yellow line */
+/* 🔵 Vertical line (dark blue like "See All") */
 .section-title::before {
   content: "";
   position: absolute;
   left: 0;
-  top: 4px;
+  top: 3px;
   width: 4px;
-  height: 70%;
-  background: #facc15;
+  height: 75%;
+  background: #2563eb; /* dark blue */
   border-radius: 2px;
-  opacity: 0.7;
 }
 
-/* Link styling */
-.section-title a {
+/* Title link */
+.title-link {
   text-decoration: none;
   color: #fff;
+  font-size: 20px;
+  font-weight: 600;
 }
 
-/* Arrow */
-.section-title .arrow {
+/* ❌ Remove unwanted small arrow (important) */
+.title-link::after {
+  content: none !important;
+}
+
+/* ✅ Perfect aligned arrow */
+.arrow {
   margin-left: 6px;
-  color: #aaa;
   font-size: 18px;
+  color: #9ca3af;
+  position: relative;
+  top: -1px; /* thoda upar align */
 }
 
-/* SEO text */
-.seo-text {
-  font-size: 14px;
-  color: #3b82f6;
-  margin-top: 4px;
-}
-
-/* SEO clickable text */
+/* 🔵 SEO text (blue + upar shift) */
 .seo-link {
   display: inline-block;
   font-size: 13px;
-  color: #9ca3af; /* blur gray */
+  color: #3b82f6; /* blue */
   text-decoration: none;
-  margin-top: 4px;
+  margin-top: 2px; /* upar shift */
 }
 
-/* Hover effect (thoda highlight) */
+/* hover */
 .seo-link:hover {
-  color: #d1d5db;
-}
+  color: #60a5fa;
+  }
 
 
 /* ========================= */
