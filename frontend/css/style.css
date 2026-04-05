@@ -1948,10 +1948,13 @@ background:rgba(255,255,255,0.18);
 /* BLUE START LINE */
 
 .picks-line{
-width:5px;
-height:26px;   /* 🔥 pehle 20px tha → ab bada */
-background:#4ea1ff;
-border-radius:3px;
+  width:5px;
+  height:26px;
+  background:#4ea1ff;
+  border-radius:3px;
+
+  position:relative;
+  top:8px;   /* 🔥 title ke parallel */
 }
 
 /* MOVNIX PICKS TITLE */
@@ -1995,6 +1998,8 @@ transform:rotate(45deg);
 
 margin-left:6px;
 
+top:8px;
+
 }
 
 /* UNIVERSAL ARROW */
@@ -2037,7 +2042,7 @@ backdrop-filter:blur(6px);
 
 transition:0.25s;
 
-margin-top:2px;
+margin-top:8px;
 
 }
 
