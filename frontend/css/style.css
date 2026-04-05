@@ -3552,7 +3552,7 @@ font-size:18px;
 /* TITLE */
 
 .box-title{
-  font-size: 15px;
+  font-size: 20px;
   font-weight: 600;
   color: #58a6ff;
   cursor: pointer;
@@ -4264,7 +4264,7 @@ body {
   content:"";
   position:absolute;
   left:0;
-  top:1px;              /* 🔥 SAME FOR ALL */
+  top:0px;              /* 🔥 SAME FOR ALL */
   width:6px;
   height:110%;
   background:#4ea1ff;
