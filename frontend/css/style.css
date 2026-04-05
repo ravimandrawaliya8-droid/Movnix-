@@ -2012,7 +2012,7 @@ display:inline-block;
 
 margin-left:6px;
 position:relative;
-top:2px;   /* 🔥 title ke level pe align */
+top:8px;   /* 🔥 title ke level pe align */
 }
 
 /* SEE LIST BUTTON */
@@ -2036,6 +2036,8 @@ background:rgba(255,255,255,0.05);
 backdrop-filter:blur(6px);
 
 transition:0.25s;
+
+margin-top:2px;
 
 }
 
