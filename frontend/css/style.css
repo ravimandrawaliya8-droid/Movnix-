@@ -1651,6 +1651,8 @@ display:flex;
 align-items:center;
 justify-content:space-between;
 margin-bottom:10px;
+padding-left:16px;
+padding-right:16px;
 }
 
 /* MOVNIX PICKS TITLE */
@@ -1701,6 +1703,8 @@ gap:14px;
 overflow-x:auto;
 padding-bottom:10px;
 scroll-behavior:smooth;
+padding-left:16px;
+padding-right:16px;
 }
 
 .picks-row::-webkit-scrollbar{
@@ -1951,8 +1955,24 @@ border-radius:3px;
 
 .picks-title{
 color:#f5c518;
-font-size:18px;
+font-size:20px;   /* 🔥 same as other sections */
 font-weight:600;
+}
+
+.picks-left div{
+display:flex;
+flex-direction:column;
+}
+
+.picks-left .seo-link{
+font-size:14px;
+color:#b0b3b8;
+text-decoration:none;
+margin-top:-4px;
+}
+
+.picks-left .seo-link:hover{
+color:#d1d5db;
 }
 
 /* ARROW (M SIZE) */
@@ -2033,6 +2053,12 @@ display:inline-block;
 
 margin-left:4px;
 
+}
+
+.picks{
+background:#111;     /* 🔥 light black section */
+padding:16px 0;      /* top bottom spacing */
+margin:20px 0;       /* section gap */
 }
 
 
