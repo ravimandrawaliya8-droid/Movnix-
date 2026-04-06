@@ -3611,12 +3611,12 @@ font-size:18px;
   text-decoration: underline;
 }
 
-/* MOVIE NAME FIX */
-.box-movie-name{
-  font-size:14px;   /* 🔥 chhota clean size */
+/* ONLY movie list ke andar title chhota hoga */
+.box-row .box-title{
+  font-size:14px !important;
   font-weight:600;
-  margin:0;
   color:#fff;
+  margin:0;
 }
 
 /* CLICKABLE TITLE GLOBAL (sab sections ke liye) */
