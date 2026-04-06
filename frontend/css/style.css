@@ -3098,6 +3098,37 @@ font-size:18px;
   }
 
 
+/* TITLE LINK */
+.stream-title .title-link{
+  color:#f5c518;   /* 🔥 IMDb style yellow */
+  text-decoration:none;
+  font-weight:600;
+  position:relative;
+}
+
+/* ARROW (same universal style) */
+.stream-title .title-link::after{
+  content:"";
+
+  display:inline-block;
+  width:12px;
+  height:12px;
+
+  border-top:3px solid #f5c518;
+  border-right:3px solid #f5c518;
+
+  transform:rotate(45deg);
+
+  margin-left:6px;
+  position:relative;
+  top:1px;
+}
+
+/* OPTIONAL HOVER */
+.stream-title .title-link:hover{
+  opacity:0.9;
+}
+
 
 /* ================= theater SECTION ================= */
 
