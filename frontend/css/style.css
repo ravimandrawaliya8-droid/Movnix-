@@ -3579,17 +3579,18 @@ font-size:18px;
   margin-top: 3px;
 }
 
-/* TICKET ICON */
-
+/* TICKET ICON STYLE */
 .box-ticket{
-  font-size: 18px;
-  cursor: pointer;
-  color: #58a6ff;
-  transition: 0.2s;
+  font-size:18px;
+  cursor:pointer;
+  color:#f5c518;   /* 🔥 IMDb yellow */
+  transform:rotate(45deg);   /* 🔥 tilt */
+  transition:0.25s;
 }
 
+/* hover effect (mast lagega) */
 .box-ticket:hover{
-  transform: scale(1.1);
+  transform:rotate(45deg) scale(1.2);
 }
 
 /* FOOTER */
@@ -3615,7 +3616,7 @@ font-size:18px;
 .box-row .box-title{
   font-size:14px !important;
   font-weight:600;
-  color:#fff;
+  color:#4ea1ff;
   margin:0;
 }
 
