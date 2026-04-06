@@ -4325,6 +4325,13 @@ body {
   margin-top:8px;       /* 🔥 SAME LEVEL */
 }
 
+/* LEFT BLOCK ko thoda push karo (line ke baad) */
+.common-head > div{
+  padding-left:10px;   /* 🔥 same gap as line + spacing */
+}
+
+/* SEO ko proper align */
 .common-head .seo-link{
-  margin-top:3px;   /* 🔥 subtle spacing */
+  display:block;
+  margin-top:4px;
 }
