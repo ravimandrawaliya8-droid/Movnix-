@@ -2401,45 +2401,44 @@ text-decoration:none;
 
 }
 
-/* SEE ALL */
-
+/* SEE ALL WRAP */
 .trend-seeall{
-
-display:flex;
-
-justify-content:flex-end;
-
-margin-top:20px;
-
+  display:flex;
+  justify-content:flex-end;
+  margin-top:28px;          /* thoda aur niche */
+  padding-right:10px;       /* 👉 right side breathing space */
 }
 
+/* BUTTON */
 .see-btn{
+  display:inline-block;
 
-color:#4ea1ff;
+  color:#4ea1ff;
+  border:1.5px solid #4ea1ff;
 
-border:1.5px solid #4ea1ff;
+  background:rgba(255,255,255,0.06);
+  backdrop-filter:blur(10px);
 
-background:rgba(255,255,255,0.05);
+  padding:8px 16px;         /* 👉 size increase (FIXED) */
+  border-radius:30px;
 
-backdrop-filter:blur(8px);
+  text-decoration:none;
+  font-size:15px;           /* 👉 thoda bada text */
+  font-weight:500;
 
-padding-right:4px;
-
-border-radius:24px;
-
-text-decoration:none;
-
-font-size:14px;
-
+  transition:all 0.25s ease;
 }
 
+/* HOVER */
 .see-btn:hover{
+  background:rgba(78,161,255,0.18);
 
-background:rgba(78,161,255,0.15);
+  box-shadow:
+    0 0 12px rgba(78,161,255,0.6),
+    0 0 24px rgba(78,161,255,0.3);  /* 👉 strong glow */
 
-box-shadow:0 0 10px rgba(78,161,255,0.4);
-
-  }
+  transform:translateY(-1px);       /* 👉 premium feel */
+}
 
 .trending-section{
 
