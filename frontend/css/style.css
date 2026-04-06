@@ -3114,7 +3114,7 @@ font-size:18px;
   width:12px;
   height:12px;
 
-  border-top:3px solid #f5c518;
+  border-top:3px solid #f5c518;   /* yellow arrow */
   border-right:3px solid #f5c518;
 
   transform:rotate(45deg);
@@ -3124,6 +3124,7 @@ font-size:18px;
   top:1px;
 }
 
+
 /* OPTIONAL HOVER */
 .stream-title .title-link:hover{
   opacity:0.9;
@@ -3131,12 +3132,14 @@ font-size:18px;
 
 /* 🔥 STREAMING SECTION FULL WIDTH */
 .streaming-section{
-  width:100%;
-  margin:0;                     /* ❌ koi side gap nahi */
-  padding:20px 0;              /* ❌ left-right padding hata diya */
+  position:relative;
 
-  background:#141414;          /* 🔥 light dark (trailer jaisa) */
+  margin-right:-12px;   /* 🔥 right side ko push karega */
+  padding-right:12px;   /* content safe rahe */
+
+  background:#141414;   /* light dark */
 }
+
 
 /* 👉 INNER CONTENT CONTROL (cards same jagah rahe) */
 .streaming-section .stream-header,
