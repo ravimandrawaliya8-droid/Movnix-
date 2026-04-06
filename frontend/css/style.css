@@ -4324,3 +4324,7 @@ body {
 .common-head .see-all-btn{
   margin-top:8px;       /* 🔥 SAME LEVEL */
 }
+
+.common-head .seo-link{
+  margin-top:3px;   /* 🔥 subtle spacing */
+}
