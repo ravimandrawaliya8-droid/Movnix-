@@ -4351,19 +4351,3 @@ body {
   margin-top:4px;
 }
 
-
-
-/* SECTION BASE */
-.section{
-  padding:20px 12px;
-}
-
-/* DARK DEFAULT */
-.section{
-  background:#0f0f0f;
-}
-
-/* LIGHT VARIANT */
-.section-light{
-  background:#141414;   /* 👉 halka light black */
-}
