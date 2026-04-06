@@ -2687,6 +2687,12 @@ font-size:18px;
   }
 
 
+/* LEFT BLOCK ko cards ke saath align karo */
+.common-head > div{
+  padding-left:12px;   /* 🔥 same as .fan-row padding */
+}
+
+
 /* ============================= */
 /* 🎬 POPULAR INTERESTS - SINGLE ROW */
 /* ============================= */
