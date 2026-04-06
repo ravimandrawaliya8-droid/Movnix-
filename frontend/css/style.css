@@ -2496,11 +2496,13 @@ margin-top:40px;
 /* ROW */
 
 .fan-row{
-display:flex;
-gap:16px;
-overflow-x:auto;
-padding:10px 0;
-scrollbar-width:none;
+  display:flex;
+  gap:16px;
+  overflow-x:auto;
+
+  padding:10px 12px;   /* 🔥 FIX: left-right spacing added */
+
+  scrollbar-width:none;
 }
 
 .fan-row::-webkit-scrollbar{
