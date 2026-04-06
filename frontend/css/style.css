@@ -3611,6 +3611,27 @@ font-size:18px;
   text-decoration: underline;
 }
 
+/* MOVIE NAME FIX */
+.box-movie-name{
+  font-size:14px;   /* 🔥 chhota clean size */
+  font-weight:600;
+  margin:0;
+  color:#fff;
+}
+
+/* CLICKABLE TITLE GLOBAL (sab sections ke liye) */
+.title-link{
+  text-decoration:none;
+  color:#fff;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+
+.title-link:hover{
+  color:#58a6ff;
+}
+
 
 /* ================= DESKTOP ================= */
 
