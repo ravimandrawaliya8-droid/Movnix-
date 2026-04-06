@@ -2997,11 +2997,12 @@ font-size:18px;
 .stream-card{
   min-width:160px;
   max-width:160px;
-  background:#1a1a1a;
+  background:#0f0f0f;
   border-radius:12px;
   overflow:hidden;
   flex-shrink:0;
   transition:0.25s ease;
+  box-shadow:0 4px 12px rgba(0,0,0,0.4);
 }
 
 .stream-card:hover{
@@ -3107,23 +3108,26 @@ font-size:18px;
 }
 
 /* ARROW (same universal style) */
+.stream-title .title-link{
+  color:#f5c518;
+  text-decoration:none;
+  font-weight:600;
+  display:inline-flex;        /* 🔥 IMPORTANT */
+  align-items:center;
+  gap:6px;
+}
+
+/* ARROW */
 .stream-title .title-link::after{
   content:"";
-
-  display:inline-block;
   width:12px;
   height:12px;
 
-  border-top:3px solid #f5c518;   /* yellow arrow */
-  border-right:3px solid #f5c518;
+  border-top:2.5px solid #f5c518;
+  border-right:2.5px solid #f5c518;
 
   transform:rotate(45deg);
-
-  margin-left:6px;
-  position:relative;
-  top:1px;
 }
-
 
 /* OPTIONAL HOVER */
 .stream-title .title-link:hover{
