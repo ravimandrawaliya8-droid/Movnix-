@@ -3129,6 +3129,21 @@ font-size:18px;
   opacity:0.9;
 }
 
+/* 🔥 STREAMING SECTION FULL WIDTH */
+.streaming-section{
+  width:100%;
+  margin:0;                     /* ❌ koi side gap nahi */
+  padding:20px 0;              /* ❌ left-right padding hata diya */
+
+  background:#141414;          /* 🔥 light dark (trailer jaisa) */
+}
+
+/* 👉 INNER CONTENT CONTROL (cards same jagah rahe) */
+.streaming-section .stream-header,
+.streaming-section .stream-row{
+  padding:0 12px;              /* ✅ content andar hi aligned rahe */
+}
+
 
 /* ================= theater SECTION ================= */
 
