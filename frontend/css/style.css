@@ -2899,7 +2899,7 @@ font-size:18px;
 /* ================= STREAMING SECTION ================= */
 
 .streaming-section{
-  background:#181818;
+  background:#000;
   padding:20px 16px;
 }
 
@@ -2997,7 +2997,7 @@ font-size:18px;
 .stream-card{
   min-width:160px;
   max-width:160px;
-  background:#0d0d0d;
+  background:#0f0f0f;
   border-radius:12px;
   overflow:hidden;
   flex-shrink:0;
