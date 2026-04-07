@@ -1,6 +1,7 @@
-import MovieSection from "@/components/MovieSection";
-import QuickButtons from "@/components/QuickButtons";
 import Header from "@/components/Header";
+import QuickButtons from "@/components/QuickButtons";
+import ExploreSlider from "@/components/ExploreSlider";
+import MovieSection from "@/components/MovieSection";
 
 export default function Home() {
   return (
@@ -8,6 +9,9 @@ export default function Home() {
       <Header />
 
       <QuickButtons />
+
+      {/* 👇 NEW ADD */}
+      <ExploreSlider />
 
       <MovieSection
         title="Trending Movies"
@@ -20,4 +24,4 @@ export default function Home() {
       />
     </>
   );
-}
+    }
