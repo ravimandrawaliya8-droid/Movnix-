@@ -3,6 +3,7 @@ import QuickButtons from "@/components/QuickButtons";
 import Hero from "@/components/Hero";
 import ExploreSlider from "@/components/ExploreSlider";
 import TrailerSection from "@/components/TrailerSection";
+import TopWeek from "@/components/TopWeek";
 import MovieSection from "@/components/MovieSection";
 
 export default function Home() {
@@ -16,6 +17,8 @@ export default function Home() {
       <ExploreSlider />
 
       <TrailerSection />
+
+      <TopWeek />
 
       <MovieSection
         title="Trending Movies"
