@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import QuickButtons from "@/components/QuickButtons";
+import Hero from "@/components/Hero";
 import ExploreSlider from "@/components/ExploreSlider";
 import MovieSection from "@/components/MovieSection";
 
@@ -7,10 +8,10 @@ export default function Home() {
   return (
     <>
       <Header />
-
       <QuickButtons />
 
-      {/* 👇 NEW ADD */}
+      <Hero /> {/* SAME HERO */}
+
       <ExploreSlider />
 
       <MovieSection
@@ -24,4 +25,4 @@ export default function Home() {
       />
     </>
   );
-    }
+}
