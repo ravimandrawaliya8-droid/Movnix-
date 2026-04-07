@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import QuickButtons from "@/components/QuickButtons";
 import Hero from "@/components/Hero";
 import ExploreSlider from "@/components/ExploreSlider";
+import TrailerSection from "@/components/TrailerSection";
 import MovieSection from "@/components/MovieSection";
 
 export default function Home() {
@@ -13,6 +14,8 @@ export default function Home() {
       <Hero /> {/* SAME HERO */}
 
       <ExploreSlider />
+
+      <TrailerSection />
 
       <MovieSection
         title="Trending Movies"
