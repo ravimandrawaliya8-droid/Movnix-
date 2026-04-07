@@ -1,0 +1,386 @@
+/* ================= RESET ================= */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family: Arial, sans-serif;
+}
+
+body{
+  background:#0b0b0f;
+  color:#fff;
+}
+
+/* ================= NAVBAR ================= */
+
+.navbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 12px;
+  background:#0b0b0f;
+  position:sticky;
+  top:0;
+  z-index:1000;
+  border-bottom:1px solid #1c1c1c;
+}
+
+.logo{
+  font-weight:bold;
+  font-size:18px;
+}
+
+.nav-links{
+  display:none;
+}
+
+.navbar input{
+  flex:1;
+  margin:0 10px;
+  padding:8px;
+  border-radius:8px;
+  border:none;
+  background:#1a1a1f;
+  color:#fff;
+}
+
+.login-btn{
+  background:#f5c518;
+  border:none;
+  padding:6px 10px;
+  border-radius:6px;
+  font-weight:bold;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+  position:relative;
+  padding:40px 16px;
+  text-align:center;
+}
+
+.hero h1{
+  font-size:24px;
+  margin-bottom:10px;
+}
+
+.hero p{
+  font-size:14px;
+  color:#bbb;
+  margin-bottom:15px;
+}
+
+.hero select{
+  padding:8px;
+  border-radius:8px;
+  border:none;
+  margin-bottom:10px;
+}
+
+.hero-buttons button{
+  margin:5px;
+  padding:8px 12px;
+  border:none;
+  border-radius:8px;
+  background:#f5c518;
+  color:#000;
+  font-weight:bold;
+}
+
+/* ================= TABS ================= */
+
+.tabs{
+  display:flex;
+  justify-content:space-around;
+  border-bottom:1px solid #222;
+}
+
+.tabs span{
+  padding:10px;
+  font-size:14px;
+  color:#aaa;
+}
+
+.tabs .active{
+  color:#fff;
+  border-bottom:2px solid #f5c518;
+}
+
+/* ================= FEATURED ================= */
+
+.featured{
+  padding:16px;
+}
+
+.featured-card{
+  background:#111;
+  border-radius:16px;
+  overflow:hidden;
+}
+
+.featured-card img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+}
+
+.featured-text{
+  padding:14px;
+}
+
+.featured-text h2{
+  margin-bottom:6px;
+}
+
+.featured-text p{
+  font-size:14px;
+  color:#bbb;
+  margin-bottom:10px;
+}
+
+.featured-text button{
+  background:#f5c518;
+  border:none;
+  padding:8px 12px;
+  border-radius:8px;
+  font-weight:bold;
+}
+
+/* ================= IMDB LIST ================= */
+
+.imdb-list{
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  padding:16px;
+}
+
+/* ================= CARD ================= */
+
+.imdb-card{
+  background:#111;
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 4px 20px rgba(0,0,0,0.5);
+  transition:0.3s;
+}
+
+.imdb-card:hover{
+  transform:scale(1.02);
+}
+
+/* IMAGE */
+.imdb-img-wrap{
+  position:relative;
+}
+
+.imdb-card img{
+  width:100%;
+  height:200px;
+  object-fit:cover;
+}
+
+/* YEAR BADGE */
+.year-badge{
+  position:absolute;
+  top:10px;
+  left:10px;
+  background:#f5c518;
+  color:#000;
+  padding:4px 8px;
+  border-radius:6px;
+  font-size:12px;
+  font-weight:bold;
+}
+
+/* CONTENT */
+.imdb-content{
+  padding:14px;
+}
+
+.imdb-label{
+  font-size:12px;
+  color:#aaa;
+  margin-bottom:6px;
+}
+
+.imdb-title{
+  font-size:18px;
+  font-weight:600;
+  margin-bottom:6px;
+}
+
+.imdb-desc{
+  font-size:14px;
+  color:#bbb;
+  margin-bottom:10px;
+}
+
+.imdb-link{
+  font-size:14px;
+  color:#3ea6ff;
+}
+
+/* ================= TRENDING ================= */
+
+.trending{
+  padding:16px;
+}
+
+.card-row{
+  display:flex;
+  overflow-x:auto;
+  gap:10px;
+}
+
+.trend-card{
+  min-width:120px;
+}
+
+.trend-card img{
+  width:100%;
+  border-radius:10px;
+}
+
+.trend-card p{
+  font-size:12px;
+  margin-top:5px;
+}
+
+/* ================= SEARCH ================= */
+
+.search-results{
+  padding:16px;
+}
+
+/* ================= LOADER ================= */
+
+.loader{
+  text-align:center;
+  padding:20px;
+  color:#aaa;
+}
+
+/* ================= FOOTER ================= */
+
+.footer{
+  text-align:center;
+  padding:20px;
+  color:#888;
+  font-size:12px;
+    }
+
+/* ================= ULTRA DRAWER ================= */
+
+.drawer{
+  position:fixed;
+  top:0;
+  left:-100%;
+  width:100%;
+  height:100%;
+  z-index:9999;
+  transition:0.4s;
+}
+
+.drawer.active{
+  left:0;
+}
+
+/* BACKDROP */
+.drawer-backdrop{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background-size:cover;
+  background-position:center;
+  filter:blur(20px);
+  transform:scale(1.2);
+}
+
+/* DARK OVERLAY */
+.drawer-backdrop::after{
+  content:"";
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:linear-gradient(to bottom, rgba(0,0,0,0.7), #000);
+}
+
+/* PANEL */
+.drawer-panel{
+  position:relative;
+  z-index:2;
+  height:100%;
+  overflow-y:auto;
+  padding:20px;
+  color:#fff;
+}
+
+/* HEADER */
+.drawer-header{
+  margin-bottom:20px;
+}
+
+.drawer-header h2{
+  font-size:22px;
+  margin:10px 0;
+}
+
+.drawer-header p{
+  color:#ccc;
+  font-size:14px;
+}
+
+/* BUTTON */
+#trailerBtn{
+  margin-top:10px;
+  padding:12px;
+  width:100%;
+  border:none;
+  border-radius:10px;
+  background:#f5c518;
+  font-weight:bold;
+}
+
+/* CLOSE */
+.close-btn{
+  background:none;
+  border:none;
+  color:#fff;
+  font-size:18px;
+}
+
+/* GALLERY */
+.drawer-gallery{
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  margin:15px 0;
+}
+
+.drawer-gallery img{
+  width:150px;
+  border-radius:12px;
+}
+
+/* SECTION */
+.drawer-section h3{
+  margin-bottom:10px;
+}
+
+.drawer-item{
+  padding:10px 0;
+  border-bottom:1px solid #222;
+}
+
+.drawer-item h4{
+  color:#f5c518;
+  font-size:14px;
+}
+
+.drawer-item p{
+  font-size:13px;
+  color:#ccc;
+                                             }
