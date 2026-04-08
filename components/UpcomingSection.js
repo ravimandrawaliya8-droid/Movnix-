@@ -1,7 +1,3 @@
-"use client";
-
-import { useEffect } from "react";
-
 /* =====================================================
 🎬 UPCOMING IN THEATRES (FINAL REAL SYSTEM)
 ===================================================== */
@@ -50,6 +46,8 @@ return data[id];
 
 async function getUpcomingMovies(){
 
+const API_KEY = "YOUR_TMDB_API_KEY"; // 👈 replace
+
 const countries = ["US","IN","KR","JP","FR","GB"];
 const categories = [
 "/movie/upcoming",
@@ -63,7 +61,7 @@ for(const country of countries){
 for(const cat of categories){
 try{
 const res = await fetch(
-`https://api.themoviedb.org/3${cat}?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&region=${country}`
+`https://api.themoviedb.org/3${cat}?api_key=${API_KEY}&region=${country}`
 );
 const data = await res.json();
 
@@ -98,6 +96,7 @@ obs.unobserve(img);
 },{ rootMargin: "100px" });
 
 images.forEach(img => {
+
 observer.observe(img);
 
 const rect = img.getBoundingClientRect();
@@ -106,6 +105,7 @@ if(rect.top < window.innerHeight){
 img.src = img.dataset.src;
 observer.unobserve(img);
 }
+
 });
 
 }
@@ -137,7 +137,7 @@ let trailerKey = "";
 
 try{
 const res = await fetch(
-`https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
+`https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=YOUR_TMDB_API_KEY`
 );
 const data = await res.json();
 
@@ -149,18 +149,21 @@ if(trailer) trailerKey = trailer.key;
 
 }catch(e){}
 
+/* IMAGE */
 const thumb = trailerKey
 ? `https://img.youtube.com/vi/${trailerKey}/hqdefault.jpg`
 : movie.backdrop_path
 ? `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`
 : `https://image.tmdb.org/t/p/w500${movie.poster_path}`;
 
+/* DATE */
 const date = movie.release_date
 ? new Date(movie.release_date).toLocaleDateString("en-US",{
 month:"short",day:"2-digit",year:"numeric"
 }).toUpperCase()
 : "COMING SOON";
 
+/* GENRES */
 const genreMap = {
 28:"Action",12:"Adventure",16:"Animation",35:"Comedy",
 18:"Drama",10751:"Family",14:"Fantasy",27:"Horror",
@@ -172,13 +175,16 @@ const genres = (movie.genre_ids || [])
 .map(id => genreMap[id] || "")
 .join(" • ");
 
+/* STATS */
 const likesCount = formatNumber(movie.vote_count);
 const interestCount = formatNumber(movie.popularity * 1000);
 
+/* STATE */
 const liked = getStorage("likes")[movie.id];
 const saved = getStorage("saved")[movie.id];
 const notified = getStorage("notify")[movie.id];
 
+/* CARD */
 const card = document.createElement("div");
 card.className = "upcoming-card";
 
@@ -227,6 +233,7 @@ if(row.children.length >= 25) break;
 }
 
 container.appendChild(row);
+
 initLazyImages(container);
 
 }catch(err){
@@ -238,7 +245,7 @@ console.error(err);
 
 /* ================= EVENTS ================= */
 
-function initEvents(){
+function initUpcomingEvents(){
 
 document.addEventListener("click", function(e){
 
@@ -278,19 +285,9 @@ btn.innerText = active ? "Notified ✓" : "Remind Me";
 
 }
 
-/* ================= COMPONENT ================= */
+/* ================= INIT ================= */
 
-export default function UpcomingSection(){
-
-useEffect(()=>{
+document.addEventListener("DOMContentLoaded", () => {
 loadUpcomingSection();
-initEvents();
-},[]);
-
-return (
-<section>
-<h2>🎬 Upcoming in Theatres</h2>
-<div id="upcomingList"></div>
-</section>
-);
-}
+initUpcomingEvents();
+});
