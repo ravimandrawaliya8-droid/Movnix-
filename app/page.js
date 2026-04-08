@@ -1,3 +1,8 @@
+"use client";
+
+import { useEffect } from "react";
+
+/* ---------------- COMPONENTS ---------------- */
 import Header from "@/components/Header";
 import QuickButtons from "@/components/QuickButtons";
 import Hero from "@/components/Hero";
@@ -16,40 +21,117 @@ import UpcomingSection from "@/components/UpcomingSection";
 import NewsSection from "@/components/NewsSection";
 import MovieSection from "@/components/MovieSection";
 
+/* ---------------- SYSTEM ---------------- */
+import { initApp } from "@/utils/movieSystem";
+
+/* ---------------- LOADERS ---------------- */
+import { loadHero } from "@/utils/hero";
+import { startExploreSlider } from "@/utils/explore";
+
+import {
+  loadQuickButtons,
+  loadTrailers,
+  loadTopWeek,
+  loadCelebrities,
+  loadMovnixPicks,
+  loadTrending,
+  loadFanFavourites,
+  loadStreaming,
+  loadPopularInterests,
+  loadTheatre,
+  loadBoxOffice,
+  loadUpcomingSection,
+  loadNewsSection
+} from "@/utils/allSections";
+
 export default function Home() {
+
+  useEffect(() => {
+
+    initApp({
+      loadHero,
+      startExploreSlider,
+      loaders: {
+        loadQuickButtons,
+        loadTrailers,
+        loadTopWeek,
+        loadCelebrities,
+        loadMovnixPicks,
+        loadTrending,
+        loadFanFavourites,
+        loadStreaming,
+        loadPopularInterests,
+        loadTheatre,
+        loadBoxOffice,
+        loadUpcomingSection,
+        loadNewsSection
+      }
+    });
+
+  }, []);
+
   return (
     <>
       <Header />
-      <QuickButtons />
 
-      <Hero /> {/* SAME HERO */}
+      {/* 🔥 IMPORTANT: IDs must match lazy system */}
+      <div id="quickButtons">
+        <QuickButtons />
+      </div>
+
+      <Hero />
 
       <ExploreSlider />
 
-      <TrailerSection />
+      <div id="trailers">
+        <TrailerSection />
+      </div>
 
-      <TopWeek />
+      <div id="top-week-section">
+        <TopWeek />
+      </div>
 
-      <Celebrities />
+      <div id="celebs">
+        <Celebrities />
+      </div>
 
-      <MovnixPicks />
+      <div id="movnixPicks">
+        <MovnixPicks />
+      </div>
 
-      <Trending />
+      <div id="trendingList">
+        <Trending />
+      </div>
 
-      <FanFavourites />
+      <div id="fanFavourites">
+        <FanFavourites />
+      </div>
 
-      <Streaming />
+      <div id="streamingSection">
+        <Streaming />
+      </div>
 
-      <PopularInterests />
+      <div id="popularInterests">
+        <PopularInterests />
+      </div>
 
-      <Theatre />
+      <div id="theatreReleases">
+        <Theatre />
+      </div>
 
-      <BoxOffice />
+      <div id="boxOfficeSection">
+        <BoxOffice />
+      </div>
 
-      <UpcomingSection />
+      <div id="upcomingTheatres">
+        <UpcomingSection />
+      </div>
 
-      <NewsSection />
+      <div id="newsSection">
+        <NewsSection />
+      </div>
 
+      {/* NORMAL SECTIONS (NO LAZY) */}
       <MovieSection
         title="Trending Movies"
         endpoint="/trending/movie/week"
@@ -61,4 +143,4 @@ export default function Home() {
       />
     </>
   );
-}
+        }
