@@ -11,6 +11,7 @@ import FanFavourites from "@/components/FanFavourites";
 import Streaming from "@/components/Streaming";
 import PopularInterests from "@/components/PopularInterests";
 import Theatre from "@/components/Theatre";
+import BoxOffice from "@/components/BoxOffice";
 import MovieSection from "@/components/MovieSection";
 
 export default function Home() {
@@ -40,6 +41,8 @@ export default function Home() {
       <PopularInterests />
 
       <Theatre />
+
+      <BoxOffice />
 
       <MovieSection
         title="Trending Movies"
