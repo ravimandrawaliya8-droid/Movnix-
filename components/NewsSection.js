@@ -1,7 +1,3 @@
-"use client";
-
-import { useEffect } from "react";
-
 /* =====================================================
 📰 TOP NEWS SECTION (FINAL PRO CLEAN)
 ===================================================== */
@@ -194,6 +190,7 @@ document.addEventListener("click", function (e) {
 
     const text = btn.innerText.toLowerCase();
 
+    /* CATEGORY */
     if (text.includes("movies")) {
       currentQuery = "movie OR film OR box office OR release";
     }
@@ -207,6 +204,7 @@ document.addEventListener("click", function (e) {
       currentQuery = "general";
     }
 
+    /* COUNTRY */
     if (text.includes("india")) {
       currentCountry = "in";
     }
@@ -220,34 +218,9 @@ document.addEventListener("click", function (e) {
 });
 }
 
-/* ================= COMPONENT ================= */
+/* ================= INIT ================= */
 
-export default function NewsSection(){
-
-useEffect(()=>{
-loadNewsSection();
-initNewsEvents();
-},[]);
-
-return (
-<section id="newsSection">
-
-  <h2>📰 Top News</h2>
-
-  {/* FILTER PILLS (same system) */}
-  <div className="news-pills">
-    <button className="active">Top</button>
-    <button>Movies</button>
-    <button>Celebs</button>
-    <button>TV</button>
-    <button>India</button>
-    <button>Global</button>
-  </div>
-
-  <div className="news-hero"></div>
-
-  <div className="news-list"></div>
-
-</section>
-);
-}
+document.addEventListener("DOMContentLoaded", () => {
+  loadNewsSection();
+  initNewsEvents();
+});
