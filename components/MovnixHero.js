@@ -1,27 +1,16 @@
-"use client";
-
-import { useEffect } from "react";
-
 /* ===================================================== */
 /* 🔥 MOVNIX FINAL SECTION - FULL JS (CINEMATIC UI)       */
 /* ===================================================== */
 
-export default function MovnixHero(){
-
-useEffect(()=>{
-
-initButtons();
-initSubscribe();
-initScrollAnimations();
-initPosterEffects();
-
-/* PAGE LOAD */
-window.addEventListener("load", () => {
-  document.body.classList.add("loaded");
+/* ===============================
+   🚀 INIT
+================================ */
+document.addEventListener("DOMContentLoaded", () => {
+  initButtons();
+  initSubscribe();
+  initScrollAnimations();
+  initPosterEffects();
 });
-
-},[]);
-
 
 /* ===============================
    🎬 HERO BUTTONS
@@ -31,12 +20,14 @@ function initButtons() {
   const exploreBtn = document.querySelector(".primary");
   const trendingBtn = document.querySelector(".secondary");
 
+  // 🎥 Explore Movies
   if (exploreBtn) {
     exploreBtn.addEventListener("click", () => {
       window.location.href = "movies.html";
     });
   }
 
+  // 🔥 Scroll to next section
   if (trendingBtn) {
     trendingBtn.addEventListener("click", () => {
       document.querySelector(".subscribe-box")?.scrollIntoView({
@@ -70,13 +61,14 @@ function initSubscribe() {
       return;
     }
 
+    // 👉 Future API connect
     showToast("🚀 Subscribed Successfully!");
     input.value = "";
   }
 }
 
 /* ===============================
-   🍞 TOAST
+   🍞 TOAST NOTIFICATION
 ================================ */
 function showToast(message) {
 
@@ -117,7 +109,7 @@ function initScrollAnimations() {
 }
 
 /* ===============================
-   🎞 POSTER EFFECT
+   🎞 POSTER HOVER EFFECT
 ================================ */
 function initPosterEffects() {
 
@@ -149,46 +141,9 @@ function initPosterEffects() {
   });
 }
 
-
 /* ===============================
-   🎨 UI JSX (IMPORTANT)
+   🌟 PAGE LOAD FADE
 ================================ */
-
-return (
-<section className="movnix-section">
-
-  <div className="movnix-left">
-    <h1>Unlimited Movies, Shows & More</h1>
-    <p>Watch anywhere. Cancel anytime.</p>
-
-    <div className="buttons">
-      <button className="primary">Explore Movies</button>
-      <button className="secondary">Trending Now</button>
-    </div>
-  </div>
-
-  <div className="movnix-posters">
-    <img src="/p1.jpg" />
-    <img src="/p2.jpg" />
-    <img src="/p3.jpg" />
-  </div>
-
-  {/* SUBSCRIBE */}
-  <div className="subscribe-box">
-    <h3>Stay Updated</h3>
-
-    <div className="subscribe-input">
-      <input type="text" placeholder="Enter your email" />
-      <button>Subscribe</button>
-    </div>
-  </div>
-
-  {/* FOOTER */}
-  <div className="movnix-footer">
-    <p>© 2026 Movnix. All rights reserved.</p>
-  </div>
-
-</section>
-);
-
-  }
+window.addEventListener("load", () => {
+  document.body.classList.add("loaded");
+});
