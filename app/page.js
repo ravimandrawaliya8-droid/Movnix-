@@ -13,6 +13,7 @@ import PopularInterests from "@/components/PopularInterests";
 import Theatre from "@/components/Theatre";
 import BoxOffice from "@/components/BoxOffice";
 import UpcomingSection from "@/components/UpcomingSection";
+import NewsSection from "@/components/NewsSection";
 import MovieSection from "@/components/MovieSection";
 
 export default function Home() {
@@ -46,6 +47,8 @@ export default function Home() {
       <BoxOffice />
 
       <UpcomingSection />
+
+      <NewsSection />
 
       <MovieSection
         title="Trending Movies"
