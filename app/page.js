@@ -5,6 +5,7 @@ import ExploreSlider from "@/components/ExploreSlider";
 import TrailerSection from "@/components/TrailerSection";
 import TopWeek from "@/components/TopWeek";
 import Celebrities from "@/components/Celebrities";
+import MovnixPicks from "@/components/MovnixPicks";
 import MovieSection from "@/components/MovieSection";
 
 export default function Home() {
@@ -22,6 +23,8 @@ export default function Home() {
       <TopWeek />
 
       <Celebrities />
+
+      <MovnixPicks />
 
       <MovieSection
         title="Trending Movies"
