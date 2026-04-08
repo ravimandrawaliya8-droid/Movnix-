@@ -8,6 +8,7 @@ import Celebrities from "@/components/Celebrities";
 import MovnixPicks from "@/components/MovnixPicks";
 import Trending from "@/components/Trending";
 import FanFavourites from "@/components/FanFavourites";
+import Streaming from "@/components/Streaming";
 import MovieSection from "@/components/MovieSection";
 
 export default function Home() {
@@ -31,6 +32,8 @@ export default function Home() {
       <Trending />
 
       <FanFavourites />
+
+      <Streaming />
 
       <MovieSection
         title="Trending Movies"
